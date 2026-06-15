@@ -206,18 +206,19 @@
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--amber);
-  padding: 0.35rem 0.85rem;
-  border: 1px solid var(--amber-dim);
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(255, 106, 0, 0.15);
   border-radius: 100px;
-  background: rgba(255, 106, 0, 0.06);
+  background: rgba(255, 106, 0, 0.04);
   width: fit-content;
+  backdrop-filter: blur(8px);
 }
 
 .hero-eyebrow-dot {
@@ -226,6 +227,12 @@
   border-radius: 50%;
   background: var(--amber);
   animation: pulse-amber 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.hero-eyebrow-sep {
+  color: rgba(255, 106, 0, 0.3);
+  font-size: 0.8em;
 }
 
 @keyframes pulse-amber {
@@ -240,7 +247,23 @@
   }
 }
 
-/* Hero h1 */
+/* Hero headline group — editorial two-line treatment */
+.hero-headline-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero-descriptor {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 0 0 0.15rem 0;
+}
+
 .hero-h1 {
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 7vw, 6.5rem);
@@ -262,102 +285,137 @@
 
 .hero-tagline {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 400;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--steel);
+  margin-top: 0.5rem;
 }
 
 .hero-p {
   font-family: var(--font-sans);
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
-  line-height: 1.7;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.75;
   color: var(--muted);
-  max-width: 440px;
+  max-width: 420px;
   font-weight: 400;
 }
 
+/* Hero stats — with dividers */
 .hero-stats {
   display: flex;
-  gap: 2rem;
-  padding: 1rem 0;
-  border-top: 1px solid var(--subtle);
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(240, 237, 230, 0.06);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .hero-stat-value {
   font-family: var(--font-mono);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--amber);
   display: block;
+  line-height: 1;
 }
 
-@keyframes drawLine {
-  from {
-    stroke-dashoffset: 1000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes orbitSpin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.5;
-    filter: drop-shadow(0 0 2px rgba(255, 138, 0, 0.2));
-  }
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 8px rgba(255, 138, 0, 0.8));
-  }
-}
-
-@keyframes pulseDataFlow {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-10px) scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.3;
-  }
-}
-
-.anim-draw {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: drawLine 3s var(--ease-spring) forwards;
-}
-
-.anim-orbit {
-  transform-origin: center;
-  animation: orbitSpin linear infinite;
-}
-
-.anim-pulse {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
 .hero-stat-label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+  opacity: 0.7;
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(240, 237, 230, 0.1);
+  flex-shrink: 0;
+}
+
+/* CTA — Install chip */
+.btn-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  background: rgba(255, 106, 0, 0.06);
+  color: var(--amber-light);
+  cursor: pointer;
+  transition:
+    background 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    transform 160ms var(--ease-out);
+  position: relative;
+}
+
+.btn-install:hover {
+  background: rgba(255, 106, 0, 0.12);
+  border-color: var(--amber);
+  box-shadow: 0 4px 20px rgba(255, 106, 0, 0.15);
+}
+
+.btn-install:active {
+  transform: scale(0.97);
+}
+
+.btn-install code {
+  font-family: inherit;
+}
+
+.btn-install-icon {
+  opacity: 0.7;
+}
+
+.btn-install-feedback {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: var(--amber);
+  margin-left: 0.25rem;
+  min-width: 3em;
+}
+
+/* Scroll indicator */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--amber), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
 }
 
 /* CTA Buttons */
@@ -423,7 +481,7 @@
 }
 
 /* =====================================
-   NAV
+   NAV — Glass Editorial
    ===================================== */
 .vanta-nav {
   position: fixed;
@@ -434,50 +492,55 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
-  background: linear-gradient(to bottom, rgba(4, 2, 8, 0.9) 0%, transparent 100%);
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  height: 64px;
+  background: linear-gradient(to bottom, rgba(5, 5, 7, 0.85) 0%, transparent 100%);
   backdrop-filter: blur(0px);
+  transition:
+    background 400ms var(--ease-out),
+    backdrop-filter 400ms var(--ease-out),
+    box-shadow 400ms var(--ease-out),
+    height 300ms var(--ease-out);
 }
 
+.vanta-nav--scrolled {
+  background: rgba(5, 5, 7, 0.88);
+  backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: 0 1px 0 rgba(255, 106, 0, 0.06), 0 4px 24px rgba(0, 0, 0, 0.4);
+  height: 56px;
+}
+
+/* ── Logo (wrapper para el componente SVG animado VantaDBLogo) ── */
 .vanta-logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--white);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  z-index: 101;
+  /* El componente VantaDBLogoFull gestiona su propio layout interno */
 }
 
-.vanta-logo span {
-  color: var(--amber);
+/* Hover en el logo: acelera el SVG interno via clase compuesta */
+@media (hover: hover) and (pointer: fine) {
+  .vanta-logo:hover .vdb-mark .vdb-singularity {
+    filter: drop-shadow(0 0 14px rgba(255, 106, 0, 1));
+  }
+  .vanta-logo:hover .vdb-mark g:has(.vdb-orbit:not(.vdb-orbit--outer)) {
+    animation-duration: 2.5s !important;
+  }
 }
 
-.vanta-logo-icon {
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--amber);
-  border-radius: 50%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 12px rgba(255, 106, 0, 0.4);
-}
 
-.vanta-logo-icon::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background: var(--amber);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--amber);
+/* ── Center Links ── */
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -485,60 +548,155 @@
 
 .nav-links a {
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   color: var(--muted);
   text-decoration: none;
-  letter-spacing: 0.02em;
-  transition: color 150ms;
+  letter-spacing: 0.01em;
+  transition: color 200ms var(--ease-out);
   position: relative;
+  padding: 0.25rem 0;
 }
 
 .nav-links a::after {
   content: "";
   position: absolute;
-  bottom: -3px;
+  bottom: -2px;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 1.5px;
   background: var(--amber);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 200ms var(--ease-out);
+  transition: transform 250ms var(--ease-out);
 }
 
 .nav-links a:hover {
   color: var(--white);
 }
+
 .nav-links a:hover::after {
   transform: scaleX(1);
 }
 
+.nav-links a.active {
+  color: var(--white);
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
+  opacity: 0.6;
+}
+
+/* ── Actions ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  z-index: 101;
+}
+
+.nav-github-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  color: var(--muted);
+  transition: color 200ms, background 200ms;
+}
+
+.nav-github-link:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .nav-cta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  padding: 0.5rem 1.25rem;
-  border: 1px solid var(--steel);
-  border-radius: var(--radius-sm);
-  color: var(--steel-light);
-  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid rgba(255, 106, 0, 0.35);
+  border-radius: var(--radius-pill);
+  color: var(--amber);
+  background: rgba(255, 106, 0, 0.06);
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   transition:
-    background 200ms,
-    color 200ms,
-    transform 160ms var(--ease-out);
+    background 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    transform 160ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
 }
 
 .nav-cta:hover {
   background: var(--amber);
+  border-color: var(--amber);
   color: var(--black);
+  box-shadow: 0 4px 16px rgba(255, 106, 0, 0.3);
 }
+
 .nav-cta:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
+
+/* ── Hamburger ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 101;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--white);
+  border-radius: 1px;
+  transition: transform 250ms var(--ease-out), opacity 200ms;
+  transform-origin: center;
+}
+
+.nav-hamburger--open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav-hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger--open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile overlay ── */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 200ms var(--ease-out);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 
 /* =====================================
    MAIN CONTENT WRAPPER
@@ -1122,22 +1280,26 @@
 }
 
 /* =====================================
-   FOOTER
+   FOOTER — Column Grid
    ===================================== */
 .vanta-footer {
-  border-top: 1px solid var(--subtle);
-  padding: 3rem clamp(1.5rem, 5vw, 4rem);
+  border-top: 1px solid rgba(240, 237, 230, 0.06);
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+.footer-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  padding: 3.5rem 0 2.5rem;
+  gap: 3rem;
   flex-wrap: wrap;
-  gap: 1.5rem;
 }
 
 .footer-brand {
   font-family: var(--font-display);
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--white);
   letter-spacing: -0.02em;
 }
@@ -1147,39 +1309,74 @@
 }
 
 .footer-tagline {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
   color: var(--muted);
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
+  max-width: 260px;
+  line-height: 1.5;
 }
 
-.footer-links {
+.footer-columns {
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
+}
+
+.footer-col {
+  min-width: 120px;
+}
+
+.footer-col-title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0 0 0.8rem;
+}
+
+.footer-col ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
 }
 
-.footer-links a {
+.footer-col a {
   font-family: var(--font-sans);
   font-size: 0.8rem;
   color: var(--muted);
   text-decoration: none;
-  transition: color 150ms;
+  transition: color 200ms;
 }
 
-.footer-links a:hover {
+.footer-col a:hover {
   color: var(--amber);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  border-top: 1px solid rgba(240, 237, 230, 0.04);
 }
 
 .footer-copy {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: var(--subtle);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+}
+
+.footer-license {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--subtle);
+  letter-spacing: 0.06em;
 }
 
 /* =====================================
@@ -1271,12 +1468,63 @@
 }
 
 @media (max-width: 768px) {
-  .nav-links {
+  /* Nav mobile */
+  .nav-center {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: none;
+    background: rgba(5, 5, 7, 0.96);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms var(--ease-out);
+  }
+  .nav-center--open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-center .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .nav-center .nav-links a {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
+  .nav-actions {
     display: none;
   }
+
+  /* Hero mobile */
   .hero-h1 {
     font-size: clamp(2.5rem, 10vw, 4rem);
   }
+  .hero-descriptor {
+    font-size: clamp(0.95rem, 3vw, 1.2rem);
+  }
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .hero-stat-divider {
+    display: none;
+  }
+  .hero-scroll-indicator {
+    display: none;
+  }
+
+  /* Grid fallbacks */
   .arch-grid {
     grid-template-columns: 1fr;
   }
@@ -1286,10 +1534,20 @@
   .metrics-strip {
     grid-template-columns: repeat(2, 1fr);
   }
-  .vanta-footer {
+
+  /* Footer mobile */
+  .footer-top {
+    flex-direction: column;
+  }
+  .footer-columns {
+    gap: 2rem;
+  }
+  .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
   }
+
   .hero-section::after {
     background: linear-gradient(
       to right,
@@ -1315,6 +1573,13 @@
   }
   .hero-eyebrow-dot {
     animation: none;
+  }
+  .hero-scroll-line {
+    animation: none;
+    opacity: 0.5;
+  }
+  .vanta-logo-ring {
+    transition: none;
   }
   .term-cursor {
     animation: none;
@@ -1882,27 +2147,17 @@ button:focus-visible {
   border-bottom: 1px solid rgba(255, 106, 0, 0.06);
   height: 70px;
 }
+/* ── Logo (bloque legado — ahora el componente VantaDBLogoFull lo gestiona) ── */
 .vanta-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.35rem;
-  color: var(--white);
-  letter-spacing: -0.03em;
+  text-decoration: none;
 }
-.vanta-logo span {
-  color: var(--amber);
+.vanta-logo svg {
+  /* Hereda del componente VantaDBMark */
+  display: block;
 }
-.vanta-logo-icon {
-  width: 18px;
-  height: 18px;
-  background: var(--amber);
-  border-radius: 3px;
-  box-shadow: 0 0 10px var(--amber);
-  animation: ping 2s ease-in-out infinite alternate;
-}
+/* .vanta-logo-icon era un div. Ahora es SVG. No se necesita ping animation aquí. */
 .nav-links {
   display: flex;
   list-style: none;
@@ -1948,3 +2203,291 @@ button:focus-visible {
   box-shadow: var(--shadow-glow);
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   VANTADB LOGO SYSTEM
+   Emil Kowalski animation philosophy:
+   - stroke-dasharray draw-in (CSS, off main thread)
+   - Orbit rotation: linear, GPU-composited (transform only)
+   - Hover: singularity pulse (opacity + filter, NO scale bounce)
+   - Stagger: V legs draw before orbit appears (cascade)
+   - prefers-reduced-motion: all motion removed, opacity preserved
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── KEYFRAMES ─────────────────────────────────────────── */
+
+/* V leg stroke draw-in */
+@keyframes vdbDrawStroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Orbit appear (opacity after draw completes) */
+@keyframes vdbOrbitAppear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Orbit continuous rotation — linear, GPU only */
+@keyframes vdbOrbitSpin {
+  from { transform: rotate(-12deg); }
+  to   { transform: rotate(348deg); }  /* -12 + 360 = 348 */
+}
+
+/* Outer orbit counter-spin (slower, opposite direction) */
+@keyframes vdbOrbitSpinReverse {
+  from { transform: rotate(-12deg); }
+  to   { transform: rotate(-372deg); } /* -12 - 360 = -372 */
+}
+
+/* Singularity pulse (idle ambient) */
+@keyframes vdbSingularityPulse {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px rgba(255, 106, 0, 0.6));
+  }
+  50% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 8px rgba(255, 106, 0, 1));
+  }
+}
+
+/* Singularity + void core appear */
+@keyframes vdbCoreAppear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── MARK BASE ─────────────────────────────────────────── */
+
+.vdb-mark {
+  display: block;
+  overflow: visible;  /* allow drop-shadow glow to bleed */
+  flex-shrink: 0;
+}
+
+/* ─── V LEGS — stroke-dasharray draw animation ───────────── */
+
+.vdb-mark .vdb-v-leg {
+  animation:
+    vdbDrawStroke 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  will-change: stroke-dashoffset;
+}
+
+.vdb-mark .vdb-v-leg--left {
+  animation-delay: 0ms;
+}
+
+.vdb-mark .vdb-v-leg--right {
+  animation-delay: 80ms;  /* 80ms stagger after left — Emil: 30-80ms */
+}
+
+/* ─── ORBIT RINGS ────────────────────────────────────────── */
+
+/* The <g> wrappers handle rotation — NOT the ellipse (keeps dasharray stable) */
+.vdb-mark g:has(.vdb-orbit:not(.vdb-orbit--outer)) {
+  transform-origin: 32px 54px;
+  animation: vdbOrbitSpin 8s linear infinite;
+  will-change: transform;
+}
+
+.vdb-mark g:has(.vdb-orbit--outer) {
+  transform-origin: 32px 54px;
+  animation: vdbOrbitSpinReverse 14s linear infinite;
+  will-change: transform;
+}
+
+/* Orbit ellipse: appear after V legs finish drawing */
+.vdb-mark .vdb-orbit {
+  animation:
+    vdbOrbitAppear 0.4s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.6s forwards;
+}
+
+.vdb-mark .vdb-orbit--outer {
+  animation:
+    vdbOrbitAppear 0.4s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.75s forwards;
+  opacity: 0;
+}
+
+/* ─── SINGULARITY POINT + VOID CORE ─────────────────────── */
+
+.vdb-mark .vdb-singularity {
+  animation:
+    vdbCoreAppear 0.3s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.5s forwards,
+    vdbSingularityPulse 3.5s ease-in-out 1s infinite;
+  will-change: opacity, filter;
+}
+
+.vdb-mark .vdb-void-core {
+  animation:
+    vdbCoreAppear 0.3s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.5s forwards;
+}
+
+/* ─── HOVER STATE (gate behind hover:hover — Emil rule) ──── */
+
+@media (hover: hover) and (pointer: fine) {
+  .vdb-mark:hover .vdb-singularity {
+    filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.9));
+    transition: filter 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  }
+
+  .vdb-mark:hover .vdb-v-leg {
+    stroke: var(--amber-light, #FF8C38);
+    transition: stroke 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  }
+
+  /* Speed up orbit spin on hover — feels reactive */
+  .vdb-mark:hover g:has(.vdb-orbit:not(.vdb-orbit--outer)) {
+    animation-duration: 3s;
+  }
+  .vdb-mark:hover g:has(.vdb-orbit--outer) {
+    animation-duration: 6s;
+  }
+}
+
+/* ─── FULL LOGO (horizontal) ────────────────────────────── */
+
+.vdb-logo-full {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  text-decoration: none;
+  cursor: default;
+}
+
+a.vdb-logo-full,
+.vdb-logo-full[role="link"] {
+  cursor: pointer;
+}
+
+/* ─── STACKED LOGO (vertical) ───────────────────────────── */
+
+.vdb-logo-stacked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  text-align: center;
+}
+
+/* ─── WORDMARK TYPOGRAPHY ───────────────────────────────── */
+
+.vdb-wordmark {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--white, #F0EDE6);
+  line-height: 1;
+  user-select: none;
+}
+
+.vdb-wordmark-db {
+  /* "DB" suffix — amber accent for identity anchoring */
+  color: var(--amber, #FF6A00);
+}
+
+.vdb-wordmark--stacked {
+  letter-spacing: -0.02em;
+}
+
+/* ─── BADGE (app icon container) ───────────────────────── */
+
+.vdb-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface, #0c0c10);
+  border: 1px solid rgba(255, 106, 0, 0.15);
+  box-shadow:
+    0 0 0 1px rgba(255, 106, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    box-shadow 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vdb-badge:hover {
+    border-color: rgba(255, 106, 0, 0.4);
+    box-shadow:
+      0 0 0 1px rgba(255, 106, 0, 0.1),
+      0 0 20px rgba(255, 106, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* ─── NO-ANIMATION FLAG ─────────────────────────────────── */
+
+.vdb-logo--no-anim .vdb-v-leg,
+.vdb-logo--no-anim .vdb-orbit,
+.vdb-logo--no-anim .vdb-singularity,
+.vdb-logo--no-anim .vdb-void-core {
+  animation: none !important;
+  stroke-dashoffset: 0 !important;  /* fully drawn */
+  opacity: 1 !important;
+}
+
+.vdb-logo--no-anim g:has(.vdb-orbit) {
+  animation: none !important;
+}
+
+/* ─── REDUCED MOTION ────────────────────────────────────── */
+/* Emil: "Reduced motion means fewer/gentler animations,
+         not zero. Keep opacity. Remove movement." */
+
+@media (prefers-reduced-motion: reduce) {
+  .vdb-v-leg {
+    animation: vdbOrbitAppear 0.3s ease forwards !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .vdb-orbit,
+  .vdb-singularity,
+  .vdb-void-core {
+    animation: vdbOrbitAppear 0.3s ease 0.1s forwards !important;
+  }
+
+  /* Kill rotation and pulse */
+  .vdb-mark g:has(.vdb-orbit),
+  .vdb-mark g:has(.vdb-orbit--outer) {
+    animation: none !important;
+    transform: rotate(-12deg);  /* locked at initial tilt */
+  }
+
+  .vdb-mark .vdb-singularity {
+    animation: vdbOrbitAppear 0.3s ease 0.1s forwards !important;
+    /* No pulse */
+  }
+}
+
+/* ─── FOOTER BRAND GROUP ────────────────────────────────── */
+
+.footer-brand-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-brand-group .vdb-logo-full {
+  cursor: default;
+  pointer-events: none;
+}
+
+.footer-tagline {
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  color: var(--muted, rgba(240, 237, 230, 0.7));
+  line-height: 1.5;
+  max-width: 260px;
+}
+
+@media (max-width: 640px) {
+  .footer-brand-group {
+    align-items: center;
+    text-align: center;
+  }
+  .footer-tagline {
+    text-align: center;
+  }
+}
