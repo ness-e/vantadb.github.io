@@ -9,7 +9,7 @@ import {
     mix, max, uint, varying, varyingProperty, Fn, struct, output, emissive, diffuseColor, PI, PI2,
     oneMinus, cos, atan, float, pass, mrt, assign, normalize, mul, log2, length, pow, smoothstep,
     screenUV, distance, instancedArray, instancedBufferAttribute, attribute, attributeArray, pointUV,
-    select, equals, deltaTime, oscSine, hash, materialColor, mx_fractal_noise_vec4, mx_noise_vec4, abs,
+    select, deltaTime, oscSine, hash, materialColor, mx_fractal_noise_vec4, mx_noise_vec4, abs,
     modelViewMatrix, clamp, fwidth, convertToTexture, viewportLinearDepth, viewportDepthTexture, vertexIndex,
     instance
 } from 'three/tsl'

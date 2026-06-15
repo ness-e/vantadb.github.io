@@ -4,6 +4,7 @@ import Model from '@experience/Worlds/Abstracts/Model.js'
 import Experience from '@experience/Experience.js'
 import Debug from '@experience/Utils/Debug.js'
 import State from "@experience/State.js";
+import { Pane } from 'tweakpane';
 
 import {
     sin, positionLocal, time, vec2, vec3, vec4, uv, uniform, color, fog, rangeFogFactor, texture, If, min,
@@ -89,6 +90,56 @@ export default class BlackHole extends Model {
 
     init() {
         this.setModel()
+        // this._createCustomPanel() // Oculto a petición para uso futuro
+    }
+
+    _createCustomPanel() {
+        const existingPanel = document.getElementById('custom-hero-panel');
+        if (existingPanel) existingPanel.remove();
+
+        const container = document.createElement('div');
+        container.id = 'custom-hero-panel';
+        container.style.position = 'fixed';
+        container.style.top = '50%';
+        container.style.left = '50%';
+        container.style.transform = 'translate(-50%, -50%)';
+        container.style.zIndex = '100000';
+        container.style.width = '350px';
+        container.style.boxShadow = '0 30px 60px rgba(0,0,0,0.8)';
+        document.body.appendChild(container);
+
+        this.customPane = new Pane({
+            container: container,
+            title: 'Datos en Tiempo Real (Cámara)'
+        });
+
+        this.customParams = {
+            camPos: { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z },
+            target: { x: this.world.camera.controls.target.x, y: this.world.camera.controls.target.y, z: this.world.camera.controls.target.z },
+            rotX: this.container.rotation.x,
+            rotY: this.container.rotation.y,
+            rotZ: this.container.rotation.z
+        };
+
+        this.customPane.addBinding(this.customParams, 'camPos', { label: 'Posición (Zoom/Órbita)' })
+            .on('change', (ev) => this.camera.position.set(ev.value.x, ev.value.y, ev.value.z));
+
+        this.customPane.addBinding(this.customParams, 'target', { label: 'Encuadre (Target)' })
+            .on('change', (ev) => this.world.camera.controls.target.set(ev.value.x, ev.value.y, ev.value.z));
+
+        this.customPane.addBinding(this.customParams, 'rotX', { label: 'Inclinación X' })
+            .on('change', (ev) => this.container.rotation.x = ev.value);
+        this.customPane.addBinding(this.customParams, 'rotY', { label: 'Inclinación Y' })
+            .on('change', (ev) => this.container.rotation.y = ev.value);
+        this.customPane.addBinding(this.customParams, 'rotZ', { label: 'Inclinación Z' })
+            .on('change', (ev) => this.container.rotation.z = ev.value);
+
+        this.customPane.addButton({ title: 'Imprimir en Consola' }).on('click', () => {
+            console.log(`Valores Finales de la Cámara y Agujero Negro:
+            cameraPosition: (${this.customParams.camPos.x}, ${this.customParams.camPos.y}, ${this.customParams.camPos.z})
+            cameraTarget: (${this.customParams.target.x}, ${this.customParams.target.y}, ${this.customParams.target.z})
+            blackHoleRotation: (${this.customParams.rotX}, ${this.customParams.rotY}, ${this.customParams.rotZ})`);
+        });
     }
 
     postInit() {
@@ -382,8 +433,22 @@ export default class BlackHole extends Model {
     }
 
     update(deltaTime) {
-        //this.cube2.rotation.y += deltaTime * 20
-        //this.cube.rotation.y += deltaTime * 30
+        if (this.customPane && this.customParams) {
+            this.customParams.camPos.x = this.camera.position.x;
+            this.customParams.camPos.y = this.camera.position.y;
+            this.customParams.camPos.z = this.camera.position.z;
+            
+            this.customParams.target.x = this.world.camera.controls.target.x;
+            this.customParams.target.y = this.world.camera.controls.target.y;
+            this.customParams.target.z = this.world.camera.controls.target.z;
+
+            // Mantenemos track manual por si modifica el slider
+            this.customParams.rotX = this.container.rotation.x;
+            this.customParams.rotY = this.container.rotation.y;
+            this.customParams.rotZ = this.container.rotation.z;
+
+            this.customPane.refresh();
+        }
     }
 
 }

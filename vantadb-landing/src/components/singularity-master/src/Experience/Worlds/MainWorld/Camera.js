@@ -27,10 +27,10 @@ export default class Camera
     {
         //const FOV = this.experience.isMobile ? 35 : 25
         this.instance = new THREE.PerspectiveCamera(50, this.sizes.width / this.sizes.height, 0.1, 2000)
-        this.defaultCameraPosition = new THREE.Vector3(1, 0.5, 3);
+        this.defaultCameraPosition = new THREE.Vector3(0.234467, 0.109675, 0.744738);
 
         this.instance.position.copy(this.defaultCameraPosition)
-        this.instance.lookAt(new THREE.Vector3(-1, 0, 0));
+        this.instance.lookAt(new THREE.Vector3(0, 0, 0));
 
         this.lerpVector.copy(this.instance.position);
     }

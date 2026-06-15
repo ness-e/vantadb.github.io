@@ -16,7 +16,11 @@ export function SingularityHero() {
 
     // Mock the window.preloader that Experience.js expects
     (window as any).preloader = {
-      hidePreloader: () => {},
+      hidePreloader: () => {
+        const el = document.getElementById("preloader");
+        if (el) el.style.opacity = "0";
+        setTimeout(() => { if (el) el.style.display = "none"; }, 500);
+      },
       showPlayButton: (cb: any) => cb && cb(),
     };
 

@@ -27,7 +27,6 @@ export default class Debug {
         //this.active = window.location.hash === '#debug'
         this.active = false
 
-
         if ( this.active ) {
             this.panel = new Pane({
                 title: 'Debug',
