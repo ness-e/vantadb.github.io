@@ -19,7 +19,9 @@ export function SingularityHero() {
       hidePreloader: () => {
         const el = document.getElementById("preloader");
         if (el) el.style.opacity = "0";
-        setTimeout(() => { if (el) el.style.display = "none"; }, 500);
+        setTimeout(() => {
+          if (el) el.style.display = "none";
+        }, 500);
       },
       showPlayButton: (cb: any) => cb && cb(),
     };
@@ -53,7 +55,7 @@ export function SingularityHero() {
               renderer.setAnimationLoop(null);
             }
           },
-          { threshold: 0.01 }
+          { threshold: 0.01 },
         );
 
         if (sectionRef.current) observer.observe(sectionRef.current);
@@ -70,7 +72,7 @@ export function SingularityHero() {
       if (experience) {
         document.removeEventListener(
           "visibilitychange",
-          (experience as any)._cleanupVisiblityHandler
+          (experience as any)._cleanupVisiblityHandler,
         );
         (experience as any)._cleanupObserver?.disconnect();
         if (typeof experience.destroy === "function") experience.destroy();
@@ -102,8 +104,8 @@ export function SingularityHero() {
         <p className="hero-tagline animate-enter stagger-2">Where context never escapes</p>
 
         <p className="hero-p animate-enter stagger-3">
-          Embedded cognitive memory engine for AI agents. Hybrid search via BM25 + HNSW,
-          GraphRAG relations, and crash-safe durability — no servers, no config, one pip install.
+          Embedded cognitive memory engine for AI agents. Hybrid search via BM25 + HNSW, GraphRAG
+          relations, and crash-safe durability — no servers, no config, one pip install.
         </p>
 
         <div className="hero-stats animate-enter stagger-4">
