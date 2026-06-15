@@ -1,0 +1,3 @@
+Verifica el diseño, que no se ve como en las imagenes que me generaste, las animaciones estan erroneas y no se si puedes diseñar algo diferente, algo mas simbolico al agujero negro y a lo que es el producto, estaba pensando algo con esas imahenes que te pase
+
+Me gusto el Brand Strategy Analysis pero quiero rehacerlo,utiliza las herramientas de generacion visual y conceptuacion de marca con brandkit en conjunto de implementacion de iconografia vectorial en codigo con impeccable y Dinamismo y Micro-interacciones con emil-design-eng y stroke-dasharray para desarollar el logo e icono de VantaDB,recuerda lo que es vantadb, la estetica de la pagina y el hero que tiene un agujero negro, vanta viene de vantablack

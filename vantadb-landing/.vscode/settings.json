@@ -1,5 +1,0 @@
-{
-  "css.lint.unknownAtRules": "ignore",
-  "css.lint.validProperties": "ignore",
-  "css.lint.unknownProperties": "ignore"
-}
