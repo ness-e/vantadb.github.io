@@ -1,7 +1,5 @@
 import * as THREE from "three";
 import Experience from "@experience/Experience.js";
-import DebugHelpers from "../Objects/DebugHelpers.js";
-import Time from "@experience/Utils/Time.js";
 import EventEmitter from "@experience/Utils/EventEmitter.js";
 import Debug from "@experience/Utils/Debug.js";
 
@@ -41,12 +39,9 @@ export default class MainWorld extends EventEmitter {
   }
 
   init() {
-    //this.example = new ExampleClass( { world: this } )
     this.blackHole = new BlackHole({ world: this });
 
     this.environment = new Environment({ world: this });
-
-    this.debugHelpers = new DebugHelpers({ world: this });
   }
 
   animationPipeline() {
@@ -69,7 +64,6 @@ export default class MainWorld extends EventEmitter {
   update(deltaTime) {
     if (!this.enabled) return;
 
-    this.debugHelpers?.update(deltaTime);
     this.blackHole?.update(deltaTime);
 
     this.camera?.update();

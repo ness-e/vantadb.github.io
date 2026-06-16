@@ -7,16 +7,12 @@ import Time from "./Utils/Time.js";
 import Renderer from "./Renderer.js";
 import Worlds from "./Worlds.js";
 import Resources from "./Utils/Resources.js";
-import Sound from "./Utils/Sound.js";
 
 import sources from "./Sources.js";
-import gsap from "gsap";
-import MotionPathPlugin from "gsap/MotionPathPlugin";
 import State from "./State.js";
 import PostProcess from "./Utils/PostProcess.js";
 
 import { isMobile } from "@experience/Utils/Helpers/Global/isMobile";
-import Ui from "@experience/Ui/Ui.js";
 
 export default class Experience extends EventEmitter {
   static _instance = null;
@@ -55,25 +51,15 @@ export default class Experience extends EventEmitter {
       return;
     }
 
-    this.setDefaultCode();
-
     this.init();
   }
 
   init() {
-    // Start Loading Resources
-
-    // Setup
-    this.timeline = gsap.timeline({
-      paused: true,
-    });
     this.debug = new Debug();
     this.sizes = new Sizes();
     this.time = new Time();
-    this.ui = new Ui();
     this.renderer = new Renderer();
     this.state = new State();
-    this.sound = new Sound();
 
     this.resources = new Resources(sources);
 
@@ -108,6 +94,11 @@ export default class Experience extends EventEmitter {
 
       this.appLoaded = true;
     });
+
+    // FPS-based quality auto-adjust
+    this._frameCount = 0;
+    this._lastFpsCheck = performance.now();
+    this._qualityReduced = false;
   }
 
   animationPipeline() {
@@ -127,7 +118,6 @@ export default class Experience extends EventEmitter {
     this.postProcess?.resize();
     this.debug?.resize();
     this.state?.resize();
-    this.sound?.resize();
   }
 
   async render() {
@@ -151,11 +141,38 @@ export default class Experience extends EventEmitter {
     await this.postUpdate(this.time.delta);
 
     this.debug?.stats?.update();
+
+    this._frameCount++;
+    const now = performance.now();
+    const elapsed = now - this._lastFpsCheck;
+    if (elapsed >= 1000 && !this._qualityReduced) {
+      const fps = this._frameCount / (elapsed / 1000);
+      this._frameCount = 0;
+      this._lastFpsCheck = now;
+      if (fps < 30) this._reduceQuality();
+    }
+  }
+
+  _reduceQuality() {
+    this._qualityReduced = true;
+    const bh = this.worlds?.mainWorld?.blackHole;
+    if (!bh) return;
+    bh.uniforms.iterations.value = this.isMobile ? 32 : 96;
+    bh.uniforms.stepSize.value = this.isMobile ? 0.024 : 0.01;
   }
 
   _fireReady() {
     this.trigger("ready");
     window.dispatchEvent(new CustomEvent("3d-app:ready"));
+
+    // Animate camera to hero position after full load
+    const cam = this.worlds?.mainWorld?.camera;
+    if (cam) {
+      cam.animateCameraPosition(
+        { x: -3.0881, y: 0.1231, z: 1.4445 },
+        { x: -1.0, y: 0.0, z: 0.0 },
+      );
+    }
 
     this.firstRender = "done";
   }
@@ -184,40 +201,6 @@ export default class Experience extends EventEmitter {
     });
 
     this.renderer.instance.setAnimationLoop(async () => this.update());
-  }
-
-  setDefaultCode() {
-    document.ondblclick = function (e) {
-      e.preventDefault();
-    };
-
-    gsap.registerPlugin(MotionPathPlugin);
-  }
-
-  startWithPreloader() {
-    this.ui.playButton.classList.add("fade-in");
-    this.ui.playButton.addEventListener(
-      "click",
-      () => {
-        this.ui.playButton.classList.replace("fade-in", "fade-out");
-        //this.sound.createSounds();
-
-        setTimeout(() => {
-          this.time.reset();
-
-          // Setup
-          this.setupWorlds();
-
-          // Remove preloader
-          this.ui.preloader.classList.add("preloaded");
-          setTimeout(() => {
-            this.ui.preloader.remove();
-            this.ui.playButton.remove();
-          }, 2500);
-        }, 100);
-      },
-      { once: true },
-    );
   }
 
   destroy() {

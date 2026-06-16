@@ -30,7 +30,7 @@ export default class Debug {
   sizes = this.experience.sizes;
 
   constructor() {
-    this.active = true;
+    this.active = false;
 
     if (this.active) {
       // Create debug panel container — centered, floating over the canvas

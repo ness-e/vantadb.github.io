@@ -128,16 +128,16 @@ export default class BlackHole extends Model {
 
   uniforms = {
     iterations: uniform(float(128)),
-    stepSize: uniform(float(0.0071)),
+    stepSize: uniform(float(0.007)),
     noiseFactor: uniform(float(0.01)),
     power: uniform(float(0.3)),
 
     clamp1: uniform(float(0.5)),
     clamp2: uniform(float(1.0)),
 
-    originRadius: uniform(float(0.13)),
+    originRadius: uniform(float(0.14)),
     width: uniform(float(0.03)),
-    uvMotion: uniform(float(0)),
+    uvMotion: uniform(float(0.0)),
 
     rampCol1: uniform(color(0.95, 0.71, 0.44)),
     rampPos1: uniform(float(0.05)),
@@ -187,7 +187,8 @@ export default class BlackHole extends Model {
       this.uniforms.stepSize.value = 0.012;
     }
     this.setModel();
-    this._createCustomPanel(); // Panel de cámara y rotación en tiempo real
+    this._createGrid();
+    // this._createCustomPanel(); // Panel de cámara y rotación en tiempo real
   }
 
   _createCustomPanel() {
@@ -370,9 +371,10 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
 
       // ==== Main loop ====
       Loop(iterCount, ({ i }) => {
-        // Steering term toward center
         const rNorm = normalize(rayPos);
         const rLen = lengthSqrt(rayPos);
+
+        // Steering term toward center
         const steerMag = _step.mul(power).div(rLen.mul(rLen)); // step*power / r^2
         const range = remapClamp(rLen, 1.0, 0.5, 0.0, 1.0); // fade steering
         const steer = rNorm.mul(steerMag.mul(range));
@@ -387,7 +389,7 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
         const rotPhase = xyLen.mul(4.27).sub(time.mul(0.1));
         const uvAxis = vec3(0, 0, 1);
         const uvRot = rayPos.mul(rotateAxis(uvAxis, rotPhase));
-        const uv = uvRot.mul(2);
+        const uv = uvRot.mul(2).add(time.mul(this.uniforms.uvMotion));
 
         // Deep noise sample
         const noiseDeep = texture(this.resources.items.noiseDeepTexture, uv);
@@ -477,6 +479,7 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
     // const planeMesh = new THREE.Mesh( planeGeometry, planeMaterial )
 
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.static = true;
     this.container.add(mesh);
 
     // Ubicar el agujero negro en el origen. El encuadre a la derecha lo hará la cámara.
@@ -594,6 +597,31 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
     exampleFolder.addBinding(this.uniforms.test4, "value", {
       label: "Fast Test 4",
     });
+  }
+
+  _createGrid() {
+    const gridGeo = new THREE.PlaneGeometry(40, 40);
+    const gridMat = new THREE.MeshBasicNodeMaterial({
+      transparent: true,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+
+    gridMat.colorNode = Fn(() => {
+      const gridUV = uv().mul(30);
+      const animatedUV = gridUV.add(time.mul(0.008));
+      const gridX = fract(animatedUV.x);
+      const gridY = fract(animatedUV.y);
+      const distX = min(gridX, float(1).sub(gridX));
+      const distY = min(gridY, float(1).sub(gridY));
+      const line = step(min(distX, distY), float(0.025));
+      const fade = float(1).sub(length(abs(uv().sub(0.5)).mul(2)).mul(0.4));
+      return vec4(0.25, 0.5, 1.0, line.mul(fade).mul(0.12));
+    })();
+
+    const gridMesh = new THREE.Mesh(gridGeo, gridMat);
+    gridMesh.position.set(0, 0, -8);
+    this.scene.add(gridMesh);
   }
 
   update(deltaTime) {
