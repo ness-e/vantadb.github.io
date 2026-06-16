@@ -20,14 +20,14 @@
 
 These values are locked from user preference and must never be overridden:
 
-| Asset | Value | Reason |
-|-------|-------|--------|
-| Hero Component | `<SingularityHero>` | WebGL black-hole — untouchable |
-| Heading Font | **Space Grotesk** | Explicitly requested |
-| Monospace Font | **JetBrains Mono** | Project identity, terminal aesthetic |
-| Body Font | **Outfit** (or IBM Plex Sans as alt) | Readability + modern |
-| Primary Accent | `#FF6A00` (amber-orange) | Brand identity |
-| Background | `#050507` (near-void black) | Deep space feel |
+| Asset          | Value                                | Reason                               |
+| -------------- | ------------------------------------ | ------------------------------------ |
+| Hero Component | `<SingularityHero>`                  | WebGL black-hole — untouchable       |
+| Heading Font   | **Space Grotesk**                    | Explicitly requested                 |
+| Monospace Font | **JetBrains Mono**                   | Project identity, terminal aesthetic |
+| Body Font      | **Outfit** (or IBM Plex Sans as alt) | Readability + modern                 |
+| Primary Accent | `#FF6A00` (amber-orange)             | Brand identity                       |
+| Background     | `#050507` (near-void black)          | Deep space feel                      |
 
 ---
 
@@ -37,24 +37,25 @@ These values are locked from user preference and must never be overridden:
 
 All values in OKLCH-mapped CSS variables. **Never use raw hex in components — always use tokens.**
 
-| Role | CSS Variable | Hex | OKLCH approx |
-|------|-------------|-----|-------------|
-| Background | `--background` | `#050507` | oklch(3% 0.01 264) |
-| Surface | `--surface` | `#0e0e14` | oklch(8% 0.012 265) |
-| Surface Raised | `--surface-raised` | `#14141c` | oklch(10% 0.015 265) |
-| Amber (Primary CTA) | `--amber` | `#FF6A00` | oklch(65% 0.18 44) |
-| Amber Light | `--amber-light` | `#FF8C38` | oklch(72% 0.15 50) |
-| Amber Soft | `--amber-soft` | `#FFB574` | oklch(80% 0.11 60) |
-| Amber Dim | `--amber-dim` | `rgba(255,106,0,0.12)` | — |
-| Steel (Secondary) | `--steel` | `#8B9EB7` | oklch(65% 0.03 235) |
-| Steel Light | `--steel-light` | `#B0C4DE` | oklch(76% 0.025 230) |
-| White (Headings) | `--white` | `#F0EDE6` | oklch(93% 0.005 80) |
-| Frost (Body) | `--frost` | `#E0DEE5` | oklch(89% 0.006 280) |
-| Muted (Secondary text) | `--muted` | `rgba(240,237,230,0.70)` | — |
-| Subtle (Borders) | `--subtle` | `rgba(240,237,230,0.20)` | — |
-| Void | `--void` | `#030305` | oklch(2% 0.008 265) |
+| Role                   | CSS Variable       | Hex                      | OKLCH approx         |
+| ---------------------- | ------------------ | ------------------------ | -------------------- |
+| Background             | `--background`     | `#050507`                | oklch(3% 0.01 264)   |
+| Surface                | `--surface`        | `#0e0e14`                | oklch(8% 0.012 265)  |
+| Surface Raised         | `--surface-raised` | `#14141c`                | oklch(10% 0.015 265) |
+| Amber (Primary CTA)    | `--amber`          | `#FF6A00`                | oklch(65% 0.18 44)   |
+| Amber Light            | `--amber-light`    | `#FF8C38`                | oklch(72% 0.15 50)   |
+| Amber Soft             | `--amber-soft`     | `#FFB574`                | oklch(80% 0.11 60)   |
+| Amber Dim              | `--amber-dim`      | `rgba(255,106,0,0.12)`   | —                    |
+| Steel (Secondary)      | `--steel`          | `#8B9EB7`                | oklch(65% 0.03 235)  |
+| Steel Light            | `--steel-light`    | `#B0C4DE`                | oklch(76% 0.025 230) |
+| White (Headings)       | `--white`          | `#F0EDE6`                | oklch(93% 0.005 80)  |
+| Frost (Body)           | `--frost`          | `#E0DEE5`                | oklch(89% 0.006 280) |
+| Muted (Secondary text) | `--muted`          | `rgba(240,237,230,0.70)` | —                    |
+| Subtle (Borders)       | `--subtle`         | `rgba(240,237,230,0.20)` | —                    |
+| Void                   | `--void`           | `#030305`                | oklch(2% 0.008 265)  |
 
 **Color Rules:**
+
 - **One accent only:** `--amber`. Never add purple, blue, or green accents.
 - **Shadows must be tinted:** Use `rgba(255,106,0,0.04-0.08)` not pure black.
 - **Text minimum contrast:** 4.5:1 for body (`--frost`), 7:1 for critical labels.
@@ -65,23 +66,24 @@ All values in OKLCH-mapped CSS variables. **Never use raw hex in components — 
 
 ```css
 /* Font Stack */
---font-display: 'Space Grotesk', 'Cabinet Grotesk', system-ui, sans-serif;
---font-sans:    'Outfit', 'IBM Plex Sans', system-ui, sans-serif;
---font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+--font-display: "Space Grotesk", "Cabinet Grotesk", system-ui, sans-serif;
+--font-sans: "Outfit", "IBM Plex Sans", system-ui, sans-serif;
+--font-mono: "JetBrains Mono", "Fira Code", monospace;
 
 /* Scale (fluid with clamp) */
---text-xs:    clamp(0.6rem,  0.6vw + 0.5rem, 0.72rem);
---text-sm:    clamp(0.75rem, 0.8vw + 0.6rem, 0.875rem);
---text-base:  clamp(0.875rem,1vw  + 0.7rem, 1rem);
---text-lg:    clamp(1rem,    1.2vw + 0.8rem, 1.125rem);
---text-xl:    clamp(1.1rem,  1.5vw + 0.8rem, 1.35rem);
---text-2xl:   clamp(1.3rem,  2vw   + 0.9rem, 1.75rem);
---text-3xl:   clamp(1.6rem,  3vw   + 0.9rem, 2.5rem);
---text-4xl:   clamp(2rem,    4vw   + 1rem,   3.5rem);
---text-display: clamp(2.5rem, 6vw  + 1rem,   5.5rem);
+--text-xs: clamp(0.6rem, 0.6vw + 0.5rem, 0.72rem);
+--text-sm: clamp(0.75rem, 0.8vw + 0.6rem, 0.875rem);
+--text-base: clamp(0.875rem, 1vw + 0.7rem, 1rem);
+--text-lg: clamp(1rem, 1.2vw + 0.8rem, 1.125rem);
+--text-xl: clamp(1.1rem, 1.5vw + 0.8rem, 1.35rem);
+--text-2xl: clamp(1.3rem, 2vw + 0.9rem, 1.75rem);
+--text-3xl: clamp(1.6rem, 3vw + 0.9rem, 2.5rem);
+--text-4xl: clamp(2rem, 4vw + 1rem, 3.5rem);
+--text-display: clamp(2.5rem, 6vw + 1rem, 5.5rem);
 ```
 
 **Typography Rules:**
+
 - **Headings:** Space Grotesk, `letter-spacing: -0.04em` for display, `-0.02em` for h2-h3.
 - **`text-wrap: balance`** on all h1–h3. `text-wrap: pretty` on paragraphs.
 - **Hero H1 ceiling:** `clamp(3rem, 6vw, 5.5rem)`. Never above 5.5rem.
@@ -96,19 +98,20 @@ All values in OKLCH-mapped CSS variables. **Never use raw hex in components — 
 Base: 4px. Scale factor: 1.5× per step.
 
 ```css
---space-1:  4px;    /* Tight icon gaps */
---space-2:  8px;    /* Inline elements */
---space-3:  12px;   /* Dense elements */
---space-4:  16px;   /* Standard */
---space-6:  24px;   /* Component padding */
---space-8:  32px;   /* Section inner padding */
---space-12: 48px;   /* Between major elements */
---space-16: 64px;   /* Section vertical padding */
---space-24: 96px;   /* Major section gaps */
---space-32: 128px;  /* Hero / CTA breathing room */
+--space-1: 4px; /* Tight icon gaps */
+--space-2: 8px; /* Inline elements */
+--space-3: 12px; /* Dense elements */
+--space-4: 16px; /* Standard */
+--space-6: 24px; /* Component padding */
+--space-8: 32px; /* Section inner padding */
+--space-12: 48px; /* Between major elements */
+--space-16: 64px; /* Section vertical padding */
+--space-24: 96px; /* Major section gaps */
+--space-32: 128px; /* Hero / CTA breathing room */
 ```
 
 **Spacing Rules:**
+
 - **Section vertical padding:** min `8rem`, prefer `10rem–12rem` for impact.
 - **Max content width:** `1200px` with auto margins.
 - **Never uniform top/bottom padding.** Optically, bottom should be 10% larger.
@@ -117,11 +120,11 @@ Base: 4px. Scale factor: 1.5× per step.
 ### 4. Shadow Depths
 
 ```css
---shadow-sm:   0 2px 8px rgba(0,0,0,0.3);
---shadow-md:   0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,106,0,0.04);
---shadow-lg:   0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,106,0,0.06);
---shadow-xl:   0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,106,0,0.08);
---shadow-glow: 0 0 20px rgba(255,106,0,0.2), 0 0 40px rgba(255,106,0,0.1);
+--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+--shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 106, 0, 0.04);
+--shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 106, 0, 0.06);
+--shadow-xl: 0 40px 100px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 106, 0, 0.08);
+--shadow-glow: 0 0 20px rgba(255, 106, 0, 0.2), 0 0 40px rgba(255, 106, 0, 0.1);
 ```
 
 **All shadows must be amber-tinted.** Pure black shadows at low opacity = AI fingerprint.
@@ -145,10 +148,17 @@ Base: 4px. Scale factor: 1.5× per step.
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
-  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  transition:
+    transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out);
 }
-.btn-primary:hover { box-shadow: 0 8px 30px rgba(255,106,0,0.4); transform: translateY(-1px); }
-.btn-primary:active { transform: scale(0.97); }
+.btn-primary:hover {
+  box-shadow: 0 8px 30px rgba(255, 106, 0, 0.4);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+}
 
 /* Ghost */
 .btn-ghost {
@@ -158,13 +168,21 @@ Base: 4px. Scale factor: 1.5× per step.
   color: var(--frost);
   border: 1px solid var(--subtle);
   border-radius: var(--radius-md);
-  transition: border-color 200ms, background 200ms;
-  display: flex; align-items: center; gap: 0.5rem;
+  transition:
+    border-color 200ms,
+    background 200ms;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-.btn-ghost:hover { border-color: rgba(255,106,0,0.35); background: rgba(255,106,0,0.05); }
+.btn-ghost:hover {
+  border-color: rgba(255, 106, 0, 0.35);
+  background: rgba(255, 106, 0, 0.05);
+}
 ```
 
 **Button Rules:**
+
 - Primary: amber fill, dark text. Never white text on amber.
 - Ghost: subtle border only. No fill on default state.
 - No pill shapes for primary actions. `--radius-md` (8px) max.
@@ -179,20 +197,23 @@ Base: 4px. Scale factor: 1.5× per step.
 /* Feature Card — use only for isolated feature callouts */
 .feature-card {
   background: var(--surface);
-  border: 1px solid rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   border-radius: var(--radius-lg);
   padding: 2rem;
-  transition: border-color 250ms var(--ease-out), transform 250ms var(--ease-out);
+  transition:
+    border-color 250ms var(--ease-out),
+    transform 250ms var(--ease-out);
 }
 .feature-card:hover {
-  border-color: rgba(255,106,0,0.2);
+  border-color: rgba(255, 106, 0, 0.2);
   transform: translateY(-3px);
 }
 ```
 
 **Anti-pattern — BANNED:**
+
 - ❌ Three identical cards in a row (3-column equal grid). Replace with zig-zag 2-col or Bento.
-- ❌ Cards with `border + shadow + white background`. 
+- ❌ Cards with `border + shadow + white background`.
 - ❌ Icon + Heading + Body text card repeated N times. Use `<FeatureRow>` pattern instead.
 - ❌ Nested cards (card inside card).
 
@@ -212,7 +233,8 @@ Horizontal row, `borderTop + borderBottom: 1px solid var(--subtle)`. 4 columns w
 
 ```css
 .vanta-nav {
-  position: sticky; top: 0;
+  position: sticky;
+  top: 0;
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   background: rgba(5, 5, 7, 0.85);
@@ -257,9 +279,9 @@ Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syn
 ### Grid Variables
 
 ```css
---grid-max:    1200px;
---grid-cols:   12;
---grid-gap:    2rem;
+--grid-max: 1200px;
+--grid-cols: 12;
+--grid-gap: 2rem;
 --section-pad: clamp(6rem, 10vw, 10rem);
 ```
 
@@ -270,21 +292,21 @@ Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syn
 ### Easing Tokens
 
 ```css
---ease-out:    cubic-bezier(0.23, 1, 0.32, 1);     /* All UI exit/hover */
---ease-spring: cubic-bezier(0.25, 1, 0.5, 1);      /* Spring-feel entries */
---ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* Page transitions */
---ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* Drawers, slides */
+--ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* All UI exit/hover */
+--ease-spring: cubic-bezier(0.25, 1, 0.5, 1); /* Spring-feel entries */
+--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* Page transitions */
+--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* Drawers, slides */
 ```
 
 ### Duration Scale
 
-| Context | Duration | Easing |
-|---------|----------|--------|
-| Micro (hover state change) | 150ms | `--ease-out` |
-| Standard (button, card hover) | 200-250ms | `--ease-out` |
-| Entry animation | 400-600ms | `--ease-spring` |
-| Page section reveal | 700ms | `--ease-out` |
-| Max (complex transition) | 800ms | `--ease-in-out` |
+| Context                       | Duration  | Easing          |
+| ----------------------------- | --------- | --------------- |
+| Micro (hover state change)    | 150ms     | `--ease-out`    |
+| Standard (button, card hover) | 200-250ms | `--ease-out`    |
+| Entry animation               | 400-600ms | `--ease-spring` |
+| Page section reveal           | 700ms     | `--ease-out`    |
+| Max (complex transition)      | 800ms     | `--ease-in-out` |
 
 ### Animation Rules (Emil Kowalski Philosophy)
 
@@ -307,7 +329,9 @@ Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syn
   animation: drawLine 3s var(--ease-spring) forwards;
 }
 @keyframes drawLine {
-  to { stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Pulse glow for nodes */
@@ -315,8 +339,15 @@ Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syn
   animation: pulseGlow 3s ease-in-out infinite;
 }
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 2px rgba(255,138,0,0.2)); }
-  50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(255,138,0,0.8)); }
+  0%,
+  100% {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 2px rgba(255, 138, 0, 0.2));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(255, 138, 0, 0.8));
+  }
 }
 
 /* Orbit ring for CTA section */
@@ -351,12 +382,12 @@ Apply to: Engine section, Architecture, Integrations, CTA. **Never on Hero (WebG
 
 ```css
 .radial-glow-amber {
-  background: radial-gradient(circle at center, rgba(255,138,0,0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at center, rgba(255, 138, 0, 0.15) 0%, transparent 60%);
   /* Place: CTA center, Architecture bottom-left */
 }
 
 .radial-glow-steel {
-  background: radial-gradient(circle at center, rgba(139,158,183,0.1) 0%, transparent 60%);
+  background: radial-gradient(circle at center, rgba(139, 158, 183, 0.1) 0%, transparent 60%);
   /* Place: Engine top-right */
 }
 ```
@@ -368,9 +399,11 @@ Only for cards that float over background content (e.g., Integrations):
 ```css
 backdrop-filter: blur(12px) saturate(180%);
 background: rgba(14, 14, 20, 0.75);
-border: 1px solid rgba(255,255,255,0.06);
+border: 1px solid rgba(255, 255, 255, 0.06);
 /* Add inner top border for refraction effect */
-box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), var(--shadow-md);
+box-shadow:
+  inset 0 1px 0 rgba(255, 255, 255, 0.05),
+  var(--shadow-md);
 ```
 
 ---
@@ -392,6 +425,7 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), var(--shadow-md);
 **Voice:** Direct, technical, confident. Write like a senior Rust engineer explaining their tool.
 
 **CTAs:** Start with verb + specific outcome.
+
 - ✅ `pip install vantadb-py` (imperative, technical)
 - ✅ `View on GitHub` (clear destination)
 - ❌ `Get Started Today!` (exclamation = weak)
@@ -433,6 +467,7 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), var(--shadow-md);
 From `impeccable` v3.6.0 + `redesign-existing-projects` slop-test:
 
 ### Visual
+
 - ❌ **Gradient text** (`background-clip: text`) — decorative noise.
 - ❌ **Purple/blue "AI gradient"** — biggest fingerprint. Amber or nothing.
 - ❌ **Glassmorphism as default** — only for specific floating cards.
@@ -446,6 +481,7 @@ From `impeccable` v3.6.0 + `redesign-existing-projects` slop-test:
 - ❌ **Scale on image hover** (`.group:hover img { transform: scale }`) — animate card border/shadow instead.
 
 ### Layout
+
 - ❌ **Symmetrical everything** — must have at least 2 intentionally asymmetric sections.
 - ❌ **`height: 100vh`** — use `min-height: 100dvh`.
 - ❌ **4-column footer link farm** — simplify to 4 links max.
@@ -453,6 +489,7 @@ From `impeccable` v3.6.0 + `redesign-existing-projects` slop-test:
 - ❌ **Nested cards** (card inside card) — ever.
 
 ### Content
+
 - ❌ **Lorem ipsum** — always real copy.
 - ❌ **Round fake numbers** (`99.99%`, `100K`) — use real validated metrics.
 - ❌ **"Oops!" error messages**.
@@ -466,7 +503,7 @@ Before delivering any UI code, verify:
 
 - [ ] No emojis as icons — SVG only
 - [ ] All icons same stroke weight (1.5px)
-- [ ] `cursor: pointer` on all clickable elements  
+- [ ] `cursor: pointer` on all clickable elements
 - [ ] Hover states with smooth transitions (150-300ms)
 - [ ] Text contrast ≥4.5:1 on all body text
 - [ ] Focus states visible (amber outline)

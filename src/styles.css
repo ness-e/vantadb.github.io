@@ -407,7 +407,8 @@
 }
 
 @keyframes scrollPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scaleY(0.6);
     transform-origin: top;
@@ -506,7 +507,9 @@
 .vanta-nav--scrolled {
   background: rgba(5, 5, 7, 0.88);
   backdrop-filter: blur(16px) saturate(1.4);
-  box-shadow: 0 1px 0 rgba(255, 106, 0, 0.06), 0 4px 24px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 1px 0 rgba(255, 106, 0, 0.06),
+    0 4px 24px rgba(0, 0, 0, 0.4);
   height: 56px;
 }
 
@@ -529,7 +532,6 @@
     animation-duration: 2.5s !important;
   }
 }
-
 
 /* ── Center Links ── */
 .nav-center {
@@ -605,7 +607,9 @@
   height: 34px;
   border-radius: var(--radius-md);
   color: var(--muted);
-  transition: color 200ms, background 200ms;
+  transition:
+    color 200ms,
+    background 200ms;
 }
 
 .nav-github-link:hover {
@@ -668,7 +672,9 @@
   height: 1.5px;
   background: var(--white);
   border-radius: 1px;
-  transition: transform 250ms var(--ease-out), opacity 200ms;
+  transition:
+    transform 250ms var(--ease-out),
+    opacity 200ms;
   transform-origin: center;
 }
 
@@ -693,10 +699,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 
 /* =====================================
    MAIN CONTENT WRAPPER
@@ -1600,7 +1609,9 @@
   padding: 0.75rem 1rem;
   border-left: 2px solid rgba(255, 106, 0, 0.18);
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  transition: border-left-color 200ms var(--ease-out), background 200ms;
+  transition:
+    border-left-color 200ms var(--ease-out),
+    background 200ms;
   cursor: default;
 }
 .quickstart-step:last-child {
@@ -1929,7 +1940,9 @@ button:focus-visible {
   background: rgba(255, 106, 0, 0.08);
   border-color: var(--amber);
   transform: rotateX(60deg) rotateZ(-30deg) translateZ(calc(var(--layer-index) * 65px + 20px));
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 106, 0, 0.2);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 15px rgba(255, 106, 0, 0.2);
 }
 .isometric-layer-info {
   transform: rotateZ(30deg) rotateX(-60deg);
@@ -1974,8 +1987,14 @@ button:focus-visible {
   height: 360px;
 }
 @media (max-width: 600px) {
-  .orbit-track.inner { width: 140px; height: 140px; }
-  .orbit-track.middle { width: 240px; height: 240px; }
+  .orbit-track.inner {
+    width: 140px;
+    height: 140px;
+  }
+  .orbit-track.middle {
+    width: 240px;
+    height: 240px;
+  }
 }
 .orbit-satellite {
   position: absolute;
@@ -2011,7 +2030,9 @@ button:focus-visible {
 }
 
 @keyframes counter-spin {
-  to { transform: rotate(-360deg); }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 /* ── CodeAccordion CSS ── */
@@ -2203,7 +2224,6 @@ button:focus-visible {
   box-shadow: var(--shadow-glow);
 }
 
-
 /* ═══════════════════════════════════════════════════════════
    VANTADB LOGO SYSTEM
    Emil Kowalski animation philosophy:
@@ -2225,25 +2245,38 @@ button:focus-visible {
 
 /* Orbit appear (opacity after draw completes) */
 @keyframes vdbOrbitAppear {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Orbit continuous rotation — linear, GPU only */
 @keyframes vdbOrbitSpin {
-  from { transform: rotate(-12deg); }
-  to   { transform: rotate(348deg); }  /* -12 + 360 = 348 */
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(348deg);
+  } /* -12 + 360 = 348 */
 }
 
 /* Outer orbit counter-spin (slower, opposite direction) */
 @keyframes vdbOrbitSpinReverse {
-  from { transform: rotate(-12deg); }
-  to   { transform: rotate(-372deg); } /* -12 - 360 = -372 */
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(-372deg);
+  } /* -12 - 360 = -372 */
 }
 
 /* Singularity pulse (idle ambient) */
 @keyframes vdbSingularityPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     filter: drop-shadow(0 0 3px rgba(255, 106, 0, 0.6));
   }
@@ -2255,23 +2288,26 @@ button:focus-visible {
 
 /* Singularity + void core appear */
 @keyframes vdbCoreAppear {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ─── MARK BASE ─────────────────────────────────────────── */
 
 .vdb-mark {
   display: block;
-  overflow: visible;  /* allow drop-shadow glow to bleed */
+  overflow: visible; /* allow drop-shadow glow to bleed */
   flex-shrink: 0;
 }
 
 /* ─── V LEGS — stroke-dasharray draw animation ───────────── */
 
 .vdb-mark .vdb-v-leg {
-  animation:
-    vdbDrawStroke 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: vdbDrawStroke 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   will-change: stroke-dashoffset;
 }
 
@@ -2280,7 +2316,7 @@ button:focus-visible {
 }
 
 .vdb-mark .vdb-v-leg--right {
-  animation-delay: 80ms;  /* 80ms stagger after left — Emil: 30-80ms */
+  animation-delay: 80ms; /* 80ms stagger after left — Emil: 30-80ms */
 }
 
 /* ─── ORBIT RINGS ────────────────────────────────────────── */
@@ -2300,13 +2336,11 @@ button:focus-visible {
 
 /* Orbit ellipse: appear after V legs finish drawing */
 .vdb-mark .vdb-orbit {
-  animation:
-    vdbOrbitAppear 0.4s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.6s forwards;
+  animation: vdbOrbitAppear 0.4s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.6s forwards;
 }
 
 .vdb-mark .vdb-orbit--outer {
-  animation:
-    vdbOrbitAppear 0.4s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.75s forwards;
+  animation: vdbOrbitAppear 0.4s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.75s forwards;
   opacity: 0;
 }
 
@@ -2320,8 +2354,7 @@ button:focus-visible {
 }
 
 .vdb-mark .vdb-void-core {
-  animation:
-    vdbCoreAppear 0.3s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.5s forwards;
+  animation: vdbCoreAppear 0.3s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) 0.5s forwards;
 }
 
 /* ─── HOVER STATE (gate behind hover:hover — Emil rule) ──── */
@@ -2333,7 +2366,7 @@ button:focus-visible {
   }
 
   .vdb-mark:hover .vdb-v-leg {
-    stroke: var(--amber-light, #FF8C38);
+    stroke: var(--amber-light, #ff8c38);
     transition: stroke 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
 
@@ -2374,17 +2407,17 @@ a.vdb-logo-full,
 /* ─── WORDMARK TYPOGRAPHY ───────────────────────────────── */
 
 .vdb-wordmark {
-  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-weight: 700;
   letter-spacing: -0.04em;
-  color: var(--white, #F0EDE6);
+  color: var(--white, #f0ede6);
   line-height: 1;
   user-select: none;
 }
 
 .vdb-wordmark-db {
   /* "DB" suffix — amber accent for identity anchoring */
-  color: var(--amber, #FF6A00);
+  color: var(--amber, #ff6a00);
 }
 
 .vdb-wordmark--stacked {
@@ -2424,7 +2457,7 @@ a.vdb-logo-full,
 .vdb-logo--no-anim .vdb-singularity,
 .vdb-logo--no-anim .vdb-void-core {
   animation: none !important;
-  stroke-dashoffset: 0 !important;  /* fully drawn */
+  stroke-dashoffset: 0 !important; /* fully drawn */
   opacity: 1 !important;
 }
 
@@ -2452,7 +2485,7 @@ a.vdb-logo-full,
   .vdb-mark g:has(.vdb-orbit),
   .vdb-mark g:has(.vdb-orbit--outer) {
     animation: none !important;
-    transform: rotate(-12deg);  /* locked at initial tilt */
+    transform: rotate(-12deg); /* locked at initial tilt */
   }
 
   .vdb-mark .vdb-singularity {
@@ -2475,7 +2508,7 @@ a.vdb-logo-full,
 }
 
 .footer-tagline {
-  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-family: var(--font-sans, "Outfit", sans-serif);
   font-size: 0.82rem;
   color: var(--muted, rgba(240, 237, 230, 0.7));
   line-height: 1.5;

@@ -128,16 +128,16 @@ export default class BlackHole extends Model {
 
   uniforms = {
     iterations: uniform(float(128)),
-    stepSize: uniform(float(0.0071)),
+    stepSize: uniform(float(0.007)),
     noiseFactor: uniform(float(0.01)),
     power: uniform(float(0.3)),
 
     clamp1: uniform(float(0.5)),
     clamp2: uniform(float(1.0)),
 
-    originRadius: uniform(float(0.13)),
+    originRadius: uniform(float(0.14)),
     width: uniform(float(0.03)),
-    uvMotion: uniform(float(0)),
+    uvMotion: uniform(float(0.0)),
 
     rampCol1: uniform(color(0.95, 0.71, 0.44)),
     rampPos1: uniform(float(0.05)),
@@ -182,8 +182,12 @@ export default class BlackHole extends Model {
   }
 
   init() {
+    if (this.experience.isMobile) {
+      this.uniforms.iterations.value = 64;
+      this.uniforms.stepSize.value = 0.012;
+    }
     this.setModel();
-    // this._createCustomPanel() // Oculto a petición para uso futuro
+    // this._createCustomPanel(); // Panel de cámara y rotación en tiempo real
   }
 
   _createCustomPanel() {
@@ -192,18 +196,64 @@ export default class BlackHole extends Model {
 
     const container = document.createElement("div");
     container.id = "custom-hero-panel";
-    container.style.position = "fixed";
-    container.style.top = "50%";
-    container.style.left = "50%";
-    container.style.transform = "translate(-50%, -50%)";
-    container.style.zIndex = "100000";
-    container.style.width = "350px";
-    container.style.boxShadow = "0 30px 60px rgba(0,0,0,0.8)";
+    Object.assign(container.style, {
+      position: "fixed",
+      top: "50%",
+      left: "calc(50% - 200px)",
+      transform: "translate(-100%, -50%)",
+      zIndex: "100000",
+      width: "300px",
+      maxHeight: "80vh",
+      overflowY: "auto",
+      borderRadius: "12px",
+      boxShadow: "0 24px 64px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.06)",
+      background: "rgba(10, 10, 18, 0.92)",
+      backdropFilter: "blur(20px)",
+      scrollbarWidth: "thin",
+      cursor: "grab",
+      userSelect: "none",
+    });
     document.body.appendChild(container);
+
+    // ── Drag-to-move ─────────────────────────────────────────
+    let dragging = false;
+    let startX = 0;
+    let startY = 0;
+    let origLeft = 0;
+    let origTop = 0;
+
+    container.addEventListener("mousedown", (e) => {
+      // Only drag from the title bar (first child element)
+      if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+      dragging = true;
+      container.style.cursor = "grabbing";
+      container.style.transform = "none";
+      const rect = container.getBoundingClientRect();
+      origLeft = rect.left;
+      origTop = rect.top;
+      container.style.left = origLeft + "px";
+      container.style.top = origTop + "px";
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      container.style.left = origLeft + dx + "px";
+      container.style.top = origTop + dy + "px";
+    });
+
+    window.addEventListener("mouseup", () => {
+      dragging = false;
+      container.style.cursor = "grab";
+    });
+    // ─────────────────────────────────────────────────────────
 
     this.customPane = new Pane({
       container: container,
-      title: "Datos en Tiempo Real (Cámara)",
+      title: "📷 Cámara & Posición",
     });
 
     this.customParams = {
@@ -229,20 +279,36 @@ export default class BlackHole extends Model {
       );
 
     this.customPane
-      .addBinding(this.customParams, "rotX", { label: "Inclinación X" })
+      .addBinding(this.customParams, "rotX", {
+        label: "Inclinación X",
+        min: -Math.PI,
+        max: Math.PI,
+        step: 0.001,
+      })
       .on("change", (ev) => (this.container.rotation.x = ev.value));
     this.customPane
-      .addBinding(this.customParams, "rotY", { label: "Inclinación Y" })
+      .addBinding(this.customParams, "rotY", {
+        label: "Inclinación Y",
+        min: -Math.PI,
+        max: Math.PI,
+        step: 0.001,
+      })
       .on("change", (ev) => (this.container.rotation.y = ev.value));
     this.customPane
-      .addBinding(this.customParams, "rotZ", { label: "Inclinación Z" })
+      .addBinding(this.customParams, "rotZ", {
+        label: "Inclinación Z",
+        min: -Math.PI,
+        max: Math.PI,
+        step: 0.001,
+      })
       .on("change", (ev) => (this.container.rotation.z = ev.value));
 
-    this.customPane.addButton({ title: "Imprimir en Consola" }).on("click", () => {
-      console.log(`Valores Finales de la Cámara y Agujero Negro:
-            cameraPosition: (${this.customParams.camPos.x}, ${this.customParams.camPos.y}, ${this.customParams.camPos.z})
-            cameraTarget: (${this.customParams.target.x}, ${this.customParams.target.y}, ${this.customParams.target.z})
-            blackHoleRotation: (${this.customParams.rotX}, ${this.customParams.rotY}, ${this.customParams.rotZ})`);
+    this.customPane.addButton({ title: "📋 Copiar valores a consola" }).on("click", () => {
+      const out = `camPos: { x: ${this.customParams.camPos.x.toFixed(4)}, y: ${this.customParams.camPos.y.toFixed(4)}, z: ${this.customParams.camPos.z.toFixed(4)} }
+target: { x: ${this.customParams.target.x.toFixed(4)}, y: ${this.customParams.target.y.toFixed(4)}, z: ${this.customParams.target.z.toFixed(4)} }
+rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY.toFixed(4)}, z: ${this.customParams.rotZ.toFixed(4)} }`;
+      console.log("── Scene Snapshot ──\n" + out);
+      navigator.clipboard?.writeText(out).catch(() => {});
     });
   }
 
@@ -263,7 +329,9 @@ export default class BlackHole extends Model {
     noiseTex.generateMipmaps = true;
     noiseTex.minFilter = THREE.LinearMipmapLinearFilter;
     noiseTex.magFilter = THREE.LinearFilter;
-    noiseTex.anisotropy = this.renderer.capabilities?.getMaxAnisotropy?.() || 4;
+    noiseTex.anisotropy = this.experience.isMobile
+      ? 1
+      : this.renderer.capabilities?.getMaxAnisotropy?.() || 4;
     noiseTex.needsUpdate = true;
 
     material.colorNode = Fn(() => {
@@ -302,9 +370,10 @@ export default class BlackHole extends Model {
 
       // ==== Main loop ====
       Loop(iterCount, ({ i }) => {
-        // Steering term toward center
         const rNorm = normalize(rayPos);
         const rLen = lengthSqrt(rayPos);
+
+        // Steering term toward center
         const steerMag = _step.mul(power).div(rLen.mul(rLen)); // step*power / r^2
         const range = remapClamp(rLen, 1.0, 0.5, 0.0, 1.0); // fade steering
         const steer = rNorm.mul(steerMag.mul(range));
@@ -319,7 +388,7 @@ export default class BlackHole extends Model {
         const rotPhase = xyLen.mul(4.27).sub(time.mul(0.1));
         const uvAxis = vec3(0, 0, 1);
         const uvRot = rayPos.mul(rotateAxis(uvAxis, rotPhase));
-        const uv = uvRot.mul(2);
+        const uv = uvRot.mul(2).add(time.mul(this.uniforms.uvMotion));
 
         // Deep noise sample
         const noiseDeep = texture(this.resources.items.noiseDeepTexture, uv);
@@ -382,17 +451,39 @@ export default class BlackHole extends Model {
 
       // ==== Environment blend on remaining transparency ====
       const dirForEnv = rayDir.mul(vec3(1, -1, 1)).xzy;
-      const env = linearToSrgb(
-        texture(this.resources.items.starsTexture, equirectUV(dirForEnv)).mul(
+      const envUV = equirectUV(dirForEnv);
+      const stars = linearToSrgb(
+        texture(this.resources.items.starsTexture, envUV).mul(
           this.state.uniforms.mainScene.environment.backgroundIntensity,
         ),
       );
 
+      const gridUV = envUV.mul(12);
+      const gx = fract(gridUV.x.add(time.mul(0.003)));
+      const gy = fract(gridUV.y.add(time.mul(0.002)));
+      const gxD = min(gx, float(1).sub(gx));
+      const gyD = min(gy, float(1).sub(gy));
+
+      const primaryX = step(gxD, 0.015);
+      const primaryY = step(gyD, 0.015);
+      const primary = max(primaryX, primaryY);
+
+      const gxH = fract(gridUV.x.add(time.mul(0.003)).add(0.5));
+      const gyH = fract(gridUV.y.add(time.mul(0.002)).add(0.5));
+      const gxHD = min(gxH, float(1).sub(gxH));
+      const gyHD = min(gyH, float(1).sub(gyH));
+      const secondaryX = step(gxHD, 0.01);
+      const secondaryY = step(gyHD, 0.01);
+      const secondary = max(secondaryX, secondaryY).mul(0.25);
+
+      const gridAlpha = max(primary.mul(0.35), secondary);
+      const env = mix(stars, vec4(0.4, 0.7, 1.0, 1.0), gridAlpha);
+
       const trans = float(1.0).sub(alphaAcc);
       const finalRGB = mix(colorAcc, env, trans.mul(1.0));
-      // const finalAlpha = mix(alphaAcc, 1.0, 1.0); // kept for clarity, output uses color only
+      const fringeGlow = alphaAcc.mul(alphaAcc.oneMinus()).mul(0.35);
 
-      return srgbToLinear(finalRGB);
+      return srgbToLinear(finalRGB.add(vec3(0.5, 0.3, 0.8).mul(fringeGlow)));
     })();
     material.emissiveNode = material.colorNode;
 
@@ -409,6 +500,7 @@ export default class BlackHole extends Model {
     // const planeMesh = new THREE.Mesh( planeGeometry, planeMaterial )
 
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.static = true;
     this.container.add(mesh);
 
     // Ubicar el agujero negro en el origen. El encuadre a la derecha lo hará la cámara.

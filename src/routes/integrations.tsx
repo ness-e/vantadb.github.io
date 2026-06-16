@@ -17,26 +17,67 @@ export const Route = createFileRoute("/integrations")({
 
 // ── Satellite Icons (inline SVG) ────────────────────────────────────────────────
 const IconLangChain = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+    <path d="M2 17l10 5 10-5" />
+    <path d="M2 12l10 5 10-5" />
   </svg>
 );
 
 const IconLlamaIndex = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 17V7l5 5-5 5z" />
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <path d="M9 17V7l5 5-5 5z" />
   </svg>
 );
 
 const IconMCP = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3z" /><path d="M6 21a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3v12a3 3 0 0 0 3 3z" />
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3z" />
+    <path d="M6 21a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3v12a3 3 0 0 0 3 3z" />
   </svg>
 );
 
 const IconPython = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" /><path d="M8 12h8M12 8v8" />
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M8 12h8M12 8v8" />
   </svg>
 );
 
@@ -66,7 +107,7 @@ vector_store.add_texts(
 )
 
 # Similarity query execution
-docs = vector_store.similarity_search("python developer", k=3)`
+docs = vector_store.similarity_search("python developer", k=3)`,
     },
     {
       id: "llamaindex",
@@ -89,7 +130,7 @@ index = VectorStoreIndex.from_documents(
 
 # Query vector index
 query_engine = index.as_query_engine()
-response = query_engine.query("What is the system limits?")`
+response = query_engine.query("What is the system limits?")`,
     },
     {
       id: "mcp",
@@ -106,7 +147,7 @@ response = query_engine.query("What is the system limits?")`
       }
     }
   }
-}`
+}`,
     },
     {
       id: "python",
@@ -131,8 +172,8 @@ hits = db.search_memory(
     "memories",
     query_vector=[0.14, 0.85, 0.40],
     top_k=1
-)`
-    }
+)`,
+    },
   ];
 
   useEffect(() => {
@@ -148,31 +189,65 @@ hits = db.search_memory(
     return () => obs.disconnect();
   }, []);
 
-  const activeIntegration = integrations.find(i => i.id === selectedSat) || integrations[0];
+  const activeIntegration = integrations.find((i) => i.id === selectedSat) || integrations[0];
 
   return (
     <div style={{ background: "var(--background)", minHeight: "100vh" }}>
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Ecosystem</span>
-        <h1 className="title-accent reveal reveal-delay-1" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.04em", margin: "0.5rem 0 1.5rem" }}>
-          Fits your stack.<br />Not the other way.
+        <h1
+          className="title-accent reveal reveal-delay-1"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.04em",
+            margin: "0.5rem 0 1.5rem",
+          }}
+        >
+          Fits your stack.
+          <br />
+          Not the other way.
         </h1>
         <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
-          Connect VantaDB directly to the frameworks you already know. Built for first-class Python and Rust ecosystems.
+          Connect VantaDB directly to the frameworks you already know. Built for first-class Python
+          and Rust ecosystems.
         </p>
       </header>
 
-      <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}>
-        
+      <main
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}
+      >
         {/* ── Section: Orbit Universe and Code panel ── */}
-        <section style={{ padding: "4rem 0", display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "6rem", alignItems: "center" }}>
-          
+        <section
+          style={{
+            padding: "4rem 0",
+            display: "grid",
+            gridTemplateColumns: "1.2fr 1fr",
+            gap: "6rem",
+            alignItems: "center",
+          }}
+        >
           <div className="reveal">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginBottom: "1rem",
+              }}
+            >
               <h2 className="section-title" style={{ margin: 0 }}>
                 {activeIntegration.name}
               </h2>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: "var(--amber)", letterSpacing: "0.1em" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.68rem",
+                  color: "var(--amber)",
+                  letterSpacing: "0.1em",
+                }}
+              >
                 {activeIntegration.tag}
               </span>
             </div>
@@ -181,7 +256,7 @@ hits = db.search_memory(
             </p>
 
             <pre className="code-block-premium">
-              <button 
+              <button
                 className="code-copy-btn"
                 onClick={() => navigator.clipboard?.writeText(activeIntegration.code)}
               >
@@ -194,28 +269,38 @@ hits = db.search_memory(
           <div className="reveal reveal-delay-2">
             <div className="orbit-universe">
               {/* Sun (VantaDB Core) */}
-              <div 
-                style={{ 
-                  position: "absolute", 
-                  width: "70px", 
-                  height: "70px", 
-                  background: "var(--amber)", 
-                  borderRadius: "50%", 
-                  boxShadow: "var(--shadow-glow), 0 0 50px rgba(255,106,0,0.4)", 
-                  display: "flex", 
-                  alignItems: "center", 
+              <div
+                style={{
+                  position: "absolute",
+                  width: "70px",
+                  height: "70px",
+                  background: "var(--amber)",
+                  borderRadius: "50%",
+                  boxShadow: "var(--shadow-glow), 0 0 50px rgba(255,106,0,0.4)",
+                  display: "flex",
+                  alignItems: "center",
                   justifyContent: "center",
-                  zIndex: 10
+                  zIndex: 10,
                 }}
               >
-                <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.8rem", color: "#050507" }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "0.8rem",
+                    color: "#050507",
+                  }}
+                >
                   VantaDB
                 </span>
               </div>
 
               {/* Inner Orbit track (Python & MCP) */}
-              <div className="orbit-track inner" style={{ "--orbit-speed": "32s" } as React.CSSProperties}>
-                <button 
+              <div
+                className="orbit-track inner"
+                style={{ "--orbit-speed": "32s" } as React.CSSProperties}
+              >
+                <button
                   className={`orbit-satellite ${selectedSat === "python" ? "active" : ""}`}
                   style={{ top: "0", left: "calc(50% - 22px)" }}
                   onClick={() => setSelectedSat("python")}
@@ -223,7 +308,7 @@ hits = db.search_memory(
                 >
                   <IconPython />
                 </button>
-                <button 
+                <button
                   className={`orbit-satellite ${selectedSat === "mcp" ? "active" : ""}`}
                   style={{ bottom: "0", left: "calc(50% - 22px)" }}
                   onClick={() => setSelectedSat("mcp")}
@@ -234,8 +319,11 @@ hits = db.search_memory(
               </div>
 
               {/* Middle Orbit track (LangChain & LlamaIndex) */}
-              <div className="orbit-track middle" style={{ "--orbit-speed": "48s" } as React.CSSProperties}>
-                <button 
+              <div
+                className="orbit-track middle"
+                style={{ "--orbit-speed": "48s" } as React.CSSProperties}
+              >
+                <button
                   className={`orbit-satellite ${selectedSat === "langchain" ? "active" : ""}`}
                   style={{ top: "50%", left: "-22px", transform: "translateY(-50%)" }}
                   onClick={() => setSelectedSat("langchain")}
@@ -243,7 +331,7 @@ hits = db.search_memory(
                 >
                   <IconLangChain />
                 </button>
-                <button 
+                <button
                   className={`orbit-satellite ${selectedSat === "llamaindex" ? "active" : ""}`}
                   style={{ top: "50%", right: "-22px", transform: "translateY(-50%)" }}
                   onClick={() => setSelectedSat("llamaindex")}
@@ -252,11 +340,9 @@ hits = db.search_memory(
                   <IconLlamaIndex />
                 </button>
               </div>
-
             </div>
           </div>
         </section>
-
       </main>
     </div>
   );

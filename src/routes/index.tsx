@@ -90,11 +90,7 @@ function ArchVisual() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
       {layers.map((l, i) => (
-        <div
-          key={i}
-          className="arch-layer"
-          style={{ animationDelay: `${i * 0.08}s` }}
-        >
+        <div key={i} className="arch-layer" style={{ animationDelay: `${i * 0.08}s` }}>
           <div style={{ flex: 1 }}>
             <div
               style={{
@@ -119,10 +115,7 @@ function ArchVisual() {
               {l.sub}
             </div>
           </div>
-          <div
-            className="arch-ping"
-            style={{ animationDuration: `${1.5 + i * 0.3}s` }}
-          />
+          <div className="arch-ping" style={{ animationDuration: `${1.5 + i * 0.3}s` }} />
         </div>
       ))}
     </div>
@@ -157,10 +150,7 @@ function ComparisonBar() {
     >
       <div className="reveal text-center" style={{ marginBottom: "3rem" }}>
         <span className="section-eyebrow">// VantaDB vs. The Stack</span>
-        <h2
-          className="section-title"
-          style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
-        >
+        <h2 className="section-title" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
           Simpler. Faster. <span style={{ color: "var(--amber)" }}>Zero Infra.</span>
         </h2>
       </div>
@@ -181,13 +171,8 @@ function ComparisonBar() {
           </div>
           {oldWayItems.map((item, idx) => (
             <div key={idx} className="comparison-item">
-              <span style={{ color: "var(--muted)", fontSize: "0.85rem" }}>
-                {item.label}
-              </span>
-              <span
-                className="comparison-item-val"
-                style={{ fontSize: "0.85rem" }}
-              >
+              <span style={{ color: "var(--muted)", fontSize: "0.85rem" }}>{item.label}</span>
+              <span className="comparison-item-val" style={{ fontSize: "0.85rem" }}>
                 {item.val}
               </span>
             </div>
@@ -218,10 +203,7 @@ function ComparisonBar() {
               >
                 {item.label}
               </span>
-              <span
-                className="comparison-item-val"
-                style={{ fontSize: "0.85rem" }}
-              >
+              <span className="comparison-item-val" style={{ fontSize: "0.85rem" }}>
                 {item.val}
               </span>
             </div>
@@ -263,10 +245,8 @@ function InteractiveQuickstart() {
     {
       title: "02 INITIALIZE",
       label: "Open local DB",
-      pythonCode:
-        "import vantadb_py as vanta\n\ndb = vanta.VantaDB(\"./agent_memory\")",
-      rustCode:
-        "use vantadb::VantaDB;\n\nlet db = VantaDB::open(\"./agent_memory\")?;",
+      pythonCode: 'import vantadb_py as vanta\n\ndb = vanta.VantaDB("./agent_memory")',
+      rustCode: 'use vantadb::VantaDB;\n\nlet db = VantaDB::open("./agent_memory")?;',
       pythonOutput: [
         ">>> db = vanta.VantaDB('./agent_memory')",
         "✓ Folder path validated",
@@ -275,7 +255,7 @@ function InteractiveQuickstart() {
         "✓ Database instance live",
       ],
       rustOutput: [
-        "let db = VantaDB::open(\"./agent_memory\")?;",
+        'let db = VantaDB::open("./agent_memory")?;',
         "✓ WAL recovery complete (CRC32C verified)",
         "✓ Raw storage initialized at ./agent_memory",
         "✓ Safe Rust wrapper initialized",
@@ -347,8 +327,7 @@ function InteractiveQuickstart() {
 
   const currentStep = steps[activeStep];
   const codeText = lang === "python" ? currentStep.pythonCode : currentStep.rustCode;
-  const outputLines =
-    lang === "python" ? currentStep.pythonOutput : currentStep.rustOutput;
+  const outputLines = lang === "python" ? currentStep.pythonOutput : currentStep.rustOutput;
 
   return (
     <section
@@ -378,12 +357,8 @@ function InteractiveQuickstart() {
           >
             Get started in <span style={{ color: "var(--amber)" }}>seconds.</span>
           </h2>
-          <p
-            className="section-sub reveal reveal-delay-2"
-            style={{ marginBottom: "2.5rem" }}
-          >
-            Install, import and query locally. Zero dependencies. Open a file
-            and go.
+          <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
+            Install, import and query locally. Zero dependencies. Open a file and go.
           </p>
 
           <div
@@ -432,12 +407,8 @@ function InteractiveQuickstart() {
                   alignItems: "center",
                   gap: "1.25rem",
                   padding: "1.25rem 1.5rem",
-                  borderLeft:
-                    activeStep === i
-                      ? "3px solid var(--amber)"
-                      : "3px solid transparent",
-                  background:
-                    activeStep === i ? "rgba(255, 106, 0, 0.04)" : "transparent",
+                  borderLeft: activeStep === i ? "3px solid var(--amber)" : "3px solid transparent",
+                  background: activeStep === i ? "rgba(255, 106, 0, 0.04)" : "transparent",
                   cursor: "pointer",
                   borderRadius: "0 var(--radius-md) var(--radius-md) 0",
                   transition: "all 200ms",
@@ -447,10 +418,7 @@ function InteractiveQuickstart() {
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: "0.7rem",
-                    color:
-                      activeStep === i
-                        ? "var(--amber)"
-                        : "rgba(255,106,0,0.4)",
+                    color: activeStep === i ? "var(--amber)" : "rgba(255,106,0,0.4)",
                   }}
                 >
                   0{i + 1}
@@ -507,10 +475,7 @@ function InteractiveQuickstart() {
                 >
                   {lang === "python" ? "python editor" : "rust editor"}
                 </div>
-                <pre
-                  className="code-block-premium"
-                  style={{ border: "none", padding: 0 }}
-                >
+                <pre className="code-block-premium" style={{ border: "none", padding: 0 }}>
                   <code>{codeText}</code>
                 </pre>
               </div>
@@ -581,9 +546,15 @@ function Landing() {
       <SingularityHero />
 
       <main className="page-content" style={{ position: "relative", zIndex: 2 }}>
-        
         {/* ── 1. COMPARISON BAR (Old Stack vs VantaDB) ── */}
-        <div style={{ borderBottom: "1px solid var(--subtle)", borderTop: "1px solid var(--subtle)", position: "relative", overflow: "hidden" }}>
+        <div
+          style={{
+            borderBottom: "1px solid var(--subtle)",
+            borderTop: "1px solid var(--subtle)",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
           <Scanlines />
           <ComparisonBar />
         </div>
@@ -594,28 +565,77 @@ function Landing() {
         <div className="section-divider" />
 
         {/* ── 3. ENGINE PORTAL ── */}
-        <section id="engine" style={{ padding: "8rem clamp(1.5rem,5vw,4rem)", maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
+        <section
+          id="engine"
+          style={{
+            padding: "8rem clamp(1.5rem,5vw,4rem)",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            position: "relative",
+          }}
+        >
           <div className="noise-overlay" style={{ opacity: 0.1 }} />
-          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "6rem", alignItems: "center" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div>
               <span className="section-eyebrow reveal">// Core Engine</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}>
-                Four memory modalities.<br />
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+              >
+                Four memory modalities.
+                <br />
                 <span style={{ color: "var(--amber)" }}>One atomic contract.</span>
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
-                BM25 + HNSW unified via RRF in a single local database engine. relations stored natively as weighted graph edges. CRC32C Write-Ahead Logging for absolute crash safety.
+                BM25 + HNSW unified via RRF in a single local database engine. relations stored
+                natively as weighted graph edges. CRC32C Write-Ahead Logging for absolute crash
+                safety.
               </p>
               <div className="reveal reveal-delay-3">
-                <Link to="/engine" className="nav-cta" style={{ display: "inline-block", padding: "0.85rem 2rem", textDecoration: "none", fontSize: "0.8rem" }}>
+                <Link
+                  to="/engine"
+                  className="nav-cta"
+                  style={{
+                    display: "inline-block",
+                    padding: "0.85rem 2rem",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                  }}
+                >
                   Explore Core Engine Features →
                 </Link>
               </div>
             </div>
             <div className="reveal reveal-delay-2" style={{ position: "relative" }}>
-              <div style={{ background: "var(--surface)", border: "1px solid rgba(255,106,0,0.08)", borderRadius: "var(--radius-md)", padding: "2rem", position: "relative", overflow: "hidden" }}>
+              <div
+                style={{
+                  background: "var(--surface)",
+                  border: "1px solid rgba(255,106,0,0.08)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "2rem",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
                 <Scanlines />
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", marginBottom: "1.5rem", color: "var(--amber)", letterSpacing: "0.1em" }}>HYBRID FUSION pipeline</div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.72rem",
+                    marginBottom: "1.5rem",
+                    color: "var(--amber)",
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  HYBRID FUSION pipeline
+                </div>
                 <div className="bars-container">
                   {[
                     { name: "BM25 (lexical)", value: 88, color: "#FF6A00" },
@@ -623,14 +643,38 @@ function Landing() {
                     { name: "RRF (fused)", value: 100, color: "#FF8C38" },
                   ].map((b, i) => (
                     <div key={i} style={{ marginBottom: "1.25rem" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem", fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--muted)" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginBottom: "0.4rem",
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.7rem",
+                          color: "var(--muted)",
+                        }}
+                      >
                         <span>{b.name}</span>
                         <span style={{ color: b.color }}>{b.value}%</span>
                       </div>
-                      <div style={{ height: "3px", background: "rgba(255,255,255,0.03)", borderRadius: "2px", overflow: "hidden" }}>
+                      <div
+                        style={{
+                          height: "3px",
+                          background: "rgba(255,255,255,0.03)",
+                          borderRadius: "2px",
+                          overflow: "hidden",
+                        }}
+                      >
                         <div
                           className="bar-fill"
-                          style={{ "--delay": `${i * 0.15 + 0.3}s`, height: "100%", width: "0", borderRadius: "2px", background: `linear-gradient(to right, ${b.color}, rgba(255,255,255,0.3))` } as React.CSSProperties}
+                          style={
+                            {
+                              "--delay": `${i * 0.15 + 0.3}s`,
+                              height: "100%",
+                              width: "0",
+                              borderRadius: "2px",
+                              background: `linear-gradient(to right, ${b.color}, rgba(255,255,255,0.3))`,
+                            } as React.CSSProperties
+                          }
                           data-w={b.value}
                         />
                       </div>
@@ -645,22 +689,59 @@ function Landing() {
         <div className="section-divider" />
 
         {/* ── 4. ARCHITECTURE PORTAL ── */}
-        <section id="architecture" style={{ background: "var(--surface)", borderTop: "1px solid var(--subtle)", borderBottom: "1px solid var(--subtle)", padding: "8rem clamp(1.5rem,5vw,4rem)", position: "relative", overflow: "hidden" }}>
+        <section
+          id="architecture"
+          style={{
+            background: "var(--surface)",
+            borderTop: "1px solid var(--subtle)",
+            borderBottom: "1px solid var(--subtle)",
+            padding: "8rem clamp(1.5rem,5vw,4rem)",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
           <div className="noise-overlay" style={{ opacity: 0.15 }} />
-          <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "6rem", alignItems: "center" }}>
+          <div
+            style={{
+              maxWidth: "1200px",
+              margin: "0 auto",
+              position: "relative",
+              zIndex: 1,
+              display: "grid",
+              gridTemplateColumns: "1fr 1.2fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div className="reveal reveal-delay-1">
               <ArchVisual />
             </div>
             <div>
               <span className="section-eyebrow reveal">// Architecture</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}>
-                Built different.<br /><span style={{ color: "var(--amber)" }}>Runs everywhere.</span>
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+              >
+                Built different.
+                <br />
+                <span style={{ color: "var(--amber)" }}>Runs everywhere.</span>
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
-                VantaDB bridges direct native Python execution to high-performance compiled Rust memory storage using PyO3 FFI boundary limits, avoiding expensive serialization or server process loops.
+                VantaDB bridges direct native Python execution to high-performance compiled Rust
+                memory storage using PyO3 FFI boundary limits, avoiding expensive serialization or
+                server process loops.
               </p>
               <div className="reveal reveal-delay-3">
-                <Link to="/architecture" className="nav-cta" style={{ display: "inline-block", padding: "0.85rem 2rem", textDecoration: "none", fontSize: "0.8rem" }}>
+                <Link
+                  to="/architecture"
+                  className="nav-cta"
+                  style={{
+                    display: "inline-block",
+                    padding: "0.85rem 2rem",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                  }}
+                >
                   View Deep FFI Architecture →
                 </Link>
               </div>
@@ -669,32 +750,102 @@ function Landing() {
         </section>
 
         {/* ── 5. INTEGRATIONS PORTAL ── */}
-        <section id="integrations" style={{ padding: "8rem clamp(1.5rem,5vw,4rem)", position: "relative", overflow: "hidden" }}>
+        <section
+          id="integrations"
+          style={{
+            padding: "8rem clamp(1.5rem,5vw,4rem)",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
           <div className="noise-overlay" style={{ opacity: 0.12 }} />
-          <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "6rem", alignItems: "center" }}>
+          <div
+            style={{
+              maxWidth: "1200px",
+              margin: "0 auto",
+              position: "relative",
+              zIndex: 1,
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div>
               <span className="section-eyebrow reveal">// Ecosystem</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}>
-                Agnostic.<br /><span style={{ color: "var(--amber)" }}>Unbound.</span>
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+              >
+                Agnostic.
+                <br />
+                <span style={{ color: "var(--amber)" }}>Unbound.</span>
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
-                Directly connect VantaDB to your current AI agents framework. Built with first-class support for LlamaIndex index traversal, LangChain vectorstores, AutoGen, and Model Context Protocol (MCP).
+                Directly connect VantaDB to your current AI agents framework. Built with first-class
+                support for LlamaIndex index traversal, LangChain vectorstores, AutoGen, and Model
+                Context Protocol (MCP).
               </p>
               <div className="reveal reveal-delay-3">
-                <Link to="/integrations" className="nav-cta" style={{ display: "inline-block", padding: "0.85rem 2rem", textDecoration: "none", fontSize: "0.8rem" }}>
+                <Link
+                  to="/integrations"
+                  className="nav-cta"
+                  style={{
+                    display: "inline-block",
+                    padding: "0.85rem 2rem",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                  }}
+                >
                   Explore Orbit Ecosystem →
                 </Link>
               </div>
             </div>
             <div className="reveal reveal-delay-2">
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                <div style={{ background: "var(--surface)", border: "1px solid rgba(255,106,0,0.08)", padding: "1.5rem", borderRadius: "var(--radius-md)" }}>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--amber)", marginBottom: "0.5rem" }}>SUPPORTED FRAMEWORK</div>
-                  <div style={{ color: "var(--white)", fontWeight: 600, fontSize: "1.1rem" }}>LangChain</div>
+                <div
+                  style={{
+                    background: "var(--surface)",
+                    border: "1px solid rgba(255,106,0,0.08)",
+                    padding: "1.5rem",
+                    borderRadius: "var(--radius-md)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.62rem",
+                      color: "var(--amber)",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    SUPPORTED FRAMEWORK
+                  </div>
+                  <div style={{ color: "var(--white)", fontWeight: 600, fontSize: "1.1rem" }}>
+                    LangChain
+                  </div>
                 </div>
-                <div style={{ background: "var(--surface)", border: "1px solid rgba(255,106,0,0.08)", padding: "1.5rem", borderRadius: "var(--radius-md)" }}>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--amber)", marginBottom: "0.5rem" }}>SUPPORTED FRAMEWORK</div>
-                  <div style={{ color: "var(--white)", fontWeight: 600, fontSize: "1.1rem" }}>LlamaIndex</div>
+                <div
+                  style={{
+                    background: "var(--surface)",
+                    border: "1px solid rgba(255,106,0,0.08)",
+                    padding: "1.5rem",
+                    borderRadius: "var(--radius-md)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.62rem",
+                      color: "var(--amber)",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    SUPPORTED FRAMEWORK
+                  </div>
+                  <div style={{ color: "var(--white)", fontWeight: 600, fontSize: "1.1rem" }}>
+                    LlamaIndex
+                  </div>
                 </div>
               </div>
             </div>
@@ -704,18 +855,43 @@ function Landing() {
         <div className="section-divider" />
 
         {/* ── 6. USE CASES PORTAL ── */}
-        <section id="use-cases" style={{ padding: "8rem clamp(1.5rem,5vw,4rem)", maxWidth: "1200px", margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "6rem", alignItems: "center" }}>
+        <section
+          id="use-cases"
+          style={{ padding: "8rem clamp(1.5rem,5vw,4rem)", maxWidth: "1200px", margin: "0 auto" }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.2fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div>
               <span className="section-eyebrow reveal">// Use Cases</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ fontSize: "clamp(2.5rem,4vw,3.2rem)", marginBottom: "1.5rem" }}>
-                Where VantaDB<br /><span style={{ color: "var(--amber)" }}>fits perfectly.</span>
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ fontSize: "clamp(2.5rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+              >
+                Where VantaDB
+                <br />
+                <span style={{ color: "var(--amber)" }}>fits perfectly.</span>
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
-                Persistent scratchpads, memory that survives agent crashes, AST parsing context databases, and secure edge execution contexts with zero network footprints.
+                Persistent scratchpads, memory that survives agent crashes, AST parsing context
+                databases, and secure edge execution contexts with zero network footprints.
               </p>
               <div className="reveal reveal-delay-3">
-                <Link to="/use-cases" className="nav-cta" style={{ display: "inline-block", padding: "0.85rem 2rem", textDecoration: "none", fontSize: "0.8rem" }}>
+                <Link
+                  to="/use-cases"
+                  className="nav-cta"
+                  style={{
+                    display: "inline-block",
+                    padding: "0.85rem 2rem",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                  }}
+                >
                   View Design Patterns & Code →
                 </Link>
               </div>
@@ -723,8 +899,25 @@ function Landing() {
             <div className="reveal reveal-delay-2">
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {["AI AGENTS MEMORY", "LOCAL-FIRST RAG", "CODEBASE INTELLIGENCE"].map((uc, i) => (
-                  <div key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)", paddingBottom: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--steel)" }}>0{i+1} / {uc}</span>
+                  <div
+                    key={i}
+                    style={{
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      paddingBottom: "1rem",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.7rem",
+                        color: "var(--steel)",
+                      }}
+                    >
+                      0{i + 1} / {uc}
+                    </span>
                     <span style={{ color: "var(--amber)" }}>→</span>
                   </div>
                 ))}
@@ -736,16 +929,55 @@ function Landing() {
         <div className="section-divider" />
 
         {/* ── 7. CTA / SINGULARITY (Glassmorphic bg) ── */}
-        <section style={{ padding: "12rem clamp(1.5rem,5vw,4rem)", position: "relative", overflow: "hidden", textAlign: "center", backgroundImage: "url('/bg_singularity_cta.png')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+        <section
+          style={{
+            padding: "12rem clamp(1.5rem,5vw,4rem)",
+            position: "relative",
+            overflow: "hidden",
+            textAlign: "center",
+            backgroundImage: "url('/bg_singularity_cta.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
+          }}
+        >
           <div className="noise-overlay" style={{ opacity: 0.12 }} />
-          <div style={{ position: "relative", background: "var(--surface-glass)", border: "1px solid rgba(255, 106, 0, 0.12)", borderRadius: "var(--radius-xl)", padding: "4rem 2rem", maxWidth: "800px", margin: "0 auto", backdropFilter: "blur(12px)", boxShadow: "var(--shadow-xl)" }} className="reveal">
+          <div
+            style={{
+              position: "relative",
+              background: "var(--surface-glass)",
+              border: "1px solid rgba(255, 106, 0, 0.12)",
+              borderRadius: "var(--radius-xl)",
+              padding: "4rem 2rem",
+              maxWidth: "800px",
+              margin: "0 auto",
+              backdropFilter: "blur(12px)",
+              boxShadow: "var(--shadow-xl)",
+            }}
+            className="reveal"
+          >
             <h2 className="cta-title" style={{ color: "var(--white)", marginBottom: "1.5rem" }}>
-              Memory that<br /><span style={{ color: "var(--amber)" }}>never escapes.</span>
+              Memory that
+              <br />
+              <span style={{ color: "var(--amber)" }}>never escapes.</span>
             </h2>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.05rem", color: "var(--muted)", maxWidth: "440px", margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-              Start building AI agents with persistent, hybrid-searchable memory today. Apache 2.0. One pip install.
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "1.05rem",
+                color: "var(--muted)",
+                maxWidth: "440px",
+                margin: "0 auto 2.5rem",
+                lineHeight: 1.7,
+              }}
+            >
+              Start building AI agents with persistent, hybrid-searchable memory today. Apache 2.0.
+              One pip install.
             </p>
-            <div className="cta-group-center" style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+            <div
+              className="cta-group-center"
+              style={{ display: "flex", gap: "1rem", justifyContent: "center" }}
+            >
               <button
                 className="btn-primary"
                 style={{ fontSize: "0.9rem", padding: "1rem 2rem" }}
@@ -753,20 +985,48 @@ function Landing() {
               >
                 pip install vantadb-py
               </button>
-              <a href="https://github.com/ness-e/Vantadb" target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+              <a
+                href="https://github.com/ness-e/Vantadb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+                style={{
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
                 View on GitHub
               </a>
             </div>
-            <div style={{ marginTop: "2.5rem", display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-              {["CI passing", "Apache 2.0", "Python 3.8+", "Rust 1.94.1+", "0 external deps"].map((b) => (
-                <span key={b} style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--muted)", letterSpacing: "0.1em" }}>
-                  ✓ {b}
-                </span>
-              ))}
+            <div
+              style={{
+                marginTop: "2.5rem",
+                display: "flex",
+                gap: "1.5rem",
+                justifyContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              {["CI passing", "Apache 2.0", "Python 3.8+", "Rust 1.94.1+", "0 external deps"].map(
+                (b) => (
+                  <span
+                    key={b}
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.65rem",
+                      color: "var(--muted)",
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    ✓ {b}
+                  </span>
+                ),
+              )}
             </div>
           </div>
         </section>
-
       </main>
     </>
   );

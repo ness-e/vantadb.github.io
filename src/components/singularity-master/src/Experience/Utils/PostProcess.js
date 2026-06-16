@@ -4,7 +4,6 @@ import Experience from "@experience/Experience.js";
 import Debug from "@experience/Utils/Debug.js";
 import State from "@experience/State.js";
 import Sizes from "./Sizes.js";
-import Materials from "@experience/Materials/Materials.js";
 
 import {
   luminance,
@@ -75,13 +74,11 @@ export default class PostProcess {
   debug = this.experience.debug;
   sizes = this.experience.sizes;
   state = this.experience.state;
-  materials = Materials.getInstance();
 
   rendererClass = this.experience.renderer;
   scene = experience.scene;
   time = experience.time;
   resources = experience.resources;
-  timeline = experience.time.timeline;
   container = new THREE.Group();
   passes = {};
 

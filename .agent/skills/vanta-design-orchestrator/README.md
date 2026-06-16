@@ -86,29 +86,29 @@ Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (
 
 ## Mapa de Skills por Capa
 
-| Capa | Skill | Sub-Skills | Fase |
-|:---|:---|---:|:---|
-| **1. Fundaciones** | `ui-ux-pro-max` | — | Fase 1 |
-| | `design-systems` | 10 | Fase 1-2 |
-| **2. Estructura** | `ux-heuristics` | — | Fase 1 |
-| | `frontend-design` | — | Fase 1 |
-| | `ux-strategy` | 10 | Pre-Fase |
-| **3. Visuals** | `ui-design` | 13 | Fase 2 |
-| | `visual-critique` | 4 | Fase 4 |
-| | `awesome-claude-design` | — | Fase 2-3 |
-| **4. Interacción** | `emil-design-eng` | — | Fase 3 |
-| | `interaction-design` | 13 | Fase 3 |
-| **5. Auditoría** | `impeccable` | — | Fase 4 |
-| | `web-design-guidelines` | — | Fase 4 |
-| | `writing-guidelines` | — | Fase 4 |
-| **6. Rendimiento** | `react-best-practices` | — | Fase 3-4 |
-| | `vercel-optimize` | — | Post-prod |
-| **7. Research** | `design-research` | 10 | Pre-Fase |
-| | `prototyping-testing` | 8 | Fase 2-3 |
-| **8. Operaciones** | `design-ops` | 7 | Fase 4+ |
-| | `designer-toolkit` | 7 | Cualquier |
-| **Meta** | `vanta-design-orchestrator` | — | Siempre |
-| | **Total sub-skills** | **82+** | |
+| Capa               | Skill                       | Sub-Skills | Fase      |
+| :----------------- | :-------------------------- | ---------: | :-------- |
+| **1. Fundaciones** | `ui-ux-pro-max`             |          — | Fase 1    |
+|                    | `design-systems`            |         10 | Fase 1-2  |
+| **2. Estructura**  | `ux-heuristics`             |          — | Fase 1    |
+|                    | `frontend-design`           |          — | Fase 1    |
+|                    | `ux-strategy`               |         10 | Pre-Fase  |
+| **3. Visuals**     | `ui-design`                 |         13 | Fase 2    |
+|                    | `visual-critique`           |          4 | Fase 4    |
+|                    | `awesome-claude-design`     |          — | Fase 2-3  |
+| **4. Interacción** | `emil-design-eng`           |          — | Fase 3    |
+|                    | `interaction-design`        |         13 | Fase 3    |
+| **5. Auditoría**   | `impeccable`                |          — | Fase 4    |
+|                    | `web-design-guidelines`     |          — | Fase 4    |
+|                    | `writing-guidelines`        |          — | Fase 4    |
+| **6. Rendimiento** | `react-best-practices`      |          — | Fase 3-4  |
+|                    | `vercel-optimize`           |          — | Post-prod |
+| **7. Research**    | `design-research`           |         10 | Pre-Fase  |
+|                    | `prototyping-testing`       |          8 | Fase 2-3  |
+| **8. Operaciones** | `design-ops`                |          7 | Fase 4+   |
+|                    | `designer-toolkit`          |          7 | Cualquier |
+| **Meta**           | `vanta-design-orchestrator` |          — | Siempre   |
+|                    | **Total sub-skills**        |    **82+** |           |
 
 ---
 
@@ -117,6 +117,7 @@ Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (
 ### CAPA 1 — Fundaciones y Tokens
 
 #### `ui-ux-pro-max`
+
 **Motor de estilos y tokens programático.**
 
 Contiene 50 estilos de diseño, 21 paletas de color, 50 parejas tipográficas y scripts Python para búsqueda.
@@ -134,11 +135,13 @@ python skills/ui-ux-pro-max/scripts/search.py "cinematic dark" --design-system -
 ---
 
 #### `design-systems`
+
 **Arquitectura completa de design systems.**
 
 10 sub-skills: `design-token`, `component-spec`, `accessibility-audit`, `theming-system`, `motion-system`, `naming-convention`, `pattern-library`, `icon-system`, `documentation-template`, `localization-design`, `design-system-governance`.
 
 **Jerarquía de tokens**:
+
 ```
 Global tokens (raw)     →  blue-500: #3B82F6
   ↓
@@ -156,19 +159,21 @@ Component tokens        →  button-color-primary: var(--color-action-primary)
 ### CAPA 2 — Estructura y Usabilidad
 
 #### `ux-heuristics`
+
 **Las 10 de Nielsen + Krug.**
 
 Checklist evaluable de severidad 0-4:
 
-| Severidad | Significado |
-|:---|:---|
-| 0 | No es problema de usabilidad |
-| 1 | Cosmético — corregir si hay tiempo |
-| 2 | Menor — prioridad baja |
-| 3 | Mayor — importante corregir |
-| 4 | Catástrofe — corregir antes de lanzar |
+| Severidad | Significado                           |
+| :-------- | :------------------------------------ |
+| 0         | No es problema de usabilidad          |
+| 1         | Cosmético — corregir si hay tiempo    |
+| 2         | Menor — prioridad baja                |
+| 3         | Mayor — importante corregir           |
+| 4         | Catástrofe — corregir antes de lanzar |
 
 **Trunk Test de Krug**: ¿El usuario puede identificar al instante?
+
 1. ¿Qué sitio es? (identidad)
 2. ¿En qué página/sección está?
 3. ¿Cuáles son las opciones principales?
@@ -181,15 +186,18 @@ Checklist evaluable de severidad 0-4:
 ---
 
 #### `frontend-design`
+
 **Estructuración limpia de componentes.**
 
 Anti-patrones que detecta y rechaza:
+
 - Divitis (nesting excesivo de `<div>`)
 - Layouts de 3 columnas iguales sin tensión visual
 - Hero sections sin whitespace dramático
 - Composiciones simétricas predecibles
 
 Patrones que promueve:
+
 - Bento grids asimétricos
 - Composiciones 60/40 o 70/30
 - Whitespace como elemento de diseño activo
@@ -200,20 +208,21 @@ Patrones que promueve:
 ---
 
 #### `ux-strategy`
+
 **10 sub-skills estratégicas.**
 
-| Sub-skill | Propósito |
-|:---|:---|
-| `competitive-analysis` | Benchmark UX contra competidores |
-| `design-principles` | Principios que resuelven debates |
-| `design-brief` | Brief con problema, audiencia, constraints, criterios |
-| `information-architecture` | Sitemap, taxonomía, modelo de contenido |
-| `content-strategy` | Auditoría, modelo, voz/tono, governance |
-| `experience-map` | Mapa multi-canal de todo el ecosistema |
-| `metrics-definition` | KPIs con HEART framework |
-| `north-star-vision` | Visión a 1/3/5 años |
-| `opportunity-framework` | Priorización con RICE, Kano, Impact-Effort |
-| `service-blueprint` | 5 swim lanes: evidence → user → frontstage → backstage → support |
+| Sub-skill                  | Propósito                                                        |
+| :------------------------- | :--------------------------------------------------------------- |
+| `competitive-analysis`     | Benchmark UX contra competidores                                 |
+| `design-principles`        | Principios que resuelven debates                                 |
+| `design-brief`             | Brief con problema, audiencia, constraints, criterios            |
+| `information-architecture` | Sitemap, taxonomía, modelo de contenido                          |
+| `content-strategy`         | Auditoría, modelo, voz/tono, governance                          |
+| `experience-map`           | Mapa multi-canal de todo el ecosistema                           |
+| `metrics-definition`       | KPIs con HEART framework                                         |
+| `north-star-vision`        | Visión a 1/3/5 años                                              |
+| `opportunity-framework`    | Priorización con RICE, Kano, Impact-Effort                       |
+| `service-blueprint`        | 5 swim lanes: evidence → user → frontstage → backstage → support |
 
 **Cuándo usarlo**: Antes de diseñar pixeles. Discovery puro.
 
@@ -222,29 +231,31 @@ Patrones que promueve:
 ### CAPA 3 — Diseño Visual y Composición
 
 #### `ui-design`
+
 **13 sub-skills de craft visual.**
 
-| Sub-skill | Regla clave |
-|:---|:---|
-| `color-system` | Escalas tonales 50-950. Contraste 4.5:1 body, 3:1 large text |
-| `typography-scale` | Ratio modular 1.25+. Mínimo 16px body. 4-5 tamaños en uso regular |
-| `spacing-system` | Base 4px o 8px. Escala nombrada xs→3xl |
-| `layout-grid` | 4/8/12 columnas. Gutters 16/24/32px |
-| `responsive-design` | Mobile-first. Breakpoints: 375/640/1024/1440 |
-| `visual-hierarchy` | Squint test: jerarquía visible al desenfocar |
-| `dark-mode-design` | No invertir — rediseñar superficies. Off-white `#E0E0E0` no pure white |
-| `readable-measure` | 45-75 caracteres por línea. `max-width: 65ch` |
-| `data-visualization` | Data-ink ratio máximo. Colorblind-safe palettes |
-| `law-of-proximity` | Espacio dentro < espacio entre |
-| `law-of-common-region` | Usar el contenedor más débil que funcione |
-| `von-restorff-effect` | Un solo elemento diferenciado por pantalla |
-| `aesthetic-usability` | Consistencia como señal de calidad |
+| Sub-skill              | Regla clave                                                            |
+| :--------------------- | :--------------------------------------------------------------------- |
+| `color-system`         | Escalas tonales 50-950. Contraste 4.5:1 body, 3:1 large text           |
+| `typography-scale`     | Ratio modular 1.25+. Mínimo 16px body. 4-5 tamaños en uso regular      |
+| `spacing-system`       | Base 4px o 8px. Escala nombrada xs→3xl                                 |
+| `layout-grid`          | 4/8/12 columnas. Gutters 16/24/32px                                    |
+| `responsive-design`    | Mobile-first. Breakpoints: 375/640/1024/1440                           |
+| `visual-hierarchy`     | Squint test: jerarquía visible al desenfocar                           |
+| `dark-mode-design`     | No invertir — rediseñar superficies. Off-white `#E0E0E0` no pure white |
+| `readable-measure`     | 45-75 caracteres por línea. `max-width: 65ch`                          |
+| `data-visualization`   | Data-ink ratio máximo. Colorblind-safe palettes                        |
+| `law-of-proximity`     | Espacio dentro < espacio entre                                         |
+| `law-of-common-region` | Usar el contenedor más débil que funcione                              |
+| `von-restorff-effect`  | Un solo elemento diferenciado por pantalla                             |
+| `aesthetic-usability`  | Consistencia como señal de calidad                                     |
 
 **Cuándo usarlo**: Fase 2 — Después de la estructura, para aplicar identidad visual.
 
 ---
 
 #### `visual-critique`
+
 **4 dimensiones de crítica.**
 
 ```
@@ -262,9 +273,11 @@ Rating por dimensión: `pass` / `minor issue` / `major issue`
 ---
 
 #### `awesome-claude-design`
+
 **Anti-slop y familias estéticas.**
 
 **Slop test — señales de alerta**:
+
 - ❌ Gradientes morado→azul ubicuos
 - ❌ Inter/Roboto como única fuente en todo
 - ❌ Tarjetas sobre tarjetas sobre tarjetas
@@ -280,9 +293,11 @@ Rating por dimensión: `pass` / `minor issue` / `major issue`
 ### CAPA 4 — Interacciones y Movimiento
 
 #### `emil-design-eng`
+
 **Filosofía de microinteracciones de Emil Kowalski.**
 
 **Reglas fundamentales**:
+
 - Las buenas animaciones son invisibles — los usuarios solo notan las malas
 - Respuesta física inmediata: <100ms visual feedback al input
 - Duración estándar: 150-300ms. Máximo: 500ms para transiciones de página
@@ -295,18 +310,20 @@ Rating por dimensión: `pass` / `minor issue` / `major issue`
 ---
 
 #### `interaction-design`
+
 **13 sub-skills con base en ciencia cognitiva.**
 
 **Leyes cognitivas aplicadas**:
 
-| Ley | Regla de diseño |
-|:---|:---|
-| **Doherty** (<400ms) | Feedback visual <100ms. Loading indicator >400ms. Progress >3s |
+| Ley                       | Regla de diseño                                                                        |
+| :------------------------ | :------------------------------------------------------------------------------------- |
+| **Doherty** (<400ms)      | Feedback visual <100ms. Loading indicator >400ms. Progress >3s                         |
 | **Fitts** (target sizing) | Touch: 44×44pt mínimo. Pointer: 24×24px mínimo. Bordes de pantalla = targets infinitos |
-| **Hick** (decisión) | Reducir opciones simultáneas. Agrupar antes de eliminar. Pricing: 3 tiers max |
-| **Miller** (chunking) | Agrupar en bloques de 4±1. Forms: secciones lógicas. Phone: `555-867-5309` |
+| **Hick** (decisión)       | Reducir opciones simultáneas. Agrupar antes de eliminar. Pricing: 3 tiers max          |
+| **Miller** (chunking)     | Agrupar en bloques de 4±1. Forms: secciones lógicas. Phone: `555-867-5309`             |
 
 **State machines para UI**:
+
 ```
 Form:   idle → editing → validating → submitting → success/error → idle
 Fetch:  idle → loading → success/error, error → retrying → success/error
@@ -320,6 +337,7 @@ Auth:   logged-out → authenticating → logged-in → logging-out → logged-o
 ### CAPA 5 — Auditoría y Refinamiento
 
 #### `impeccable`
+
 **CLI de auditoría con 23 comandos y 41 reglas anti-slop.**
 
 ```bash
@@ -336,6 +354,7 @@ Auth:   logged-out → authenticating → logged-in → logging-out → logged-o
 ---
 
 #### `web-design-guidelines` + `writing-guidelines`
+
 **Compliance checks de Vercel.**
 
 Ambas skills descargan las guidelines actualizadas desde los repos oficiales y aplican reglas en formato `file:line`.
@@ -350,20 +369,22 @@ Ambas skills descargan las guidelines actualizadas desde los repos oficiales y a
 ### CAPA 6 — Rendimiento y Optimización
 
 #### `react-best-practices`
+
 **70 reglas en 8 categorías por prioridad.**
 
-| Prioridad | Categoría | Prefijo | Impacto |
-|:---|:---|:---|:---|
-| 1 | Eliminar waterfalls | `async-` | CRITICAL |
-| 2 | Bundle size | `bundle-` | CRITICAL |
-| 3 | Server-side | `server-` | HIGH |
-| 4 | Client data fetching | `client-` | MEDIUM-HIGH |
-| 5 | Re-renders | `rerender-` | MEDIUM |
-| 6 | Rendering | `rendering-` | MEDIUM |
-| 7 | JavaScript | `js-` | LOW-MEDIUM |
-| 8 | Advanced | `advanced-` | LOW |
+| Prioridad | Categoría            | Prefijo      | Impacto     |
+| :-------- | :------------------- | :----------- | :---------- |
+| 1         | Eliminar waterfalls  | `async-`     | CRITICAL    |
+| 2         | Bundle size          | `bundle-`    | CRITICAL    |
+| 3         | Server-side          | `server-`    | HIGH        |
+| 4         | Client data fetching | `client-`    | MEDIUM-HIGH |
+| 5         | Re-renders           | `rerender-`  | MEDIUM      |
+| 6         | Rendering            | `rendering-` | MEDIUM      |
+| 7         | JavaScript           | `js-`        | LOW-MEDIUM  |
+| 8         | Advanced             | `advanced-`  | LOW         |
 
 **Top 5 reglas de mayor impacto**:
+
 1. `async-parallel` → `Promise.all()` para operaciones independientes
 2. `bundle-barrel-imports` → Importar directo, evitar barrel files
 3. `async-suspense-boundaries` → Usar Suspense para streaming
@@ -375,6 +396,7 @@ Ambas skills descargan las guidelines actualizadas desde los repos oficiales y a
 ---
 
 #### `vercel-optimize`
+
 **Pipeline de auditoría de producción.**
 
 Requiere: Vercel CLI v53+, proyecto linkeado, Node.js 20+.
@@ -388,38 +410,40 @@ Pipeline: `collect → scan → merge → gate → deep-dive → reconcile → v
 ### CAPA 7 — Investigación y Metodología
 
 #### `design-research`
+
 **10 sub-skills de investigación de usuario.**
 
-| Sub-skill | Método | Artefacto |
-|:---|:---|:---|
-| `user-persona` | Entrevistas + analytics | Persona profile |
-| `empathy-map` | Investigación cualitativa | 4 cuadrantes: Says/Thinks/Does/Feels |
-| `journey-map` | Observación + entrevistas | Mapa 5-7 stages con emociones |
-| `interview-script` | Preparación | Script con warm-up/core/wrap-up |
-| `usability-test-plan` | Planificación | Plan con tareas, métricas, facilitación |
-| `card-sort-analysis` | Análisis | Similarity matrix + IA recomendada |
-| `affinity-diagram` | Síntesis | Clusters bottom-up con insights |
-| `jobs-to-be-done` | Framework JTBD | Mapa funcional/emocional/social |
-| `diary-study-plan` | Longitudinal | Plan 1-4 semanas |
-| `survey-design` | Cuantitativa | Encuesta con scales validadas |
+| Sub-skill             | Método                    | Artefacto                               |
+| :-------------------- | :------------------------ | :-------------------------------------- |
+| `user-persona`        | Entrevistas + analytics   | Persona profile                         |
+| `empathy-map`         | Investigación cualitativa | 4 cuadrantes: Says/Thinks/Does/Feels    |
+| `journey-map`         | Observación + entrevistas | Mapa 5-7 stages con emociones           |
+| `interview-script`    | Preparación               | Script con warm-up/core/wrap-up         |
+| `usability-test-plan` | Planificación             | Plan con tareas, métricas, facilitación |
+| `card-sort-analysis`  | Análisis                  | Similarity matrix + IA recomendada      |
+| `affinity-diagram`    | Síntesis                  | Clusters bottom-up con insights         |
+| `jobs-to-be-done`     | Framework JTBD            | Mapa funcional/emocional/social         |
+| `diary-study-plan`    | Longitudinal              | Plan 1-4 semanas                        |
+| `survey-design`       | Cuantitativa              | Encuesta con scales validadas           |
 
 **Cuándo usarlo**: Pre-Fase — Antes de cualquier diseño significativo.
 
 ---
 
 #### `prototyping-testing`
+
 **8 sub-skills de validación.**
 
-| Sub-skill | Propósito |
-|:---|:---|
-| `prototype-strategy` | Elegir fidelidad correcta para la pregunta |
-| `heuristic-evaluation` | Nielsen 10 con severidad 0-4 |
-| `a-b-test-design` | Hipótesis + variantes + sample size |
-| `accessibility-test-plan` | 4 capas: automated → manual → AT → user |
-| `click-test-plan` | First-click success rate |
-| `test-scenario` | Tareas + criterios + guía de observación |
-| `user-flow-diagram` | Happy path + error paths + exits |
-| `wireframe-spec` | Layout anotado con comportamiento |
+| Sub-skill                 | Propósito                                  |
+| :------------------------ | :----------------------------------------- |
+| `prototype-strategy`      | Elegir fidelidad correcta para la pregunta |
+| `heuristic-evaluation`    | Nielsen 10 con severidad 0-4               |
+| `a-b-test-design`         | Hipótesis + variantes + sample size        |
+| `accessibility-test-plan` | 4 capas: automated → manual → AT → user    |
+| `click-test-plan`         | First-click success rate                   |
+| `test-scenario`           | Tareas + criterios + guía de observación   |
+| `user-flow-diagram`       | Happy path + error paths + exits           |
+| `wireframe-spec`          | Layout anotado con comportamiento          |
 
 **Cuándo usarlo**: Entre Fase 2 y Fase 3.
 
@@ -428,34 +452,36 @@ Pipeline: `collect → scan → merge → gate → deep-dive → reconcile → v
 ### CAPA 8 — Operaciones y Herramientas de Equipo
 
 #### `design-ops`
+
 **7 sub-skills operacionales.**
 
-| Sub-skill | Entregable |
-|:---|:---|
-| `design-critique` | Sesión estructurada con formato I notice/I wonder/What if |
-| `design-debt-audit` | Registro con Severidad × Frecuencia / Esfuerzo |
-| `design-impact-reporting` | Before/After + A/B summary + scorecard |
-| `design-qa-checklist` | Visual/Layout/Interaction/Content/A11y/Cross-platform |
-| `design-review-process` | 4 gates: Concept → Design → Pre-Handoff → Implementation QA |
-| `handoff-spec` | Specs: visual + interaction + content + assets + edge cases |
-| `design-sprint-plan` | 5 días: Understand → Diverge → Decide → Prototype → Test |
+| Sub-skill                 | Entregable                                                  |
+| :------------------------ | :---------------------------------------------------------- |
+| `design-critique`         | Sesión estructurada con formato I notice/I wonder/What if   |
+| `design-debt-audit`       | Registro con Severidad × Frecuencia / Esfuerzo              |
+| `design-impact-reporting` | Before/After + A/B summary + scorecard                      |
+| `design-qa-checklist`     | Visual/Layout/Interaction/Content/A11y/Cross-platform       |
+| `design-review-process`   | 4 gates: Concept → Design → Pre-Handoff → Implementation QA |
+| `handoff-spec`            | Specs: visual + interaction + content + assets + edge cases |
+| `design-sprint-plan`      | 5 días: Understand → Diverge → Decide → Prototype → Test    |
 
 **Cuándo usarlo**: Fase 4 y post-producción.
 
 ---
 
 #### `designer-toolkit`
+
 **7 sub-skills utilitarias.**
 
-| Sub-skill | Uso |
-|:---|:---|
-| `design-rationale` | Decision → Context → Options → Evidence → Reasoning → Trade-offs |
-| `ux-writing` | Microcopy, errors, empty states, CTAs, onboarding |
-| `case-study` | Challenge → Process → Solution → Impact → Reflection |
-| `design-negotiation` | Advocacy basada en evidencia, no en preferencia |
-| `presentation-deck` | Hook → Context → Journey → Solution → Evidence → Ask |
-| `design-system-adoption` | Awareness → Education → Enablement → Incentives |
-| `design-token-audit` | Inventory → Categorize → Map → Flag → Recommend |
+| Sub-skill                | Uso                                                              |
+| :----------------------- | :--------------------------------------------------------------- |
+| `design-rationale`       | Decision → Context → Options → Evidence → Reasoning → Trade-offs |
+| `ux-writing`             | Microcopy, errors, empty states, CTAs, onboarding                |
+| `case-study`             | Challenge → Process → Solution → Impact → Reflection             |
+| `design-negotiation`     | Advocacy basada en evidencia, no en preferencia                  |
+| `presentation-deck`      | Hook → Context → Journey → Solution → Evidence → Ask             |
+| `design-system-adoption` | Awareness → Education → Enablement → Incentives                  |
+| `design-token-audit`     | Inventory → Categorize → Map → Flag → Recommend                  |
 
 **Cuándo usarlo**: Cualquier fase, según necesidad.
 
@@ -506,36 +532,36 @@ Pipeline: `collect → scan → merge → gate → deep-dive → reconcile → v
 
 Workflows encadenados que combinan múltiples sub-skills:
 
-| Skill | Workflow | Descripción |
-|:---|:---|:---|
-| `design-systems` | `:audit-system` | Auditoría completa de design system |
-| `design-systems` | `:create-component` | Scaffold de spec de componente |
-| `design-systems` | `:tokenize` | Extraer tokens de stylesheet existente |
-| `ui-design` | `:color-palette` | Paleta completa con accessibility checks |
-| `ui-design` | `:design-screen` | Diseñar pantalla desde requirements |
-| `ui-design` | `:responsive-audit` | Auditar responsive en breakpoints |
-| `ui-design` | `:type-system` | Sistema tipográfico completo |
-| `visual-critique` | `:critique-screen` | 4 críticas + fix list priorizada |
-| `interaction-design` | `:design-interaction` | Flujo de interacción completo |
-| `interaction-design` | `:error-flow` | Flujo de manejo de errores |
-| `interaction-design` | `:map-states` | State machine para UI complejo |
-| `design-research` | `:discover` | Ciclo completo de user research |
-| `design-research` | `:interview` | Script o resumen de entrevista |
-| `design-research` | `:synthesize` | Síntesis en affinity diagram |
-| `design-research` | `:test-plan` | Plan de usability test |
-| `prototyping-testing` | `:evaluate` | Evaluación heurística |
-| `prototyping-testing` | `:experiment` | Diseño de A/B test |
-| `prototyping-testing` | `:prototype-plan` | Plan de prototipado |
-| `prototyping-testing` | `:test-plan` | Plan de testing completo |
-| `ux-strategy` | `:benchmark` | Benchmarking competitivo |
-| `ux-strategy` | `:frame-problem` | Estructurar design challenge |
-| `ux-strategy` | `:strategize` | Estrategia UX completa |
-| `design-ops` | `:handoff` | Package de handoff a dev |
-| `design-ops` | `:plan-sprint` | Planificar design sprint |
-| `design-ops` | `:setup-workflow` | Configurar workflow de equipo |
-| `designer-toolkit` | `:build-presentation` | Presentación estructurada |
-| `designer-toolkit` | `:write-case-study` | Case study de portfolio |
-| `designer-toolkit` | `:write-rationale` | Rationale de decisiones |
+| Skill                 | Workflow              | Descripción                              |
+| :-------------------- | :-------------------- | :--------------------------------------- |
+| `design-systems`      | `:audit-system`       | Auditoría completa de design system      |
+| `design-systems`      | `:create-component`   | Scaffold de spec de componente           |
+| `design-systems`      | `:tokenize`           | Extraer tokens de stylesheet existente   |
+| `ui-design`           | `:color-palette`      | Paleta completa con accessibility checks |
+| `ui-design`           | `:design-screen`      | Diseñar pantalla desde requirements      |
+| `ui-design`           | `:responsive-audit`   | Auditar responsive en breakpoints        |
+| `ui-design`           | `:type-system`        | Sistema tipográfico completo             |
+| `visual-critique`     | `:critique-screen`    | 4 críticas + fix list priorizada         |
+| `interaction-design`  | `:design-interaction` | Flujo de interacción completo            |
+| `interaction-design`  | `:error-flow`         | Flujo de manejo de errores               |
+| `interaction-design`  | `:map-states`         | State machine para UI complejo           |
+| `design-research`     | `:discover`           | Ciclo completo de user research          |
+| `design-research`     | `:interview`          | Script o resumen de entrevista           |
+| `design-research`     | `:synthesize`         | Síntesis en affinity diagram             |
+| `design-research`     | `:test-plan`          | Plan de usability test                   |
+| `prototyping-testing` | `:evaluate`           | Evaluación heurística                    |
+| `prototyping-testing` | `:experiment`         | Diseño de A/B test                       |
+| `prototyping-testing` | `:prototype-plan`     | Plan de prototipado                      |
+| `prototyping-testing` | `:test-plan`          | Plan de testing completo                 |
+| `ux-strategy`         | `:benchmark`          | Benchmarking competitivo                 |
+| `ux-strategy`         | `:frame-problem`      | Estructurar design challenge             |
+| `ux-strategy`         | `:strategize`         | Estrategia UX completa                   |
+| `design-ops`          | `:handoff`            | Package de handoff a dev                 |
+| `design-ops`          | `:plan-sprint`        | Planificar design sprint                 |
+| `design-ops`          | `:setup-workflow`     | Configurar workflow de equipo            |
+| `designer-toolkit`    | `:build-presentation` | Presentación estructurada                |
+| `designer-toolkit`    | `:write-case-study`   | Case study de portfolio                  |
+| `designer-toolkit`    | `:write-rationale`    | Rationale de decisiones                  |
 
 ---
 
@@ -543,13 +569,13 @@ Workflows encadenados que combinan múltiples sub-skills:
 
 Cuando dos skills dan directrices contradictorias, se resuelven en este orden:
 
-| Prioridad | Dominio | Skills Rectoras |
-|:---|:---|:---|
+| Prioridad  | Dominio           | Skills Rectoras                                       |
+| :--------- | :---------------- | :---------------------------------------------------- |
 | 1 (máxima) | **Accesibilidad** | `design-systems/accessibility-audit`, `ux-heuristics` |
-| 2 | **Rendimiento** | `react-best-practices`, `vercel-optimize` |
-| 3 | **Usabilidad** | `ux-heuristics`, `interaction-design` |
-| 4 | **Anti-Slop** | `impeccable`, `awesome-claude-design` |
-| 5 | **Estética** | `ui-design`, `emil-design-eng`, `visual-critique` |
+| 2          | **Rendimiento**   | `react-best-practices`, `vercel-optimize`             |
+| 3          | **Usabilidad**    | `ux-heuristics`, `interaction-design`                 |
+| 4          | **Anti-Slop**     | `impeccable`, `awesome-claude-design`                 |
+| 5          | **Estética**      | `ui-design`, `emil-design-eng`, `visual-critique`     |
 
 > Si es accesible pero lento → se optimiza rendimiento.
 > Si es bonito pero confuso → se reestructura usabilidad.
@@ -562,28 +588,28 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden:
 
 ### Valores por defecto del sistema
 
-| Propiedad | Valor |
-|:---|:---|
-| Color space | OKLCH o HSL (no hex/rgb sin justificación) |
-| Contraste mínimo texto | 4.5:1 (AA) |
-| Contraste mínimo UI | 3:1 |
-| Fuente body mínimo | 16px |
-| Línea óptima (measure) | 45-75 caracteres |
-| Touch target mínimo | 44×44pt |
-| Pointer target mínimo | 24×24px |
-| Feedback visual máximo | <100ms |
-| Loading indicator | >400ms (Doherty) |
-| Duración animación UI | 150-300ms |
-| Duración máxima transición | 500ms |
-| WebGL target | 60fps constante |
-| Spacing base | 4px o 8px |
-| Easing estándar | `cubic-bezier(0.2, 0, 0, 1)` |
-| Easing de entrada | `cubic-bezier(0, 0, 0.2, 1)` |
-| Easing de salida | `cubic-bezier(0.3, 0, 1, 0.3)` |
-| Easing prohibido en UI | `ease-in` |
-| `prefers-reduced-motion` | Obligatorio en toda animación |
+| Propiedad                  | Valor                                      |
+| :------------------------- | :----------------------------------------- |
+| Color space                | OKLCH o HSL (no hex/rgb sin justificación) |
+| Contraste mínimo texto     | 4.5:1 (AA)                                 |
+| Contraste mínimo UI        | 3:1                                        |
+| Fuente body mínimo         | 16px                                       |
+| Línea óptima (measure)     | 45-75 caracteres                           |
+| Touch target mínimo        | 44×44pt                                    |
+| Pointer target mínimo      | 24×24px                                    |
+| Feedback visual máximo     | <100ms                                     |
+| Loading indicator          | >400ms (Doherty)                           |
+| Duración animación UI      | 150-300ms                                  |
+| Duración máxima transición | 500ms                                      |
+| WebGL target               | 60fps constante                            |
+| Spacing base               | 4px o 8px                                  |
+| Easing estándar            | `cubic-bezier(0.2, 0, 0, 1)`               |
+| Easing de entrada          | `cubic-bezier(0, 0, 0.2, 1)`               |
+| Easing de salida           | `cubic-bezier(0.3, 0, 1, 0.3)`             |
+| Easing prohibido en UI     | `ease-in`                                  |
+| `prefers-reduced-motion`   | Obligatorio en toda animación              |
 
 ---
 
-*Documento generado y mantenido por el Vanta Design Orchestrator.*
-*Última actualización: 2026-06-15.*
+_Documento generado y mantenido por el Vanta Design Orchestrator._
+_Última actualización: 2026-06-15._

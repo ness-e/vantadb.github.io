@@ -12,7 +12,8 @@ export default class Sizes extends EventEmitter {
     this.isMobile = this.exprience.isMobile;
 
     // Setup
-    this.pixelRatio = this.isMobile ? 1 : Math.min(window.devicePixelRatio, 2);
+    this.renderScale = this.isMobile ? 1 : 0.9;
+    this.pixelRatio = this.isMobile ? 1 : Math.min(window.devicePixelRatio, 3);
     this.width = window.innerWidth;
     this.height = window.innerHeight;
 

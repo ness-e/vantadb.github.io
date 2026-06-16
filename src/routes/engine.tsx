@@ -81,11 +81,7 @@ function GraphTopology() {
           y1={nodes[a].y}
           x2={nodes[b].x}
           y2={nodes[b].y}
-          stroke={
-            isEdgeHighlighted(a, b)
-              ? "rgba(255,106,0,0.8)"
-              : "rgba(255,106,0,0.18)"
-          }
+          stroke={isEdgeHighlighted(a, b) ? "rgba(255,106,0,0.8)" : "rgba(255,106,0,0.18)"}
           strokeWidth={isEdgeHighlighted(a, b) ? "2" : "1"}
           style={{ transition: "stroke 200ms, stroke-width 200ms" }}
         />
@@ -179,18 +175,58 @@ function WALSimulator() {
   };
 
   return (
-    <div style={{ background: "var(--surface)", border: "1px solid rgba(255,106,0,0.08)", borderRadius: "var(--radius-lg)", padding: "2rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+    <div
+      style={{
+        background: "var(--surface)",
+        border: "1px solid rgba(255,106,0,0.08)",
+        borderRadius: "var(--radius-lg)",
+        padding: "2rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "1.5rem",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: engineState === "ready" ? "#28c840" : engineState === "crashed" ? "#ff5f57" : "#ffc107", boxShadow: `0 0 10px ${engineState === "ready" ? "#28c840" : engineState === "crashed" ? "#ff5f57" : "#ffc107"}` }} />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "var(--white)", textTransform: "uppercase" }}>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background:
+                engineState === "ready"
+                  ? "#28c840"
+                  : engineState === "crashed"
+                    ? "#ff5f57"
+                    : "#ffc107",
+              boxShadow: `0 0 10px ${engineState === "ready" ? "#28c840" : engineState === "crashed" ? "#ff5f57" : "#ffc107"}`,
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.72rem",
+              color: "var(--white)",
+              textTransform: "uppercase",
+            }}
+          >
             ENGINE STATUS: {engineState}
           </span>
         </div>
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <button
             className="btn-ghost"
-            style={{ fontSize: "0.7rem", padding: "0.4rem 0.8rem", color: engineState === "ready" ? "var(--crimson)" : "var(--steel)", borderColor: engineState === "ready" ? "rgba(220,20,60,0.2)" : "rgba(255,255,255,0.05)" }}
+            style={{
+              fontSize: "0.7rem",
+              padding: "0.4rem 0.8rem",
+              color: engineState === "ready" ? "var(--crimson)" : "var(--steel)",
+              borderColor:
+                engineState === "ready" ? "rgba(220,20,60,0.2)" : "rgba(255,255,255,0.05)",
+            }}
             onClick={triggerCrash}
             disabled={engineState !== "ready"}
           >
@@ -245,8 +281,22 @@ function RRFWeightsSlider() {
 
   return (
     <div className="slider-container">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
-        <h4 style={{ fontFamily: "var(--font-display)", color: "var(--white)", margin: 0, fontSize: "1.1rem" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          marginBottom: "1rem",
+        }}
+      >
+        <h4
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--white)",
+            margin: 0,
+            fontSize: "1.1rem",
+          }}
+        >
           Interactive Reciprocal Rank Fusion (RRF) Planner
         </h4>
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--amber)" }}>
@@ -254,10 +304,19 @@ function RRFWeightsSlider() {
         </span>
       </div>
       <p style={{ fontSize: "0.85rem", color: "var(--muted)", margin: "0 0 1.5rem" }}>
-        Adjust the slider to balance lexical matching (BM25) and vector embedding similarity (HNSW). VantaDB fuses both signals dynamically.
+        Adjust the slider to balance lexical matching (BM25) and vector embedding similarity (HNSW).
+        VantaDB fuses both signals dynamically.
       </p>
 
-      <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--steel)" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.75rem",
+          color: "var(--steel)",
+        }}
+      >
         <span>BM25 (Léxico): {bm25Weight}%</span>
         <span>HNSW (Vector): {hnswWeight}%</span>
       </div>
@@ -271,18 +330,79 @@ function RRFWeightsSlider() {
         className="rrf-slider"
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginTop: "1.5rem" }}>
-        <div style={{ background: "rgba(0,0,0,0.2)", padding: "1rem", borderRadius: "var(--radius-md)", border: "1px solid rgba(255,255,255,0.03)" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--steel)", marginBottom: "0.25rem" }}>LEXICAL RECALL</div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--white)" }}>{lexicalRecall}%</div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "1rem",
+          marginTop: "1.5rem",
+        }}
+      >
+        <div
+          style={{
+            background: "rgba(0,0,0,0.2)",
+            padding: "1rem",
+            borderRadius: "var(--radius-md)",
+            border: "1px solid rgba(255,255,255,0.03)",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.62rem",
+              color: "var(--steel)",
+              marginBottom: "0.25rem",
+            }}
+          >
+            LEXICAL RECALL
+          </div>
+          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--white)" }}>
+            {lexicalRecall}%
+          </div>
         </div>
-        <div style={{ background: "rgba(0,0,0,0.2)", padding: "1rem", borderRadius: "var(--radius-md)", border: "1px solid rgba(255,255,255,0.03)" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--steel)", marginBottom: "0.25rem" }}>VECTOR RECALL</div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--white)" }}>{vectorRecall}%</div>
+        <div
+          style={{
+            background: "rgba(0,0,0,0.2)",
+            padding: "1rem",
+            borderRadius: "var(--radius-md)",
+            border: "1px solid rgba(255,255,255,0.03)",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.62rem",
+              color: "var(--steel)",
+              marginBottom: "0.25rem",
+            }}
+          >
+            VECTOR RECALL
+          </div>
+          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--white)" }}>
+            {vectorRecall}%
+          </div>
         </div>
-        <div style={{ background: "var(--amber-dim)", padding: "1rem", borderRadius: "var(--radius-md)", border: "1px solid rgba(255,106,0,0.15)" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--amber-soft)", marginBottom: "0.25rem" }}>FUSED RECALL@10</div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--amber)" }}>{fusedRecall}%</div>
+        <div
+          style={{
+            background: "var(--amber-dim)",
+            padding: "1rem",
+            borderRadius: "var(--radius-md)",
+            border: "1px solid rgba(255,106,0,0.15)",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.62rem",
+              color: "var(--amber-soft)",
+              marginBottom: "0.25rem",
+            }}
+          >
+            FUSED RECALL@10
+          </div>
+          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--amber)" }}>
+            {fusedRecall}%
+          </div>
         </div>
       </div>
     </div>
@@ -308,30 +428,71 @@ function EnginePage() {
     <div style={{ background: "var(--background)", minHeight: "100vh" }}>
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Core Engine</span>
-        <h1 className="title-accent reveal reveal-delay-1" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.04em", margin: "0.5rem 0 1.5rem" }}>
-          Four modalities.<br />One atomic contract.
+        <h1
+          className="title-accent reveal reveal-delay-1"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.04em",
+            margin: "0.5rem 0 1.5rem",
+          }}
+        >
+          Four modalities.
+          <br />
+          One atomic contract.
         </h1>
         <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
-          VantaDB consolidates lexical matching, HNSW vector search, Graph traversal nodes and transactional persistence in a zero-dependency Rust local-first library database.
+          VantaDB consolidates lexical matching, HNSW vector search, Graph traversal nodes and
+          transactional persistence in a zero-dependency Rust local-first library database.
         </p>
       </header>
 
-      <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}>
-        
+      <main
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}
+      >
         {/* ── Section 1: BM25 + HNSW Hybrid Search ── */}
         <section style={{ padding: "6rem 0", borderBottom: "1px solid var(--subtle)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "6rem", alignItems: "center" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.2fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div>
               <span className="section-eyebrow reveal">Modalidad 01</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ margin: "0.5rem 0 1.5rem" }}>
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ margin: "0.5rem 0 1.5rem" }}
+              >
                 Hybrid Search with RRF Fusion
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2rem" }}>
-                VantaDB executes lexical BM25 matching and high-dimensional HNSW vector recall under a unified internal query engine framework. The fusion relies on Reciprocal Rank Fusion (RRF), weighting relevance dynamically.
+                VantaDB executes lexical BM25 matching and high-dimensional HNSW vector recall under
+                a unified internal query engine framework. The fusion relies on Reciprocal Rank
+                Fusion (RRF), weighting relevance dynamically.
               </p>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }} className="reveal reveal-delay-3">
-                {["k1=1.2, b=0.75 text tf-idf saturation configuration.", "ef_construction=200, M=16 HNSW parameters.", "Cosine, Euclidean, and Dot Product distances."].map((spec, sIdx) => (
-                  <li key={sIdx} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", fontSize: "0.85rem", color: "var(--steel)" }}>
+              <ul
+                style={{ listStyle: "none", padding: 0, margin: 0 }}
+                className="reveal reveal-delay-3"
+              >
+                {[
+                  "k1=1.2, b=0.75 text tf-idf saturation configuration.",
+                  "ef_construction=200, M=16 HNSW parameters.",
+                  "Cosine, Euclidean, and Dot Product distances.",
+                ].map((spec, sIdx) => (
+                  <li
+                    key={sIdx}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      fontSize: "0.85rem",
+                      color: "var(--steel)",
+                    }}
+                  >
                     <span style={{ color: "var(--amber)" }}>✓</span> {spec}
                   </li>
                 ))}
@@ -345,24 +506,59 @@ function EnginePage() {
 
         {/* ── Section 2: GraphRAG Relations ── */}
         <section style={{ padding: "6rem 0", borderBottom: "1px solid var(--subtle)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "6rem", alignItems: "center" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div className="reveal reveal-delay-2">
-              <div style={{ background: "var(--surface)", border: "1px solid rgba(255,106,0,0.08)", padding: "2rem", borderRadius: "var(--radius-lg)" }}>
+              <div
+                style={{
+                  background: "var(--surface)",
+                  border: "1px solid rgba(255,106,0,0.08)",
+                  padding: "2rem",
+                  borderRadius: "var(--radius-lg)",
+                }}
+              >
                 <Scanlines />
                 <GraphTopology />
               </div>
             </div>
             <div>
               <span className="section-eyebrow reveal">Modalidad 02</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ margin: "0.5rem 0 1.5rem" }}>
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ margin: "0.5rem 0 1.5rem" }}
+              >
                 Graph Relations alongside vectors
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2rem" }}>
-                Establish semantic connections between vectors natively. VantaDB stores directed weighted adjacency lists in-process. Traverse the local knowledge graph via similarity keys without spawning network-bound Graph servers.
+                Establish semantic connections between vectors natively. VantaDB stores directed
+                weighted adjacency lists in-process. Traverse the local knowledge graph via
+                similarity keys without spawning network-bound Graph servers.
               </p>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }} className="reveal reveal-delay-3">
-                {["graph_hops=2 traversal search capability.", "Target weight attributes for contextual relevance.", "60% less prompt token usage compared to flat memory arrays."].map((spec, sIdx) => (
-                  <li key={sIdx} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", fontSize: "0.85rem", color: "var(--steel)" }}>
+              <ul
+                style={{ listStyle: "none", padding: 0, margin: 0 }}
+                className="reveal reveal-delay-3"
+              >
+                {[
+                  "graph_hops=2 traversal search capability.",
+                  "Target weight attributes for contextual relevance.",
+                  "60% less prompt token usage compared to flat memory arrays.",
+                ].map((spec, sIdx) => (
+                  <li
+                    key={sIdx}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      fontSize: "0.85rem",
+                      color: "var(--steel)",
+                    }}
+                  >
                     <span style={{ color: "var(--amber)" }}>✓</span> {spec}
                   </li>
                 ))}
@@ -373,18 +569,46 @@ function EnginePage() {
 
         {/* ── Section 3: Crash-Safe Durability ── */}
         <section style={{ padding: "6rem 0" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "6rem", alignItems: "center" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.2fr",
+              gap: "6rem",
+              alignItems: "center",
+            }}
+          >
             <div>
               <span className="section-eyebrow reveal">Modalidad 03</span>
-              <h2 className="section-title reveal reveal-delay-1" style={{ margin: "0.5rem 0 1.5rem" }}>
+              <h2
+                className="section-title reveal reveal-delay-1"
+                style={{ margin: "0.5rem 0 1.5rem" }}
+              >
                 Durability: WAL + CRC32C Verification
               </h2>
               <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2rem" }}>
-                VantaDB guarantees ACID durability levels by forcing log flushes inside the Write-Ahead Log (WAL) before returning write confirmations. A checksum validation prevents corrupted sectors from reading into runtime indexes.
+                VantaDB guarantees ACID durability levels by forcing log flushes inside the
+                Write-Ahead Log (WAL) before returning write confirmations. A checksum validation
+                prevents corrupted sectors from reading into runtime indexes.
               </p>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }} className="reveal reveal-delay-3">
-                {["Fsync enabled block transactions.", "Automatic WAL replay integrity verification on engine.open().", "Heavy certification testing validation suites."].map((spec, sIdx) => (
-                  <li key={sIdx} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", fontSize: "0.85rem", color: "var(--steel)" }}>
+              <ul
+                style={{ listStyle: "none", padding: 0, margin: 0 }}
+                className="reveal reveal-delay-3"
+              >
+                {[
+                  "Fsync enabled block transactions.",
+                  "Automatic WAL replay integrity verification on engine.open().",
+                  "Heavy certification testing validation suites.",
+                ].map((spec, sIdx) => (
+                  <li
+                    key={sIdx}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      fontSize: "0.85rem",
+                      color: "var(--steel)",
+                    }}
+                  >
                     <span style={{ color: "var(--amber)" }}>✓</span> {spec}
                   </li>
                 ))}
@@ -395,7 +619,6 @@ function EnginePage() {
             </div>
           </div>
         </section>
-
       </main>
     </div>
   );
