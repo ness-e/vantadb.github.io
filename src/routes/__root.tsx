@@ -4,12 +4,9 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, useCallback, type ReactNode } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-import appCss from "../styles.css?url";
 import { VantaDBLogoFull } from "../components/VantaDBLogo";
 
 function NotFoundComponent() {
@@ -70,62 +67,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "VantaDB — Embedded Cognitive Memory for AI Agents" },
-      {
-        name: "description",
-        content:
-          "The embedded database that gives AI agents persistent memory. Hybrid BM25 + HNSW search, GraphRAG, crash-safe WAL — zero config, one pip install.",
-      },
-      { name: "author", content: "VantaDB" },
-      { property: "og:title", content: "VantaDB — Embedded Cognitive Memory for AI Agents" },
-      {
-        property: "og:description",
-        content:
-          "The embedded database that gives AI agents persistent memory. Hybrid search, GraphRAG, crash-safe durability — zero config.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "VantaDB — Embedded Cognitive Memory for AI Agents" },
-      {
-        name: "twitter:description",
-        content:
-          "The embedded database that gives AI agents persistent memory. Hybrid search, GraphRAG, crash-safe durability.",
-      },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap",
-      },
-    ],
-  }),
-
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
