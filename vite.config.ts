@@ -14,7 +14,7 @@ export default defineConfig({
     server: { entry: "server" },
     // Configure Nitro for static export (GitHub Pages)
     nitro: {
-      preset: "static",
+      preset: "vercel-static",
     },
   },
   vite: {
