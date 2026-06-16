@@ -12,14 +12,13 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
-    // Configure Nitro for static export (GitHub Pages)
+    // Configure Nitro for Vercel static deployment
     nitro: {
       preset: "vercel-static",
     },
   },
   vite: {
-    // Configure base path for GitHub Pages
-    // For username.github.io repositories, base should be '/'
+    // Base path for Vercel deployment
     base: "/",
     resolve: {
       alias: {
