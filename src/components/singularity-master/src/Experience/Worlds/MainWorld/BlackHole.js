@@ -187,7 +187,6 @@ export default class BlackHole extends Model {
       this.uniforms.stepSize.value = 0.012;
     }
     this.setModel();
-    this._createGrid();
     // this._createCustomPanel(); // Panel de cámara y rotación en tiempo real
   }
 
@@ -452,17 +451,39 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
 
       // ==== Environment blend on remaining transparency ====
       const dirForEnv = rayDir.mul(vec3(1, -1, 1)).xzy;
-      const env = linearToSrgb(
-        texture(this.resources.items.starsTexture, equirectUV(dirForEnv)).mul(
+      const envUV = equirectUV(dirForEnv);
+      const stars = linearToSrgb(
+        texture(this.resources.items.starsTexture, envUV).mul(
           this.state.uniforms.mainScene.environment.backgroundIntensity,
         ),
       );
 
+      const gridUV = envUV.mul(12);
+      const gx = fract(gridUV.x.add(time.mul(0.003)));
+      const gy = fract(gridUV.y.add(time.mul(0.002)));
+      const gxD = min(gx, float(1).sub(gx));
+      const gyD = min(gy, float(1).sub(gy));
+
+      const primaryX = step(gxD, 0.015);
+      const primaryY = step(gyD, 0.015);
+      const primary = max(primaryX, primaryY);
+
+      const gxH = fract(gridUV.x.add(time.mul(0.003)).add(0.5));
+      const gyH = fract(gridUV.y.add(time.mul(0.002)).add(0.5));
+      const gxHD = min(gxH, float(1).sub(gxH));
+      const gyHD = min(gyH, float(1).sub(gyH));
+      const secondaryX = step(gxHD, 0.01);
+      const secondaryY = step(gyHD, 0.01);
+      const secondary = max(secondaryX, secondaryY).mul(0.25);
+
+      const gridAlpha = max(primary.mul(0.35), secondary);
+      const env = mix(stars, vec4(0.4, 0.7, 1.0, 1.0), gridAlpha);
+
       const trans = float(1.0).sub(alphaAcc);
       const finalRGB = mix(colorAcc, env, trans.mul(1.0));
-      // const finalAlpha = mix(alphaAcc, 1.0, 1.0); // kept for clarity, output uses color only
+      const fringeGlow = alphaAcc.mul(alphaAcc.oneMinus()).mul(0.35);
 
-      return srgbToLinear(finalRGB);
+      return srgbToLinear(finalRGB.add(vec3(0.5, 0.3, 0.8).mul(fringeGlow)));
     })();
     material.emissiveNode = material.colorNode;
 
@@ -597,31 +618,6 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
     exampleFolder.addBinding(this.uniforms.test4, "value", {
       label: "Fast Test 4",
     });
-  }
-
-  _createGrid() {
-    const gridGeo = new THREE.PlaneGeometry(40, 40);
-    const gridMat = new THREE.MeshBasicNodeMaterial({
-      transparent: true,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    });
-
-    gridMat.colorNode = Fn(() => {
-      const gridUV = uv().mul(30);
-      const animatedUV = gridUV.add(time.mul(0.008));
-      const gridX = fract(animatedUV.x);
-      const gridY = fract(animatedUV.y);
-      const distX = min(gridX, float(1).sub(gridX));
-      const distY = min(gridY, float(1).sub(gridY));
-      const line = step(min(distX, distY), float(0.025));
-      const fade = float(1).sub(length(abs(uv().sub(0.5)).mul(2)).mul(0.4));
-      return vec4(0.25, 0.5, 1.0, line.mul(fade).mul(0.12));
-    })();
-
-    const gridMesh = new THREE.Mesh(gridGeo, gridMat);
-    gridMesh.position.set(0, 0, -8);
-    this.scene.add(gridMesh);
   }
 
   update(deltaTime) {
