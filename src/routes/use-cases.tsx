@@ -45,7 +45,7 @@ hits = db.search_memory(
     "conversations",
     query_vector=[0.12, 0.85, 0.52],
     top_k=3
-)`
+)`,
     },
     {
       title: "Embedded Local-First RAG Backend",
@@ -69,7 +69,7 @@ results = db.search_memory(
     "documents",
     query_vector=[0.42, 0.25, 0.88],
     top_k=5
-)`
+)`,
     },
     {
       title: "Codebase Intelligence (AST GraphRAG)",
@@ -104,7 +104,7 @@ hits = db.search_memory(
     "ast",
     query_vector=[0.71, 0.14, 0.60],
     graph_hops=2
-)`
+)`,
     },
     {
       title: "Multi-Agent Sandbox Isolation",
@@ -135,8 +135,8 @@ hits = db.search_memory(
     "designer",
     query_vector=[0.12, 0.80, 0.38],
     top_k=2
-)`
-    }
+)`,
+    },
   ];
 
   useEffect(() => {
@@ -156,31 +156,50 @@ hits = db.search_memory(
     <div style={{ background: "var(--background)", minHeight: "100vh" }}>
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Use Cases</span>
-        <h1 className="title-accent reveal reveal-delay-1" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.04em", margin: "0.5rem 0 1.5rem" }}>
-          Where VantaDB<br />fits perfectly.
+        <h1
+          className="title-accent reveal reveal-delay-1"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.04em",
+            margin: "0.5rem 0 1.5rem",
+          }}
+        >
+          Where VantaDB
+          <br />
+          fits perfectly.
         </h1>
         <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
-          Practical design patterns built on top of the VantaDB SDK. Leverage persistent memory in production.
+          Practical design patterns built on top of the VantaDB SDK. Leverage persistent memory in
+          production.
         </p>
       </header>
 
-      <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}>
-        
+      <main
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}
+      >
         {/* ── Section: Accordion component ── */}
         <section style={{ padding: "4rem 0" }}>
           <div className="accordion-wrapper reveal">
             {cases.map((c, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className={`accordion-item-premium ${activeIdx === idx ? "active" : ""}`}
               >
-                <button 
+                <button
                   className="accordion-header"
                   onClick={() => setActiveIdx(activeIdx === idx ? -1 : idx)}
                 >
                   <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: activeIdx === idx ? "var(--amber)" : "var(--steel)" }}>
-                      0{idx+1}
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.72rem",
+                        color: activeIdx === idx ? "var(--amber)" : "var(--steel)",
+                      }}
+                    >
+                      0{idx + 1}
                     </span>
                     <h4>{c.title}</h4>
                   </div>
@@ -188,22 +207,38 @@ hits = db.search_memory(
                     {activeIdx === idx ? "✕" : "＋"}
                   </span>
                 </button>
-                <div 
+                <div
                   className="accordion-content"
-                  style={{ 
-                    maxHeight: activeIdx === idx ? "600px" : "0"
+                  style={{
+                    maxHeight: activeIdx === idx ? "600px" : "0",
                   }}
                 >
                   <div className="accordion-content-inner">
                     <div>
-                      <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--amber)", letterSpacing: "0.1em", display: "inline-block", marginBottom: "0.5rem" }}>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.62rem",
+                          color: "var(--amber)",
+                          letterSpacing: "0.1em",
+                          display: "inline-block",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
                         {c.tag}
                       </span>
-                      <p style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.6, margin: "0 0 1.5rem" }}>
+                      <p
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "var(--muted)",
+                          lineHeight: 1.6,
+                          margin: "0 0 1.5rem",
+                        }}
+                      >
                         {c.desc}
                       </p>
                       <pre className="code-block-premium" style={{ maxHeight: "250px" }}>
-                        <button 
+                        <button
                           className="code-copy-btn"
                           onClick={() => navigator.clipboard?.writeText(c.code)}
                         >
@@ -212,31 +247,76 @@ hits = db.search_memory(
                         <code>{c.code}</code>
                       </pre>
                     </div>
-                    <div style={{ background: "rgba(0,0,0,0.15)", borderRadius: "var(--radius-md)", padding: "1.5rem", border: "1px solid rgba(255,255,255,0.02)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--steel)", marginBottom: "0.5rem" }}>
+                    <div
+                      style={{
+                        background: "rgba(0,0,0,0.15)",
+                        borderRadius: "var(--radius-md)",
+                        padding: "1.5rem",
+                        border: "1px solid rgba(255,255,255,0.02)",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.62rem",
+                          color: "var(--steel)",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
                         DESIGN PATTERN BEHAVIOR
                       </div>
-                      <ul style={{ paddingLeft: "1rem", margin: 0, fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.65 }}>
-                        {idx === 0 && [
-                          "Keys synchronized immediately inside Fjall log engines.",
-                          "1.2ms p99 latency ensures zero agent loop blocking.",
-                          "Restarts trigger safe WAL replay recoveries automatically."
-                        ].map((li, lIdx) => <li key={lIdx} style={{ marginBottom: "0.5rem" }}>{li}</li>)}
-                        {idx === 1 && [
-                          "Lexical searches use BM25 score distributions.",
-                          "Vector searches use HNSW graph indices.",
-                          "Reciprocal Rank Fusion fuses relevance queries in 1ms."
-                        ].map((li, lIdx) => <li key={lIdx} style={{ marginBottom: "0.5rem" }}>{li}</li>)}
-                        {idx === 2 && [
-                          "directed connections stored in adjacency files.",
-                          "graph_hops=2 traversal walks namespaces locally.",
-                          "Eliminates prompt overflow tokens by 60%."
-                        ].map((li, lIdx) => <li key={lIdx} style={{ marginBottom: "0.5rem" }}>{li}</li>)}
-                        {idx === 3 && [
-                          "Namespaces separate tables safely inside standard files.",
-                          "Filters pre-isolate records before calculating cosine ranks.",
-                          "Run hundreds of agent memories under a single DB."
-                        ].map((li, lIdx) => <li key={lIdx} style={{ marginBottom: "0.5rem" }}>{li}</li>)}
+                      <ul
+                        style={{
+                          paddingLeft: "1rem",
+                          margin: 0,
+                          fontSize: "0.82rem",
+                          color: "var(--muted)",
+                          lineHeight: 1.65,
+                        }}
+                      >
+                        {idx === 0 &&
+                          [
+                            "Keys synchronized immediately inside Fjall log engines.",
+                            "1.2ms p99 latency ensures zero agent loop blocking.",
+                            "Restarts trigger safe WAL replay recoveries automatically.",
+                          ].map((li, lIdx) => (
+                            <li key={lIdx} style={{ marginBottom: "0.5rem" }}>
+                              {li}
+                            </li>
+                          ))}
+                        {idx === 1 &&
+                          [
+                            "Lexical searches use BM25 score distributions.",
+                            "Vector searches use HNSW graph indices.",
+                            "Reciprocal Rank Fusion fuses relevance queries in 1ms.",
+                          ].map((li, lIdx) => (
+                            <li key={lIdx} style={{ marginBottom: "0.5rem" }}>
+                              {li}
+                            </li>
+                          ))}
+                        {idx === 2 &&
+                          [
+                            "directed connections stored in adjacency files.",
+                            "graph_hops=2 traversal walks namespaces locally.",
+                            "Eliminates prompt overflow tokens by 60%.",
+                          ].map((li, lIdx) => (
+                            <li key={lIdx} style={{ marginBottom: "0.5rem" }}>
+                              {li}
+                            </li>
+                          ))}
+                        {idx === 3 &&
+                          [
+                            "Namespaces separate tables safely inside standard files.",
+                            "Filters pre-isolate records before calculating cosine ranks.",
+                            "Run hundreds of agent memories under a single DB.",
+                          ].map((li, lIdx) => (
+                            <li key={lIdx} style={{ marginBottom: "0.5rem" }}>
+                              {li}
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   </div>
@@ -245,7 +325,6 @@ hits = db.search_memory(
             ))}
           </div>
         </section>
-
       </main>
     </div>
   );

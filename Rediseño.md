@@ -7,15 +7,15 @@ He realizado una auditoría exhaustiva comparando el plan original descrito en [
 
 ### Tabla Comparativa de Implementación
 
-| Componente del Plan | Estado en [index.tsx](file:///c:/Users/Eros/VantaDB%20Proyect/VantaDB-landing/vantadb-page/vantadb-landing/src/routes/index.tsx) | Diagnóstico Técnico |
-| :--- | :--- | :--- |
-| **ComparisonBar** (VantaDB vs The Stack) | **No Implementado** | Se mantiene el componente `METRICS STRIP` antiguo con una rejilla estática de 4 columnas y contadores básicos. |
-| **InteractiveQuickstart** (Terminal Interactiva) | **No Implementado** | Sigue la estructura estática clásica. El componente `TerminalBlock` es inerte y los comandos laterales no responden a eventos. |
-| **FeatureShowcase** (Carrusel/Deck de Engine) | **No Implementado** | Persisten las filas de características `FeatureRow` duplicadas en zig-zag con diagramas fijos. |
-| **Layered Depth Architecture** (Isométrico con bg) | **No Implementado** | Grilla rígida de dos columnas con `ArchVisual` secuencial y sin la profundidad en perspectiva isométrica ni fondo dinámico. |
-| **IntegrationOrbit** (Ecosistema Orbital) | **No Implementado** | Bento grid estático con tarjetas de texto repetitivas y un icono SVG genérico (`Lucide Layers`). |
-| **UseCases** (Acordeón de Código) | **No Implementado** | Se renderiza mediante una lista vertical tradicional plana. |
-| **CTA** (Full-bleed con Glass Panel y Background) | **No Implementado** | Sección centrada simple con anillos orbitales CSS genéricos en lugar del layout con soporte para la imagen `bg_singularity_cta.png`. |
+| Componente del Plan                                | Estado en [index.tsx](file:///c:/Users/Eros/VantaDB%20Proyect/VantaDB-landing/vantadb-page/vantadb-landing/src/routes/index.tsx) | Diagnóstico Técnico                                                                                                                  |
+| :------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| **ComparisonBar** (VantaDB vs The Stack)           | **No Implementado**                                                                                                              | Se mantiene el componente `METRICS STRIP` antiguo con una rejilla estática de 4 columnas y contadores básicos.                       |
+| **InteractiveQuickstart** (Terminal Interactiva)   | **No Implementado**                                                                                                              | Sigue la estructura estática clásica. El componente `TerminalBlock` es inerte y los comandos laterales no responden a eventos.       |
+| **FeatureShowcase** (Carrusel/Deck de Engine)      | **No Implementado**                                                                                                              | Persisten las filas de características `FeatureRow` duplicadas en zig-zag con diagramas fijos.                                       |
+| **Layered Depth Architecture** (Isométrico con bg) | **No Implementado**                                                                                                              | Grilla rígida de dos columnas con `ArchVisual` secuencial y sin la profundidad en perspectiva isométrica ni fondo dinámico.          |
+| **IntegrationOrbit** (Ecosistema Orbital)          | **No Implementado**                                                                                                              | Bento grid estático con tarjetas de texto repetitivas y un icono SVG genérico (`Lucide Layers`).                                     |
+| **UseCases** (Acordeón de Código)                  | **No Implementado**                                                                                                              | Se renderiza mediante una lista vertical tradicional plana.                                                                          |
+| **CTA** (Full-bleed con Glass Panel y Background)  | **No Implementado**                                                                                                              | Sección centrada simple con anillos orbitales CSS genéricos en lugar del layout con soporte para la imagen `bg_singularity_cta.png`. |
 
 ---
 
@@ -49,48 +49,54 @@ Reemplazaremos todos los componentes estáticos y tarjetas genéricas por interf
 
 ### A. ComparisonBar ("VantaDB vs. The Stack")
 
-* **Inspiración**: Pinecone y SurrealDB (comparativas de costes/latencias realistas).
-- **Diseño**: Un componente de comparación tipo split-screen interactivo. La columna de la izquierda ("The Old Way") muestra servicios tradicionales (Pinecone + Redis + S3) que se "tachan" con una animación de rayado (strikethrough) roja y se oscurecen al pasar el cursor. La columna de la derecha ("VantaDB") resplandece con un glow ámbar y destaca un simple `pip install vantadb-py`.
-- **Interactividad**: Hover en los elementos resalta las métricas comparativas y los tiempos de latencia (1.2ms p99 vs. 200ms p99).
+- **Inspiración**: Pinecone y SurrealDB (comparativas de costes/latencias realistas).
+
+* **Diseño**: Un componente de comparación tipo split-screen interactivo. La columna de la izquierda ("The Old Way") muestra servicios tradicionales (Pinecone + Redis + S3) que se "tachan" con una animación de rayado (strikethrough) roja y se oscurecen al pasar el cursor. La columna de la derecha ("VantaDB") resplandece con un glow ámbar y destaca un simple `pip install vantadb-py`.
+* **Interactividad**: Hover en los elementos resalta las métricas comparativas y los tiempos de latencia (1.2ms p99 vs. 200ms p99).
 
 ### B. InteractiveQuickstart (Terminal Interactivo Multietapa)
 
-* **Inspiración**: La consola interactiva de SurrealDB y Chroma.
-- **Diseño**: Un panel integrado que fusiona el selector de etapas, un editor de código y una terminal simulada.
-- **Interactividad**:
+- **Inspiración**: La consola interactiva de SurrealDB y Chroma.
+
+* **Diseño**: Un panel integrado que fusiona el selector de etapas, un editor de código y una terminal simulada.
+* **Interactividad**:
   - Stepper con 4 pasos: `01 INSTALL`, `02 INITIALIZE`, `03 STORE`, `04 SEARCH`.
   - Al hacer click en un paso (o mediante avance automático cada 5s), el código de la consola se actualiza con un efecto de escritura automática (Typewriter), y la simulación del terminal ejecuta el comando imprimiendo el output simulado en tiempo real con estados de carga.
   - Pestañas con soporte para alternar entre el SDK de **Python** y comandos raw de **Rust (FFI)**.
 
 ### C. FeatureShowcase (Interactive Feature Deck)
 
-* **Inspiración**: El carrusel interactivo y interactivos visuales de Qdrant/Pinecone.
-- **Diseño**: En lugar de filas de características consecutivas, crearemos un contenedor de "Showcase" premium.
-- **Componentes visuales interactivos**:
+- **Inspiración**: El carrusel interactivo y interactivos visuales de Qdrant/Pinecone.
+
+* **Diseño**: En lugar de filas de características consecutivas, crearemos un contenedor de "Showcase" premium.
+* **Componentes visuales interactivos**:
   - **Hybrid Search**: Control deslizante interactivo donde el usuario puede arrastrar una barra para ajustar el peso entre **BM25 (Léxico)** y **HNSW (Vectorial)**, y ver cómo varía dinámicamente la fusión RRF y el Recall en un pipeline animado en tiempo real.
   - **GraphRAG**: Un grafo SVG interactivo real (interactividad por hover sobre nodos para iluminar relaciones en cascada y mostrar pesos de aristas).
   - **Crash-Safe WAL**: Un timeline interactivo de simulación de fallo. El usuario presiona un botón "CRASH ENGINE", se simula una caída del proceso en el log, y luego un botón "AUTO-RECOVER" que muestra el replay del WAL con CRC32C y la restauración del estado en milisegundos.
 
 ### D. Layered Depth Architecture with Cosmic Flow
 
-* **Inspiración**: Capas 3D en perspectiva isométrica de Milvus y Pinecone.
-- **Diseño**: Estructura de capas con perspectiva isométrica pseudo-3D utilizando CSS transforms. Las capas se separarán visualmente con líneas de conexión al pasar el mouse por encima.
-- **Fondo**: Integración de la imagen generada `bg_gravitational_flow.png` con parallax suave sobre la sección de arquitectura.
+- **Inspiración**: Capas 3D en perspectiva isométrica de Milvus y Pinecone.
+
+* **Diseño**: Estructura de capas con perspectiva isométrica pseudo-3D utilizando CSS transforms. Las capas se separarán visualmente con líneas de conexión al pasar el mouse por encima.
+* **Fondo**: Integración de la imagen generada `bg_gravitational_flow.png` con parallax suave sobre la sección de arquitectura.
 
 ### E. IntegrationOrbit (Ecosystem Satellites)
 
-* **Inspiración**: SurrealDB y LangChain ecosystem diagrams.
-- **Diseño**: En lugar de una cuadrícula de tarjetas de texto estáticas, diseñaremos un sistema planetario orbital.
-- **Interactividad**:
+- **Inspiración**: SurrealDB y LangChain ecosystem diagrams.
+
+* **Diseño**: En lugar de una cuadrícula de tarjetas de texto estáticas, diseñaremos un sistema planetario orbital.
+* **Interactividad**:
   - Un sol central representando a **VantaDB**.
   - Órbitas concéntricas con satélites animados (LangChain, LlamaIndex, MCP, AutoGen).
   - Al hacer click o hover sobre un satélite, la órbita correspondiente se activa y se despliega un panel flotante de código con el snippet real para integrar esa herramienta específica de manera instantánea.
 
 ### F. UseCases (Interactive Code Accordion)
 
-* **Inspiración**: Stripe y Weaviate (ejemplos prácticos y ejecutables de casos de uso).
-- **Diseño**: Acordeón vertical interactivo de 4 paneles.
-- **Interactividad**: Al abrir un caso de uso (p. ej., "Conversational Agent Memory"), se expande con una transición suave de altura máxima y revela a la derecha una pestaña de código que contiene la implementación real de VantaDB para ese patrón específico.
+- **Inspiración**: Stripe y Weaviate (ejemplos prácticos y ejecutables de casos de uso).
+
+* **Diseño**: Acordeón vertical interactivo de 4 paneles.
+* **Interactividad**: Al abrir un caso de uso (p. ej., "Conversational Agent Memory"), se expande con una transición suave de altura máxima y revela a la derecha una pestaña de código que contiene la implementación real de VantaDB para ese patrón específico.
 
 ---
 
@@ -220,12 +226,12 @@ Reemplazaremos todos los componentes estáticos y tarjetas genéricas por interf
 
 **Features expandidas** (de documentación):
 
-| # | Feature | Visual |
-|:---|:---|:---|
-| 01 | **Hybrid Search**: BM25 + HNSW + RRF. k1=1.2, b=0.75 para saturación TF. M=16, ef_construction=200. Cosine, Euclidean, Dot configurable | Pipeline animado con barras de fusión |
-| 02 | **GraphRAG**: Edges dirigidos con pesos opcionales. `graph_hops=2` para traversal. Reduce tokens 60% vs RAG plano | Grafo SVG interactivo (ya existe GraphTopology) |
-| 03 | **Crash-Safe WAL**: CRC32C checksums. fsync por defecto. Recovery automático al abrir. Heavy Certification CI | Timeline de escritura animada |
-| 04 | **Namespace Isolation** (NUEVO): Registros scoped por namespace. Multi-agent sobre una sola DB. Filtros por metadata `$gte`, `$in` | Diagrama de namespaces aislados |
+| #   | Feature                                                                                                                                 | Visual                                          |
+| :-- | :-------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| 01  | **Hybrid Search**: BM25 + HNSW + RRF. k1=1.2, b=0.75 para saturación TF. M=16, ef_construction=200. Cosine, Euclidean, Dot configurable | Pipeline animado con barras de fusión           |
+| 02  | **GraphRAG**: Edges dirigidos con pesos opcionales. `graph_hops=2` para traversal. Reduce tokens 60% vs RAG plano                       | Grafo SVG interactivo (ya existe GraphTopology) |
+| 03  | **Crash-Safe WAL**: CRC32C checksums. fsync por defecto. Recovery automático al abrir. Heavy Certification CI                           | Timeline de escritura animada                   |
+| 04  | **Namespace Isolation** (NUEVO): Registros scoped por namespace. Multi-agent sobre una sola DB. Filtros por metadata `$gte`, `$in`      | Diagrama de namespaces aislados                 |
 
 **Componente**: `FeatureShowcase` — Panel horizontal scrollable con snap points. Cada panel ocupa 100% viewport width. Navegación con dots + flechas + keyboard.
 

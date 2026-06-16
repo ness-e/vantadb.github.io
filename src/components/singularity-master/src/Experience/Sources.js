@@ -104,7 +104,7 @@ export default [
     name: "noiseDeepTexture",
     type: "texture",
     obfuscate: true,
-    path: "./textures/noise_deep.png",
+    path: "./textures/noise_deep.webp",
     meta: {
       type: "texture",
     },

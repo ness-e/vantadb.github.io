@@ -195,11 +195,7 @@ export const VantaDBLogoFull: React.FC<{
       aria-label="VantaDB"
     >
       <VantaDBMark size={markPx} noAnimation={noAnimation} />
-      <span
-        className="vdb-wordmark"
-        style={{ fontSize: `${fontPx}px` }}
-        aria-hidden="true"
-      >
+      <span className="vdb-wordmark" style={{ fontSize: `${fontPx}px` }} aria-hidden="true">
         Vanta<span className="vdb-wordmark-db">DB</span>
       </span>
     </div>
@@ -251,17 +247,11 @@ const VantaDBLogo: React.FC<VantaDBLogoProps> = ({
     case "mark":
       return (
         <div role="img" aria-label={ariaLabel} className={className}>
-          <VantaDBMark
-            size={markPx}
-            accentColor={accentColor}
-            noAnimation={noAnimation}
-          />
+          <VantaDBMark size={markPx} accentColor={accentColor} noAnimation={noAnimation} />
         </div>
       );
     case "badge":
-      return (
-        <VantaDBBadge size={size} noAnimation={noAnimation} className={className} />
-      );
+      return <VantaDBBadge size={size} noAnimation={noAnimation} className={className} />;
     case "stacked":
       return (
         <div
@@ -269,11 +259,7 @@ const VantaDBLogo: React.FC<VantaDBLogoProps> = ({
           role="img"
           aria-label={ariaLabel}
         >
-          <VantaDBMark
-            size={markPx}
-            accentColor={accentColor}
-            noAnimation={noAnimation}
-          />
+          <VantaDBMark size={markPx} accentColor={accentColor} noAnimation={noAnimation} />
           <span
             className="vdb-wordmark vdb-wordmark--stacked"
             style={{ fontSize: `${Math.round(markPx * 0.45)}px` }}
@@ -285,13 +271,7 @@ const VantaDBLogo: React.FC<VantaDBLogoProps> = ({
       );
     case "full":
     default:
-      return (
-        <VantaDBLogoFull
-          size={size}
-          noAnimation={noAnimation}
-          className={className}
-        />
-      );
+      return <VantaDBLogoFull size={size} noAnimation={noAnimation} className={className} />;
   }
 };
 

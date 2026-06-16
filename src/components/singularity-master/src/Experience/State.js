@@ -8,7 +8,7 @@ export default class State {
   experience = Experience.getInstance();
   sizes = this.experience.sizes;
   renderer = this.experience.renderer.instance;
-  postprocessing = true;
+  postprocessing = !this.experience.isMobile;
   //floatType = this.renderer.capabilities.isWebGL2 ? THREE.FloatType : THREE.HalfFloatType;
 
   uniforms = {

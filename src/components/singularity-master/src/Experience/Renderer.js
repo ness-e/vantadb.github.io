@@ -51,7 +51,9 @@ export default class Renderer {
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     this.instance.setSize(this.sizes.width, this.sizes.height);
     // Limitar el pixel ratio a 1 o 1.5 mejora enormemente el rendimiento en pantallas de alta resolución
-    this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 1.5));
+    this.instance.setPixelRatio(
+      this.experience.isMobile ? 1.0 : Math.min(this.sizes.pixelRatio, 1.5),
+    );
     this.instance.setClearColor(this.clearColor, 1);
 
     this.instance.toneMapping = THREE.ACESFilmicToneMapping;
@@ -117,7 +119,9 @@ export default class Renderer {
 
   resize() {
     this.instance.setSize(this.sizes.width, this.sizes.height);
-    this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 1.5));
+    this.instance.setPixelRatio(
+      this.experience.isMobile ? 1.0 : Math.min(this.sizes.pixelRatio, 1.5),
+    );
   }
 
   destroy() {}
