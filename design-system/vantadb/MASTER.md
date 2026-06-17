@@ -5,7 +5,7 @@
 > If not, strictly follow the rules below.
 >
 > **Generated via:** `vanta-design-orchestrator` + `ui-ux-pro-max` + `impeccable` + `redesign-existing-projects`
-> **Last updated:** 2026-06-15
+> **Last updated:** 2026-06-17
 
 ---
 
@@ -162,7 +162,7 @@ Base: 4px. Scale factor: 1.5× per step.
 
 /* Ghost */
 .btn-ghost {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   padding: 0.85rem 1.75rem;
   background: transparent;
   color: var(--frost);
@@ -245,9 +245,60 @@ Horizontal row, `borderTop + borderBottom: 1px solid var(--subtle)`. 4 columns w
 
 Active nav link: `color: var(--white)` + underline. Never background-highlighted.
 
-### Terminal Block
+### InteractiveQuickstart (Split Playground)
 
-Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syntax highlighting: keywords `#ff79c6`, strings `#f1fa8c`, functions `#8be9fd`, amber `var(--amber)`. Blinking cursor `|` with 1s step animation.
+**Layout:** Sticky sidebar (140px, 4-step navigation) + terminal window content pane. Language tabs (Python SDK / Rust Core) inside the content pane switch between code+output per step.
+
+**Terminal Window (`.tl-window`):**
+- Background `#08080c`, border `1px solid rgba(255,255,255,0.06)`, radius `var(--radius-xl)`
+- Title bar with macOS-style dots (red/yellow/green) + centered label `vantadb — interactive shell v0.1` + status legend (● active / ✓ done / ○ pending)
+- Title bar: `--steel` text, bottom border `rgba(255,255,255,0.04)`
+
+**Sidebar (`.sp-sidebar`):**
+- Sticky at `top: 6rem`, width 140px
+- Each item: hover background `rgba(255,255,255,0.02)`, active gets `inset 2px 0 0 var(--amber)` + amber bg tint (`rgba(255,106,0,0.06)`)
+- Completed: `rgba(255,106,0,0.5)` text
+- Entrance: 900ms `var(--ease-out)`, translateX(-16px) → 0
+
+**Step Block (`.sp-block`):**
+- Entrance: 700ms `var(--ease-out)` fade+slide-up (20px)
+- Remounts on step/lang change via React `key` — triggers fresh animation
+- Typewriter effect: code characters appear at 45ms/char with `liveHighlight()` (real-time syntax highlighting via tokenizer on the partial substring)
+- After code typing finishes → 300ms pause → output lines reveal at 120ms/line with stagger fade-in (350ms each)
+- Visible cursor `▊` blinks at 1.2s `step-end`, amber color
+
+**Syntax Highlighting Tokens (Material Palenight):**
+```
+--keyword: #c792ea  (purple)
+--string:  #c3e88d  (green)
+--comment: #546e7a  (slate, italic)
+--number:  #f78c6c  (orange)
+--function:#82aaff  (blue)
+--builtin: #ffcb6b  (gold)
+--operator:#89ddff  (cyan)
+--punct:   rgba(240,237,230,0.3)
+```
+
+**Language Tabs (`.sp-lang-tab`):**
+- Flex row with 1px divider between tabs
+- Default: `--steel` text. Active: amber text + `rgba(255,106,0,0.04)` bg
+- Font: `var(--font-mono)`, 0.65rem, letter-spacing 0.04em
+- Each tab has inline SVG icon (layers icon for Python, circle for Rust)
+
+**Output (`.sp-output`):**
+- Background `rgba(0,0,0,0.15)`, border `rgba(255,255,255,0.01)`, radius `var(--radius-md)`
+- Lines colored by prefix: `$`/`cargo` → `--steel`, `>>>`/`✓` → `#28c840`, `🔍`/`→` → `--amber-soft`, else `--frost`
+
+**Copy Button (`.sp-copy-btn`):**
+- Absolute top-right of code wrap, hidden by default (`opacity: 0`)
+- Appears on `.sp-code-wrap:hover` or `:focus-visible`
+- Hover: amber tint bg + border
+
+**Mobile (< 768px):**
+- Sidebar collapses to horizontal pill row (scrollable, rounded-full)
+- Sidebar icon indicators hidden
+- Legend hidden in titlebar
+- All margins reduce to 1rem
 
 ---
 
@@ -267,7 +318,7 @@ Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syn
 1. Nav (sticky, glassmorphism)
 2. Hero (SingularityHero — WebGL, IMMUTABLE)
 3. Metrics Strip (4 stats — animated counters)
-4. Quickstart (2-col: steps left, terminal right)
+4. Quickstart (sidebar nav + terminal content pane, Python/Rust language tabs, typewriter code reveal)
 5. Engine (zig-zag FeatureRows: Hybrid Search, Graph, WAL)
 6. Architecture (full-width dark surface: SVG diagram + specs grid)
 7. Ecosystem / Integrations (Bento Grid or asymmetric 4-card stagger)
@@ -300,13 +351,18 @@ Use `background: var(--surface)` + `border: 1px solid rgba(255,106,0,0.10)`. Syn
 
 ### Duration Scale
 
-| Context                       | Duration  | Easing          |
-| ----------------------------- | --------- | --------------- |
-| Micro (hover state change)    | 150ms     | `--ease-out`    |
-| Standard (button, card hover) | 200-250ms | `--ease-out`    |
-| Entry animation               | 400-600ms | `--ease-spring` |
-| Page section reveal           | 700ms     | `--ease-out`    |
-| Max (complex transition)      | 800ms     | `--ease-in-out` |
+| Context                       | Duration   | Easing          |
+| ----------------------------- | ---------- | --------------- |
+| Micro (hover state change)    | 150ms      | `--ease-out`    |
+| Standard (button, card hover) | 200-250ms  | `--ease-out`    |
+| Entry animation               | 600-700ms  | `--ease-spring` |
+| Page section reveal           | 700-900ms  | `--ease-out`    |
+| Max (complex transition)      | 800ms      | `--ease-in-out` |
+| Typewriter per character      | 45ms       | linear          |
+| Output line stagger           | 120ms      | linear          |
+| Output line fade-in           | 350ms      | `--ease-out`    |
+| Sidebar entrance              | 900ms      | `--ease-out`    |
+| Cursor blink                  | 1.2s       | `step-end`      |
 
 ### Animation Rules (Emil Kowalski Philosophy)
 
@@ -410,10 +466,9 @@ box-shadow:
 
 ## Iconography
 
-- **Primary set:** Lucide React (already in project). For differentiation, supplement with custom SVG inline icons.
+- **Primary approach:** Inline `<svg>` elements — no icon library dependency. Keep icons small (12-14px for UI, 20-24px for standalone).
 - **Stroke width:** 1.5px uniformly. Never mix 1px and 2px strokes.
-- **Icon size:** 20px (inline), 24px (standalone feature icons), 40px (large decorative).
-- **No emoji as icons.** Ever.
+- **No emoji as icons.** Ever. (Output text may contain `🔍` as data content, but never as interface icons.)
 - **Custom icons for VantaDB concepts:** graph nodes (hexagons), WAL journal (scroll), orbit rings, vector embedding (constellation pattern).
 
 ---
@@ -453,7 +508,7 @@ box-shadow:
 
 ## Code Quality Standards
 
-- **No inline styles in components.** All values must use CSS variables.
+- **No inline styles in components.** All values must use CSS variables. **Exception:** dynamic output line colors (prefix-based coloring in terminal output) may use inline `style={{ color }}` computed from runtime data.
 - **No `z-index: 9999`.** Establish z-index scale: `--z-nav: 100`, `--z-modal: 200`, `--z-toast: 300`.
 - **`min-height: 100dvh`** not `height: 100vh` for full-screen sections.
 - **Semantic HTML:** `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`.
@@ -476,7 +531,7 @@ From `impeccable` v3.6.0 + `redesign-existing-projects` slop-test:
 - ❌ **Tiny uppercase tracked eyebrow above EVERY section** — use `// comment` style mono labels maximum once per section, not repeated on all.
 - ❌ **Numbered section markers as default scaffolding (01/02/03 as eyebrows)** — only use when truly sequential content.
 - ❌ **Warm-neutral body background** — no cream, sand, beige, linen.
-- ❌ **Side-stripe borders** (`border-left > 1px` as accent) — never.
+- ❌ **Side-stripe borders** (`border-left > 1px` as accent) — never on cards or sections. **Exception:** sidebar nav active item uses `inset 2px 0 0 var(--amber)` as navigation indicator.
 - ❌ **Emojis as icons**.
 - ❌ **Scale on image hover** (`.group:hover img { transform: scale }`) — animate card border/shadow instead.
 
