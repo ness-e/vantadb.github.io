@@ -10,14 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UseCasesRouteImport } from './routes/use-cases'
+import { Route as StorageRouteImport } from './routes/storage'
+import { Route as MaintRouteImport } from './routes/maint'
+import { Route as LatencyRouteImport } from './routes/latency'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as EngineRouteImport } from './routes/engine'
+import { Route as CostRouteImport } from './routes/cost'
+import { Route as ConfigRouteImport } from './routes/config'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UseCasesRoute = UseCasesRouteImport.update({
   id: '/use-cases',
   path: '/use-cases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StorageRoute = StorageRouteImport.update({
+  id: '/storage',
+  path: '/storage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaintRoute = MaintRouteImport.update({
+  id: '/maint',
+  path: '/maint',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LatencyRoute = LatencyRouteImport.update({
+  id: '/latency',
+  path: '/latency',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntegrationsRoute = IntegrationsRouteImport.update({
@@ -28,6 +48,16 @@ const IntegrationsRoute = IntegrationsRouteImport.update({
 const EngineRoute = EngineRouteImport.update({
   id: '/engine',
   path: '/engine',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CostRoute = CostRouteImport.update({
+  id: '/cost',
+  path: '/cost',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigRoute = ConfigRouteImport.update({
+  id: '/config',
+  path: '/config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArchitectureRoute = ArchitectureRouteImport.update({
@@ -44,44 +74,89 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
+  '/config': typeof ConfigRoute
+  '/cost': typeof CostRoute
   '/engine': typeof EngineRoute
   '/integrations': typeof IntegrationsRoute
+  '/latency': typeof LatencyRoute
+  '/maint': typeof MaintRoute
+  '/storage': typeof StorageRoute
   '/use-cases': typeof UseCasesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
+  '/config': typeof ConfigRoute
+  '/cost': typeof CostRoute
   '/engine': typeof EngineRoute
   '/integrations': typeof IntegrationsRoute
+  '/latency': typeof LatencyRoute
+  '/maint': typeof MaintRoute
+  '/storage': typeof StorageRoute
   '/use-cases': typeof UseCasesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
+  '/config': typeof ConfigRoute
+  '/cost': typeof CostRoute
   '/engine': typeof EngineRoute
   '/integrations': typeof IntegrationsRoute
+  '/latency': typeof LatencyRoute
+  '/maint': typeof MaintRoute
+  '/storage': typeof StorageRoute
   '/use-cases': typeof UseCasesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/architecture' | '/engine' | '/integrations' | '/use-cases'
+  fullPaths:
+    | '/'
+    | '/architecture'
+    | '/config'
+    | '/cost'
+    | '/engine'
+    | '/integrations'
+    | '/latency'
+    | '/maint'
+    | '/storage'
+    | '/use-cases'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/architecture' | '/engine' | '/integrations' | '/use-cases'
+  to:
+    | '/'
+    | '/architecture'
+    | '/config'
+    | '/cost'
+    | '/engine'
+    | '/integrations'
+    | '/latency'
+    | '/maint'
+    | '/storage'
+    | '/use-cases'
   id:
     | '__root__'
     | '/'
     | '/architecture'
+    | '/config'
+    | '/cost'
     | '/engine'
     | '/integrations'
+    | '/latency'
+    | '/maint'
+    | '/storage'
     | '/use-cases'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArchitectureRoute: typeof ArchitectureRoute
+  ConfigRoute: typeof ConfigRoute
+  CostRoute: typeof CostRoute
   EngineRoute: typeof EngineRoute
   IntegrationsRoute: typeof IntegrationsRoute
+  LatencyRoute: typeof LatencyRoute
+  MaintRoute: typeof MaintRoute
+  StorageRoute: typeof StorageRoute
   UseCasesRoute: typeof UseCasesRoute
 }
 
@@ -92,6 +167,27 @@ declare module '@tanstack/react-router' {
       path: '/use-cases'
       fullPath: '/use-cases'
       preLoaderRoute: typeof UseCasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/storage': {
+      id: '/storage'
+      path: '/storage'
+      fullPath: '/storage'
+      preLoaderRoute: typeof StorageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maint': {
+      id: '/maint'
+      path: '/maint'
+      fullPath: '/maint'
+      preLoaderRoute: typeof MaintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/latency': {
+      id: '/latency'
+      path: '/latency'
+      fullPath: '/latency'
+      preLoaderRoute: typeof LatencyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/integrations': {
@@ -106,6 +202,20 @@ declare module '@tanstack/react-router' {
       path: '/engine'
       fullPath: '/engine'
       preLoaderRoute: typeof EngineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cost': {
+      id: '/cost'
+      path: '/cost'
+      fullPath: '/cost'
+      preLoaderRoute: typeof CostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/config': {
+      id: '/config'
+      path: '/config'
+      fullPath: '/config'
+      preLoaderRoute: typeof ConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/architecture': {
@@ -128,8 +238,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArchitectureRoute: ArchitectureRoute,
+  ConfigRoute: ConfigRoute,
+  CostRoute: CostRoute,
   EngineRoute: EngineRoute,
   IntegrationsRoute: IntegrationsRoute,
+  LatencyRoute: LatencyRoute,
+  MaintRoute: MaintRoute,
+  StorageRoute: StorageRoute,
   UseCasesRoute: UseCasesRoute,
 }
 export const routeTree = rootRouteImport

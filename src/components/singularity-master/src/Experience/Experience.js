@@ -204,30 +204,34 @@ export default class Experience extends EventEmitter {
   }
 
   destroy() {
-    this.sizes.off("resize");
-    this.time.off("tick");
+    this.sizes?.off("resize");
+    this.time?.off("tick");
 
-    // Traverse the whole scene
-    this.scene.traverse((child) => {
-      // Test if it's a mesh
-      if (child instanceof THREE.Mesh) {
-        child.geometry.dispose();
+    const targetScene = this.scene || this.mainScene;
+    if (targetScene) {
+      targetScene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.geometry.dispose();
 
-        // Loop through the material properties
-        for (const key in child.material) {
-          const value = child.material[key];
+          for (const key in child.material) {
+            const value = child.material[key];
 
-          // Test if there is a dispose function
-          if (value && typeof value.dispose === "function") {
-            value.dispose();
+            if (value && typeof value.dispose === "function") {
+              value.dispose();
+            }
           }
         }
-      }
-    });
+      });
+    }
 
-    this.camera.controls.dispose();
-    this.renderer.instance.dispose();
+    if (this.renderer) {
+      if (this.camera?.controls) this.camera.controls.dispose();
+      if (this.renderer.instance) this.renderer.instance.dispose();
+    }
 
-    if (this.debug.active) this.debug.ui.destroy();
+    if (this.debug?.active && this.debug.ui) this.debug.ui.destroy();
+
+    window.experience = null;
+    Experience._instance = null;
   }
 }

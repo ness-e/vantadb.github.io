@@ -76,9 +76,9 @@ export default class PostProcess {
   state = this.experience.state;
 
   rendererClass = this.experience.renderer;
-  scene = experience.scene;
-  time = experience.time;
-  resources = experience.resources;
+  scene = this.experience.scene;
+  time = this.experience.time;
+  resources = this.experience.resources;
   container = new THREE.Group();
   passes = {};
 
