@@ -1,7 +1,7 @@
 import * as THREE from "three/webgpu";
 import Experience from "@experience/Experience.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import { normalWorld, uniform, texture, uv, equirectUV, Fn, vec4, float, time, fract, min, max, step, mix, abs, length, positionWorldDirection } from "three/tsl";
+import { normalWorld, uniform, texture, uv, equirectUV, Fn, vec4, float, time, fract, min, max, step, smoothstep, mix, abs, length, positionWorldDirection } from "three/tsl";
 
 export default class Environment {
   constructor(parameters = {}) {
@@ -82,35 +82,45 @@ export default class Environment {
     this.resources.items.starsTexture.mapping = THREE.EquirectangularReflectionMapping;
     this.resources.items.starsTexture.colorSpace = THREE.SRGBColorSpace;
     this.resources.items.starsTexture.needsUpdate = true;
-    this.scene.backgroundNode = Fn(() => {
-      const stars = texture(this.resources.items.starsTexture, equirectUV()).mul(
+
+    // Función compartida: fondo (estrellas + grilla) parametrizado por UV
+    const bgFn = Fn(([uv]) => {
+      const stars = texture(this.resources.items.starsTexture, uv).mul(
         this.state.uniforms.mainScene.environment.backgroundIntensity,
       );
 
-      const envUV = equirectUV();
-      const gridUV = envUV.mul(12);
-      const gx = fract(gridUV.x.add(time.mul(0.003)));
-      const gy = fract(gridUV.y.add(time.mul(0.002)));
+      const gridUV = uv.mul(12);
+      const animX = time.mul(0.003);
+      const animY = time.mul(0.002);
+      const gx = fract(gridUV.x.add(animX));
+      const gy = fract(gridUV.y.add(animY));
       const gxD = min(gx, float(1).sub(gx));
       const gyD = min(gy, float(1).sub(gy));
 
-      const primaryX = step(gxD, 0.015);
-      const primaryY = step(gyD, 0.015);
-      const primary = max(primaryX, primaryY);
+      const lineWidth = float(0.008);
+      const primaryX = float(1).sub(smoothstep(float(0), lineWidth, gxD));
+      const primaryY = float(1).sub(smoothstep(float(0), lineWidth, gyD));
+      const primary = max(primaryX, primaryY).mul(0.35);
 
-      const gxH = fract(gridUV.x.add(time.mul(0.003)).add(0.5));
-      const gyH = fract(gridUV.y.add(time.mul(0.002)).add(0.5));
+      const gxH = fract(gridUV.x.add(animX).add(0.5));
+      const gyH = fract(gridUV.y.add(animY).add(0.5));
       const gxHD = min(gxH, float(1).sub(gxH));
       const gyHD = min(gyH, float(1).sub(gyH));
-      const secondaryX = step(gxHD, 0.01);
-      const secondaryY = step(gyHD, 0.01);
+      const secondaryX = float(1).sub(smoothstep(float(0), float(0.005), gxHD));
+      const secondaryY = float(1).sub(smoothstep(float(0), float(0.005), gyHD));
       const secondary = max(secondaryX, secondaryY).mul(0.25);
 
-      const gridAlpha = max(primary.mul(0.35), secondary);
+      const gridAlpha = max(primary, secondary);
       const gridColor = vec4(0.4, 0.7, 1.0, 1.0);
 
       return mix(stars, gridColor, gridAlpha);
-    })();
+    });
+
+    // Background de escena con dirección de vista
+    this.scene.backgroundNode = bgFn(equirectUV());
+
+    // Exponer función para que BlackHole la use con dirección curveada
+    this.scene.userData.bgFn = bgFn;
   }
 
   setBackground() {

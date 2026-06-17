@@ -545,12 +545,13 @@ function Landing() {
       {/* Hero (immutable) */}
       <SingularityHero />
 
-      <main className="page-content" style={{ position: "relative", zIndex: 2 }}>
+      <div className="hero-nebula" />
+
+      <main className="page-content">
         {/* ── 1. COMPARISON BAR (Old Stack vs VantaDB) ── */}
         <div
           style={{
             borderBottom: "1px solid var(--subtle)",
-            borderTop: "1px solid var(--subtle)",
             position: "relative",
             overflow: "hidden",
           }}

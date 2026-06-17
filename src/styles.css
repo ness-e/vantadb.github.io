@@ -716,6 +716,15 @@
   z-index: 20;
 }
 
+.hero-nebula {
+  position: relative;
+  height: 150px;
+  margin-top: -150px;
+  background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+  pointer-events: none;
+  z-index: 30;
+}
+
 /* Section base */
 .section {
   max-width: 1200px;

@@ -449,41 +449,14 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
         alphaAcc.assign(newAlpha);
       });
 
-      // ==== Mezcla con el entorno según la transparencia restante ====
+      // ==== Entorno: misma función que el background, con UV curveada ====
       const dirForEnv = rayDir.mul(vec3(1, -1, 1)).xzy;
-      const envUV = equirectUV(dirForEnv);
-      const stars = linearToSrgb(
-        texture(this.resources.items.starsTexture, envUV).mul(
-          this.state.uniforms.mainScene.environment.backgroundIntensity,
-        ),
-      );
-
-      const gridUV = envUV.mul(12);
-      const gx = fract(gridUV.x.add(time.mul(0.003)));
-      const gy = fract(gridUV.y.add(time.mul(0.002)));
-      const gxD = min(gx, float(1).sub(gx));
-      const gyD = min(gy, float(1).sub(gy));
-
-      const primaryX = step(gxD, 0.015);
-      const primaryY = step(gyD, 0.015);
-      const primary = max(primaryX, primaryY);
-
-      const gxH = fract(gridUV.x.add(time.mul(0.003)).add(0.5));
-      const gyH = fract(gridUV.y.add(time.mul(0.002)).add(0.5));
-      const gxHD = min(gxH, float(1).sub(gxH));
-      const gyHD = min(gyH, float(1).sub(gyH));
-      const secondaryX = step(gxHD, 0.01);
-      const secondaryY = step(gyHD, 0.01);
-      const secondary = max(secondaryX, secondaryY).mul(0.25);
-
-      const gridAlpha = max(primary.mul(0.35), secondary);
-      const env = mix(stars, vec4(0.4, 0.7, 1.0, 1.0), gridAlpha);
+      const env = linearToSrgb(this.scene.userData.bgFn(equirectUV(dirForEnv)));
 
       const trans = float(1.0).sub(alphaAcc);
       const finalRGB = mix(colorAcc, env, trans.mul(1.0));
-      const fringeGlow = alphaAcc.mul(alphaAcc.oneMinus()).mul(0.35);
 
-      return srgbToLinear(finalRGB.add(vec3(0.5, 0.3, 0.8).mul(fringeGlow)));
+      return srgbToLinear(finalRGB);
     })();
     material.emissiveNode = material.colorNode;
 

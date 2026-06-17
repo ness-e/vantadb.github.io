@@ -39,9 +39,8 @@ export default class MainWorld extends EventEmitter {
   }
 
   init() {
-    this.blackHole = new BlackHole({ world: this });
-
     this.environment = new Environment({ world: this });
+    this.blackHole = new BlackHole({ world: this });
   }
 
   animationPipeline() {

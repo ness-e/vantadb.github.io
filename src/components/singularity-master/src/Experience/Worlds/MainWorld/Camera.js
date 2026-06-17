@@ -49,8 +49,8 @@ export default class Camera {
     // Hero setup: push black hole to the right by targeting a point to the left
     this.controls.target = new THREE.Vector3(-1.0, 0, 0);
 
-    // Hero setup: allow interaction
-    this.controls.enableZoom = true;
+    // Hero setup: allow interaction (scroll solo para página, no para zoom)
+    this.controls.enableZoom = false;
     this.controls.enablePan = true;
 
     // Transform controls removed for production
@@ -71,8 +71,6 @@ export default class Camera {
     this._animState = 'wait';
     this._animTimer = 0;
     this._animProgress = 0;
-    this._pulseCount = 0;
-    this._pulseDurations = [1.2, 1.6, 2.4];
   }
 
   update() {
@@ -86,10 +84,9 @@ export default class Camera {
       this._animProgress += this.time.delta * 0.25;
       if (this._animProgress >= 1) {
         this._animProgress = 1;
-        this._animState = 'pulse';
-        this._pulseTimer = 0;
-        this._pulseCount = 0;
-        this._finalPos = this._animateTargetPos.clone();
+        this._animState = 'done';
+        this.instance.position.copy(this._animateTargetPos);
+        this.controls.target.copy(this._animateTargetTarget);
       }
       const t = 1 - Math.pow(1 - this._animProgress, 3);
       this.instance.position.lerpVectors(this.defaultCameraPosition, this._animateTargetPos, t);
@@ -98,49 +95,6 @@ export default class Camera {
         this._animateTargetTarget,
         t,
       );
-    } else if (this._animState === 'pulse') {
-      const duration = this._pulseDurations[this._pulseCount];
-      this._pulseTimer += this.time.delta;
-      const phase = Math.min(this._pulseTimer / duration, 1);
-
-      const isLast = this._pulseCount === 2;
-      let breathePhase;
-      if (isLast) {
-        breathePhase = phase < 0.25
-          ? phase / 0.25
-          : 1 - Math.pow((phase - 0.25) / 0.75, 0.5);
-      } else {
-        breathePhase = Math.sin(phase * Math.PI);
-      }
-
-      const pulseOffset = breathePhase * 0.3;
-      const circleFade = Math.sin(phase * Math.PI);
-      const circleRadius = isLast && phase > 0.7
-        ? 0.05 * circleFade * (1 - (phase - 0.7) / 0.3)
-        : 0.05 * circleFade;
-      const circleAngle = phase * Math.PI * 4;
-
-      const dir = new THREE.Vector3()
-        .subVectors(this._animateTargetTarget, this._finalPos)
-        .normalize();
-      const up = new THREE.Vector3(0, 1, 0);
-      const right = new THREE.Vector3().crossVectors(dir, up).normalize();
-      const localUp = new THREE.Vector3().crossVectors(right, dir).normalize();
-
-      this.instance.position
-        .copy(this._finalPos)
-        .addScaledVector(dir, pulseOffset)
-        .addScaledVector(right, Math.cos(circleAngle) * circleRadius)
-        .addScaledVector(localUp, Math.sin(circleAngle) * circleRadius);
-
-      if (phase >= 1) {
-        this._pulseTimer = 0;
-        this._pulseCount++;
-        if (this._pulseCount >= 3) {
-          this._animState = 'done';
-          this.instance.position.copy(this._finalPos);
-        }
-      }
     }
 
     this.controls?.update();
