@@ -187,7 +187,7 @@ export default class BlackHole extends Model {
       this.uniforms.stepSize.value = 0.012;
     }
     this.setModel();
-    // this._createCustomPanel(); // Panel de cámara y rotación en tiempo real
+    //this._createCustomPanel(); // Panel de cámara y rotación en tiempo real (desactivado)
   }
 
   _createCustomPanel() {
@@ -215,7 +215,7 @@ export default class BlackHole extends Model {
     });
     document.body.appendChild(container);
 
-    // ── Drag-to-move ─────────────────────────────────────────
+    // ── Arrastrar para mover ─────────────────────────────────────────
     let dragging = false;
     let startX = 0;
     let startY = 0;
@@ -223,7 +223,7 @@ export default class BlackHole extends Model {
     let origTop = 0;
 
     container.addEventListener("mousedown", (e) => {
-      // Only drag from the title bar (first child element)
+      // Solo arrastrar desde la barra de título (primer elemento hijo)
       if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
       dragging = true;
       container.style.cursor = "grabbing";
@@ -315,14 +315,14 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
   postInit() {}
 
   setModel() {
-    // Reduced segments — the visual is entirely shader-driven
+    // Segmentos reducidos — todo el detalle visual está en el shader
     const geometry = new THREE.SphereGeometry(1, 12, 12);
 
     const material = new THREE.MeshStandardNodeMaterial({
       side: THREE.DoubleSide,
     });
 
-    // Texture setup with mipmapping for faster GPU cache performance
+    // Configuración de textura con mipmapping para mejor rendimiento de caché GPU
     const noiseTex = this.resources.items.noiseDeepTexture;
     noiseTex.wrapS = THREE.RepeatWrapping;
     noiseTex.wrapT = THREE.RepeatWrapping;
@@ -335,7 +335,7 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
     noiseTex.needsUpdate = true;
 
     material.colorNode = Fn(() => {
-      // ==== Uniforms and constants ====
+      // ==== Uniformes y constantes ====
       const _step = this.uniforms.stepSize;
       const noiseAmp = this.uniforms.noiseFactor;
       const power = this.uniforms.power;
@@ -343,73 +343,73 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
       const bandWidth = this.uniforms.width;
       const iterCount = this.uniforms.iterations;
 
-      // ==== Geometry- and view-dependent bases ====
-      const objCoords = positionGeometry.mul(vec3(1, 1, -1)).xzy; // flip Z then swizzle
-      const isBackface = step(0.0, faceDirection.negate()); // 1 backface, 0 front
+      // ==== Bases geométricas y de vista ====
+      const objCoords = positionGeometry.mul(vec3(1, 1, -1)).xzy; // flip Z luego swizzle
+      const isBackface = step(0.0, faceDirection.negate()); // 1 cara trasera, 0 frontal
 
-      // Camera as point in object space
+      // Cámara como punto en espacio del objeto
       const camPointObj = cameraPosition.mul(modelWorldMatrix).mul(vec3(1, 1, -1)).xzy;
 
-      // Pick coords from camera for backfaces, from geometry for frontfaces
+      // Elige coordenadas: cámara para backfaces, geometría para frontfaces
       const startCoords = mix(objCoords, camPointObj.xyz, isBackface);
 
-      // Incoming view direction in world, then to object-like swizzle
+      // Dirección de vista entrante en mundo, luego swizzle a espacio de objeto
       const viewInWorld = normalize(sub(cameraPosition, positionWorld)).mul(vec3(1, 1, -1)).xzy;
-      const rayDir = viewInWorld.negate(); // initial march direction
+      const rayDir = viewInWorld.negate(); // dirección inicial de marcha
 
-      // White noise to jitter start
+      // Ruido blanco para jitter del inicio
       const noiseWhite = whiteNoise2D(objCoords.xy).mul(noiseAmp);
       const jitter = rayDir.mul(noiseWhite);
 
-      // Ray initial position
+      // Posición inicial del rayo
       const rayPos = startCoords.sub(jitter);
 
-      // Accumulators
+      // Acumuladores
       const colorAcc = vec3(0);
       const alphaAcc = float(0.0);
 
-      // ==== Main loop ====
+      // ==== Bucle principal ====
       Loop(iterCount, ({ i }) => {
         const rNorm = normalize(rayPos);
         const rLen = lengthSqrt(rayPos);
 
-        // Steering term toward center
+        // Término de steering hacia el centro
         const steerMag = _step.mul(power).div(rLen.mul(rLen)); // step*power / r^2
-        const range = remapClamp(rLen, 1.0, 0.5, 0.0, 1.0); // fade steering
+        const range = remapClamp(rLen, 1.0, 0.5, 0.0, 1.0); // desvanecer steering
         const steer = rNorm.mul(steerMag.mul(range));
         const steeredDir = rayDir.sub(steer).normalize();
 
-        // Advance once
+        // Avance una vez
         const advance = rayDir.mul(_step);
         rayPos.addAssign(advance);
 
-        // Local measures in XY plane and rotating UVs
+        // Medidas locales en plano XY y UVs rotatorias
         const xyLen = lengthSqrt(rayPos.mul(vec3(1, 1, 0)));
         const rotPhase = xyLen.mul(4.27).sub(time.mul(0.1));
         const uvAxis = vec3(0, 0, 1);
         const uvRot = rayPos.mul(rotateAxis(uvAxis, rotPhase));
         const uv = uvRot.mul(2).add(time.mul(this.uniforms.uvMotion));
 
-        // Deep noise sample
+        // Muestra de ruido profundo
         const noiseDeep = texture(this.resources.items.noiseDeepTexture, uv);
 
-        // Z band shaping
+        // Modelado de banda Z
         const bandMin = bandWidth.negate();
         const bandEnds = vec3(bandMin, 0.0, bandWidth); // [-w, 0, w]
         const dz = sub(bandEnds, vec3(rayPos.z));
         const zQuad = dz.mul(dz).div(bandWidth);
         const zBand = max(bandWidth.sub(zQuad).div(bandWidth), 0.0);
 
-        // Modulated noise amplitude
+        // Amplitud de ruido modulada
         const noiseAmp3 = noiseDeep.mul(zBand);
         const noiseAmpLen = lengthSqrt(noiseAmp3);
 
-        // Pseudo normal via offset noise
+        // Pseudo normal mediante ruido desplazado
         const uvForNormal = uv.mul(1.002);
         const noiseNormal = texture(this.resources.items.noiseDeepTexture, uvForNormal).mul(zBand);
         const noiseNormalLen = lengthSqrt(noiseNormal);
 
-        // Color ramp evaluation
+        // Evaluación del gradiente de color
         const rampInput = xyLen
           .add(noiseAmpLen.sub(0.78).mul(1.5))
           .add(noiseAmpLen.sub(noiseNormalLen).mul(19.75));
@@ -423,12 +423,12 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
           .mul(this.uniforms.rampEmission)
           .add(this.uniforms.emissionColor);
 
-        // Core suppression near origin
+        // Supresión del núcleo cerca del origen
         const rLenNow = lengthSqrt(rayPos);
         const insideCore = rLenNow.lessThan(originRadius);
         const shadedCol = mix(emissiveCol, vec3(0), insideCore);
 
-        // Alpha shaping
+        // Modelado de alpha
         const zAbs = abs(rayPos.z);
         const aNoise = noiseAmpLen.sub(0.75).mul(-0.6);
         const aPre = zAbs.add(aNoise);
@@ -436,20 +436,20 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
         const aBand = smoothRange(aPre, bandWidth, 0, 0, aRadial);
         const alphaLocal = mix(aBand, 1.0, insideCore);
 
-        // Front-to-back compositing
+        // Composición front-to-back
         const oneMinusA = alphaAcc.oneMinus();
         const weight = oneMinusA.mul(vecToFac(alphaLocal));
         const newColor = mix(colorAcc, shadedCol, weight);
         const newAlpha = mix(alphaAcc, 1.0, vecToFac(alphaLocal));
 
-        // Second advance and steering update
+        // Segundo avance y actualización de steering
         rayPos.addAssign(advance);
         rayDir.assign(steeredDir);
         colorAcc.assign(newColor);
         alphaAcc.assign(newAlpha);
       });
 
-      // ==== Environment blend on remaining transparency ====
+      // ==== Mezcla con el entorno según la transparencia restante ====
       const dirForEnv = rayDir.mul(vec3(1, -1, 1)).xzy;
       const envUV = equirectUV(dirForEnv);
       const stars = linearToSrgb(
@@ -487,7 +487,7 @@ rotation: { x: ${this.customParams.rotX.toFixed(4)}, y: ${this.customParams.rotY
     })();
     material.emissiveNode = material.colorNode;
 
-    // add plane
+    // agregar plano (debug de backfaces — comentado)
     // const planeGeometry = new THREE.PlaneGeometry( 10, 10 )
     // const planeMaterial = new THREE.MeshStandardNodeMaterial()
     // planeMaterial.side = THREE.DoubleSide
