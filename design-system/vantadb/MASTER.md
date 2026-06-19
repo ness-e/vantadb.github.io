@@ -5,7 +5,7 @@
 > If not, strictly follow the rules below.
 >
 > **Generated via:** `vanta-design-orchestrator` + `ui-ux-pro-max` + `impeccable` + `redesign-existing-projects`
-> **Last updated:** 2026-06-17
+> **Last updated:** 2026-06-18
 
 ---
 
@@ -57,6 +57,7 @@ All values in OKLCH-mapped CSS variables. **Never use raw hex in components — 
 **Color Rules:**
 
 - **One accent only:** `--amber`. Never add purple, blue, or green accents.
+- **Exception:** Syntax highlighting tokens (Material Palenight colors for code blocks) use purple keywords, green strings, blue functions, etc. These are semantic colors for code readability — not interface accents. Allowed.
 - **Shadows must be tinted:** Use `rgba(255,106,0,0.04-0.08)` not pure black.
 - **Text minimum contrast:** 4.5:1 for body (`--frost`), 7:1 for critical labels.
 - **No warm-neutral backgrounds:** The `#050507` IS the warmth. No cream/sand/beige sections.
@@ -223,7 +224,15 @@ Alternating left/right layout. 2-column grid `1fr 1fr` with `gap: 5rem–8rem`. 
 
 ### Bento Grid
 
-For feature overviews. Use `grid-template-columns: repeat(12, 1fr)`. Cells span different widths (`span 4`, `span 8`, `span 6`) to create intentional asymmetry. Never all same-sized cells.
+For feature overviews and data-dense sections. Use `grid-template-columns: repeat(12, 1fr)`. Cells span different widths (`span 7 + span 5`, `span 12`, etc.) to create intentional asymmetry. Never all same-sized cells.
+
+**Engine Section implementation:**
+- Outer grid: headline left (280px) + bento right (1fr). Headline has `position: sticky; top: 6rem` to follow scroll.
+- Inner bento: 12-col grid with 1.25rem gap. Cells have `var(--surface)` background, `1px solid rgba(255,255,255,0.03)` border, `var(--radius-lg)` corners.
+- Cell content: amber dot + mono uppercase label in header row, metric rows with `justify-content: space-between` below.
+- `font-variant-numeric: tabular-nums` on all metric values.
+- Hover: `translateY(-2px)`, amber-tinted border + shadow.
+- Mobile (< 820px): outer grid collapses to single column, bento collapses to 1fr, sticky removed.
 
 ### Metric Bar / Stats Strip
 
@@ -302,6 +311,49 @@ Active nav link: `color: var(--white)` + underline. Never background-highlighted
 
 ---
 
+### Terminal & Code UI Patterns
+
+For non-Quickstart terminal/code displays (Engine Bento, spec sheets, log output).
+
+**Code/Metric Row (`.bento-row`-style):**
+```css
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-family: var(--font-mono);
+font-size: 0.72rem;
+color: var(--muted);
+padding: 0.25rem 0;
+```
+
+**Metric Value (`.bento-val`):**
+- Color: `var(--white)`, weight: 500, `font-variant-numeric: tabular-nums`
+- Amber values for primary metrics: `color: var(--amber)`
+- Soft amber string values: `color: var(--amber-soft)`
+
+**Status Tags (`.bento-tag`):**
+- Small inline chip: `border: 1px solid rgba(255,106,0,0.1)`, `color: var(--amber)`
+- `border-radius: 3px`, `font-size: 0.62rem`
+
+**Status Dot (`.bento-dot`):**
+- `width: 6px; height: 6px; border-radius: 50%`
+- Background: `var(--amber)` with `box-shadow: 0 0 6px rgba(255,106,0,0.4)`
+- Use as section indicator, never as decoration on non-interactive elements
+
+**Metric Rows spacing:**
+- Separate metric groups with a thin divider: `height: 1px; background: rgba(255,255,255,0.02); margin: 0.5rem 0`
+- Keep row density high: 0.25rem vertical padding per row
+
+**Allowed accent hierarchy in data displays:**
+1. Amber dot: stage indicator
+2. Amber uppercase label: stage title
+3. Amber value: primary metric
+4. Amber-soft text: string results like `"Quantum primer"`
+5. White value: secondary metric
+6. Muted text: labels
+
+---
+
 ## Layout Patterns
 
 ### Asymmetry Rules (Anti-Slop Priority)
@@ -319,7 +371,7 @@ Active nav link: `color: var(--white)` + underline. Never background-highlighted
 2. Hero (SingularityHero — WebGL, IMMUTABLE)
 3. Metrics Strip (4 stats — animated counters)
 4. Quickstart (sidebar nav + terminal content pane, Python/Rust language tabs, typewriter code reveal)
-5. Engine (zig-zag FeatureRows: Hybrid Search, Graph, WAL)
+5. Engine (Bento Grid: headline left + pipeline metrics right; Query → BM25 | HNSW → RRF → Result)
 6. Architecture (full-width dark surface: SVG diagram + specs grid)
 7. Ecosystem / Integrations (Bento Grid or asymmetric 4-card stagger)
 8. Use Cases (vertical list with large ghost numbers — NOT cards)

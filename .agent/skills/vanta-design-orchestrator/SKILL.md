@@ -1,11 +1,11 @@
 ---
 name: vanta-design-orchestrator
-description: Master orchestrator and role definition for local UI/UX design tools and skills. Integrates Krug UX, Impeccable CLI, Emil animation philosophy, custom frontend, and Three.js/Shader guidelines.
+description: Master orchestrator and role definition for local UI/UX design tools and skills. Integrates Krug UX, Impeccable CLI, Emil animation philosophy, Motion library, Anime.js, GSAP (8 skills), Three.js/Shader pipeline, SEO audit, mobile design patterns, and video production (HyperFrames/Remotion).
 ---
 
 # Vanta Design Orchestrator
 
-Punto de entrada central para las **20 habilidades de diseño** del workspace VantaDB. Define el perfil de rol, documenta cada herramienta en profundidad y establece el protocolo de orquestación para que todas trabajen en conjunto sin interferencias.
+Punto de entrada central para las **35+ habilidades de diseño** del workspace VantaDB. Define el perfil de rol, documenta cada herramienta en profundidad y establece el protocolo de orquestación para que todas trabajen en conjunto sin interferencias. Incluye **capas condicionales opcionales** que se activan según las necesidades del proyecto: Video, 3D Avanzado, y SEO + Mobile.
 
 ---
 
@@ -43,7 +43,71 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 
 ---
 
-## 2. Catálogo Completo de Habilidades (20 Skills)
+## 1.5. Activación Condicional de Capas (Branching)
+
+No todos los proyectos necesitan todas las capas. Al iniciar una tarea de diseño, el orquestador pregunta:
+
+- **Video** — ¿El proyecto incluye producción de video, motion graphics o composiciones animadas? (HyperFrames, Remotion)
+- **3D Avanzado** — ¿El proyecto usa escenas Three.js complejas, shaders personalizados o geometría 3D interactiva?
+- **SEO + Mobile** — ¿El proyecto necesita optimización SEO, diseño mobile-first o estrategia de visibilidad en buscadores/LLMs?
+
+### Flujo de decisión
+
+```mermaid
+graph TD
+    INICIO[Inicio de tarea de diseño] --> PREGUNTA{¿Incluye video?}
+    PREGUNTA -->|Sí| C9[Carga CAPA 9 - Video]
+    PREGUNTA -->|No| SIGUE1[Saltar CAPA 9]
+    C9 --> P3D
+    SIGUE1 --> P3D
+    P3D{¿Incluye 3D avanzado?} -->|Sí| C10[Carga CAPA 10 - 3D Avanzado]
+    P3D -->|No| SIGUE2[Saltar CAPA 10]
+    C10 --> PSEO
+    SIGUE2 --> PSEO
+    PSEO{¿Incluye SEO o Mobile?} -->|Sí| C11[Carga CAPA 11 - SEO + Mobile]
+    PSEO -->|No| SIGUE3[Saltar CAPA 11]
+    C11 --> FLUJO
+    SIGUE3 --> FLUJO
+    FLUJO[Flujo estándar CAPA 1-8]
+
+    style INICIO fill:#1a1a2e,stroke:#16213e,color:#e0e0e0
+    style PREGUNTA fill:#2a1a1a,stroke:#4a2a2a,color:#fff
+    style P3D fill:#1a2a1a,stroke:#2a4a2a,color:#fff
+    style PSEO fill:#1a1a2a,stroke:#2a2a4a,color:#fff
+    style C9 fill:#2a2a1a,stroke:#4a4a2a,color:#fff
+    style C10 fill:#1a2a2a,stroke:#2a4a4a,color:#fff
+    style C11 fill:#2a1a2a,stroke:#4a2a4a,color:#fff
+    style FLUJO fill:#1e1e24,stroke:#3a3a3a,color:#fff
+```
+
+Las capas opcionales (9-11) se integran en el flujo de orquestación según corresponda. Si no se activan, el flujo continúa solo con CAPA 1-8.
+
+---
+
+## 1.6. Enrutamiento por Tarea (Task Routing)
+
+Cuando el usuario pide algo, el agente NO usa una sola skill — combina varias en secuencia. Esta tabla mapea pedidos comunes al combo de skills que debe cargar y ejecutar:
+
+| Si el usuario pide... | Skills a combinar (en orden) | Notas |
+|:----------------------|:-----------------------------|:------|
+| **Animación UI** (hovers, transiciones, micro-interacciones, scroll) | `motion` → `animejs` (timelines complejos, SVG, stagger) → `emil-design-eng` → `design-motion-principles` (audit) → `interaction-design` (loading states, feedback) | `motion` es la librería default para UI; `animejs` para timelines complejos, SVG morphing y stagger avanzado; `design-motion-principles` audita el resultado |
+| **Diseño visual completo** (página, landing, sección) | `ui-ux-pro-max` → `design-systems` → `ui-design` → `awesome-claude-design` → luego `visual-critique` para auditar | Arranca con paleta/tipografía, formaliza tokens, aplica diseño visual, verifica anti-slop |
+| **Componente UI** (botón, card, modal, formulario, nav) | `interaction-design` (state-machine, feedback) → `frontend-design` (estructura semántica) → `ui-design` (color, spacing, tipografía) → `emil-design-eng` (micro-interacciones) → `ux-heuristics` (usabilidad) | Cada sub-skill de `interaction-design` según el tipo de componente |
+| **Auditoría / quality check** | `impeccable` (audit) → `visual-critique` (critique-screen) → `web-design-guidelines` (compliance) → `design-motion-principles` (motion audit) → `writing-guidelines` (copy) → `react-best-practices` (perf) → `design-ops` (QA checklist) | Pipeline completo de calidad. Saltar lo que no aplique |
+| **Video / motion graphics** | `hyperframes` → `hyperframes-animation` | Si el stack es React, consultar `remotion-best-practices` como alternativa. Preguntar al usuario cuál prefiere |
+| **Escena 3D / WebGL** | `threejs-fundamentals` → `threejs-geometry` → `threejs-materials` → `threejs-interaction` → `threejs-animation` → `threejs-shaders` (solo si se necesita efecto no-PBR) | Mantener 60fps. Fallback `prefers-reduced-motion`. No cargar todos — solo los que apliquen al caso |
+| **SEO completo** | `roier-seo` (auditoría técnica) → `ai-seo` (AI visibility) → `seo` (correcciones on-page) | Para proyecto nuevo, integrar desde el inicio. Para existente, correr roier-seo primero |
+| **App mobile** (iOS/Android nativo o responsive) | `sleek-design-mobile-apps` → `ui-design` (responsive-design, spacing) → `interaction-design` (gestos, touch targets, Fitts) → `ux-heuristics` (mobile usability) | Verificar en 3 tamaños (4.7", 6.1", 6.7"). Touch targets 44×44pt mínimo |
+| **Sistema de diseño / tokens** | `design-systems` (tokenize) → `ui-ux-pro-max` (paleta + tipografía) → `ui-design` (color-system, type-scale, spacing-system) → `design-systems` (component-spec, accessibility-audit) | El flujo produce `MASTER.md` con tokens globales → semánticos → de componente |
+| **Formulario / onboarding / flujo** | `interaction-design` (form-design, state-machine, onboarding-design) → `ux-heuristics` (prevención de errores, recuperación) → `frontend-design` (estructura semántica) → `ui-design` (visual) | State machine primero (idle → loading → success/error), luego UI |
+| **Refactor / rediseño** | `impeccable` (shape → audit → polish) → `visual-critique` → `design-motion-principles` (si hay animaciones existentes) → `ui-ux-pro-max` (si cambia identidad) → `web-design-guidelines` | No tocar lo que funciona. `audit` primero para diagnosticar |
+| **Timeline / SVG / stagger** (animaciones coreografiadas, morphing SVG) | `animejs` (timeline API, stagger grid, SVG morph) → `motion` (si necesita integración React) → `design-motion-principles` (audit) | `animejs` es la opción correcta para SVG pesado, timelines con posicionamiento relativo y stagger avanzado desde centro/grid |
+
+> 💡 **Regla**: Cada tarea carga MÍNIMO 2-3 skills. Nunca resolver un pedido complejo con una sola skill.
+
+---
+
+## 2. Catálogo Completo de Habilidades (35+ Skills)
 
 ### ──────────────────────────────────────────
 
@@ -61,6 +125,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | `python skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system`. Acepta queries como "cinematic dark database" o "minimal editorial SaaS".                                                |
 | **¿Cómo debería usarse?**   | Con el flag `--persist` para generar automáticamente el archivo maestro `design-system/MASTER.md` que centraliza todos los tokens.                                                                  |
 | **¿Cuándo debería usarse?** | **Fase 1** — Al inicio de la conceptualización o rediseño estético general. Es la PRIMERA skill que se consulta en un nuevo proyecto.                                                               |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/ui-ux-pro-max/`). Requiere Python 3.8+ para los scripts de búsqueda. Los scripts están en `skills/ui-ux-pro-max/scripts/search.py`.                              |
+| **Requerimientos**          | Python 3.8+. Opcional: `rich` (para output coloreado en terminal).                                                                                                                                 |
 
 #### 2. `design-systems` — Arquitectura de Sistemas de Diseño
 
@@ -73,6 +139,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Definiendo primero tokens globales → luego alias semánticos → luego tokens de componente. Nunca referenciar valores raw en componentes. Usar CSS custom properties para temas runtime.                                                                                                                                               |
 | **¿Cuándo debería usarse?** | **Fase 1-2** — Después de definir el estilo global con `ui-ux-pro-max`, para formalizar y estructurar los tokens en un sistema versionable.                                                                                                                                                                                          |
 | **Workflows disponibles**   | `/design-systems:audit-system`, `/design-systems:create-component`, `/design-systems:tokenize`                                                                                                                                                                                                                                       |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/design-systems/`). No requiere instalación adicional — es conocimiento de arquitectura de design systems.                                                                                                                                                                                         |
+| **Requerimientos**          | Ninguno. Funciona sobre cualquier stack. Opcional: repo de tokens (CSS custom properties, JSON, o Figma).                                                                                                                                                                                                                           |
 
 ---
 
@@ -92,6 +160,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Evaluando cada heurística de 0 a 4 en severidad. Ejecutando el Trunk Test en cada página. Aplicando la regla de "eliminar la mitad de las palabras, y luego eliminar la mitad de lo que queda".                                                                                                                                                                                                                       |
 | **¿Cómo debería usarse?**   | Como filtro obligatorio antes de pasar a la fase visual. Si una página no pasa el Trunk Test, no se estiliza — se reestructura.                                                                                                                                                                                                                                                                                       |
 | **¿Cuándo debería usarse?** | **Fase 1** — Al estructurar wireframes, menús de navegación, textos y flujos conversacionales.                                                                                                                                                                                                                                                                                                                        |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/ux-heuristics/`). No requiere instalación — es marco cognitivo basado en las 10 heurísticas de Nielsen y el Trunk Test de Krug.                                                                                                                                                                                                                                                     |
+| **Requerimientos**          | Ninguno. Solo acceso al diseño o prototipo a evaluar.                                                                                                                                                                                                                                                                                                                                                                |
 
 #### 4. `frontend-design` — Estructuración Limpia de Componentes
 
@@ -103,6 +173,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Evaluando la estructura propuesta contra su checklist interno: ¿es semántica? ¿evita nesting innecesario? ¿el layout tiene tensión visual o es plano? ¿los espacios negativos son intencionales?                   |
 | **¿Cómo debería usarse?**   | Diseñando layouts con bento-grid, composiciones de 60/40 o 70/30, hero sections con whitespace dramático, y evitando la cuadrícula perfecta de 3 columnas iguales.                                                 |
 | **¿Cuándo debería usarse?** | **Fase 1** — Durante la escritura inicial de la estructura HTML y estilos base de cualquier componente.                                                                                                            |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/frontend-design/`). No requiere instalación — son pautas de calidad frontend.                                                                                                                                                                    |
+| **Requerimientos**          | Ninguno. Aplica a cualquier proyecto HTML/CSS/JS.                                                                                                                                                                                                                                 |
 
 #### 5. `ux-strategy` — Estrategia y Arquitectura de Producto
 
@@ -115,6 +187,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Como fase de discovery antes de la implementación. Un análisis competitivo identifica oportunidades; los principios de diseño resuelven debates futuros.                                                                                                                                                                                            |
 | **¿Cuándo debería usarse?** | **Pre-Fase 1** — Antes de iniciar cualquier trabajo de diseño significativo.                                                                                                                                                                                                                                                                        |
 | **Workflows disponibles**   | `/ux-strategy:benchmark`, `/ux-strategy:frame-problem`, `/ux-strategy:strategize`                                                                                                                                                                                                                                                                   |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/ux-strategy/`). No requiere instalación — es conocimiento estratégico de producto.                                                                                                                                                                                                                                |
+| **Requerimientos**          | Ninguno. Solo acceso a información del negocio/competencia.                                                                                                                                                                                                                                                                                         |
 
 ---
 
@@ -135,6 +209,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | `color-system` → genera la paleta completa y verifica contraste AA en cada combinación fondo/texto. `typography-scale` → define con ratio matemático, mínimo 16px para body. `spacing-system` → usa base de 4px o 8px con escala nombrada (xs/sm/md/lg/xl).                                                                                                                             |
 | **¿Cuándo debería usarse?** | **Fase 2** — Después de definir la estructura, para aplicar identidad visual con fundamento perceptual.                                                                                                                                                                                                                                                                                 |
 | **Workflows disponibles**   | `/ui-design:color-palette`, `/ui-design:design-screen`, `/ui-design:responsive-audit`, `/ui-design:type-system`                                                                                                                                                                                                                                                                         |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/ui-design/`). No requiere instalación — es conocimiento de diseño visual con 13 sub-skills.                                                                                                                                                                                                                                                           |
+| **Requerimientos**          | Ninguno. Funciona sobre cualquier stack. Opcional: herramientas de color (Coolors, OKLCH Chrome) para verificar paletas.                                                                                                                                                                                                                                                               |
 
 #### 7. `visual-critique` — Crítica Visual Estructurada
 
@@ -147,6 +223,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Comparando contra archivos de referencia del proyecto (`mood.md`, `voice.md`, `tokens.md`). Si no existen, crear primero la referencia de brand con `design-systems`.                                                                                                          |
 | **¿Cuándo debería usarse?** | **Fase 4** — Después de implementar, como auditoría de calidad visual antes de producción.                                                                                                                                                                                     |
 | **Workflows disponibles**   | `/visual-critique:critique-screen`                                                                                                                                                                                                                                             |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/visual-critique/`). No requiere instalación — es suite de crítica visual estructurada.                                                                                                                                                       |
+| **Requerimientos**          | Ninguno. Solo acceso a la pantalla/diseño a evaluar. Opcional: archivos de referencia del proyecto (`mood.md`, `voice.md`, `tokens.md`).                                                                                                                                      |
 
 #### 8. `awesome-claude-design` — Anti-Slop y Familias Estéticas
 
@@ -158,6 +236,21 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Consultando las guías de familias estéticas y los checklists anti-slop. Para WebGL: verificando que fragment shaders no usen branching dinámico pesado y que el render sea 60fps constante.                                                 |
 | **¿Cómo debería usarse?**   | Restringiendo shaders y escenas 3D a un presupuesto de frame (<16.6ms). Aplicando fallbacks estáticos con `prefers-reduced-motion`. Evitando `ease-in` en transiciones UI.                                                                  |
 | **¿Cuándo debería usarse?** | **Fase 2-3** — Al definir identidad visual y al implementar elementos 3D/WebGL.                                                                                                                                                             |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/awesome-claude-design/`). No requiere instalación — es base cognitiva anti-slop con guías de estética y WebGL.                                                                                                                                  |
+| **Requerimientos**          | Ninguno. Para WebGL: navegador con soporte WebGL2. Opcional: Three.js si se usan las guías 3D.                                                                                                                                              |
+
+#### `sleek-design-mobile-apps` — Diseño Mobile Nativo
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de diseño mobile que cubre creación de pantallas, flujos y UI nativa para iOS y Android. Integración con proyectos Sleek.                                                                                                    |
+| **¿Para qué es?**           | Diseñar interfaces mobile-first con patrones nativos: navegación inferior, gestos swipe/tap/long-press, sheets modales, y adaptación táctil (targets 44×44pt mínimos).                                                            |
+| **¿Para qué se usa?**       | Crear flujos de onboarding, dashboards mobile, formularios táctiles, listas con swipe-actions, y bottomsheets. Optimizar layouts para viewports pequeños con espaciado compacto.                                                  |
+| **¿Cómo se usa?**           | Consultando los patrones de diseño mobile del skill. Para proyectos iOS/Android nativos, usa sus guías de plataforma. Para web responsive, combínalo con `ui-design` → `responsive-design`.                                       |
+| **¿Cómo debería usarse?**   | Como complemento de `ui-design` y `interaction-design` cuando el target incluye mobile. Siempre verificar touch targets (Fitts: 44×44pt mínimo) y thumbs-zone (zona de alcance del pulgar en 4.7"-6.7").                          |
+| **¿Cuándo debería usarse?** | **Fase 2-3** — Cuando el proyecto requiere diseño mobile nativo o adaptación mobile-first. Consultar también CAPA 11 si se activa la capa SEO+Mobile.                                                                             |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add sleekdotdesign/agent-skills@sleek-design-mobile-apps -g`). No requiere paquetes npm adicionales — es conocimiento de patrones.                                                    |
+| **Requerimientos**          | Ninguno. Funciona sobre cualquier stack web. Para iOS/Android nativo, tener Xcode o Android Studio.                                                                                                                                |
 
 ---
 
@@ -177,6 +270,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Aplicando las directrices: respuesta física inmediata (<100ms), easing de salida con deceleración, sin rebotes excesivos, sin `ease-in` en UI. Hover effects con `transform: scale(1.02)` + shadow sutil, no `scale(1.1)` que se siente agresivo.                                                     |
 | **¿Cómo debería usarse?**   | Como complemento de `interaction-design`. Emil define la filosofía; `interaction-design` define los patrones técnicos (state machines, loading states).                                                                                                                                               |
 | **¿Cuándo debería usarse?** | **Fase 3** — Al diseñar cualquier elemento interactivo: menús, botones, popups, control dinámico de Three.js.                                                                                                                                                                                         |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/emil-design-eng/`). No requiere instalación — es filosofía de micro-interacciones.                                                                                                                                                                                |
+| **Requerimientos**          | Ninguno. Funciona sobre cualquier stack. Complementa a `motion` y `interaction-design`.                                                                                                                                                                                                             |
 
 #### 10. `interaction-design` — Patrones de Interacción Completos
 
@@ -189,6 +284,47 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Los patrones de interacción se fundamentan con las leyes cognitivas (`doherty-threshold`, `fitts-law`, `hicks-law`, `millers-law`). Cada decisión de interacción debe citar qué ley respalda el diseño.                                                                                                                                                                                                                                                                                                                                                                                              |
 | **¿Cuándo debería usarse?** | **Fase 3** — Al implementar comportamientos interactivos, flujos de datos y feedback de sistema.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | **Workflows disponibles**   | `/interaction-design:design-interaction`, `/interaction-design:error-flow`, `/interaction-design:map-states`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add wshobson/agents@interaction-design -g`). No requiere paquetes npm adicionales — es conocimiento de patrones de interacción con 13 sub-skills.                                                                                                                                                                                                                                                                                                                                                                                                      |
+| **Requerimientos**          | Ninguno. Funciona sobre cualquier stack. Opcional: herramientas de prototipado (Figma, ProtoPie) para validar flujos.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+
+#### `motion` — Librería de Animaciones (motion.dev)
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Librería de animaciones para JavaScript, React y Vue de motion.dev (v12). Reemplazo moderno de Framer Motion con API simplificada. Soporta `motion.div`, layout animations, scroll-linked effects, y gesture-driven motion.       |
+| **¿Para qué es?**           | Implementar todas las animaciones del proyecto con una sola librería declarativa: entradas, salidas, transiciones de layout, hover, tap, drag y scroll. Es la librería de animación PREDETERMINADA del proyecto.                   |
+| **¿Para qué se usa?**       | Animar componentes con `<motion.div>`, escalar con `whileHover`, transiciones de layout con `layoutId`, scroll animations con `useScroll`, y gestos con `whileTap` / `whileDrag`. Sin CSS keyframes — todo declarativo.           |
+| **¿Cómo se usa?**           | `import { motion } from "motion"` → `<motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.3}}>`. Para scroll: `const { scrollYProgress } = useScroll()`.                                               |
+| **¿Cómo debería usarse?**   | Como librería única de animación. No mezclar con CSS keyframes ni otras librerías para el mismo tipo de animación. `prefers-reduced-motion` lo maneja motion.dev automáticamente.                                                 |
+| **¿Cuándo debería usarse?** | **Fase 3** — En toda animación de UI: transiciones, hover, scroll, layout, micro-interacciones. Reemplaza CSS keyframes y Framer Motion legacy.                                                                                   |
+| **Dependencias**            | `npm install motion` (motion.dev v12+). Es la librería de animación por defecto del proyecto. Reemplaza a Framer Motion.                                                                                                          |
+| **Requerimientos**          | Proyecto con npm/pnpm/yarn. React 16.8+ o Vue 3+. Node 18+. Sin dependencias nativas.                                                                                                                                            |
+
+#### `animejs` — Animaciones de Timeline y SVG
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Librería versátil de animación JavaScript que trabaja con DOM, CSS, SVG y objetos JS. Especializada en timelines con coreografía precisa, stagger grid, morphing SVG, y easing spring físico. ~9KB gzipped. 956+ instalaciones.     |
+| **¿Para qué es?**           | Animaciones complejas con secuencias multi-paso (timelines), animaciones escalonadas sobre grids (stagger desde centro/filas), morphing de rutas SVG, y keyframes con temporización porcentual.                                    |
+| **¿Para qué se usa?**       | Coreografiar secuencias con `anime.timeline()` y posicionamiento relativo (`-=500`). Animar desde centro de grid con `stagger()`. Morphing SVG con atributos `d`. Animar objetos JS para datos reactivos.                          |
+| **¿Cómo se usa?**           | `import anime from 'animejs'` → `anime({ targets: '.el', translateX: 250, duration: 800, easing: 'spring(1, 80, 10, 0)' })`. Timelines: `anime.timeline().add({...}).add({...}, '-=500')`. Stagger: `anime({ targets, delay: anime.stagger(100, {from: 'center'}) })`. |
+| **¿Cómo debería usarse?**   | Usar `anime` para animaciones que requieren control temporal fino (timelines, SVG morphing, stagger grid). Usar `motion` (motion.dev) para animaciones declarativas de UI (hover, layout, scroll). No mezclar ambas en el mismo componente — elegir según el caso. |
+| **¿Cuándo debería usarse?** | **Fase 3** — Cuando se necesita: timelines multi-secuencia con posicionamiento relativo, animaciones SVG (morphing, draw), stagger sobre colecciones/grids, o easing spring avanzado no disponible en CSS. |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add freshtechbro/claudedesignskills@animejs -g`). Proyecto: `npm install animejs`. Incluye scripts Python para generación de animaciones (`scripts/animation_generator.py`, `scripts/timeline_builder.py`). |
+| **Requerimientos**          | Node 18+. Proyecto con npm/pnpm/yarn. Sin dependencias nativas. Anime.js v4 (última). Compatible con todos los navegadores modernos. Para scripts Python: Python 3.8+. |
+
+#### `design-motion-principles` — Auditoría de Movimiento
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de auditoría de motion basado en las técnicas de Emil Kowalski, Jakub Krehel y Jhey Tompkins. Dos modos: construir componentes con movimiento intencional, o auditar animaciones existentes y detectar patrones "slop".     |
+| **¿Para qué es?**           | Revisar y mejorar la calidad del movimiento en la interfaz. Detectar easing genéricos, duraciones incorrectas, hover effects agresivos, y falta de intencionalidad en transiciones.                                               |
+| **¿Para qué se usa?**       | Auditar motion existente (genera reporte HTML con demos en loop). Definir personalidad de movimiento del proyecto (constantes de spring, duración base, easing tokens).                                                             |
+| **¿Cómo se usa?**           | En modo audit: corre reglas de calidad de motion y emite reporte. En modo build: consulta perspectivas por diseñador (Emil → micro-interacciones, Jakub → layout, Jhey → scroll/parallax).                                        |
+| **¿Cómo debería usarse?**   | Como complemento de `motion` y `emil-design-eng`. Primero construir con `motion`, luego auditar con `design-motion-principles`, luego refinar con `impeccable`. Sobre `prefers-reduced-motion`: motion.dev lo maneja automáticamente. |
+| **¿Cuándo debería usarse?** | **Fase 3-4** — Después de implementar animaciones, antes de la auditoría final. Opcional si el proyecto usa solo motion básico sin scroll ni gestos complejos.                                                                     |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add wshobson/agents@design-motion-principles -g`). No requiere paquetes npm — es conocimiento de patrones y genera reporte HTML autónomo.                                            |
+| **Requerimientos**          | Ninguno. El reporte de auditoría se genera como HTML estático.                                                                                                                                                                   |
 
 ---
 
@@ -208,6 +344,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Comandos principales: `/impeccable craft <target>` (construir), `/impeccable shape <target>` (dar forma), `/impeccable audit <target>` (auditar), `/impeccable polish <target>` (pulir). Cada comando activa un conjunto específico de reglas. |
 | **¿Cómo debería usarse?**   | Ejecutando `audit` sobre cada sección construida → corrigiendo hallazgos → ejecutando `polish` para el refinamiento final. El slop-test es obligatorio antes de producción.                                                                    |
 | **¿Cuándo debería usarse?** | **Fase 4** — En la fase de maquetación media y finalización de componentes.                                                                                                                                                                    |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add pbakaus/impeccable -g`). El CLI `impeccable` se instala globalmente. Requiere Node 18+.                                                                                                       |
+| **Requerimientos**          | Node 18+. El CLI corre desde la terminal. Para auditoría en navegador: Chrome/Edge.                                                                                                                                                            |
 
 #### 12. `web-design-guidelines` — Compliance de Interfaz Web
 
@@ -219,6 +357,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Proporcionando archivos o patrones para revisión. El skill descarga las guidelines actualizadas desde el repo oficial de Vercel y aplica todas las reglas, reportando en formato `file:line`. |
 | **¿Cómo debería usarse?**   | Como gate de calidad final. Si hay violaciones críticas (accesibilidad, contraste), no se despliega.                                                                                          |
 | **¿Cuándo debería usarse?** | **Fase 4** — Post-implementación, antes del deploy a producción.                                                                                                                              |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/web-design-guidelines/`). Descarga guidelines de Vercel en tiempo real desde su repo oficial. Requiere conexión a internet.                                   |
+| **Requerimientos**          | Conexión a internet para descargar guidelines. Los archivos a revisar deben ser accesibles localmente.                                                                                         |
 
 #### 13. `writing-guidelines` — Compliance de Prosa y Documentación
 
@@ -230,6 +370,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Proporcionando archivos markdown o patrones de texto. El skill descarga las reglas desde el repo oficial y reporta hallazgos en formato `file:line`. |
 | **¿Cómo debería usarse?**   | Después de escribir cualquier documentación significativa o microcopy UI.                                                                            |
 | **¿Cuándo debería usarse?** | **Fase 4** — Revisión de contenido textual antes de publicación.                                                                                     |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/writing-guidelines/`). Descarga guidelines de Vercel en tiempo real. Requiere conexión a internet.                    |
+| **Requerimientos**          | Conexión a internet. Archivos markdown o texto a revisar.                                                                                             |
 
 ---
 
@@ -249,6 +391,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Consultando las reglas por categoría y prioridad. Cada regla tiene: explicación, código incorrecto, código correcto y contexto adicional. Las reglas expandidas están en `rules/*.md` y el documento completo en `AGENTS.md`.                                                                                                                                         |
 | **¿Cómo debería usarse?**   | Aplicando las reglas CRITICAL primero (waterfalls y bundle size), luego HIGH (server-side), luego MEDIUM (re-renders y rendering). Las reglas LOW se aplican solo en optimización profunda.                                                                                                                                                                           |
 | **¿Cuándo debería usarse?** | **Fase 4** — Durante code review y optimización de rendimiento. También durante Fase 3 al escribir componentes nuevos.                                                                                                                                                                                                                                                |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/vercel-react-best-practices/`). No requiere instalación — es guía de 70 reglas de rendimiento React/Next.js de Vercel Engineering.                                                                                                                                                                                                 |
+| **Requerimientos**          | Proyecto React 16.8+ o Next.js. Opcional: React DevTools, Lighthouse, Vercel Analytics.                                                                                                                                                                                                                                                                             |
 
 #### 15. `vercel-optimize` — Auditoría de Costos y Performance Vercel
 
@@ -260,6 +404,47 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo se usa?**           | Ejecutando el pipeline de scripts: `collect-signals.mjs` → `scan-codebase.mjs` → `merge-signals.mjs` → `gate-investigations.mjs` → `deep-dive.mjs` → `reconcile-candidates.mjs` → `verify-and-regen.mjs` → `render-report.mjs`.                                      |
 | **¿Cómo debería usarse?**   | Solo sobre proyectos desplegados en Vercel con tráfico real. Nunca grep repo-wide sin evidencia métrica. Cada recomendación debe trazar a un candidato y a métricas observadas.                                                                                      |
 | **¿Cuándo debería usarse?** | **Post-producción** — Cuando hay factura alta, rutas lentas, o se necesita optimización de costos.                                                                                                                                                                   |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/vercel-optimize/`). Requiere Vercel CLI v53+ (`npm i -g vercel@latest`). Opcional: Vercel Observability Plus. Pipeline de scripts: `collect-signals.mjs` → `scan-codebase.mjs` → etc.                                                |
+| **Requerimientos**          | Node 18+. Proyecto desplegado en Vercel con tráfico real. Acceso a Vercel dashboard. Vercel CLI autenticado (`vercel login`).                                                                                                                                        |
+
+#### `roier-seo` — Auditoría Técnica SEO
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Auditor SEO técnico que corre Lighthouse/PageSpeed sobre sitios o servidores dev, analiza puntuaciones SEO/Performance/Accesibilidad e implementa correcciones automáticas.                                                        |
+| **¿Para qué es?**           | Detectar y corregir problemas SEO, Core Web Vitals, meta tags, structured data y accesibilidad antes del deploy.                                                                                                                  |
+| **¿Para qué se usa?**       | Ejecutar auditorías automatizadas, implementar fixes para meta tags faltantes, structured data (JSON-LD), lazy loading, contraste, etiquetas ARIA, y jerarquía de headings.                                                         |
+| **¿Cómo se usa?**           | El skill corre Lighthouse/PageSpeed, analiza resultados, y genera parches para los issues encontrados. Para auditoría continua, combinarlo con CI/CD.                                                                              |
+| **¿Cómo debería usarse?**   | Como gate de calidad pre-deploy. Si el score baja de 90 en SEO o Performance, no se despliega. También como auditoría periódica en producción.                                                                                     |
+| **¿Cuándo debería usarse?** | **Fase 4** — Antes del deploy. También **post-producción** para monitoreo periódico. Consultar CAPA 11 si se activa la capa SEO+Mobile.                                                                                            |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add davila7/claude-code-templates@roier-seo -g`). Requiere Lighthouse/PageSpeed (corre desde Node). Opcional: Google Search Console API access.                                      |
+| **Requerimientos**          | Node 18+. El skill corre auditorías desde el CLI. Para auditorías en dev, el servidor local debe ser accesible. Para producción, el sitio debe estar desplegado.                                                                   |
+
+#### `ai-seo` — Optimización para Buscadores AI
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill especializado en optimizar contenido para motores de búsqueda AI (ChatGPT Search, Perplexity, Google AI Overviews, Claude, Gemini). Cubre AEO (Answer Engine Optimization), LLMO, y GEO (Generative Engine Optimization).    |
+| **¿Para qué es?**           | Conseguir que el contenido del proyecto aparezca en respuestas generadas por IA, sea citado por LLMs, y optimice para visibilidad en AI Overviews y búsqueda zero-click.                                                           |
+| **¿Para qué se usa?**       | Crear OKF (Open Knowledge Format), `llms.txt`, knowledge bundles, y structured data para agentes. Optimizar contenido para preguntas conversacionales y fragmentos destacados.                                                     |
+| **¿Cómo se usa?**           | Analizando el contenido existente, generando OKF/knowledge bundles, y aplicando técnicas de AI visibility. El skill incluye guías para structured data, entity recognition, y topical authority.                                 |
+| **¿Cómo debería usarse?**   | Junto con `roier-seo` para cobertura completa: SEO técnico (roier) + AI visibility (ai-seo). El contenido optimizado para AI SEO también beneficia el ranking tradicional.                                                          |
+| **¿Cuándo debería usarse?** | **Fase 4** — Cuando el proyecto necesita visibilidad en respuestas AI. Consultar CAPA 11 si se activa la capa SEO+Mobile.                                                                                                          |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add coreyhaines31/marketingskills@ai-seo -g`). No requiere paquetes npm adicionales — es conocimiento y guías de contenido.                                                          |
+| **Requerimientos**          | Ninguno. Solo acceso al contenido del proyecto para analizarlo y reescribirlo.                                                                                                                                                     |
+
+#### `seo` — Optimización General para Buscadores
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de optimización SEO general: meta tags, sitemap optimization, structured data, canonical URLs, heading hierarchy, alt texts, y buenas prácticas de contenido.                                                                |
+| **¿Para qué es?**           | Mejorar el ranking en buscadores tradicionales (Google, Bing) mediante prácticas on-page y técnicas.                                                                                                                               |
+| **¿Para qué se usa?**       | Implementar meta tags (title, description, OG), sitemap.xml, robots.txt, canonical tags, heading structure (`h1`→`h6`), lazy loading de imágenes, y datos estructurados (Schema.org, JSON-LD).                                     |
+| **¿Cómo se usa?**           | Auditando el sitio contra checklist SEO, implementando correcciones en meta tags, sitemaps, headings, y structured data. Verificando con Lighthouse y Google Search Console.                                                        |
+| **¿Cómo debería usarse?**   | Como base SEO del proyecto. `seo` cubre lo fundamental, `roier-seo` añade auditoría automatizada, y `ai-seo` cubre la visibilidad en búsqueda AI. Los tres son complementarios.                                                     |
+| **¿Cuándo debería usarse?** | **Fase 4** — En todo proyecto web que requiera visibilidad en buscadores. Consultar CAPA 11 si se activa la capa SEO+Mobile.                                                                                                       |
+| **Dependencias**            | Skill de skills.sh (se instaló con `npx skills add addyosi@web-quality-skills@seo -g`). No requiere paquetes npm — es conocimiento de mejores prácticas SEO.                                                                       |
+| **Requerimientos**          | Ninguno. Las verificaciones se hacen con Lighthouse (ya incluido en Chrome/Edge) y Google Search Console.                                                                                                                          |
 
 ---
 
@@ -280,6 +465,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Personas se crean desde datos reales (entrevistas, analytics), no desde asunciones. Los insights del research repository se estructuran como statements atómicos con nivel de confianza (High/Medium/Low).                                                                                                                                        |
 | **¿Cuándo debería usarse?** | **Pre-Fase 1** — Antes de cualquier diseño. O durante validación post-diseño.                                                                                                                                                                                                                                                                     |
 | **Workflows disponibles**   | `/design-research:discover`, `/design-research:interview`, `/design-research:synthesize`, `/design-research:test-plan`                                                                                                                                                                                                                            |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/design-research/`). No requiere instalación — es conocimiento de investigación UX con 10 sub-skills.                                                                                                                                                                                                            |
+| **Requerimientos**          | Ninguno. Opcional: herramientas de research (Dovetail, Condens, o simplemente una pizarra Miro/Figma).                                                                                                                                                                                                                                            |
 
 #### 17. `prototyping-testing` — Validación de Diseño
 
@@ -292,6 +479,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Prototipando la asunción más riesgosa primero. Corriendo heuristic evaluation con 3-5 evaluadores independientes.                                                                                                                                                                                                         |
 | **¿Cuándo debería usarse?** | **Entre Fase 2 y Fase 3** — Después de definir visuals, antes de implementar interacciones complejas.                                                                                                                                                                                                                     |
 | **Workflows disponibles**   | `/prototyping-testing:evaluate`, `/prototyping-testing:experiment`, `/prototyping-testing:prototype-plan`, `/prototyping-testing:test-plan`                                                                                                                                                                               |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/prototyping-testing/`). No requiere instalación — es conocimiento de validación con 8 sub-skills.                                                                                                                                                                                        |
+| **Requerimientos**          | Ninguno. Opcional: herramientas de prototipado (Figma, ProtoPie, Framer) y testing (UserTesting, Maze, Lookback).                                                                                                                                                                                                         |
 
 ---
 
@@ -312,6 +501,8 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Los handoffs siempre usan tokens (nunca hex/px raw). La deuda de diseño se cuantifica con: Severidad × Frecuencia / Esfuerzo. El QA checklist cubre: visual accuracy, layout, interaction, content, accessibility, cross-platform.                                                                                         |
 | **¿Cuándo debería usarse?** | **Fase 4 y Post-producción** — Para entrega, QA y mejora continua.                                                                                                                                                                                                                                                         |
 | **Workflows disponibles**   | `/design-ops:handoff`, `/design-ops:plan-sprint`, `/design-ops:setup-workflow`                                                                                                                                                                                                                                             |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/design-ops/`). No requiere instalación — es conocimiento operacional con 7 sub-skills.                                                                                                                                                                                                   |
+| **Requerimientos**          | Ninguno. Opcional: herramientas de project management (Linear, Jira, Notion) y handoff (Figma Dev Mode, Zeplin).                                                                                                                                                                                                           |
 
 #### 19. `designer-toolkit` — Utilidades Esenciales del Diseñador
 
@@ -324,29 +515,201 @@ Punto de entrada central para las **20 habilidades de diseño** del workspace Va
 | **¿Cómo debería usarse?**   | Toda decisión de diseño controversial debe acompañarse de un rationale escrito. Los error messages siguen formato: What happened → Why → What to do. Los CTAs empiezan con verbo y son específicos sobre el outcome.                                                                                                                       |
 | **¿Cuándo debería usarse?** | **Cualquier fase** — Según la necesidad de documentación, comunicación o advocacy.                                                                                                                                                                                                                                                         |
 | **Workflows disponibles**   | `/designer-toolkit:build-presentation`, `/designer-toolkit:write-case-study`, `/designer-toolkit:write-rationale`                                                                                                                                                                                                                          |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/designer-toolkit/`). No requiere instalación — es conocimiento utilitario con 7 sub-skills.                                                                                                                                                                                                              |
+| **Requerimientos**          | Ninguno. Opcional: herramientas de presentación (slides.com, Google Slides, Keynote).                                                                                                                                                                                                                                                       |
 
 #### 20. `vanta-design-orchestrator` — Este Archivo (Meta-Skill)
 
-| Campo               | Detalle                                                                                                                 |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------- |
-| **¿Qué es?**        | El orquestador maestro que define el rol del agente, documenta las 20 skills y establece el protocolo de uso combinado. |
-| **¿Para qué es?**   | Ser el punto de entrada único para cualquier tarea de diseño.                                                           |
-| **¿Cuándo se lee?** | Automáticamente cuando se activa el rol de Lead Design Engineer (trigger words).                                        |
+| Campo               | Detalle                                                                                                                     |
+| :------------------ | :-------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**        | El orquestador maestro que define el rol del agente, documenta las 35+ skills y establece el protocolo de uso combinado.    |
+| **¿Para qué es?**   | Ser el punto de entrada único para cualquier tarea de diseño.                                                               |
+| **¿Cuándo se lee?** | Automáticamente cuando se activa el rol de Lead Design Engineer (trigger words), o cuando se carga una capa condicional.     |
+| **Dependencias**            | Este archivo. No requiere instalación — es el meta-skill orquestador.                                                                                                                         |
+| **Requerimientos**          | Los skills que orquesta deben estar instalados. Ver `Dependencias` de cada skill individual.                                                                                                  |
+
+---
+
+### ──────────────────────────────────────────
+
+### CAPA 9 — VIDEO [OPCIONAL]
+
+### ──────────────────────────────────────────
+
+> ⚠️ **Capa condicional.** Se activa SOLO si el proyecto incluye producción de video, motion graphics o composiciones animadas. Preguntar al usuario al iniciar la tarea.
+
+#### `hyperframes` — Composición de Video con HTML
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Framework de código abierto para convertir HTML, CSS, animaciones seekable y media en videos MP4 deterministas. Usa el CLI para preview, lint y render. 102.2K instalaciones.                                                      |
+| **¿Para qué es?**           | Producir videos desde HTML con animaciones GSAP, captions sincronizados, audio-reactive visuals, transiciones de escena, y composiciones multi-secuencia.                                                                          |
+| **¿Para qué se usa?**       | Crear videos promocionales, explainers, caption overlays, PR videos, motion graphics, y animaciones para web. El flujo: plan → HTML → animaciones → lint → preview → render → MP4.                                                 |
+| **¿Cómo se usa?**           | `npx hyperframes init` → escribe `index.html` con data-* attributes → `npx hyperframes preview` → `npx hyperframes render output.mp4`. Usa GSAP para timelines seekable.                                                           |
+| **¿Cómo debería usarse?**   | Para proyectos que necesitan video generado programáticamente. No para edición de video tradicional. HyperFrames es el entry point; `hyperframes-animation` añade conocimiento profundo de animación.                              |
+| **¿Cuándo debería usarse?** | Cuando el proyecto requiere video generado desde código (promos, explainers, captions, motion graphics). Activar CAPA 9 solo si el usuario confirma que necesita video.                                                            |
+| **Dependencias**            | `npx skills add heygen-com/hyperframes -g`. CLI: `npx hyperframes`. Requiere Node 18+. Para render: Chrome/Chromium (lo usa Puppeteer internamente). Opcional: FFmpeg para post-processing.                                        |
+| **Requerimientos**          | Node 18+. Chrome/Chromium (se instala automáticamente con Puppeteer). GPU recomendada para renders complejos. 4GB+ RAM.                                                                                                           |
+
+#### `hyperframes-animation` — Animación para HyperFrames
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Todo el conocimiento de animación para HyperFrames: reglas de motion atómico, blueprints de escena multi-fase, transiciones, y 7 adaptadores runtime (GSAP, Lottie, Three.js, Anime.js, CSS keyframes, WAAPI, TypeGPU).             |
+| **¿Para qué es?**           | Implementar animaciones seekable y deterministas dentro de composiciones HyperFrames. Cubre desde easing básico hasta shaders de transición.                                                                                       |
+| **¿Para qué se usa?**       | Animar elementos HTML, sincronizar motion con audio, crear transiciones entre escenas, y usar adaptadores específicos (Lottie para vector animation, Three.js para 3D, etc.).                                                      |
+| **¿Cómo se usa?**           | Seleccionando un blueprint de escena (entrance → body → exit), eligiendo el adaptador adecuado, y aplicando reglas de motion atómico (duración, easing, stagger).                                                                  |
+| **¿Cómo debería usarse?**   | Después de leer `hyperframes`. Usar GSAP como default, otros adaptadores solo si el caso lo justifica. Para CSS keyframes simples, ver `awesome-claude-design`.                                                                    |
+| **¿Cuándo debería usarse?** | Junto con `hyperframes` cuando se necesita control fino de animación en composiciones de video.                                                                                                                                    |
+| **Dependencias**            | Se instala con el skill `hyperframes` (`npx skills add heygen-com/hyperframes@hyperframes-animation -g`). Depende de `hyperframes` CLI. GSAP se incluye vía CDN o npm.                                                             |
+| **Requerimientos**          | Los mismos que `hyperframes`. GSAP (opcional, vía CDN). Cada adaptador (Three.js, Lottie, etc.) requiere su propia librería.                                                                                                       |
+
+#### `remotion-best-practices` — Video con React (Remotion)
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de mejores prácticas para Remotion — framework de creación de video con React. Cubre performance, composición, rendering, y patrones específicos de Remotion.                                                                |
+| **¿Para qué es?**           | Crear videos usando componentes React: animaciones programáticas, data-driven motion graphics, y composiciones dinámicas renderizadas con <code>&lt;Canvas&gt;</code> y React hooks.                                              |
+| **¿Para qué se usa?**       | Animar con hooks de Remotion (`useCurrentFrame`, `useVideoConfig`), componer escenas con `<Sequence>`, optimizar render con `<useOffthreadVideo>`, y manejar assets.                                                                |
+| **¿Cómo se usa?**           | Consultando reglas de performance específicas de Remotion: evitar re-renders en cada frame, usar `useMemo` para valores estáticos, `<Img>` en vez de `<img>`, y `continueRender` para assets async.                                |
+| **¿Cómo debería usarse?**   | Alternativa a HyperFrames cuando el equipo ya usa React y prefiere componentes sobre HTML plano. No mezclar con HyperFrames en el mismo proyecto — elegir uno.                                                                     |
+| **¿Cuándo debería usarse?** | Solo si el usuario prefiere explícitamente Remotion sobre HyperFrames, o si el proyecto ya tiene código Remotion existente.                                                                                                         |
+| **Dependencias**            | Skill de skills.sh (`npx skills add remotion-dev/skills@remotion-best-practices -g`). Proyecto React con `npm install @remotion/cli`. Puppeteer o Chrome para render. FFmpeg opcional.                                              |
+| **Requerimientos**          | Node 18+. React 18+. Chrome/Chromium (para render). GPU recomendada. 8GB+ RAM para renders largos. FFmpeg para codecs adicionales.                                                                                                |
+
+---
+
+### ──────────────────────────────────────────
+
+### CAPA 10 — 3D AVANZADO [OPCIONAL]
+
+### ──────────────────────────────────────────
+
+> ⚠️ **Capa condicional.** Se activa SOLO si el proyecto incluye escenas Three.js complejas, shaders personalizados o geometría 3D interactiva. Preguntar al usuario al iniciar la tarea.
+
+#### `threejs-fundamentals` — Fundamentos de Three.js
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de fundamentos: setup de escena, cámaras (Perspective/Orthographic), renderer (WebGL/WebGPU), jerarquía Object3D, y sistemas de coordenadas.                                                                                 |
+| **¿Para qué es?**           | Establecer la base de cualquier proyecto Three.js: scene, camera, renderer, y el loop de renderizado.                                                                                                                              |
+| **¿Para qué se usa?**       | Inicializar una escena 3D, configurar la cámara (posición, fov, near/far planes), elegir el renderer (WebGL vs WebGPU), y manejar transforms de objetos (position, rotation, scale).                                                |
+| **¿Cómo se usa?**           | `const scene = new THREE.Scene()` → `const camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000)` → `const renderer = new THREE.WebGLRenderer()` → `renderer.render(scene, camera)`.                                           |
+| **¿Cómo debería usarse?**   | Primera skill de Three.js a consultar. Establece el scaffold básico. Las demás threejs-* skills se consultan según la necesidad específica (geometría, materiales, interacción, animación, shaders).                                |
+| **¿Cuándo debería usarse?** | **Fase 3** — Si el proyecto incluye elementos 3D. Esta es la puerta de entrada a todas las threejs-* skills.                                                                                                                       |
+| **Dependencias**            | Skills de skills.sh (se instalaron con `npx skills add cloudai-x/threejs-skills@threejs-fundamentals -g`). Proyecto: `npm install three`.                                                                                          |
+| **Requerimientos**          | Node 18+. Three.js r150+. WebGL 1/2 o WebGPU. GPU con soporte WebGL. Para WebGPU: navegador Chromium 113+.                                                                                                                         |
+
+#### `threejs-geometry` — Geometría y BufferGeometry
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de creación de geometría: built-in shapes (Box, Sphere, Plane, Torus), BufferGeometry personalizada, geometría dinámica, e instancing (InstancedMesh).                                                                       |
+| **¿Para qué es?**           | Crear y manipular mallas 3D desde formas simples hasta geometrías complejas con vértices personalizados.                                                                                                                           |
+| **¿Para qué se usa?**       | Usar formas predefinidas (`BoxGeometry`, `SphereGeometry`), construir geometrías con `BufferGeometry` + `Float32Array`, y optimizar con `InstancedMesh` para muchas instancias.                                                     |
+| **¿Cómo se usa?**           | `new THREE.BoxGeometry(1,1,1)` para formas simples. `new THREE.BufferGeometry()` + `setAttribute('position', ...)` para geometría custom. `InstancedMesh` para 1000+ objetos repetidos.                                           |
+| **¿Cómo debería usarse?**   | Después de `threejs-fundamentals`. Para geometrías simples usa built-ins; para orgánicas usa BufferGeometry. Para rendimiento, InstancedMesh sobre合并 meshes.                                                                    |
+| **¿Cuándo debería usarse?** | **Fase 3** — Al crear elementos 3D específicos: logos 3D, partículas, terrenos, o cualquier mesh personalizado.                                                                                                                    |
+| **Dependencias**            | `npx skills add cloudai-x/threejs-skills@threejs-geometry -g`. Proyecto: `npm install three`. Extiende a `threejs-fundamentals`.                                                                                                   |
+| **Requerimientos**          | Node 18+. Three.js r150+. WebGL 1/2.                                                                                                                                                                                               |
+
+#### `threejs-materials` — Materiales y Texturas
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de materiales Three.js: PBR (Standard, Physical), básicos (Basic, Lambert, Phong), shader materials, texturas, environment maps, y propiedades de material.                                                                  |
+| **¿Para qué es?**           | Definir el aspecto visual de los objetos 3D: color, textura, rugosidad, metálico, emisión, transparencia, y mapas de normales/desplazamiento.                                                                                      |
+| **¿Cómo se usa?**           | `new THREE.MeshStandardMaterial({color: 0xff6600, roughness: 0.3, metalness: 0.8})`. Cargar texturas con `TextureLoader`. `MeshPhysicalMaterial` para cristal/agua con clearcoat, transmission, ior.                              |
+| **¿Cómo debería usarse?**   | Preferir `MeshStandardMaterial` por defecto (PBR físico). `MeshPhysicalMaterial` solo cuando se necesita transmission/clearcoat. Evitar `MeshBasicMaterial` excepto para debugging o UI 2D en escena.                              |
+| **¿Cuándo debería usarse?** | **Fase 3** — Al texturizar objetos 3D. También en **Fase 2** si se definen tokens de materiales 3D (colores PBR, rugosidad base, metálico base).                                                                                  |
+| **Dependencias**            | `npx skills add cloudai-x/threejs-skills@threejs-materials -g`. Proyecto: `npm install three`. Para texturas: `TextureLoader` (built-in). Para HDR: `RGBELoader` o `EXRLoader` de three/examples.                                  |
+| **Requerimientos**          | Node 18+. Three.js r150+. WebGL 1/2. Texturas: 1024×1024 recomendado para web, 2048×2048 para calidad.                                                                                                                             |
+
+#### `threejs-interaction` — Interacción 3D
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de interacción 3D: raycasting, controles (OrbitControls, FirstPerson, Fly), input mouse/touch, y selección de objetos.                                                                                                       |
+| **¿Para qué es?**           | Hacer que la escena 3D responda al usuario: click en objetos, arrastrar, hover, zoom, y navegación por la escena.                                                                                                                  |
+| **¿Cómo se usa?**           | `Raycaster` para detección de clicks: `raycaster.setFromCamera(mouse, camera)` → `raycaster.intersectObjects(objects)`. `OrbitControls` para navegación: `new OrbitControls(camera, renderer.domElement)`.                         |
+| **¿Cómo debería usarse?**   | `OrbitControls` para escenas explorables. `Raycaster` + hover states para UI 3D interactiva. Para experiencias inmersivas, `PointerLockControls` o `FirstPersonControls`. Siempre con throttle en eventos mouse.                   |
+| **¿Cuándo debería usarse?** | **Fase 3** — Cuando el usuario necesita manipular o navegar la escena 3D.                                                                                                                                    |
+| **Dependencias**            | `npx skills add cloudai-x/threejs-skills@threejs-interaction -g`. Proyecto: `npm install three`. `OrbitControls` desde `three/examples/jsm/controls/OrbitControls`.                                                                |
+| **Requerimientos**          | Node 18+. Three.js r150+. WebGL 1/2. Para PointerLock: navegador moderno (Chrome, Firefox, Edge).                                                                                                                                 |
+
+#### `threejs-animation` — Animación en Three.js
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de animación Three.js: keyframe animation (KeyframeTrack, AnimationMixer), skeletal animation (SkinnedMesh), morph targets, y animation blending.                                                                            |
+| **¿Para qué es?**           | Animar objetos 3D en el tiempo: rotaciones, posiciones, morphing de formas, huesos de personajes, y blending entre animaciones.                                                                                                   |
+| **¿Cómo se usa?**           | `AnimationMixer` + `ClipAction` para animaciones desde GLTF. KeyframeTrack para animaciones manuales. `morphTargetInfluences` para morph targets. `AnimationAction.crossFadeFrom()` para blending entre animaciones.              |
+| **¿Cómo debería usarse?**   | Para animaciones importadas (GLTF), usar AnimationMixer. Para animaciones procedurales, animar propiedades directamente en el loop de render. No mezclar ambos enfoques en el mismo objeto.                                       |
+| **¿Cuándo debería usarse?** | **Fase 3** — Cuando los objetos 3D necesitan movimiento: rotación de logos, personajes animados, morphing de formas, o transiciones entre animaciones.                                                                             |
+| **Dependencias**            | `npx skills add cloudai-x/threejs-skills@threejs-animation -g`. Proyecto: `npm install three`. Para GLTF: `GLTFLoader` de three/examples.                                                                                         |
+| **Requerimientos**          | Node 18+. Three.js r150+. WebGL 1/2. Para skeletal animation: modelo con armature (GLTF/GLB).                                                                                                                                    |
+
+#### `threejs-shaders` — Shaders GLSL Personalizados
+
+| Campo                       | Detalle                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Skill de shaders Three.js: GLSL, ShaderMaterial, uniforms, atributos, varyings, y efectos visuales personalizados (post-processing, distortion, glow).                                                                             |
+| **¿Para qué es?**           | Crear efectos visuales que no son posibles con materiales estándar: distortion waves, glitch, morphing shaders, hologramas, auroras, black holes, y post-processing.                                                               |
+| **¿Cómo se usa?**           | `new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms })`. Escribir GLSL en template strings. `uniforms` para parámetros dinámicos (time, mouse, etc.). `RawShaderMaterial` para control total sin built-ins.         |
+| **¿Cómo debería usarse?**   | Solo cuando MeshStandardMaterial/MeshPhysicalMaterial no pueden lograr el efecto. Mantener presupuesto de GPU: no branching dinámico pesado, minimal texture lookups. Fallback a material estándar en dispositivos low-end.        |
+| **¿Cuándo debería usarse?** | **Fase 3** — Para efectos visuales avanzados: transiciones, glitch, hologramas, distorsión. Comprobar primero en CAPA 1-8 si el efecto se puede lograr sin shaders personalizados.                                                |
+| **Dependencias**            | `npx skills add cloudai-x/threejs-skills@threejs-shaders -g`. Proyecto: `npm install three`. Para post-processing: `three/addons/postprocessing/`.                                                                                 |
+| **Requerimientos**          | Node 18+. Three.js r150+. WebGL 1/2 (WebGL2 recomendado para shaders complejos). GPU con soporte GLSL 300 es. No branching dinámico pesado.                                                                                        |
+
+---
+
+### ──────────────────────────────────────────
+
+### CAPA 11 — SEO + MOBILE [OPCIONAL]
+
+### ──────────────────────────────────────────
+
+> ⚠️ **Capa condicional.** Se activa SOLO si el proyecto necesita optimización SEO, diseño mobile-first, o estrategia de visibilidad en buscadores/LLMs. Preguntar al usuario al iniciar la tarea.
+
+Esta capa agrupa los skills de SEO y Mobile en un flujo unificado. Los skills ya están referenciados individualmente en CAPA 3 (`sleek-design-mobile-apps`) y CAPA 5 (`roier-seo`, `ai-seo`, `seo`). Esta capa proporciona el flujo de trabajo combinado.
+
+### Flujo SEO + Mobile
+
+```mermaid
+graph LR
+    SEO[Auditoría SEO Técnica] -->|roier-seo| AI[AI SEO]
+    AI -->|ai-seo| MOBILE[Diseño Mobile]
+    MOBILE -->|sleek-design-mobile-apps| DEPLOY[Producción]
+    SEO -->|seo| MOBILE
+
+    style SEO fill:#1a1a2e,stroke:#16213e,color:#e0e0e0
+    style AI fill:#2a1a1a,stroke:#4a2a2a,color:#fff
+    style MOBILE fill:#1a2a2a,stroke:#2a4a4a,color:#fff
+    style DEPLOY fill:#1e241e,stroke:#2f4a2f,color:#fff
+```
+
+- **Fase 2 (Identidad Visual):** Aplicar principios mobile-first en diseño responsive con `sleek-design-mobile-apps`. Definir breakpoints, touch targets (44×44pt), y thumbs-zone.
+- **Fase 4 (Auditoría):** Correr `roier-seo` para auditoría técnica → `ai-seo` para optimización AI visibility → `seo` para correcciones on-page.
+- **Criterio de salida:** Scores Lighthouse >90 en SEO y Performance. Diseño mobile validado en 3 dispositivos (4.7", 6.1", 6.7"). Contenido optimizado para AI search (OKF/llms.txt).
 
 ---
 
 ## 3. El Ciclo de Orquestación Vanta (Uso en Conjunto sin Interferencias)
 
-Para evitar contradicciones visuales o técnicas al utilizar todas las habilidades, el flujo de desarrollo de UI se estructurará en **5 fases secuenciales**. Cada fase tiene skills asignados y un criterio de salida claro.
+Para evitar contradicciones visuales o técnicas al utilizar todas las habilidades, el flujo de desarrollo de UI se estructurará en **5 fases secuenciales** + **3 capas condicionales opcionales**. Cada fase tiene skills asignados y un criterio de salida claro.
 
 ```mermaid
 graph TD
     P[Pre-Fase: Discovery & Research] -->|Personas, IA, Principios| A
     A[Fase 1: Estructura y UX] -->|Wireframes, Semántica, Trunk Test| B
     B[Fase 2: Identidad Visual y Tokens] -->|HSL/OKLCH, Tipografía, Anti-Slop| C
-    C[Fase 3: Interacciones y 3D] -->|Springs, FSM, Shaders 60fps| D
-    D[Fase 4: Auditoría y Refinamiento] -->|Impeccable, WCAG, React Perf| E
+    C[Fase 3: Interacciones y 3D] -->|Springs, FSM, Motion, Shaders| D
+    D[Fase 4: Auditoría y Refinamiento] -->|Impeccable, WCAG, SEO, React Perf| E
     E[Producción / Envío]
+
+    C9[CAPA 9 - Video] -.->|opcional| F3
+    C10[CAPA 10 - 3D Avanzado] -.->|opcional| F3
+    C11[CAPA 11 - SEO + Mobile] -.->|opcional| F4
 
     style P fill:#1a1a2e,stroke:#16213e,stroke-width:2px,color:#e0e0e0
     style A fill:#1e1e24,stroke:#3a3a3a,stroke-width:2px,color:#fff
@@ -354,6 +717,9 @@ graph TD
     style C fill:#1d2424,stroke:#2f4a4a,stroke-width:2px,color:#fff
     style D fill:#24241d,stroke:#4a4a2f,stroke-width:2px,color:#fff
     style E fill:#1e241e,stroke:#2f4a2f,stroke-width:2px,color:#fff
+    style C9 fill:#2a2a1a,stroke:#4a4a2a,stroke-width:1px,color:#aaa,stroke-dasharray: 5 5
+    style C10 fill:#1a2a2a,stroke:#2a4a4a,stroke-width:1px,color:#aaa,stroke-dasharray: 5 5
+    style C11 fill:#2a1a2a,stroke:#4a2a4a,stroke-width:1px,color:#aaa,stroke-dasharray: 5 5
 ```
 
 ### Pre-Fase: Discovery & Research
@@ -370,21 +736,25 @@ graph TD
 
 ### Fase 2: Identidad Visual y Estilos (Tokens)
 
-- **Skills:** `ui-ux-pro-max` + `design-systems` + `ui-design` + `awesome-claude-design`
-- **Acción**: Genera paleta HSL/OKLCH con `ui-ux-pro-max`. Formaliza tokens con `design-systems`. Aplica color system, typography scale, spacing system y layout grid con `ui-design`. Verifica contra Anti-Slop con `awesome-claude-design`. Elige familia estética.
+- **Skills:** `ui-ux-pro-max` + `design-systems` + `ui-design` + `awesome-claude-design` + `sleek-design-mobile-apps` (si mobile)
+- **Acción**: Genera paleta HSL/OKLCH con `ui-ux-pro-max`. Formaliza tokens con `design-systems`. Aplica color system, typography scale, spacing system y layout grid con `ui-design`. Verifica contra Anti-Slop con `awesome-claude-design`. Elige familia estética. Si aplica mobile-first, incorpora patrones de `sleek-design-mobile-apps`.
 - **Criterio de salida**: `MASTER.md` generado. Todos los valores visuales usan tokens. Contraste AA verificado. Slop test pasado.
 
-### Fase 3: Interacciones y Elementos 3D (Motion & WebGL)
+### Fase 3: Interacciones, Movimiento y 3D (Motion & WebGL)
 
-- **Skills:** `emil-design-eng` + `interaction-design` + `awesome-claude-design` (Frontier 3D/Shaders)
-- **Acción**: Implementa microanimaciones (150-300ms, spring easing). Aplica Doherty (<400ms para respuesta), Fitts (44×44pt touch targets), Hick (reducir opciones simultáneas), Miller (chunking). Configura shaders Three.js a 60fps con fallback `prefers-reduced-motion`.
-- **Criterio de salida**: Todas las interacciones tienen feedback <100ms. Animaciones <500ms. WebGL a 60fps estable. `prefers-reduced-motion` implementado.
+- **Skills base:** `emil-design-eng` + `interaction-design` + `motion` + `animejs` + `awesome-claude-design` (Frontier 3D/Shaders)
+- **Acción base**: Implementa microanimaciones con `motion` (150-300ms, spring easing). Para animaciones complejas (timelines multi-paso, SVG morphing, stagger grid) usa `animejs`. Aplica Doherty (<400ms para respuesta), Fitts (44×44pt touch targets), Hick (reducir opciones simultáneas), Miller (chunking). Usa `emil-design-eng` para filosofía de micro-interacciones.
+- **Si CAPA 9 (Video) activa:** Integra producción de video con `hyperframes` + `hyperframes-animation`. Para proyectos React existentes, `remotion-best-practices` como alternativa.
+- **Si CAPA 10 (3D Avanzado) activa:** Implementa escenas Three.js con `threejs-fundamentals` + `threejs-geometry` + `threejs-materials`. Añade interacción con `threejs-interaction`. Anima con `threejs-animation`. Para efectos visuales avanzados, `threejs-shaders`. Mantener 60fps estables con fallback `prefers-reduced-motion`.
+- **Audita movimiento con** `design-motion-principles` para detectar easing genéricos y duraciones incorrectas.
+- **Criterio de salida**: Todas las interacciones tienen feedback <100ms. Animaciones <500ms. WebGL/Three.js a 60fps estable. `prefers-reduced-motion` implementado. Video renderizado correctamente (si CAPA 9 activa).
 
 ### Fase 4: Auditoría de Calidad y Refinamiento (Quality Check)
 
-- **Skills:** `impeccable` + `visual-critique` + `web-design-guidelines` + `writing-guidelines` + `react-best-practices` + `vercel-optimize` + `design-ops` (sub: `design-qa-checklist`)
-- **Acción**: Corre `/impeccable audit` → `/impeccable polish`. Ejecuta `/visual-critique:critique-screen`. Verifica guidelines de Vercel. Revisa copy con `writing-guidelines`. Optimiza React con reglas CRITICAL/HIGH. QA checklist de `design-ops`.
-- **Criterio de salida**: Slop test pasado. Todas las críticas visuales en `pass`. WCAG AA compliant. Waterfalls eliminados. Copy revisado.
+- **Skills base:** `impeccable` + `visual-critique` + `web-design-guidelines` + `writing-guidelines` + `react-best-practices` + `vercel-optimize` + `design-ops` (sub: `design-qa-checklist`)
+- **Acción base**: Corre `/impeccable audit` → `/impeccable polish`. Ejecuta `/visual-critique:critique-screen`. Verifica guidelines de Vercel. Revisa copy con `writing-guidelines`. Optimiza React con reglas CRITICAL/HIGH. QA checklist de `design-ops`.
+- **Si CAPA 11 (SEO + Mobile) activa:** Corre `roier-seo` para auditoría Lighthouse → `ai-seo` para optimización AI visibility (OKF/llms.txt) → `seo` para correcciones on-page (meta tags, structured data, sitemap). Valida diseño mobile con `sleek-design-mobile-apps` en 3 tamaños de dispositivo.
+- **Criterio de salida**: Slop test pasado. Todas las críticas visuales en `pass`. WCAG AA compliant. Waterfalls eliminados. Copy revisado. Scores Lighthouse >90 si CAPA 11 activa.
 
 ---
 
@@ -393,7 +763,19 @@ graph TD
 Cuando dos skills dan directrices contradictorias, se resuelven en este orden de prioridad:
 
 1. **Accesibilidad** (`design-systems` → accessibility-audit, `ux-heuristics`) — WCAG AA es innegociable.
-2. **Rendimiento** (`react-best-practices`, `vercel-optimize`) — 60fps y Core Web Vitals son requisito.
+2. **Rendimiento** (`react-best-practices`, `vercel-optimize`, `threejs-*` → frame budget) — 60fps y Core Web Vitals son requisito.
 3. **Usabilidad** (`ux-heuristics`, `interaction-design`) — Si es bonito pero confuso, se cambia.
-4. **Anti-Slop** (`impeccable`, `awesome-claude-design`) — Si pasa usabilidad pero es genérico, se refina.
-5. **Estética** (`ui-design`, `emil-design-eng`, `visual-critique`) — Lo visual se adapta a los constraints anteriores.
+4. **Anti-Slop** (`impeccable`, `awesome-claude-design`, `design-motion-principles`) — Si pasa usabilidad pero es genérico, se refina.
+5. **SEO** (`roier-seo`, `ai-seo`, `seo`) — Si hay conflicto entre estética y visibilidad en buscadores, optimizar para ambos manteniendo accesibilidad.
+6. **Estética** (`ui-design`, `emil-design-eng`, `visual-critique`, `sleek-design-mobile-apps`) — Lo visual se adapta a los constraints anteriores.
+
+### Reglas específicas para capas opcionales
+
+| Conflicto | Resolución |
+|:----------|:-----------|
+| `hyperframes` vs `remotion-best-practices` | Elegir UNO según el stack del proyecto (React → Remotion, HTML → HyperFrames). No mezclar. |
+| `motion` (motion.dev) vs CSS keyframes | Usar `motion` para UI animations. CSS keyframes solo para decoration loops (shimmer, glow, grain) con `prefers-reduced-motion`. |
+| `motion` vs `animejs` | `motion` es default para UI (hover, layout, scroll). `animejs` para timelines multi-secuencia, SVG morphing y stagger grid. No mezclar ambas en el mismo componente — elegir según el caso de uso. |
+| `threejs-shaders` vs `awesome-claude-design` WebGL | Si el shader baja de 60fps en GPU media, simplificar o reemplazar con material estándar + post-processing mínimo. |
+| `ai-seo` vs `writing-guidelines` | El contenido debe ser legible para humanos primero, optimizado para AI segundo. No sacrificar claridad por keywords. |
+| `sleek-design-mobile-apps` vs `ui-design` responsive | Mobile-first siempre. `ui-design` se adapta al viewport; `sleek-design-mobile-apps` define los patrones nativos. |

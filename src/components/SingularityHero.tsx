@@ -1,21 +1,24 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-export function SingularityHero() {
+export function SingularityHero({ ready = false }: { ready?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const experienceRef = useRef<any>(null);
+  const readyRef = useRef(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Sync readyRef
+  useEffect(() => { readyRef.current = ready; });
+
+  // Single effect: import + start when both mounted and ready
   useEffect(() => {
     if (!mounted || !canvasRef.current) return;
 
-    let experience: any = null;
-
-    // Mock the window.preloader that Experience.js expects
     (window as any).preloader = {
       hidePreloader: () => {
         const el = document.getElementById("preloader");
@@ -29,14 +32,18 @@ export function SingularityHero() {
 
     import("./singularity-master/src/Experience/Experience.js")
       .then(({ default: Experience }) => {
-        experience = new Experience(canvasRef.current);
+        if (!readyRef.current || experienceRef.current || !canvasRef.current) return;
+
+        const canvas = canvasRef.current;
+        const experience = new Experience(canvas);
+        experienceRef.current = experience;
 
         // ── Performance: pause when tab is hidden ──────────────────
         const onVisibilityChange = () => {
           const renderer = experience?.renderer?.instance;
           if (!renderer) return;
           if (document.hidden) {
-            renderer.setAnimationLoop(null); // stop loop
+            renderer.setAnimationLoop(null);
           } else {
             renderer.setAnimationLoop(async () => experience.update());
           }
@@ -49,10 +56,8 @@ export function SingularityHero() {
             const renderer = experience?.renderer?.instance;
             if (!renderer) return;
             if (entry.isIntersecting) {
-              // Hero visible — run at full speed
               renderer.setAnimationLoop(async () => experience.update());
             } else {
-              // Hero scrolled away — stop rendering (saves GPU)
               renderer.setAnimationLoop(null);
             }
           },
@@ -61,25 +66,21 @@ export function SingularityHero() {
 
         if (sectionRef.current) observer.observe(sectionRef.current);
 
-        // Store cleanup refs on experience object
         (experience as any)._cleanupVisiblityHandler = onVisibilityChange;
         (experience as any)._cleanupObserver = observer;
       })
-      .catch((e) => {
-        console.error("Experience Load Error:", e);
-      });
+      .catch((e) => console.error("Experience Load Error:", e));
 
     return () => {
-      if (experience) {
-        document.removeEventListener(
-          "visibilitychange",
-          (experience as any)._cleanupVisiblityHandler,
-        );
-        (experience as any)._cleanupObserver?.disconnect();
-        if (typeof experience.destroy === "function") experience.destroy();
+      const exp = experienceRef.current;
+      if (exp) {
+        document.removeEventListener("visibilitychange", (exp as any)._cleanupVisiblityHandler);
+        (exp as any)._cleanupObserver?.disconnect();
+        if (typeof exp.destroy === "function") exp.destroy();
+        experienceRef.current = null;
       }
     };
-  }, [mounted]);
+  }, [mounted, ready]);
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText("pip install vantadb-py").then(() => {

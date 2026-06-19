@@ -1,6 +1,6 @@
 # VantaDB Design Toolkit — Manual de Referencia
 
-> **20 habilidades de diseño** integradas en un único ecosistema operativo.
+> **35+ habilidades de diseño** integradas en un único ecosistema operativo.
 > Desde tokens de color hasta auditorías de producción. Todo documentado, todo orquestado.
 
 ---
@@ -28,7 +28,7 @@
 
 ## Visión General
 
-El toolkit de diseño de VantaDB es una colección de 20 habilidades (skills) que cubren el ciclo completo de diseño de producto digital:
+El toolkit de diseño de VantaDB es una colección de 35+ habilidades (skills) que cubren el ciclo completo de diseño de producto digital:
 
 ```
 Research → Estructura → Visuals → Interacción → Auditoría → Producción
@@ -62,6 +62,7 @@ Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (
 │
 ├── # CAPA 4 — Interacción
 ├── emil-design-eng/             ← Springs, micro-detalles, filosofía de movimiento
+├── animejs/                     ← Anime.js: timelines, SVG morphing, stagger grid
 ├── interaction-design/          ← Leyes cognitivas, forms, loading, FSM, nav, search
 │
 ├── # CAPA 5 — Auditoría
@@ -97,6 +98,7 @@ Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (
 |                    | `visual-critique`           |          4 | Fase 4    |
 |                    | `awesome-claude-design`     |          — | Fase 2-3  |
 | **4. Interacción** | `emil-design-eng`           |          — | Fase 3    |
+|                    | `animejs`                   |          — | Fase 3    |
 |                    | `interaction-design`        |         13 | Fase 3    |
 | **5. Auditoría**   | `impeccable`                |          — | Fase 4    |
 |                    | `web-design-guidelines`     |          — | Fase 4    |
@@ -309,6 +311,57 @@ Rating por dimensión: `pass` / `minor issue` / `major issue`
 
 ---
 
+#### `animejs`
+
+**Animaciones de timeline, SVG morphing y stagger avanzado.**
+
+Librería ligera (~9KB gzipped) para animaciones JavaScript sin dependencias de framework.
+
+**Cuándo usar animejs vs motion (motion.dev):**
+
+| Escenario | Librería recomendada |
+| :-------- | :------------------- |
+| Hover/layout/scroll animations UI | `motion` |
+| Timelines multi-paso con posicionamiento relativo | `animejs` |
+| SVG path morphing y draw animations | `animejs` |
+| Stagger grid desde centro con easing por elemento | `animejs` |
+| Easing spring físico avanzado | `animejs` |
+| Animaciones declarativas en React | `motion` |
+| `prefers-reduced-motion` automático | `motion` |
+
+```bash
+npm install animejs
+```
+
+**Importación**:
+```javascript
+import anime from 'animejs'
+```
+
+**Timeline básico**:
+```javascript
+anime.timeline({
+  easing: 'easeOutExpo',
+  duration: 500
+})
+.add({ targets: '.el', translateX: 250 })
+.add({ targets: '.el', rotate: '1turn' }, '-=300')
+.add({ targets: '.el', scale: 1.5 }, '-=200')
+```
+
+**Stagger desde centro**:
+```javascript
+anime({
+  targets: '.grid-item',
+  scale: [0, 1],
+  delay: anime.stagger(50, { from: 'center' })
+})
+```
+
+**Cuándo usarlo**: Fase 3 — Para animaciones que requieren coreografía temporal, SVG morphing, o stagger sobre colecciones.
+
+---
+
 #### `interaction-design`
 
 **13 sub-skills con base en ciencia cognitiva.**
@@ -510,6 +563,7 @@ Pipeline: `collect → scan → merge → gate → deep-dive → reconcile → v
 │                                                                     │
 │  FASE 3: Interacciones y 3D                                         │
 │  ├─ emil-design-eng  (springs, micro-detalles)                      │
+│  ├─ animejs          (timelines, SVG morph, stagger)                │
 │  ├─ interaction-design (leyes cognitivas, FSM, loading)             │
 │  └─ awesome-claude-design (WebGL/Shaders 60fps)                     │
 │                                                                     │
@@ -574,7 +628,7 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden:
 | 1 (máxima) | **Accesibilidad** | `design-systems/accessibility-audit`, `ux-heuristics` |
 | 2          | **Rendimiento**   | `react-best-practices`, `vercel-optimize`             |
 | 3          | **Usabilidad**    | `ux-heuristics`, `interaction-design`                 |
-| 4          | **Anti-Slop**     | `impeccable`, `awesome-claude-design`                 |
+| 4          | **Anti-Slop**     | `impeccable`, `awesome-claude-design`, `animejs`      |
 | 5          | **Estética**      | `ui-design`, `emil-design-eng`, `visual-critique`     |
 
 > Si es accesible pero lento → se optimiza rendimiento.
@@ -612,4 +666,4 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden:
 ---
 
 _Documento generado y mantenido por el Vanta Design Orchestrator._
-_Última actualización: 2026-06-15._
+_Última actualización: 2026-06-18._
