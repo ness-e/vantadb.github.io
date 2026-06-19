@@ -1009,172 +1009,18 @@ function InteractiveQuickstart() {
   );
 }
 
-// ── Preloader: Singularity Pulse ─────────────────────────────────────────────
-function Preloader({ onFinish }: { onFinish: () => void }) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const flashRef = useRef<HTMLDivElement>(null);
-  const coreRef = useRef<HTMLDivElement>(null);
-  const pulseRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const pulseCount = 5;
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.set(contentRef.current, { opacity: 0, y: 14 });
-      gsap.set(coreRef.current, { scale: 0, opacity: 0 });
-      gsap.set(pulseRefs.current, { scale: 0, opacity: 0 });
-
-      const tl = gsap.timeline();
-
-      // Core ignites
-      tl.to(coreRef.current, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(3)" }, 0.1);
-
-      // Wave 1 — slow pulses
-      const pulseIn = (index: number, start: number, duration: number, scale: number, ease: string) => {
-        tl.to(pulseRefs.current[index], {
-          scale, opacity: 0, duration,
-          ease,
-        }, start);
-        tl.set(pulseRefs.current[index], { scale: 0, opacity: 0.25 }, `+=${duration * 0.1}`);
-      };
-
-      // First pulse train (slow)
-      pulseIn(0, 0.4, 1.0, 5, "power2.out");
-      pulseIn(1, 0.8, 1.0, 5, "power2.out");
-      pulseIn(2, 1.2, 1.0, 5, "power2.out");
-      pulseIn(3, 1.6, 1.0, 5, "power2.out");
-      pulseIn(4, 2.0, 1.0, 5, "power2.out");
-
-      // Content appears during wave 1
-      tl.to(contentRef.current, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.6);
-
-      // Wave 2 — faster pulses
-      pulseIn(0, 2.8, 0.5, 6, "power3.out");
-      pulseIn(1, 3.1, 0.5, 6, "power3.out");
-      pulseIn(2, 3.4, 0.5, 6, "power3.out");
-      pulseIn(3, 3.7, 0.5, 6, "power3.out");
-      pulseIn(4, 4.0, 0.5, 6, "power3.out");
-
-      // Wave 3 — rapid fire
-      pulseIn(0, 4.4, 0.25, 8, "power4.out");
-      pulseIn(1, 4.55, 0.25, 8, "power4.out");
-      pulseIn(2, 4.7, 0.25, 8, "power4.out");
-      pulseIn(3, 4.85, 0.25, 8, "power4.out");
-      pulseIn(4, 5.0, 0.25, 8, "power4.out");
-
-      // ── Collapse ──
-      // Core expands
-      tl.to(coreRef.current, { scale: 3, opacity: 0.8, duration: 0.25, ease: "power4.in" }, 5.1);
-      tl.to(contentRef.current, { opacity: 0, duration: 0.1 }, "-=0.15");
-
-      // Final pulse (large, fast)
-      tl.to(pulseRefs.current, {
-        scale: 10, opacity: 0,
-        duration: 0.2, stagger: 0.02, ease: "power4.in",
-      }, "-=0.1");
-
-      // Flash
-      tl.to(flashRef.current, { opacity: 0.95, duration: 0.06, ease: "none" });
-      tl.to(flashRef.current, { opacity: 0, duration: 0.3, ease: "power2.out" });
-      tl.to(overlayRef.current, { opacity: 0, duration: 0.25, ease: "power2.out" }, "-=0.15");
-      tl.call(() => onFinish());
-    }, overlayRef);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <div
-      ref={overlayRef}
-      style={{
-        position: "fixed", inset: 0, zIndex: 9999,
-        background: "#060608",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        fontFamily: "var(--font-sans)", overflow: "hidden",
-      }}
-    >
-      {/* Flash */}
-      <div ref={flashRef} style={{ position: "absolute", inset: 0, background: "#fff", opacity: 0, pointerEvents: "none" }} />
-
-      {/* Vignette */}
-      <div
-        style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(circle at 50% 50%, rgba(6,6,8,0) 30%, rgba(6,6,8,0.6) 80%, #060608 100%)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Pulse rings */}
-      {Array.from({ length: pulseCount }).map((_, i) => (
-        <div
-          key={`pulse-${i}`}
-          ref={(el) => { pulseRefs.current[i] = el; }}
-          style={{
-            position: "absolute", width: 40, height: 40,
-            marginLeft: -20, marginTop: -20,
-            left: "50%", top: "50%",
-            borderRadius: "50%",
-            border: `1px solid rgba(255,${140 + i * 20},${60 + i * 10},${0.15 + i * 0.03})`,
-            boxShadow: "0 0 20px rgba(255,106,0,0.04)",
-            pointerEvents: "none",
-            opacity: 0,
-          }}
-        />
-      ))}
-
-      {/* Core glow */}
-      <div
-        ref={coreRef}
-        style={{
-          position: "absolute", width: 80, height: 80,
-          marginLeft: -40, marginTop: -40,
-          left: "50%", top: "50%",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255,180,80,0.4) 0%, rgba(255,106,0,0.12) 40%, transparent 70%)",
-          boxShadow: "0 0 60px rgba(255,106,0,0.2), 0 0 120px rgba(255,60,0,0.06)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Center content */}
-      <div ref={contentRef} style={{ position: "relative", zIndex: 1, textAlign: "center", opacity: 0 }}>
-        <div
-          style={{
-            fontFamily: "var(--font-sans)", fontSize: "clamp(1.8rem, 4.5vw, 3rem)",
-            fontWeight: 700, color: "var(--white)", letterSpacing: "0.06em",
-          }}
-        >
-          VANTADB
-        </div>
-        <div
-          style={{
-            fontFamily: "var(--font-mono)", fontSize: "0.6rem",
-            color: "var(--steel)", letterSpacing: "0.14em",
-            marginTop: "0.7rem",
-          }}
-        >
-          VECTOR INDEX ENGINE
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ── Main Landing ───────────────────────────────────────────────────────────────
 function Landing() {
   useGSAPReveal();
-  const [loaded, setLoaded] = useState(false);
   const [heroReady, setHeroReady] = useState(false);
 
-  const handlePreloaderFinish = () => {
-    setLoaded(true);
-    setTimeout(() => setHeroReady(true), 100);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-      {!loaded && <Preloader onFinish={handlePreloaderFinish} />}
       <style>{`
         html, body { overflow: auto !important; touch-action: auto !important; user-select: auto !important; }
         @keyframes spin { to { transform: rotate(360deg); } }

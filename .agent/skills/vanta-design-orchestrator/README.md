@@ -1,6 +1,6 @@
 # VantaDB Design Toolkit — Manual de Referencia
 
-> **35+ habilidades de diseño** integradas en un único ecosistema operativo.
+> **170+ habilidades de diseño** integradas en un único ecosistema operativo.
 > Desde tokens de color hasta auditorías de producción. Todo documentado, todo orquestado.
 
 ---
@@ -28,7 +28,7 @@
 
 ## Visión General
 
-El toolkit de diseño de VantaDB es una colección de 35+ habilidades (skills) que cubren el ciclo completo de diseño de producto digital:
+El toolkit de diseño de VantaDB es una colección de 170+ habilidades (skills) que cubren el ciclo completo de diseño de producto digital:
 
 ```
 Research → Estructura → Visuals → Interacción → Auditoría → Producción
@@ -80,37 +80,101 @@ Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (
 │
 ├── # CAPA 8 — Operaciones
 ├── design-ops/                  ← Critique, QA, sprints, handoff, team workflow
-└── designer-toolkit/            ← Rationale, UX writing, case studies, presentations
+├── designer-toolkit/            ← Rationale, UX writing, case studies, presentations
+│
+├── # CAPA 9 — Video (opcional)
+├── hyperframes/                 ← Composición de video HTML
+├── hyperframes-animation/       ← Animación para HyperFrames
+├── remotion-best-practices/     ← Video con React
+│
+├── # CAPA 10 — 3D Avanzado (opcional)
+├── threejs-fundamentals/        ← Escenas Three.js
+├── threejs-geometry/            ← Geometría 3D
+├── threejs-materials/           ← Materiales PBR
+├── threejs-interaction/         ← Raycasting, controles
+├── threejs-animation/           ← Animación 3D
+├── threejs-shaders/             ← Shaders GLSL
+├── threejs/                     ← Three.js consolidado (open-design)
+├── shader-dev/                  ← Desarrollo de shaders
+├── vfx-text-cursor/             ← Cursor de texto con shader
+│
+├── # CAPA 11 — SEO + Mobile (opcional)
+├── roier-seo/                   ← Auditoría técnica Lighthouse
+├── ai-seo/                      ← AI visibility / LLM optimization
+├── seo/                         ← Correcciones on-page
+├── seo-audit/                   ← SEO health check
+├── apple-hig/                   ← Apple Human Interface Guidelines
+├── swiftui-design/              ← Diseño SwiftUI nativo
+├── flutter-animating-apps/      ← Animaciones Flutter
+│
+├── # CAPA 12 — Branding, Arte, Temas
+├── brandkit/                    ← Brand-kit boards premium
+├── canvas-design/               ← Arte estático .png/.pdf
+├── algorithmic-art/             ← Arte generativo p5.js
+├── theme-factory/               ← 10 temas + custom generator
+├── color-expert/                ← Teoría del color avanzada
+├── creative-director/           ← Dirección creativa profesional
+├── brand-guidelines/            ← Guías de marca
+├── design-brief/                ← Briefs de diseño
+├── design-consultation/         ← Consultoría de diseño
+├── design-review/               ← Revisión profesional de diseños
+├── design-md/                   ← Documentación de diseño
+├── research-decision-room/      ← Sala de decisiones de investigación
+│
+├── # CAPA 13 — Open Design Skills (134 skills)
+│   ├── FAL.ai Pipeline/         ← 11 skills de generación imagen/video/3D
+│   ├── Figma Integration/       ← 7 skills de Figma
+│   ├── Deck / Slides/           ← 5 skills de presentaciones
+│   ├── PPT/PPTX/                ← 4 skills de PowerPoint
+│   ├── Frame Effects/           ← 7 skills de efectos visuales
+│   ├── Venice AI/               ← 5 skills de imagen/audio/video
+│   ├── Social / Cards/          ← 6 skills de redes sociales
+│   ├── Video Templates/         ← 7 templates de video
+│   ├── Documentos/              ← 5 skills de documentos
+│   ├── Apple / Mobile/          ← 3 skills de plataformas Apple
+│   ├── Visual / Mockups/        ← 5 skills de visualización
+│   ├── UI / Components/         ← 3 skills de componentes
+│   ├── Imágenes / E-commerce/   ← 9 skills de imágenes
+│   ├── Audio / Video/           ← 3 skills de audio/video
+│   ├── Marketing / Ads/         ← 3 skills de marketing
+│   └── Utility/                 ← 20+ skills de utilidad
 ```
+
+> Ver `SKILL.md` → CAPA 13 para la lista completa de las 134 skills open-design.
 
 ---
 
 ## Mapa de Skills por Capa
 
-| Capa               | Skill                       | Sub-Skills | Fase      |
-| :----------------- | :-------------------------- | ---------: | :-------- |
-| **1. Fundaciones** | `ui-ux-pro-max`             |          — | Fase 1    |
-|                    | `design-systems`            |         10 | Fase 1-2  |
-| **2. Estructura**  | `ux-heuristics`             |          — | Fase 1    |
-|                    | `frontend-design`           |          — | Fase 1    |
-|                    | `ux-strategy`               |         10 | Pre-Fase  |
-| **3. Visuals**     | `ui-design`                 |         13 | Fase 2    |
-|                    | `visual-critique`           |          4 | Fase 4    |
-|                    | `awesome-claude-design`     |          — | Fase 2-3  |
-| **4. Interacción** | `emil-design-eng`           |          — | Fase 3    |
-|                    | `animejs`                   |          — | Fase 3    |
-|                    | `interaction-design`        |         13 | Fase 3    |
-| **5. Auditoría**   | `impeccable`                |          — | Fase 4    |
-|                    | `web-design-guidelines`     |          — | Fase 4    |
-|                    | `writing-guidelines`        |          — | Fase 4    |
-| **6. Rendimiento** | `react-best-practices`      |          — | Fase 3-4  |
-|                    | `vercel-optimize`           |          — | Post-prod |
-| **7. Research**    | `design-research`           |         10 | Pre-Fase  |
-|                    | `prototyping-testing`       |          8 | Fase 2-3  |
-| **8. Operaciones** | `design-ops`                |          7 | Fase 4+   |
-|                    | `designer-toolkit`          |          7 | Cualquier |
-| **Meta**           | `vanta-design-orchestrator` |          — | Siempre   |
-|                    | **Total sub-skills**        |    **82+** |           |
+| Capa                          | Skill                       | Sub-Skills | Fase      |
+| :---------------------------- | :-------------------------- | ---------: | :-------- |
+| **1. Fundaciones**            | `ui-ux-pro-max`             |          — | Fase 1    |
+|                               | `design-systems`            |         10 | Fase 1-2  |
+| **2. Estructura**             | `ux-heuristics`             |          — | Fase 1    |
+|                               | `frontend-design`           |          — | Fase 1    |
+|                               | `ux-strategy`               |         10 | Pre-Fase  |
+| **3. Visuals**                | `ui-design`                 |         13 | Fase 2    |
+|                               | `visual-critique`           |          4 | Fase 4    |
+|                               | `awesome-claude-design`     |          — | Fase 2-3  |
+| **4. Interacción**            | `emil-design-eng`           |          — | Fase 3    |
+|                               | `animejs`                   |          — | Fase 3    |
+|                               | `interaction-design`        |         13 | Fase 3    |
+| **5. Auditoría**              | `impeccable`                |          — | Fase 4    |
+|                               | `web-design-guidelines`     |          — | Fase 4    |
+|                               | `writing-guidelines`        |          — | Fase 4    |
+| **6. Rendimiento**            | `react-best-practices`      |          — | Fase 3-4  |
+|                               | `vercel-optimize`           |          — | Post-prod |
+| **7. Research**               | `design-research`           |         10 | Pre-Fase  |
+|                               | `prototyping-testing`       |          8 | Fase 2-3  |
+| **8. Operaciones**            | `design-ops`                |          7 | Fase 4+   |
+|                               | `designer-toolkit`          |          7 | Cualquier |
+| **9. Video (opcional)**       | `hyperframes` + `remotion` |          — | Fase 3    |
+| **10. 3D Avanzado (opcional)**| `threejs-*` + `shader-dev` |          7 | Fase 3    |
+| **11. SEO + Mobile (opcional)**| `roier-seo` + `apple-hig` |          — | Fase 4    |
+| **12. Branding / Arte**       | `brandkit` + `canvas-design` + `algorithmic-art` + `theme-factory` | — | Pre-Fase→2 |
+| **13. Open Design Skills**    | 134 skills (ver SKILL.md)  |          — | Variable  |
+| **Meta**                      | `vanta-design-orchestrator` |          — | Siempre   |
+|                               | **Total skills**            | **170+** |           |
 
 ---
 
@@ -640,6 +704,23 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden:
 
 ## Referencia Rápida
 
+### Uso de Workflows Predefinidos
+
+Además del ciclo genérico, el orquestador incluye **3 pipelines completos** en `workflows/`:
+
+| Pipeline | Fases | Skills totales | Tiempo estimado |
+|:---------|:-----:|:--------------:|:---------------:|
+| `landing-page-pipeline.json` | 12 | 25+ | 2-4h |
+| `brand-identity-pipeline.json` | 11 | 20+ | 3-6h |
+| `video-production-pipeline.json` | 9 | 16+ | 1-3h |
+
+Y **18 presets de proyecto** en `configs/project-presets.json` para cargar configuración rápida:
+
+```bash
+# Ejemplo: cargar preset para landing page
+.agent\skills\vanta-design-orchestrator\scripts\skill-bridge.ps1 -Route landing-page
+```
+
 ### Valores por defecto del sistema
 
 | Propiedad                  | Valor                                      |
@@ -666,4 +747,19 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden:
 ---
 
 _Documento generado y mantenido por el Vanta Design Orchestrator._
-_Última actualización: 2026-06-18._
+_Última actualización: 2026-06-19._
+
+## Archivos del Orquestador
+
+| Archivo | Descripción |
+|:--------|:------------|
+| `SKILL.md` | Orquestador principal con 13 capas, routing, conflictos |
+| `README.md` | Este archivo — visión general y referencia rápida |
+| `configs/project-presets.json` | 18 presets de proyecto (landing, brand, video, deck, etc.) |
+| `routing/ROUTING.md` | Tabla maestra de 50+ combinaciones de skills |
+| `examples/examples.md` | 10 ejemplos prácticos de uso combinado |
+| `workflows/landing-page-pipeline.json` | Pipeline landing page (12 fases) |
+| `workflows/brand-identity-pipeline.json` | Pipeline brand identity (11 fases) |
+| `workflows/video-production-pipeline.json` | Pipeline video production (9 fases) |
+| `scripts/skill-bridge.ps1` | CLI para listar skills, rutas y conflictos |
+| `scripts/skill-inventory.json` | Inventario completo de 170+ skills |

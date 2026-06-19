@@ -1,11 +1,11 @@
 ---
 name: vanta-design-orchestrator
-description: Master orchestrator and role definition for local UI/UX design tools and skills. Integrates Krug UX, Impeccable CLI, Emil animation philosophy, Motion library, Anime.js, GSAP (8 skills), Three.js/Shader pipeline, SEO audit, mobile design patterns, and video production (HyperFrames/Remotion).
+description: Master orchestrator and role definition for local UI/UX design tools and skills. Integrates Krug UX, Impeccable CLI, Emil animation philosophy, Motion library, Anime.js, GSAP (8 skills), Three.js/Shader pipeline, SEO audit, mobile design patterns, video production (HyperFrames/Remotion), Theme Factory, Canvas Design, Algorithmic Art, and Brandkit.
 ---
 
 # Vanta Design Orchestrator
 
-Punto de entrada central para las **35+ habilidades de diseño** del workspace VantaDB. Define el perfil de rol, documenta cada herramienta en profundidad y establece el protocolo de orquestación para que todas trabajen en conjunto sin interferencias. Incluye **capas condicionales opcionales** que se activan según las necesidades del proyecto: Video, 3D Avanzado, y SEO + Mobile.
+Punto de entrada central para las **170+ habilidades de diseño** del workspace VantaDB. Define el perfil de rol, documenta cada herramienta en profundidad y establece el protocolo de orquestación para que todas trabajen en conjunto sin interferencias. Incluye **capas condicionales opcionales** que se activan según las necesidades del proyecto: Video, 3D Avanzado, y SEO + Mobile.
 
 ---
 
@@ -102,12 +102,83 @@ Cuando el usuario pide algo, el agente NO usa una sola skill — combina varias 
 | **Formulario / onboarding / flujo** | `interaction-design` (form-design, state-machine, onboarding-design) → `ux-heuristics` (prevención de errores, recuperación) → `frontend-design` (estructura semántica) → `ui-design` (visual) | State machine primero (idle → loading → success/error), luego UI |
 | **Refactor / rediseño** | `impeccable` (shape → audit → polish) → `visual-critique` → `design-motion-principles` (si hay animaciones existentes) → `ui-ux-pro-max` (si cambia identidad) → `web-design-guidelines` | No tocar lo que funciona. `audit` primero para diagnosticar |
 | **Timeline / SVG / stagger** (animaciones coreografiadas, morphing SVG) | `animejs` (timeline API, stagger grid, SVG morph) → `motion` (si necesita integración React) → `design-motion-principles` (audit) | `animejs` es la opción correcta para SVG pesado, timelines con posicionamiento relativo y stagger avanzado desde centro/grid |
+| **Branding / Logo / Identidad** | `brandkit` (brand-kit overview image, logo system) → `canvas-design` (design philosophy + .png/.pdf output) → `algorithmic-art` (generative logo animation via p5.js) → `theme-factory` (aplicar paleta/tipografía a slides o decks) | brandkit genera la board visual; canvas-design crea assets finales; algorithmic-art anima el logo; theme-factory estiliza presentaciones |
+| **Arte generativo / abstracto** | `algorithmic-art` (p5.js generative, seeded randomness, interactive viewer) → `canvas-design` (static art, print-ready .pdf) | algorithmic-art produce HTML interactivo; canvas-design produce PDF/PNG estático para impresión |
+| **Tema / paleta / estilizado de documentos** | `theme-factory` (choose theme from 10 presets or create custom) → `canvas-design` (apply theme to visual artifact) → `brandkit` (extend theme to brand system) | theme-factory define la paleta; canvas-design la aplica visualmente; brandkit la escala a sistema de marca |
+| **Generación de imágenes IA** (crear, editar, upscale, variar) | `fal-generate` → `fal-image-edit` → `fal-upscale` → `fal-realtime` | Pipeline FAL.ai completo: generar → editar → upscalar. Usar `fal-3d` si se necesita 3D, `fal-video-edit` para video |
+| **Video IA** (generar, editar, lip-sync, kling) | `fal-kling-o3` (text-to-video) → `fal-video-edit` (editar) → `fal-lip-sync` (audio sincronizado) | Pipeline de video generativo con FAL.ai |
+| **Entrenamiento / Try-On / Restauración** | `fal-train` (entrenar modelo) → `fal-tryon` (virtual try-on) → `fal-restore` (restaurar imágenes viejas) | Casos especializados: fine-tuning, moda, restauración |
+| **Figma** (crear archivos, componentes, sistemas de diseño) | `figma-generate-design` → `figma-create-new-file` → `figma-generate-library` → `figma-code-connect-components` | Pipeline completo de Figma: diseño → archivo → librería → code connect |
+| **Figma: implementar diseño** (de diseño a código) | `figma-implement-design` (token mapping) → `figma-use` (component extraction) | Extraer diseño de Figma e implementar en código |
+| **Figma: design system rules** | `figma-create-design-system-rules` → `figma-generate-library` | Crear reglas de sistema de diseño y generar librería Figma |
+| **Deck / presentación** (slides profesionales) | `deck-swiss-international` → `deck-open-slide-canvas` → `deck-guizang-editorial` | 3 estilos de deck: suizo, open-slide, guizang editorial |
+| **Deck corporativo fintech** | `digits-fintech-swiss-template` | Template suizo para fintech, números grandes, tipografía limpia |
+| **Deck PPT/PPTX** (generar PowerPoint) | `ppt-keynote` (inspiración) → `pptx-generator` (generar) → `pptx-html-fidelity-audit` (auditar fidelidad) | Pipeline de PowerPoint desde HTML |
+| **Efectos especiales / frames** (glitch, light-leak, cine, líquido, logo outro) | `frame-glitch-title` → `frame-light-leak-cinema` → `frame-liquid-bg-hero` → `frame-logo-outro` → `frame-data-chart-nyt` → `frame-flowchart-sticky` | Efectos visuales individuales, combinar según necesidad |
+| **Mockups 3D** (dispositivos, productos) | `mockup-device-3d` → `imagegen` (background) | Mockups fotorrealistas de dispositivos en 3D |
+| **D3.js / data visualization** | `d3-visualization` → `frame-data-chart-nyt` | Visualización de datos con D3.js, estilo NYT |
+| **Hand-drawn diagrams** (diagramas dibujados a mano) | `hand-drawn-diagrams` | Diagramas con estilo sketch/dibujado a mano |
+| **Apple HIG** (diseño iOS/macOS nativo) | `apple-hig` → `swiftui-design` → `flutter-animating-apps` | Diseño de apps nativas Apple con HIG + SwiftUI |
+| **shadcn/ui** (componentes React) | `shadcn-ui` → `frontend-design` | Usar shadcn/ui como base de componentes, customizar con frontend-design |
+| **Shader dev** (WebGL/GLSL avanzado) | `shader-dev` → `threejs` (Three.js scenes) | Desarrollo de shaders GLSL personalizados |
+| **Color expert** (paletas avanzadas) | `color-expert` → `ui-ux-pro-max` | Experto en teoría del color, armonías, accesibilidad cromática |
+| **Creative direction** (briefs creativos) | `creative-director` → `design-brief` → `design-consultation` | Dirección creativa profesional, briefing, consultoría |
+| **Design review** (revisión de diseños) | `design-review` → `impeccable-design-polish` → `visual-critique` | Revisión profesional de diseños con feedback estructurado |
+| **Documentos / editorial** (doc, docx, kami parchment) | `doc` → `docx` → `doc-kami-parchment` | Documentos profesionales en formato MD, DOCX, o estilo pergamino |
+| **Social cards** (Twitter/X, Reddit, Spotify) | `social-x-post-card` → `social-reddit-card` → `social-spotify-card` | Tarjetas para redes sociales |
+| **Card / post** (Twitter, Xiaohongshu) | `card-twitter` → `card-xiaohongshu` | Posts con diseño para Twitter y Xiaohongshu (小红书) |
+| **FAQ page** (página de preguntas frecuentes) | `faq-page` → `design-review` | Página de FAQ con diseño UX optimizado |
+| **Login flow** (flujo de autenticación) | `login-flow` → `interaction-design` | Diseño de flujos de login/registro |
+| **Resume / CV** (currículum moderno) | `resume-modern` | Currículum profesional con diseño moderno |
+| **Paywall / CRO** (optimización de conversión) | `paywall-upgrade-cro` → `design-review` | Optimización de paywalls y conversión |
+| **Documentación de diseño** (design MD, plan, research) | `design-md` → `plan-design-review` → `research-decision-room` | Documentación estructurada de decisiones de diseño |
+| **Video / remotion** (producción de video React) | `remotion` → `video-hyperframes` → `video-downloader` | Producción de video con Remotion o HyperFrames |
+| **Venice AI** (audio, imagen, video) | `venice-image-generate` → `venice-image-edit` → `venice-audio-music` → `venice-audio-speech` → `venice-video` | Pipeline Venice AI: imagen → audio → video |
+| **Sora / Replicate** (video + ML) | `sora` (OpenAI video) → `replicate` (ML models) | Generación de video con Sora y modelos ML con Replicate |
+| **E-commerce images** (imágenes de producto) | `ecommerce-image-workflow` → `image-enhancer` | Flujo de imágenes para e-commerce |
+| **Screenshots** (capturas y marketing) | `screenshot` → `screenshots-marketing` | Capturas de pantalla profesionales para marketing |
+| **Speech / audio** (texto a voz, música) | `speech` → `venice-audio-speech` → `venice-audio-music` | Producción de audio: TTS, música |
+| **GIF / sticker** (animaciones ligeras) | `gif-sticker-maker` → `slack-gif-creator` | Creación de GIFs y stickers animados |
+| **swiftui-design** (apps Apple nativas) | `swiftui-design` → `apple-hig` | Diseño de apps nativas Apple con SwiftUI |
+| **flutter-animating-apps** (apps Flutter) | `flutter-animating-apps` → `ui-design` | Animaciones y diseño para apps Flutter |
+| **shader-dev** (shaders GLSL personalizados) | `shader-dev` → `threejs` → `vfx-text-cursor` | Shaders GLSL + efectos visuales como text cursor |
+| **vfx-text-cursor** (cursor de texto animado) | `vfx-text-cursor` → `shader-dev` | Efecto de cursor de texto con shader |
+| **youtube-clipper** (clips de YouTube) | `youtube-clipper` → `video-downloader` | Descargar y recortar videos de YouTube |
+| **wpds** (Web Platform Design System) | `wpds` | Design system de web platform |
+| **PixelBin** (optimización de imágenes) | `pixelbin-media` → `image-enhancer` | Optimización y transformación de imágenes |
+| **Release notes / changelog** | `release-notes-one-pager` → `design-md` | Notas de release con diseño profesional |
+| **Reference design contract** (contrato de diseño) | `reference-design-contract` | Contrato de servicios de diseño |
+| **PR feedback quality gate** (revisión de PRs) | `pr-feedback-quality-gate` | Gate de calidad para PRs de diseño |
+| **Export / download debugging** | `export-download-debugging` | Debugging de exportación y descarga |
+| **Enhance prompt** (mejorar prompts) | `enhance-prompt` → `creative-director` | Mejorar prompts de diseño para mejores resultados |
+| **Domain name brainstormer** | `domain-name-brainstormer` | Generación de nombres de dominio creativos |
+| **Ad creative** (anuncios publicitarios) | `ad-creative` → `screenshots-marketing` | Creativos publicitarios para ads |
+| **Competitive ads extractor** (extraer ads de competencia) | `competitive-ads-extractor` | Extraer y analizar anuncios de competidores |
+| **Poster / hero image** | `poster-hero` → `imagegen` | Pósters e imágenes hero |
+| **Soft skill / speech** (habilidades blandas) | `soft-skill` → `speech` | Desarrollo de habilidades blandas + speech |
+| **Platform design** (diseño de plataforma) | `platform-design` → `ui-skills` | Diseño de plataformas complejas |
+| **PDF** (generación de PDFs) | `pdf` → `minimax-pdf` | Generación y manipulación de PDFs |
+| **Nanobanana PPT** (presentaciones nanobanana) | `nanobanana-ppt` | Presentaciones estilo nanobanana |
+| **Video template: 8-bit orbit** | `8-bit-orbit-video-template` | Template de video 8-bit orbit |
+| **Video template: after hours editorial** | `after-hours-editorial-template` | Template editorial after hours |
+| **Video template: field notes editorial** | `field-notes-editorial-template` | Template field notes editorial |
+| **Video template: swiss user research** | `swiss-user-research-video-template` | Template suizo de user research |
+| **Video template: weread year in review** | `weread-year-in-review-video-template` | Template year in review estilo weread |
+| **Video template: ai music album** | `ai-music-album` | Template de álbum musical AI |
+| **Article magazine** (artículo de revista) | `article-magazine` → `editorial-burgundy-principles-template` | Artículos con estilo editorial/revista |
+| **Artifacts builder** (constructor de artifacts) | `web-artifacts-builder` → `artifacts-builder` | Constructor de web artifacts |
 
 > 💡 **Regla**: Cada tarea carga MÍNIMO 2-3 skills. Nunca resolver un pedido complejo con una sola skill.
+>
+> 🔗 **Routing detallado**: Ver `routing/ROUTING.md` para la tabla maestra de 50+ combinaciones.
+> 📦 **Presets**: Ver `configs/project-presets.json` para 18 configuraciones predefinidas por tipo de proyecto.
+> 🔧 **Script**: Ejecutar `scripts/skill-bridge.ps1` para listar skills, rutas, y detectar conflictos.
+> 📖 **Ejemplos**: Ver `examples/examples.md` para 10 patrones de uso combinado.
+> 🏭 **Workflows**: Ver `workflows/` para pipelines completos listos para usar.
 
 ---
 
-## 2. Catálogo Completo de Habilidades (35+ Skills)
+## 2. Catálogo Completo de Habilidades (170+ Skills)
 
 ### ──────────────────────────────────────────
 
@@ -694,6 +765,102 @@ graph LR
 
 ---
 
+### ──────────────────────────────────────────
+
+### CAPA 12 — BRANDING, ARTE GENERATIVO Y TEMATIZACIÓN
+
+### ──────────────────────────────────────────
+
+#### 32. `brandkit` — Brand-Kit Image Generation (Premium Identity)
+
+| Campo                       | Detalle                                                                                                                                                                                          |
+| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Generación de boards de brand-kit premium: sistemas de logo, identity decks, presentaciones visuales de marca. 50 estilos, layouts 3×3/2×3/2×2/1×3/4×2.                                       |
+| **¿Para qué es?**           | Crear identidad de marca completa desde cero: logo, paleta, tipografía, aplicaciones digitales y físicas, dirección de imagen.                                                                   |
+| **¿Para qué se usa?**       | Branding de productos, rediseño de identidad, decks de presentación, sistemas de logo, boards de dirección visual.                                                                              |
+| **¿Cómo se usa?**           | Estrategia de marca primero (categoría, audiencia, metáfora). Luego generar board con 9 paneles (logo cover, construcción, aplicación digital, esencia, color, tipografía, físico, imagen, detalle). |
+| **¿Cómo debería usarse?**   | Como fase de discovery visual para definir dirección de marca antes de implementar código. Combinar con `canvas-design` para assets finales.                                                     |
+| **¿Cuándo debería usarse?** | **Pre-Fase 1 / Fase 1** — Al iniciar un nuevo proyecto o rediseñar la identidad visual completa.                                                                                                |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/brandkit/`). No requiere instalación — es framework de generación de brand-kit.                                                                               |
+| **Requerimientos**          | Ninguno. Para imagen generada: API de generación de imágenes disponible.                                                                                                                         |
+
+#### 33. `canvas-design` — Visual Art + Design Philosophy (Static)
+
+| Campo                       | Detalle                                                                                                                                                                                     |
+| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **¿Qué es?**                | Creación de arte visual en .png y .pdf usando filosofía de diseño. Output: filosofía (.md) + canvas (.png/.pdf).                                                                            |
+| **¿Para qué es?**           | Pósters, piezas de arte, diseños estáticos, boards de dirección visual, arte impreso.                                                                                                       |
+| **¿Para qué se usa?**       | Diseño editorial, arte de portada, posters, boards de concepto, piezas de exhibición, arte de pared, composiciones visuales. Sus fuentes están en `./canvas-fonts/`.                        |
+| **¿Cómo se usa?**           | 1) Crear filosofía de diseño (manifiesto estético, 4-6 párrafos). 2) Deducir referencia conceptual sutil. 3) Expresar visualmente en canvas vía código (PNG/PDF).                          |
+| **¿Cómo debería usarse?**   | Para piezas que requieren un manifiesto estético primero, implementación visual después. Cada canvas debe sentirse meticulosamente crafted, como un objeto de museo.                        |
+| **¿Cuándo debería usarse?** | **Fase 2-3** — Cuando se necesita una pieza visual de alta calidad (logo asset, poster, board de dirección).                                                                               |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/canvas-design/`). Incluye directorio `canvas-fonts/` con fuentes preinstaladas. FUENTES: ArsenalSC, BigShoulders, Boldonse, BricolageGrotesque, CrimsonPro, DMMono, EricaOne, GeistMono, Gloock, IBMPlexMono, IBMPlexSerif, InstrumentSans, InstrumentSerif, Italiana, JetBrainsMono, Jura, LibreBaskerville, LibreCaslon, NotoSans, NotoSerif, Nunito, OldStandard, Onest, Poppins, Prompt, Rajdhani, Raleway, Redacted, Sora, Syne, Tinos, Unbounded. |
+| **Requerimientos**          | Para output PDF: biblioteca de generación PDF en el runtime. Para output PNG: canvas API. Fuentes disponibles en `./canvas-fonts/`.                                                          |
+
+#### 34. `algorithmic-art` — Generative Art + p5.js (Interactive)
+
+| Campo                       | Detalle                                                                                                                                                                                    |
+| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **¿Qué es?**                | Creación de arte generativo algorítmico con p5.js. Output: filosofía algorítmica (.md) + HTML interactivo autónomo. Seeded randomness, exploración paramétrica, Art Blocks pattern.        |
+| **¿Para qué es?**           | Arte generativo interactivo, flow fields, particle systems, animaciones algorítmicas, visuales generativas para web.                                                                       |
+| **¿Para qué se usa?**       | Fondos animados para landing pages, arte generativo interactivo, visuales de marca abstractos, NFTs, series algorítmicas.                                                                  |
+| **¿Cómo se usa?**           | 1) Crear filosofía algorítmica (4-6 párrafos). 2) Deducir semilla conceptual sutil. 3) Implementar en p5.js usando `templates/viewer.html` como base (mantener branding Anthropic, reemplazar algoritmo y parámetros). |
+| **¿Cómo debería usarse?**   | Para piezas interactivas que se exploran en navegador. Seed navigation, parámetros ajustables, regenerate button. Siempre seeded randomness.                                               |
+| **¿Cuándo debería usarse?** | **Fase 2-3** — Cuando el proyecto necesita arte generativo interactivo, background animado único, o exploración paramétrica de marca.                                                      |
+| **Dependencias**            | Skill de proyecto (`.agent/skills/algorithmic-art/`). Templates en `templates/viewer.html` (estructura fija Anthropic) y `templates/generator_template.js`.                                |
+| **Requerimientos**          | p5.js vía CDN (cargado en el HTML). Navegador moderno. No requiere build step.                                                                                                             |
+
+---
+
+### ──────────────────────────────────────────
+
+### CAPA 13 — OPEN DESIGN SKILLS (134 nuevas skills del ecosistema open-design)
+
+### ──────────────────────────────────────────
+
+Skills importadas del repositorio [nexu-io/open-design](https://github.com/nexu-io/open-design). Agrupadas por categoría funcional:
+
+| Categoría | Skills | Uso principal |
+|:----------|:-------|:--------------|
+| **FAL.ai Pipeline** (11) | `fal-generate`, `fal-image-edit`, `fal-upscale`, `fal-realtime`, `fal-3d`, `fal-kling-o3`, `fal-video-edit`, `fal-lip-sync`, `fal-train`, `fal-tryon`, `fal-restore`, `fal-vision` | Generación y edición de imágenes, video, 3D, lip-sync, training |
+| **Figma Integration** (6) | `figma-generate-design`, `figma-create-new-file`, `figma-generate-library`, `figma-code-connect-components`, `figma-implement-design`, `figma-use`, `figma-create-design-system-rules` | Diseño, librerías, code connect, implementación |
+| **Deck / Slides** (5) | `deck-swiss-international`, `deck-open-slide-canvas`, `deck-guizang-editorial`, `digits-fintech-swiss-template`, `nanobanana-ppt` | Presentaciones profesionales |
+| **PPT/PPTX** (4) | `ppt-keynote`, `pptx`, `pptx-generator`, `pptx-html-fidelity-audit` | PowerPoint desde HTML |
+| **Frame Effects** (6) | `frame-glitch-title`, `frame-light-leak-cinema`, `frame-liquid-bg-hero`, `frame-logo-outro`, `frame-data-chart-nyt`, `frame-flowchart-sticky`, `frame-macos-notification` | Efectos visuales y frames especiales |
+| **Venice AI** (5) | `venice-image-generate`, `venice-image-edit`, `venice-audio-music`, `venice-audio-speech`, `venice-video` | Imagen, audio y video con Venice AI |
+| **Social / Cards** (6) | `social-x-post-card`, `social-reddit-card`, `social-spotify-card`, `card-twitter`, `card-xiaohongshu`, `slack-gif-creator` | Contenido para redes sociales |
+| **Video Templates** (7) | `8-bit-orbit-video-template`, `after-hours-editorial-template`, `field-notes-editorial-template`, `swiss-user-research-video-template`, `weread-year-in-review-video-template`, `ai-music-album`, `youtube-clipper` | Templates de video especializados |
+| **Video / Audio** (3) | `video-hyperframes`, `video-downloader`, `remotion` | Producción de video general |
+| **Documentos / Editorial** (4) | `doc`, `docx`, `doc-kami-parchment`, `article-magazine`, `editorial-burgundy-principles-template` | Documentos profesionales y editoriales |
+| **Apple / Mobile** (3) | `apple-hig`, `swiftui-design`, `flutter-animating-apps` | Diseño nativo Apple y Flutter |
+| **Design Process** (5) | `design-brief`, `design-consultation`, `design-md`, `design-review`, `research-decision-room` | Brief, consultoría, revisión, documentación |
+| **Visual / Mockups** (5) | `mockup-device-3d`, `d3-visualization`, `hand-drawn-diagrams`, `shader-dev`, `vfx-text-cursor` | Mockups 3D, D3.js, diagramas, shaders |
+| **UI / Components** (3) | `shadcn-ui`, `ui-skills`, `platform-design` | Componentes UI y diseño de plataformas |
+| **Images / E-commerce** (5) | `ecommerce-image-workflow`, `image-enhancer`, `imagegen`, `imagen`, `poster-hero`, `full-page-screenshot`, `screenshots-marketing`, `screenshot`, `pixelbin-media` | Imágenes, e-commerce, capturas |
+| **Audio / Speech** (2) | `speech`, `sora`, `replicate` | TTS, música, video Sora, modelos ML |
+| **Marketing / Ads** (3) | `ad-creative`, `competitive-ads-extractor`, `paywall-upgrade-cro` | Anuncios, análisis competitivo, CRO |
+| **Utility** (8) | `enhance-prompt`, `export-download-debugging`, `pr-feedback-quality-gate`, `reference-design-contract`, `release-notes-one-pager`, `domain-name-brainstormer`, `soft-skill`, `output-skill`, `web-artifacts-builder`, `artifacts-builder`, `faq-page`, `login-flow`, `resume-modern`, `brand-guidelines`, `color-expert`, `creative-director`, `gif-sticker-maker`, `hatch-pet`, `html-ppt-retro-quarterly-review`, `minimax-docx`, `minimax-pdf`, `pdf`, `plan-design-review`, `slides`, `wpds` | Utilidades varias |
+| **Versiones actualizadas** (5) | `impeccable-design-polish` (→ `impeccable`), `gpt-tasteskill` (→ `gpt-taste`), `emilkowalski-motion` (→ `emil-design-eng`), `taste-skill` (→ `design-taste-frontend`), `redesign-skill` (→ `redesign-existing-projects`) | Versiones más recientes de skills existentes. Preferir estas sobre las anteriores. |
+
+> **Nota**: Skills con nombre `*-skill` o `*-template` son especializadas. Cargar SOLO cuando el prompt del usuario coincida exactamente con su propósito.
+
+### Archivos auxiliares del orquestador
+
+El orquestador incluye los siguientes archivos para facilitar el uso de las 170+ skills:
+
+| Archivo | Propósito |
+|:--------|:----------|
+| `configs/project-presets.json` | 18 presets de proyecto con fases y skills recomendadas |
+| `routing/ROUTING.md` | Tabla maestra de 50+ combinaciones de skills por tarea |
+| `examples/examples.md` | 10 ejemplos de uso combinado con tiempos estimados |
+| `workflows/landing-page-pipeline.json` | Pipeline completo de landing page (12 fases) |
+| `workflows/brand-identity-pipeline.json` | Pipeline completo de identidad de marca (11 fases) |
+| `workflows/video-production-pipeline.json` | Pipeline completo de producción de video (9 fases) |
+| `scripts/skill-bridge.ps1` | CLI PowerShell para listar skills, categorías, presets y conflictos |
+| `scripts/skill-inventory.json` | Inventario completo de las 170+ skills por categoría |
+
+---
+
 ## 3. El Ciclo de Orquestación Vanta (Uso en Conjunto sin Interferencias)
 
 Para evitar contradicciones visuales o técnicas al utilizar todas las habilidades, el flujo de desarrollo de UI se estructurará en **5 fases secuenciales** + **3 capas condicionales opcionales**. Cada fase tiene skills asignados y un criterio de salida claro.
@@ -779,3 +946,29 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden de
 | `threejs-shaders` vs `awesome-claude-design` WebGL | Si el shader baja de 60fps en GPU media, simplificar o reemplazar con material estándar + post-processing mínimo. |
 | `ai-seo` vs `writing-guidelines` | El contenido debe ser legible para humanos primero, optimizado para AI segundo. No sacrificar claridad por keywords. |
 | `sleek-design-mobile-apps` vs `ui-design` responsive | Mobile-first siempre. `ui-design` se adapta al viewport; `sleek-design-mobile-apps` define los patrones nativos. |
+| `brandkit` vs `canvas-design` | brandkit genera boards conceptuales (brand-kit overview). canvas-design produce arte final estático. Usar brandkit para exploración, canvas-design para entrega final. |
+| `algorithmic-art` vs `canvas-design` | algorithmic-art produce HTML interactivo (p5.js). canvas-design produce PDF/PNG estático. Elegir según deliverable: interactivo vs impreso. |
+| `theme-factory` vs `ui-ux-pro-max` | theme-factory estiliza documentos/slides con 10 presets. ui-ux-pro-max define paletas desde cero para UI. theme-factory es más rápido; ui-ux-pro-max más flexible. |
+| `impeccable-design-polish` vs `impeccable` | Usar `impeccable-design-polish` (open-design) por ser la versión más reciente. Mantener `impeccable` local como fallback. |
+| `gpt-tasteskill` vs `gpt-taste` | Usar `gpt-tasteskill` (open-design) por ser la versión más reciente. |
+| `emilkowalski-motion` vs `emil-design-eng` | Usar `emilkowalski-motion` (open-design) por ser la versión más reciente. `emil-design-eng` local como referencia. |
+| `taste-skill` vs `design-taste-frontend` | `taste-skill` es la versión open-design más reciente. Preferir sobre `design-taste-frontend`. |
+| `redesign-skill` vs `redesign-existing-projects` | `redesign-skill` es la versión open-design. Usar esta. |
+| `fal-generate` vs `imagegen` | `fal-generate` usa FAL.ai (modelos premium). `imagegen` es genérico. Preferir FAL para calidad, imagegen para rapidez. |
+| `figma-generate-design` vs `frontend-design` | `figma-generate-design` crea el diseño en Figma; `frontend-design` lo implementa en código. No competencia — son complementarios. |
+| `shadcn-ui` vs `frontend-design` | `shadcn-ui` proporciona componentes base copy-paste. `frontend-design` los estiliza. Usar en ese orden. |
+| `deck-*` vs `theme-factory` | `deck-*` son templates de slide con layout fijo. `theme-factory` aplica paleta/tipografía sobre ellos. Complementarios. |
+| `d3-visualization` vs `frame-data-chart-nyt` | `d3-visualization` para charts personalizados. `frame-data-chart-nyt` para charts estilo NYT. Elegir según estilo deseado. |
+| `apple-hig` vs `swiftui-design` | `apple-hig` provee las guías, `swiftui-design` implementa en SwiftUI. Usar HIG primero, SwiftUI después. |
+| `docx` vs `minimax-docx` | `docx` para DOCX estándar. `minimax-docx` para DOCX con modelo MiniMax. Preferir `docx` por simplicidad. |
+| `pdf` vs `minimax-pdf` | `pdf` para PDF estándar. `minimax-pdf` para PDF con modelo MiniMax. Preferir `pdf` por simplicidad. |
+| `threejs` (open-design) vs `threejs-*` (skills individuales) | `threejs` (open-design) es una skill consolidada. Las individuales (`threejs-fundamentals`, etc.) son más detalladas. Usar la consolidada para tareas simples, las individuales para profundidad técnica. |
+| `stitch-skill` vs `stitch-design-taste` | `stitch-skill` es la versión open-design de Stitch. `stitch-design-taste` es nuestra versión local. Preferir `stitch-skill`. |
+| `taste-skill-v1` vs `taste-skill` | `taste-skill-v1` para compatibilidad backward. `taste-skill` es la versión actual. |
+| `brutalist-skill` vs `industrial-brutalist-ui` | `brutalist-skill` es el open-design. `industrial-brutalist-ui` es nuestra versión local. Preferir `brutalist-skill`. |
+| `minimalist-skill` vs `minimalist-ui` | `minimalist-skill` es el open-design. `minimalist-ui` es nuestra versión local. Preferir `minimalist-skill`. |
+| `gpt-tasteskill` vs `awesome-claude-design` | `gpt-tasteskill` se enfoca en GSAP + AIDA. `awesome-claude-design` en filosofía de diseño general. Complementarios. |
+| `frontend-dev` vs `frontend-design` vs `frontend-skill` | `frontend-dev` = implementación técnica. `frontend-design` = diseño visual. `frontend-skill` = full stack. Elegir según necesidad. |
+| `frontend-slides` vs `deck-*` | `frontend-slides` para slides en HTML/JS. `deck-*` para slides con templates específicos. |
+| `imagegen-frontend-web` vs `imagegen-frontend-mobile` vs `imagegen` | Web vs Mobile vs genérico. Elegir según plataforma. |
+| Para más conflictos de versiones | Ver `routing/ROUTING.md` → Conflict Resolution Table | |
