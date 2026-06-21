@@ -23,49 +23,49 @@ function MaintPage() {
   }, []);
 
   return (
-    <div style={{ background: "var(--background)", minHeight: "100vh" }}>
+    <div className="page-wrapper">
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Maintenance</span>
-        <h1 className="title-accent reveal reveal-delay-1" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.04em", margin: "0.5rem 0 1.5rem" }}>
+        <h1 className="title-accent reveal reveal-delay-1">
           Nothing
           <br />to monitor.
         </h1>
-        <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
+        <p className="section-sub reveal reveal-delay-2 desc-text">
           Three services means three dashboards, three alerting rules, and three sets of logs.
           VantaDB is a library — update it like any other dependency and move on.
         </p>
       </header>
 
-      <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}>
-        <section style={{ padding: "4rem 0", borderBottom: "1px solid var(--subtle)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem" }}>
+      <main className="main-content">
+        <section className="comparison-split">
           <div className="reveal">
             <span className="section-eyebrow">// Legacy Ops</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>3 services to monitor</h2>
-            <ul style={{ listStyle: "none", padding: 0, fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--muted)", lineHeight: "2.2" }}>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Pinecone: pod health, index fullness, rate limits</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Redis: memory usage, evictions, replication lag</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> S3: bucket sizes, request rates, error rates</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Version upgrades across 3 providers</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Incident response for 3 independent systems</li>
+            <h2 className="section-title section-title--compact">3 services to monitor</h2>
+            <ul className="comparison-list">
+              <li><span className="icon-cross">✗</span> Pinecone: pod health, index fullness, rate limits</li>
+              <li><span className="icon-cross">✗</span> Redis: memory usage, evictions, replication lag</li>
+              <li><span className="icon-cross">✗</span> S3: bucket sizes, request rates, error rates</li>
+              <li><span className="icon-cross">✗</span> Version upgrades across 3 providers</li>
+              <li><span className="icon-cross">✗</span> Incident response for 3 independent systems</li>
             </ul>
           </div>
           <div className="reveal reveal-delay-1">
             <span className="section-eyebrow">// VantaDB Ops</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>0 daemon deps</h2>
-            <ul style={{ listStyle: "none", padding: 0, fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--muted)", lineHeight: "2.2" }}>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> No servers, no daemons, no sidecars</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> Update via pip upgrade — that's it</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> No dashboards to watch</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> Zero alerting rules to configure</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> Restarts with your app — no orchestration</li>
+            <h2 className="section-title section-title--compact">0 daemon deps</h2>
+            <ul className="comparison-list">
+              <li><span className="icon-check">✓</span> No servers, no daemons, no sidecars</li>
+              <li><span className="icon-check">✓</span> Update via pip upgrade — that's it</li>
+              <li><span className="icon-check">✓</span> No dashboards to watch</li>
+              <li><span className="icon-check">✓</span> Zero alerting rules to configure</li>
+              <li><span className="icon-check">✓</span> Restarts with your app — no orchestration</li>
             </ul>
           </div>
         </section>
 
-        <section style={{ padding: "4rem 0", borderBottom: "1px solid var(--subtle)" }}>
-          <div className="reveal text-center" style={{ maxWidth: "720px", margin: "0 auto" }}>
+        <section className="section-narrow">
+          <div className="reveal text-center reveal-centered">
             <span className="section-eyebrow">// Operational Simplicity</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>One Dependency, Zero Ops</h2>
+            <h2 className="section-title section-title--compact">One Dependency, Zero Ops</h2>
             <p className="section-sub">
               VantaDB collapses three independent systems into a single pip package.
               No PagerDuty alerts for index rebuilds, no 3AM callbacks for Redis OOM — just
@@ -74,8 +74,8 @@ function MaintPage() {
           </div>
         </section>
 
-        <nav style={{ marginTop: "3rem", textAlign: "center" }}>
-          <Link to="/" className="nav-cta" style={{ display: "inline-block", padding: "0.85rem 2rem", textDecoration: "none" }}>
+        <nav className="bottom-nav">
+          <Link to="/" className="back-link nav-cta">
             ← Back to comparison
           </Link>
         </nav>

@@ -20,14 +20,7 @@ function Scanlines() {
   return (
     <div
       aria-hidden="true"
-      style={{
-        position: "absolute",
-        inset: 0,
-        pointerEvents: "none",
-        zIndex: 1,
-        backgroundImage:
-          "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px)",
-      }}
+      className="scanlines"
     />
   );
 }
@@ -64,7 +57,7 @@ function GraphTopology() {
   };
 
   return (
-    <svg viewBox="0 0 540 330" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 540 330" className="graph-topology-svg">
       <defs>
         <radialGradient id="ng" r="50%">
           <stop offset="0%" stopColor="#FF6A00" stopOpacity="0.5" />
@@ -77,21 +70,21 @@ function GraphTopology() {
       {edges.map(([a, b], i) => (
         <line
           key={i}
+          className="graph-edge"
           x1={nodes[a].x}
           y1={nodes[a].y}
           x2={nodes[b].x}
           y2={nodes[b].y}
           stroke={isEdgeHighlighted(a, b) ? "rgba(255,106,0,0.8)" : "rgba(255,106,0,0.18)"}
           strokeWidth={isEdgeHighlighted(a, b) ? "2" : "1"}
-          style={{ transition: "stroke 200ms, stroke-width 200ms" }}
         />
       ))}
       {nodes.map((n, i) => (
         <g
           key={i}
+          className="graph-node-group"
           onMouseEnter={() => setActiveNode(i)}
           onMouseLeave={() => setActiveNode(null)}
-          style={{ cursor: "pointer" }}
         >
           <circle
             cx={n.x}
@@ -102,13 +95,13 @@ function GraphTopology() {
             opacity={activeNode === i ? 1 : 0.6}
           />
           <circle
+            className="graph-node-ring"
             cx={n.x}
             cy={n.y}
             r={n.size}
             fill="rgba(255,106,0,0.08)"
             stroke={activeNode === i ? "var(--amber)" : "rgba(255,106,0,0.4)"}
             strokeWidth="1"
-            style={{ transition: "stroke 200ms" }}
           />
           <circle cx={n.x} cy={n.y} r={n.size * 0.45} fill="#FF6A00" />
           <text
@@ -125,6 +118,15 @@ function GraphTopology() {
       ))}
     </svg>
   );
+}
+
+function getLogClass(log: string): string {
+  if (log.includes("!!!")) return "wal-log-entry--error";
+  if (log.includes("STATUS: READY")) return "wal-log-entry--success";
+  if (log.includes("OK")) return "wal-log-entry--success-light";
+  if (log.includes("RECOVER")) return "wal-log-entry--recover";
+  if (log.includes("STATUS")) return "wal-log-entry--status";
+  return "wal-log-entry--info";
 }
 
 // ── WAL Fallo Simulator Component ───────────────────────────────────────────────
@@ -175,66 +177,27 @@ function WALSimulator() {
   };
 
   return (
-    <div
-      style={{
-        background: "var(--surface)",
-        border: "1px solid rgba(255,106,0,0.08)",
-        borderRadius: "var(--radius-lg)",
-        padding: "2rem",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+    <div className="wal-simulator">
+      <div className="wal-header">
+        <div className="wal-status-group">
           <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background:
-                engineState === "ready"
-                  ? "#28c840"
-                  : engineState === "crashed"
-                    ? "#ff5f57"
-                    : "#ffc107",
-              boxShadow: `0 0 10px ${engineState === "ready" ? "#28c840" : engineState === "crashed" ? "#ff5f57" : "#ffc107"}`,
-            }}
+            className="wal-status-dot"
+            data-state={engineState}
           />
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.72rem",
-              color: "var(--white)",
-              textTransform: "uppercase",
-            }}
-          >
+          <span className="wal-status-label">
             ENGINE STATUS: {engineState}
           </span>
         </div>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div className="wal-actions">
           <button
-            className="btn-ghost"
-            style={{
-              fontSize: "0.7rem",
-              padding: "0.4rem 0.8rem",
-              color: engineState === "ready" ? "var(--crimson)" : "var(--steel)",
-              borderColor:
-                engineState === "ready" ? "rgba(220,20,60,0.2)" : "rgba(255,255,255,0.05)",
-            }}
+            className="btn-ghost wal-btn-sm"
             onClick={triggerCrash}
             disabled={engineState !== "ready"}
           >
             CRASH ENGINE
           </button>
           <button
-            className="btn-primary"
-            style={{ fontSize: "0.7rem", padding: "0.4rem 0.8rem" }}
+            className="btn-primary wal-btn-sm"
             onClick={recoverFromWAL}
             disabled={engineState !== "crashed"}
           >
@@ -247,17 +210,7 @@ function WALSimulator() {
         {logs.map((log, idx) => (
           <div
             key={idx}
-            className="wal-log-entry"
-            style={{
-              color: log.includes("!!!")
-                ? "#ff5f57"
-                : log.includes("STATUS: READY") || log.includes("OK")
-                  ? "#28c840"
-                  : log.includes("RECOVER")
-                    ? "var(--amber)"
-                    : "var(--frost)",
-              fontWeight: log.includes("!!!") || log.includes("STATUS") ? 600 : 400,
-            }}
+            className={`wal-log-entry ${getLogClass(log)}`}
           >
             {log}
           </div>
@@ -281,42 +234,20 @@ function RRFWeightsSlider() {
 
   return (
     <div className="slider-container">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          marginBottom: "1rem",
-        }}
-      >
-        <h4
-          style={{
-            fontFamily: "var(--font-display)",
-            color: "var(--white)",
-            margin: 0,
-            fontSize: "1.1rem",
-          }}
-        >
+      <div className="rrf-header">
+        <h4 className="rrf-title">
           Interactive Reciprocal Rank Fusion (RRF) Planner
         </h4>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--amber)" }}>
+        <span className="rrf-latency">
           PLANNER LATENCY: {queryLatency}ms
         </span>
       </div>
-      <p style={{ fontSize: "0.85rem", color: "var(--muted)", margin: "0 0 1.5rem" }}>
+      <p className="rrf-description">
         Adjust the slider to balance lexical matching (BM25) and vector embedding similarity (HNSW).
         VantaDB fuses both signals dynamically.
       </p>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.75rem",
-          color: "var(--steel)",
-        }}
-      >
+      <div className="rrf-labels">
         <span>BM25 (Léxico): {bm25Weight}%</span>
         <span>HNSW (Vector): {hnswWeight}%</span>
       </div>
@@ -330,77 +261,28 @@ function RRFWeightsSlider() {
         className="rrf-slider"
       />
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "1rem",
-          marginTop: "1.5rem",
-        }}
-      >
-        <div
-          style={{
-            background: "rgba(0,0,0,0.2)",
-            padding: "1rem",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid rgba(255,255,255,0.03)",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.62rem",
-              color: "var(--steel)",
-              marginBottom: "0.25rem",
-            }}
-          >
+      <div className="rrf-metrics-grid">
+        <div className="rrf-metric-card">
+          <div className="rrf-metric-label">
             LEXICAL RECALL
           </div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--white)" }}>
+          <div className="rrf-metric-value">
             {lexicalRecall}%
           </div>
         </div>
-        <div
-          style={{
-            background: "rgba(0,0,0,0.2)",
-            padding: "1rem",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid rgba(255,255,255,0.03)",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.62rem",
-              color: "var(--steel)",
-              marginBottom: "0.25rem",
-            }}
-          >
+        <div className="rrf-metric-card">
+          <div className="rrf-metric-label">
             VECTOR RECALL
           </div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--white)" }}>
+          <div className="rrf-metric-value">
             {vectorRecall}%
           </div>
         </div>
-        <div
-          style={{
-            background: "var(--amber-dim)",
-            padding: "1rem",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid rgba(255,106,0,0.15)",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.62rem",
-              color: "var(--amber-soft)",
-              marginBottom: "0.25rem",
-            }}
-          >
+        <div className="rrf-metric-card--amber">
+          <div className="rrf-metric-label--amber">
             FUSED RECALL@10
           </div>
-          <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--amber)" }}>
+          <div className="rrf-metric-value--amber">
             {fusedRecall}%
           </div>
         </div>
@@ -425,75 +307,44 @@ function EnginePage() {
   }, []);
 
   return (
-    <div style={{ background: "var(--background)", minHeight: "100vh" }}>
+    <div className="engine-page">
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Core Engine</span>
-        <h1
-          className="title-accent reveal reveal-delay-1"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-            fontWeight: 700,
-            letterSpacing: "-0.04em",
-            margin: "0.5rem 0 1.5rem",
-          }}
-        >
+        <h1 className="engine-hero-title title-accent reveal reveal-delay-1">
           Four modalities.
           <br />
           One atomic contract.
         </h1>
-        <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
+        <p className="section-sub reveal reveal-delay-2 desc-text">
           VantaDB consolidates lexical matching, HNSW vector search, Graph traversal nodes and
           transactional persistence in a zero-dependency Rust local-first library database.
         </p>
       </header>
 
-      <main
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}
-      >
+      <main className="engine-main">
         {/* ── Section 1: BM25 + HNSW Hybrid Search ── */}
-        <section style={{ padding: "6rem 0", borderBottom: "1px solid var(--subtle)" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.2fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
-          >
+        <section className="engine-section engine-section--bordered">
+          <div className="engine-grid">
             <div>
               <span className="section-eyebrow reveal">Modalidad 01</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ margin: "0.5rem 0 1.5rem" }}
+                className="section-title reveal reveal-delay-1 section-title--compact"
               >
                 Hybrid Search with RRF Fusion
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2rem" }}>
+              <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
                 VantaDB executes lexical BM25 matching and high-dimensional HNSW vector recall under
                 a unified internal query engine framework. The fusion relies on Reciprocal Rank
                 Fusion (RRF), weighting relevance dynamically.
               </p>
-              <ul
-                style={{ listStyle: "none", padding: 0, margin: 0 }}
-                className="reveal reveal-delay-3"
-              >
+              <ul className="spec-list reveal reveal-delay-3">
                 {[
                   "k1=1.2, b=0.75 text tf-idf saturation configuration.",
                   "ef_construction=200, M=16 HNSW parameters.",
                   "Cosine, Euclidean, and Dot Product distances.",
                 ].map((spec, sIdx) => (
-                  <li
-                    key={sIdx}
-                    style={{
-                      display: "flex",
-                      gap: "0.75rem",
-                      marginBottom: "0.75rem",
-                      fontSize: "0.85rem",
-                      color: "var(--steel)",
-                    }}
-                  >
-                    <span style={{ color: "var(--amber)" }}>✓</span> {spec}
+                  <li key={sIdx} className="spec-item">
+                    <span className="spec-check">✓</span> {spec}
                   </li>
                 ))}
               </ul>
@@ -505,24 +356,10 @@ function EnginePage() {
         </section>
 
         {/* ── Section 2: GraphRAG Relations ── */}
-        <section style={{ padding: "6rem 0", borderBottom: "1px solid var(--subtle)" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
-          >
+        <section className="engine-section engine-section--bordered">
+          <div className="engine-grid--reverse">
             <div className="reveal reveal-delay-2">
-              <div
-                style={{
-                  background: "var(--surface)",
-                  border: "1px solid rgba(255,106,0,0.08)",
-                  padding: "2rem",
-                  borderRadius: "var(--radius-lg)",
-                }}
-              >
+              <div className="graph-card">
                 <Scanlines />
                 <GraphTopology />
               </div>
@@ -530,36 +367,23 @@ function EnginePage() {
             <div>
               <span className="section-eyebrow reveal">Modalidad 02</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ margin: "0.5rem 0 1.5rem" }}
+                className="section-title reveal reveal-delay-1 section-title--compact"
               >
                 Graph Relations alongside vectors
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2rem" }}>
+              <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
                 Establish semantic connections between vectors natively. VantaDB stores directed
                 weighted adjacency lists in-process. Traverse the local knowledge graph via
                 similarity keys without spawning network-bound Graph servers.
               </p>
-              <ul
-                style={{ listStyle: "none", padding: 0, margin: 0 }}
-                className="reveal reveal-delay-3"
-              >
+              <ul className="spec-list reveal reveal-delay-3">
                 {[
                   "graph_hops=2 traversal search capability.",
                   "Target weight attributes for contextual relevance.",
                   "60% less prompt token usage compared to flat memory arrays.",
                 ].map((spec, sIdx) => (
-                  <li
-                    key={sIdx}
-                    style={{
-                      display: "flex",
-                      gap: "0.75rem",
-                      marginBottom: "0.75rem",
-                      fontSize: "0.85rem",
-                      color: "var(--steel)",
-                    }}
-                  >
-                    <span style={{ color: "var(--amber)" }}>✓</span> {spec}
+                  <li key={sIdx} className="spec-item">
+                    <span className="spec-check">✓</span> {spec}
                   </li>
                 ))}
               </ul>
@@ -568,48 +392,28 @@ function EnginePage() {
         </section>
 
         {/* ── Section 3: Crash-Safe Durability ── */}
-        <section style={{ padding: "6rem 0" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.2fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
-          >
+        <section className="engine-section">
+          <div className="engine-grid">
             <div>
               <span className="section-eyebrow reveal">Modalidad 03</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ margin: "0.5rem 0 1.5rem" }}
+                className="section-title reveal reveal-delay-1 section-title--compact"
               >
                 Durability: WAL + CRC32C Verification
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2rem" }}>
+              <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
                 VantaDB guarantees ACID durability levels by forcing log flushes inside the
                 Write-Ahead Log (WAL) before returning write confirmations. A checksum validation
                 prevents corrupted sectors from reading into runtime indexes.
               </p>
-              <ul
-                style={{ listStyle: "none", padding: 0, margin: 0 }}
-                className="reveal reveal-delay-3"
-              >
+              <ul className="spec-list reveal reveal-delay-3">
                 {[
                   "Fsync enabled block transactions.",
                   "Automatic WAL replay integrity verification on engine.open().",
                   "Heavy certification testing validation suites.",
                 ].map((spec, sIdx) => (
-                  <li
-                    key={sIdx}
-                    style={{
-                      display: "flex",
-                      gap: "0.75rem",
-                      marginBottom: "0.75rem",
-                      fontSize: "0.85rem",
-                      color: "var(--steel)",
-                    }}
-                  >
-                    <span style={{ color: "var(--amber)" }}>✓</span> {spec}
+                  <li key={sIdx} className="spec-item">
+                    <span className="spec-check">✓</span> {spec}
                   </li>
                 ))}
               </ul>

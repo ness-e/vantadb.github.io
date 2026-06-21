@@ -61,7 +61,7 @@ const ORBIT_CIRCUMFERENCE = 72.4;
 // line from (8,6) to (32,54) → √((24)²+(48)²) ≈ 53.7
 const V_STROKE_LENGTH = 54;
 
-export const VantaDBMark: React.FC<{
+const VantaDBMark: React.FC<{
   size?: number;
   accentColor?: string;
   noAnimation?: boolean;
@@ -94,10 +94,6 @@ export const VantaDBMark: React.FC<{
         stroke={accentColor}
         strokeWidth="3"
         strokeLinecap="round"
-        style={{
-          strokeDasharray: V_STROKE_LENGTH,
-          strokeDashoffset: V_STROKE_LENGTH,
-        }}
       />
 
       {/* ── V RIGHT LEG ────────────────────────── */}
@@ -110,47 +106,37 @@ export const VantaDBMark: React.FC<{
         stroke={accentColor}
         strokeWidth="3"
         strokeLinecap="round"
-        style={{
-          strokeDasharray: V_STROKE_LENGTH,
-          strokeDashoffset: V_STROKE_LENGTH,
-        }}
       />
 
       {/* ── ACCRETION DISK / ORBIT RING ────────── */}
       {/* Ellipse centered on singularity vertex, tilted -12deg */}
       <g transform="rotate(-12, 32, 54)">
-        <ellipse
-          className="vdb-orbit"
-          cx="32"
-          cy="54"
-          rx="16"
-          ry="5.5"
-          stroke={accentColor}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.65} ${ORBIT_CIRCUMFERENCE * 0.35}`}
-          style={{
-            opacity: 0,
-          }}
-        />
+      <ellipse
+        className="vdb-orbit"
+        cx="32"
+        cy="54"
+        rx="16"
+        ry="5.5"
+        stroke={accentColor}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.65} ${ORBIT_CIRCUMFERENCE * 0.35}`}
+      />
       </g>
 
       {/* ── SECONDARY ORBIT (outer, dimmer) ───── */}
       <g transform="rotate(-12, 32, 54)">
-        <ellipse
-          className="vdb-orbit vdb-orbit--outer"
-          cx="32"
-          cy="54"
-          rx="22"
-          ry="7.5"
-          stroke={accentColor}
-          strokeWidth="1"
-          strokeLinecap="round"
-          strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.4} ${ORBIT_CIRCUMFERENCE * 0.6}`}
-          style={{
-            opacity: 0,
-          }}
-        />
+      <ellipse
+        className="vdb-orbit vdb-orbit--outer"
+        cx="32"
+        cy="54"
+        rx="22"
+        ry="7.5"
+        stroke={accentColor}
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.4} ${ORBIT_CIRCUMFERENCE * 0.6}`}
+      />
       </g>
 
       {/* ── SINGULARITY POINT (event horizon) ─── */}
@@ -161,7 +147,6 @@ export const VantaDBMark: React.FC<{
         cy="54"
         r="3.5"
         fill={accentColor}
-        style={{ opacity: 0 }}
       />
 
       {/* ── INNER VOID (dark core inside singularity) */}
@@ -170,7 +155,6 @@ export const VantaDBMark: React.FC<{
         cy="54"
         r="1.5"
         fill="var(--background, #050507)"
-        style={{ opacity: 0 }}
         className="vdb-void-core"
       />
     </svg>
@@ -205,7 +189,7 @@ export const VantaDBLogoFull: React.FC<{
 // ─────────────────────────────────────────────
 // BADGE: Rounded-square container (app icon)
 // ─────────────────────────────────────────────
-export const VantaDBBadge: React.FC<{
+const VantaDBBadge: React.FC<{
   size?: LogoSize;
   noAnimation?: boolean;
   className?: string;

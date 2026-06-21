@@ -23,47 +23,47 @@ function CostPage() {
   }, []);
 
   return (
-    <div style={{ background: "var(--background)", minHeight: "100vh" }}>
+    <div className="page-wrapper">
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Infrastructure Cost</span>
-        <h1 className="title-accent reveal reveal-delay-1" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.04em", margin: "0.5rem 0 1.5rem" }}>
+        <h1 className="title-accent reveal reveal-delay-1">
           Zero cost
           <br />at runtime.
         </h1>
-        <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
+        <p className="section-sub reveal reveal-delay-2 desc-text">
           No per-vector pricing, no server bills, no hidden egress fees. VantaDB is free software — the only cost is the hardware you already own.
         </p>
       </header>
 
-      <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}>
-        <section style={{ padding: "4rem 0", borderBottom: "1px solid var(--subtle)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem" }}>
+      <main className="main-content">
+        <section className="comparison-split">
           <div className="reveal">
             <span className="section-eyebrow">// Legacy Costs</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>~$200/mo + hidden fees</h2>
-            <ul style={{ listStyle: "none", padding: 0, fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--muted)", lineHeight: "2.2" }}>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Pinecone: $70/mo (pod-based, 1M vectors)</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Redis: $30/mo (ElastiCache serverless)</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> S3: $15/mo + API request costs</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Network egress: unpredictable overage fees</li>
-              <li><span style={{ color: "var(--crimson)" }}>✗</span> Ops overhead: monitoring, scaling, patching</li>
+            <h2 className="section-title section-title--compact">~$200/mo + hidden fees</h2>
+            <ul className="comparison-list">
+              <li><span className="icon-cross">✗</span> Pinecone: $70/mo (pod-based, 1M vectors)</li>
+              <li><span className="icon-cross">✗</span> Redis: $30/mo (ElastiCache serverless)</li>
+              <li><span className="icon-cross">✗</span> S3: $15/mo + API request costs</li>
+              <li><span className="icon-cross">✗</span> Network egress: unpredictable overage fees</li>
+              <li><span className="icon-cross">✗</span> Ops overhead: monitoring, scaling, patching</li>
             </ul>
           </div>
           <div className="reveal reveal-delay-1">
             <span className="section-eyebrow">// VantaDB Costs</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>$0 runtime</h2>
-            <ul style={{ listStyle: "none", padding: 0, fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--muted)", lineHeight: "2.2" }}>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> Free and open-source (MIT license)</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> No cloud dependency — runs on your hardware</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> No per-query or per-vector pricing</li>
-              <li><span style={{ color: "var(--amber)" }}>✓</span> Zero ops cost — no servers to maintain</li>
+            <h2 className="section-title section-title--compact">$0 runtime</h2>
+            <ul className="comparison-list">
+              <li><span className="icon-check">✓</span> Free and open-source (MIT license)</li>
+              <li><span className="icon-check">✓</span> No cloud dependency — runs on your hardware</li>
+              <li><span className="icon-check">✓</span> No per-query or per-vector pricing</li>
+              <li><span className="icon-check">✓</span> Zero ops cost — no servers to maintain</li>
             </ul>
           </div>
         </section>
 
-        <section style={{ padding: "4rem 0", borderBottom: "1px solid var(--subtle)" }}>
-          <div className="reveal text-center" style={{ maxWidth: "720px", margin: "0 auto" }}>
+        <section className="section-narrow">
+          <div className="reveal text-center reveal-centered">
             <span className="section-eyebrow">// Total Cost of Ownership</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>From $200/mo to $0</h2>
+            <h2 className="section-title section-title--compact">From $200/mo to $0</h2>
             <p className="section-sub">
               By eliminating three managed services, VantaDB removes the single largest variable cost
               from your vector search infrastructure. Your only expense is the compute you already run.
@@ -71,8 +71,8 @@ function CostPage() {
           </div>
         </section>
 
-        <nav style={{ marginTop: "3rem", textAlign: "center" }}>
-          <Link to="/" className="nav-cta" style={{ display: "inline-block", padding: "0.85rem 2rem", textDecoration: "none" }}>
+        <nav className="bottom-nav">
+          <Link to="/" className="back-link nav-cta">
             ← Back to comparison
           </Link>
         </nav>

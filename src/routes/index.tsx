@@ -3,6 +3,15 @@ import { SingularityHero } from "@/components/SingularityHero";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DynamicGraphMesh } from "@/components/DynamicGraphMesh";
+import { VectorSpace } from "@/components/VectorSpace";
+import { HNSWIsometric } from "@/components/HNSWIsometric";
+import { IOMultiplexing } from "@/components/IOMultiplexing";
+import { HybridCube } from "@/components/HybridCube";
+import { DAGPlan } from "@/components/DAGPlan";
+import { SIMDVectorized } from "@/components/SIMDVectorized";
+import { Flamegraph } from "@/components/Flamegraph";
+import { AnimeMorphLogo } from "@/components/AnimeMorphLogo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,154 +29,78 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-// ── GSAP ScrollTrigger reveal ──────────────────────────────────────────────────
+// ── GSAP ScrollTrigger reveal (GSAP Performance) ───────────────────────────────
 function useGSAPReveal() {
   useEffect(() => {
-    // ── All .reveal elements (sections 1-7) ──
-    document.querySelectorAll(".reveal").forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.75,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
+    const mm = gsap.matchMedia();
+
+    // Reduced motion → reveal everything instantly
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(".reveal, .eng-cell, #integrations .glow-card, .eng-svg-line", {
+        opacity: 1, y: 0, scale: 1, strokeDashoffset: 0,
+      });
     });
 
-    // ── Section 3: Engine quadrants stagger ──
-    gsap.fromTo(
-      ".eng-cell",
-      { opacity: 0, y: 20, scale: 0.96 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".eng-wrap",
-          start: "top 80%",
-          toggleActions: "play none none none",
+    // Full motion
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      // Batch all .reveal elements with a single ScrollTrigger
+      ScrollTrigger.batch(".reveal", {
+        start: "top 87%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1, y: 0, duration: 0.65, stagger: 0.06, ease: "power2.out", overwrite: "auto",
+          });
         },
-      },
-    );
+      });
 
-    // ── Engine SVG line draw ──
-    gsap.fromTo(
-      ".eng-svg-line",
-      { strokeDashoffset: 400 },
-      {
-        strokeDashoffset: 0,
-        duration: 0.8,
-        delay: 0.4,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: ".eng-wrap",
-          start: "top 75%",
-          toggleActions: "play none none none",
+      // Engine quadrants stagger
+      gsap.fromTo(".eng-cell",
+        { opacity: 0, y: 20, scale: 0.96 },
+        {
+          opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: ".eng-wrap", start: "top 80%", toggleActions: "play none none none" },
         },
-      },
-    );
+      );
 
-    // ── Section 5: Glow cards stagger ──
-    gsap.fromTo(
-      "#integrations .glow-card",
-      { opacity: 0, y: 16 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.08,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: "#integrations",
-          start: "top 75%",
-          toggleActions: "play none none none",
+      // Engine SVG line draw
+      gsap.fromTo(".eng-svg-line",
+        { strokeDashoffset: 400 },
+        {
+          strokeDashoffset: 0, duration: 0.8, delay: 0.4, ease: "power1.out",
+          scrollTrigger: { trigger: ".eng-wrap", start: "top 75%", toggleActions: "play none none none" },
         },
-      },
-    );
+      );
 
-    // ── Section 6: Timeline rail ──
-    gsap.fromTo(
-      ".tl-rail",
-      { scaleY: 0 },
-      {
-        scaleY: 1,
-        duration: 1,
-        ease: "power2.out",
-        transformOrigin: "top",
-        scrollTrigger: {
-          trigger: ".tl-wrap",
-          start: "top 80%",
-          toggleActions: "play none none none",
+      // Glow cards batch
+      ScrollTrigger.batch("#integrations .glow-card", {
+        start: "top 78%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out", overwrite: "auto",
+          });
         },
-      },
-    );
+      });
+    });
 
-    // ── Timeline items stagger ──
-    gsap.fromTo(
-      ".tl-item",
-      { opacity: 0, x: -16 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".tl-wrap",
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-
-    // ── Timeline dots ──
-    gsap.fromTo(
-      ".tl-dot",
-      { scale: 0 },
-      {
-        scale: 1,
-        duration: 0.4,
-        stagger: 0.15,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: ".tl-wrap",
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-
-    // ── Nav glassmorphism on scroll ──
-    const nav = document.querySelector(".vanta-nav");
-    const onScroll = () => {
-      if (nav) nav.classList.toggle("scrolled", window.scrollY > 60);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // ── Glow card mouse tracking ──
-    const glowTrack = (e: MouseEvent) => {
-      const card = e.currentTarget as HTMLElement;
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-      card.style.setProperty("--my", `${e.clientY - rect.top}px`);
-    };
-    document.querySelectorAll(".glow-card").forEach((el) => el.addEventListener("mousemove", glowTrack));
+    // Glow card mouse tracking — gsap.quickTo pattern
+    const quickTos: (() => void)[] = [];
+    document.querySelectorAll(".glow-card").forEach((el) => {
+      const toMX = gsap.quickTo(el, "--mx", { x: 0 });
+      const toMY = gsap.quickTo(el, "--my", { y: 0 });
+      const handler = (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect();
+        toMX(e.clientX - rect.left);
+        toMY(e.clientY - rect.top);
+      };
+      el.addEventListener("mousemove", handler);
+      quickTos.push(() => el.removeEventListener("mousemove", handler));
+    });
 
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-      window.removeEventListener("scroll", onScroll);
-      document.querySelectorAll(".glow-card").forEach((el) => el.removeEventListener("mousemove", glowTrack));
+      mm.revert();
+      quickTos.forEach((fn) => fn());
     };
   }, []);
 }
@@ -177,14 +110,7 @@ function Scanlines() {
   return (
     <div
       aria-hidden="true"
-      style={{
-        position: "absolute",
-        inset: 0,
-        pointerEvents: "none",
-        zIndex: 1,
-        backgroundImage:
-          "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px)",
-      }}
+      className="scanlines"
     />
   );
 }
@@ -200,118 +126,43 @@ function ArchCrossSection() {
   ];
   const widths = [94, 86, 78, 70, 62];
   return (
-    <div
-      style={{
-        background: "var(--surface)",
-        border: "1px solid rgba(255,106,0,0.08)",
-        borderRadius: "var(--radius-lg)",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+    <div className="arch-terminal">
       <Scanlines />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          padding: "0.85rem 1.25rem",
-          borderBottom: "1px solid rgba(255,255,255,0.04)",
-          background: "rgba(255,255,255,0.01)",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.65rem",
-          color: "var(--steel)",
-          letterSpacing: "0.04em",
-        }}
-      >
-        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ff5f56", display: "inline-block" }} />
-        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#febc2e", display: "inline-block" }} />
-        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#28c840", display: "inline-block" }} />
-        <span style={{ flex: 1, textAlign: "center", opacity: 0.5 }}>vantadb — stack depth v1.1</span>
+      <div className="arch-titlebar">
+        <span className="term-dot-sm term-dot--red" />
+        <span className="term-dot-sm term-dot--yellow" />
+        <span className="term-dot-sm term-dot--green" />
+        <span className="term-label-sm">vantadb — stack depth v1.1</span>
       </div>
-      <div style={{ padding: "1.5rem" }}>
-        <div style={{ position: "relative" }}>
-          <div
-            style={{
-              position: "absolute",
-              right: "0.75rem",
-              top: 0,
-              bottom: 0,
-              width: "1px",
-              background:
-                "linear-gradient(to bottom, transparent, rgba(255,106,0,0.3), transparent)",
-            }}
-          />
-          {/* Tunnel flow bytes on the rail */}
-          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "2.5rem", overflow: "hidden", pointerEvents: "none", opacity: 0.6 }}>
-            {["01", "FF", "A9", "8C", "E3", "1B", "7A", "D4", "3F", "B2"].map((b, i) => (
-              <span key={i} style={{ position: "absolute", left: Math.random() > 0.5 ? "0" : "auto", right: Math.random() > 0.5 ? "0.2rem" : "auto", fontFamily: "var(--font-mono)", fontSize: "0.48rem", color: "var(--amber)", opacity: 0.3, animation: "tunnel-down 2.8s linear infinite", animationDelay: `${i * 0.28}s` }}>{b}</span>
-            ))}
-          </div>
-          {layers.map((l, i) => (
+      <div className="arch-body">
+        <div className="arch-rail" />
+        {/* Tunnel flow bytes on the rail */}
+        <div className="hex-tunnel">
+          {["01", "FF", "A9", "8C", "E3", "1B", "7A", "D4", "3F", "B2"].map((b, i) => (
+            <span key={i} style={{ position: "absolute", left: Math.random() > 0.5 ? "0" : "auto", right: Math.random() > 0.5 ? "0.2rem" : "auto", fontFamily: "var(--font-mono)", fontSize: "0.48rem", color: "var(--amber)", opacity: 0.3, animation: "tunnel-down 2.8s linear infinite", animationDelay: `${i * 0.28}s` }}>{b}</span>
+          ))}
+        </div>
+        {layers.map((l, i) => (
+          <div key={i} className="arch-layer-row" style={{ marginBottom: i < layers.length - 1 ? "0.4rem" : 0 }}>
             <div
-              key={i}
+              className="arch-bar"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                marginBottom: i < layers.length - 1 ? "0.4rem" : 0,
-                position: "relative",
+                maxWidth: `${widths[i]}%`,
+                background: `linear-gradient(135deg, rgba(255,106,0,${0.02 + 0.015 * (layers.length - i)}) 0%, rgba(255,106,0,${0.06 + 0.02 * (layers.length - i)}) 100%)`,
               }}
             >
-              <div
-                style={{
-                  flex: 1,
-                  maxWidth: `${widths[i]}%`,
-                  height: "2.8rem",
-                  background: `linear-gradient(135deg, rgba(255,106,0,${0.02 + 0.015 * (layers.length - i)}) 0%, rgba(255,106,0,${0.06 + 0.02 * (layers.length - i)}) 100%)`,
-                  border: "1px solid rgba(255,106,0,0.06)",
-                  borderRadius: "var(--radius-sm)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 0.75rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.68rem",
-                    color: "var(--white)",
-                    fontWeight: 600,
-                    letterSpacing: "0.02em",
-                  }}
-                >
+                <span className="arch-bar-label">
                   {l.name}
                 </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.58rem",
-                    color: "var(--steel)",
-                  }}
-                >
+                <span className="arch-bar-meta">
                   {l.desc}
                 </span>
-              </div>
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "var(--amber)",
-                  boxShadow: "0 0 8px rgba(255,106,0,0.5)",
-                  display: "inline-block",
-                  flexShrink: 0,
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              />
+                <span className="arch-bar-glow" />
             </div>
+          </div>
           ))}
         </div>
       </div>
-    </div>
   );
 }
 
@@ -403,7 +254,7 @@ function TypewriterTitle({ phase }: { phase: number | null }) {
       <>
         <span>{full.slice(0, Math.min(count, a))}</span>
         {count > a && (
-          <span style={{ color: "var(--amber)" }}>
+          <span className="text-highlight--amber">
             {full.slice(a, Math.min(count, b))}
           </span>
         )}
@@ -415,7 +266,7 @@ function TypewriterTitle({ phase }: { phase: number | null }) {
   };
 
   return (
-    <h2 className="section-title" style={{ fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", letterSpacing: "normal", lineHeight: 1.4, minHeight: "1.2em" }}>
+    <h2 className="section-title typewriter-h2">
       {phase !== null ? renderText() : null}
       <span className="term-cursor" />
     </h2>
@@ -465,12 +316,12 @@ function TerminalCell({ item, active, onDone }: {
       onClick={handleClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter") handleClick(); }}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); } }}
     >
       <div className="term-cell-titlebar">
-        <span className="term-cell-dot" style={{ background: "#ff5f57" }} />
-        <span className="term-cell-dot" style={{ background: "#febc2e" }} />
-        <span className="term-cell-dot" style={{ background: "#28c840" }} />
+        <span className="term-cell-dot term-cell-dot--red" />
+        <span className="term-cell-dot term-cell-dot--yellow" />
+        <span className="term-cell-dot term-cell-dot--green" />
         <span className="term-cell-title">{item.label}</span>
       </div>
       <div className="term-cell-body">
@@ -532,17 +383,12 @@ function ComparisonTable() {
 
   return (
     <div
-      className="comparison-table"
-      style={{
-        padding: "5rem clamp(1.5rem, 5vw, 4rem)",
-        maxWidth: "1500px",
-        margin: "0 auto",
-      }}
+      className="comparison-table section-wrapper--cmp"
     >
-      <div className="reveal text-center" style={{ marginBottom: "2.5rem" }}>
+      <div className="reveal text-center text-center--mb">
         <span className="section-eyebrow">// VantaDB vs. The Stack</span>
         <TypewriterTitle phase={activeIdx} />
-        <p className="section-sub" style={{ maxWidth: "520px", margin: "0 auto" }}>
+        <p className="section-sub section-sub--centered">
           A side-by-side comparison of every infrastructure layer — complexity, cost, and performance.
         </p>
       </div>
@@ -552,6 +398,7 @@ function ComparisonTable() {
           <TerminalCell key={idx} item={item} active={activeIdx === idx} onDone={handleDone} />
         ))}
       </div>
+      <SIMDVectorized />
     </div>
   );
 }
@@ -694,7 +541,7 @@ function highlightCode(code: string, lang: string) {
   return lines.map((line, lIdx) => {
     const tokens = tokenizer(line);
     return (
-      <div key={lIdx} style={{ display: "flex" }}>
+      <div key={lIdx} className="code-line">
         {tokens.map((t, tIdx) => (
           <span key={tIdx} className={`token-${t.t}`}>{t.v}</span>
         ))}
@@ -711,7 +558,7 @@ function liveHighlight(code: string, typed: number, lang: string, cursor: boolea
     const isLast = lIdx === lines.length - 1;
     const tokens = tokenizer(line);
     return (
-      <div key={lIdx} style={{ display: "flex" }}>
+      <div key={lIdx} className="code-line">
         {tokens.map((t, tIdx) => (
           <span key={tIdx} className={`token-${t.t}`}>{t.v}</span>
         ))}
@@ -888,29 +735,25 @@ function InteractiveQuickstart() {
   return (
     <section
       id="quickstart"
-      style={{
-        padding: "7rem clamp(1.5rem, 5vw, 4rem) 8rem",
-        maxWidth: "1200px",
-        margin: "0 auto",
-        position: "relative",
-      }}
+      aria-labelledby="quickstart-heading"
+      className="section-wrapper--qs"
     >
-      <div className="reveal" style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+      <div className="reveal text-center--mb-lg">
         <span className="section-eyebrow">// Quickstart</span>
         <h2
-          className="section-title"
-          style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)", marginBottom: "1rem" }}
+          id="quickstart-heading"
+          className="section-title section-title--qs"
         >
-          Get started in <span style={{ color: "var(--amber)" }}>seconds.</span>
+          Get started in <span className="text-highlight--amber">seconds.</span>
         </h2>
-        <p className="section-sub" style={{ marginBottom: "1.5rem", maxWidth: "480px", marginLeft: "auto", marginRight: "auto" }}>
+        <p className="section-sub section-sub--qs">
           Install, import and query locally. Zero dependencies. Open a file and go.
         </p>
       </div>
 
       <div className={`sp-layout ${ready ? "ready" : ""}`}>
         {/* Sidebar */}
-        <nav className="sp-sidebar">
+        <nav className="sp-sidebar" aria-label="Quickstart steps">
           {steps.map((s, idx) => {
             const status = activeIdx === idx ? "active" : completed.has(idx) ? "completed" : "pending";
             return (
@@ -936,8 +779,8 @@ function InteractiveQuickstart() {
               </div>
               <span className="tl-title">vantadb — interactive shell v0.1</span>
               <div className="tl-legend">
-                <span className="tl-legend-item" style={{ color: "var(--amber)" }}>● active</span>
-                <span className="tl-legend-item" style={{ color: "#28c840" }}>✓ done</span>
+                <span className="tl-legend-item text-highlight--amber">● active</span>
+                  <span className="tl-legend-item tl-legend-item--done">✓ done</span>
                 <span className="tl-legend-item">○ pending</span>
               </div>
             </div>
@@ -972,11 +815,11 @@ function InteractiveQuickstart() {
               </div>
 
               <div className="sp-code-wrap" key={`code-${copyKey}`}>
-                <button className="sp-copy-btn" onClick={() => copyCode(copyKey, codeText)}>
+                <button className="sp-copy-btn" onClick={() => copyCode(copyKey, codeText)} aria-label="Copy code">
                   {copied === copyKey ? (
                     <span className="sp-copied-label">Copied</span>
                   ) : (
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
@@ -993,15 +836,15 @@ function InteractiveQuickstart() {
                 {outputLines.slice(0, outRevealed).map((line, lIdx) => (
                   <div key={lIdx} className="sp-out-line" style={{ color: outColor(line) }}>{line}</div>
                 ))}
-                {outRevealed > 0 && outRevealed <= outputLines.length && typingDone && <span className="typing-cursor" style={{ marginTop: "0.2rem", display: "inline-block" }}>▊</span>}
+                {outRevealed > 0 && outRevealed <= outputLines.length && typingDone && <span className="typing-cursor typing-cursor--out">▊</span>}
               </div>
             </div>
                 </div>
                 {/* Terminal footer with typewriter query */}
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.025)", padding: "0.65rem 1.25rem", display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--steel)" }}>
-                  <span style={{ color: "var(--amber)", opacity: 0.7 }}>$</span>
-                  <span className="eng-query" style={{ overflow: "hidden", whiteSpace: "nowrap", display: "inline-block", verticalAlign: "bottom", animation: "query-type-in 2.5s steps(35) 0.5s both" }}>MATCH (n) WHERE n.vector &lt;=&gt; [0.85, 0.12] RETURN n</span>
-                  <span style={{ display: "inline-block", width: 6, height: 12, background: "var(--amber)", opacity: 0.5, animation: "blink 1s step-end infinite" }} />
+                <div className="term-footer">
+                  <span className="term-prompt">$</span>
+                  <span className="term-query term-query--anim">MATCH (n) WHERE n.vector &lt;=&gt; [0.85, 0.12] RETURN n</span>
+                  <span className="term-cursor-block" />
                 </div>
               </div>
       </div>
@@ -1049,6 +892,9 @@ function Landing() {
         .glow-card:hover::before { opacity:1; }
       `}</style>
 
+      {/* Gradient mesh background (fixed, aurora drift) */}
+      <div className="gradient-mesh" />
+
       {/* Hero (immutable) */}
       <SingularityHero ready={heroReady} />
 
@@ -1056,13 +902,7 @@ function Landing() {
 
       <main className="page-content">
         {/* ── 1. COMPARISON BAR (Old Stack vs VantaDB) ── */}
-        <div
-          style={{
-            borderBottom: "1px solid var(--subtle)",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
+        <div className="section--engine">
           <Scanlines />
           <ComparisonTable />
         </div>
@@ -1075,33 +915,25 @@ function Landing() {
         {/* ── 3. ENGINE — Digital Core (animated quadrant matrix) ── */}
         <section
           id="engine"
-          style={{
-            padding: "8rem clamp(1.5rem,5vw,4rem)",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            position: "relative",
-          }}
+          aria-labelledby="engine-heading"
+          className="section-padded--engine section-frame"
         >
-          <div className="noise-overlay" style={{ opacity: 0.1 }} />
+          <div className="noise-overlay noise-overlay--10" />
+          <DynamicGraphMesh />
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
+            className="section-split"
           >
             <div>
               <span className="section-eyebrow reveal">// Core Engine</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+                id="engine-heading"
+                className="section-title section-title--sm reveal reveal-delay-1"
               >
                 Four memory modalities.
                 <br />
-                <span style={{ color: "var(--amber)" }}>One atomic contract.</span>
+                <span className="text-highlight--amber">One atomic contract.</span>
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
+              <p className="section-sub reveal reveal-delay-2 section-sub--mb">
                 BM25 + HNSW unified via RRF in a single local database engine. Relations stored
                 natively as weighted graph edges. CRC32C Write-Ahead Logging for absolute crash
                 safety.
@@ -1109,79 +941,53 @@ function Landing() {
               <div className="reveal reveal-delay-3">
                 <Link
                   to="/engine"
-                  className="nav-cta"
-                  style={{
-                    display: "inline-block",
-                    padding: "0.85rem 2rem",
-                    textDecoration: "none",
-                    fontSize: "0.8rem",
-                  }}
+                  className="cta-link nav-cta"
                 >
                   Explore Core Engine Features →
                 </Link>
               </div>
             </div>
-            <div className="reveal reveal-delay-2 eng-wrap" style={{ position: "relative" }}>
-              <div
-                style={{
-                  background: "var(--surface)",
-                  border: "1px solid rgba(255,106,0,0.1)",
-                  borderRadius: "var(--radius-lg)",
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
+            <div className="reveal reveal-delay-2 eng-wrap">
+              <div className="term-window">
                 <Scanlines />
                 {/* Minimal title bar */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    padding: "0.85rem 1.5rem",
-                    borderBottom: "1px solid rgba(255,255,255,0.03)",
-                    background: "rgba(255,255,255,0.01)",
-                  }}
-                >
-                  <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#ff5f56", display: "inline-block" }} />
-                  <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#febc2e", display: "inline-block" }} />
-                  <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#28c840", display: "inline-block" }} />
-                  <span style={{ flex: 1, textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--steel)", opacity: 0.5, letterSpacing: "0.04em" }}>vantadb — digital core</span>
+                <div className="term-titlebar">
+                  <span className="term-dot term-dot--red" />
+                  <span className="term-dot term-dot--yellow" />
+                  <span className="term-dot term-dot--green" />
+                  <span className="term-label">vantadb — digital core</span>
                 </div>
 
                 {/* 2×2 quadrant grid */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+                <div className="eng-grid">
                   {/* ── Cell 1: BM25 ── */}
-                  <div className="eng-cell" style={{ borderRight: "1px solid rgba(255,255,255,0.025)", borderBottom: "1px solid rgba(255,255,255,0.025)", padding: "1.5rem" }}>
-                    <div style={{ height: 85, position: "relative", overflow: "hidden", marginBottom: "1rem", borderRadius: "var(--radius-sm)", background: "rgba(255,140,60,0.025)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 5, padding: "0 10%" }}>
+                  <div className="eng-cell-border--rb">
+                    <div className="eng-visual bm25-bar-wrap">
                       {[0, 0.12, 0.24, 0.36, 0.48, 0.36, 0.24, 0.12].map((d, i) => (
-                        <div key={i} style={{ width: 5, background: "linear-gradient(to top, rgba(255,140,60,0.45), rgba(255,106,0,0.15))", borderRadius: "2px 2px 0 0", height: "100%", transformOrigin: "bottom", animation: "eng-wave 1.4s ease-in-out infinite", animationDelay: `${d}s` }} />
+                        <div key={i} className="bm25-bar" style={{ animationDelay: `${d}s` }} />
                       ))}
                     </div>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", letterSpacing: "0.1em", marginBottom: "0.6rem", opacity: 0.9 }}>BM25 TEXT SEARCH</div>
-                    <div style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                      BM25 lexical search — <span style={{ color: "var(--amber)", fontWeight: 600 }}>1.2ms</span> p99 at <span style={{ color: "var(--white)", fontWeight: 600 }}>100%</span> recall
+                    <div className="eng-cell-tag">BM25 TEXT SEARCH</div>
+                    <div className="eng-cell-desc">
+                      BM25 lexical search — <span className="accent-text">1.2ms</span> p99 at <span className="text-highlight--white">100%</span> recall
                     </div>
                   </div>
 
                   {/* ── Cell 2: HNSW ── */}
-                  <div className="eng-cell" style={{ borderBottom: "1px solid rgba(255,255,255,0.025)", padding: "1.5rem" }}>
-                    <div style={{ height: 85, position: "relative", overflow: "hidden", marginBottom: "1rem", borderRadius: "var(--radius-sm)", background: "rgba(255,140,60,0.025)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      {[0, 0.5, 1, 1.5].map((d, i) => (
-                        <div key={i} style={{ position: "absolute", width: "80%", paddingTop: "80%", borderRadius: "50%", border: "1px solid rgba(255,140,60,0.18)", animation: "eng-ring 3s ease-out infinite", animationDelay: `${d}s` }} />
-                      ))}
-                      <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--amber)", opacity: 0.5, boxShadow: "0 0 12px rgba(255,106,0,0.25)", animation: "eng-breathe 2s ease-in-out infinite" }} />
+                  <div className="eng-cell-border--b">
+                    <div className="eng-visual">
+                      <HNSWIsometric />
                     </div>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", letterSpacing: "0.1em", marginBottom: "0.6rem", opacity: 0.9 }}>HNSW VECTOR INDEX</div>
-                    <div style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                      HNSW vector index — up to <span style={{ color: "var(--white)", fontWeight: 600 }}>32K</span> dimensions, <span style={{ color: "var(--white)", fontWeight: 600 }}>1KB</span> keys
+                    <div className="eng-cell-tag">HNSW VECTOR INDEX</div>
+                    <div className="eng-cell-desc">
+                      HNSW vector index — up to <span className="text-highlight--white">32K</span> dimensions, <span className="text-highlight--white">1KB</span> keys
                     </div>
                   </div>
 
                   {/* ── Cell 3: GraphRAG ── */}
-                  <div className="eng-cell" style={{ borderRight: "1px solid rgba(255,255,255,0.025)", padding: "1.5rem" }}>
-                    <div style={{ height: 85, position: "relative", overflow: "hidden", marginBottom: "1rem", borderRadius: "var(--radius-sm)", background: "rgba(255,140,60,0.025)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <svg viewBox="0 0 60 60" style={{ width: "75%", height: "75%" }}>
+                  <div className="eng-cell-border--r">
+                    <div className="eng-visual">
+                      <svg viewBox="0 0 60 60" className="eng-cell-svg--75">
                         <line x1="10" y1="10" x2="30" y2="10" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
                         <line x1="10" y1="10" x2="10" y2="30" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
                         <line x1="30" y1="10" x2="50" y2="10" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
@@ -1204,31 +1010,32 @@ function Landing() {
                         <circle cx="50" cy="50" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 1s" />
                       </svg>
                     </div>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", letterSpacing: "0.1em", marginBottom: "0.6rem", opacity: 0.9 }}>GRAPH RAG</div>
-                    <div style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                      Weighted-edge graph relations — <span style={{ color: "var(--amber-soft)", fontWeight: 600 }}>0.2ms</span> recovery
+                    <div className="eng-cell-tag">GRAPH RAG</div>
+                    <div className="eng-cell-desc">
+                      Weighted-edge graph relations — <span className="text-highlight--amber-soft">0.2ms</span> recovery
                     </div>
                   </div>
 
                   {/* ── Cell 4: WAL ── */}
-                  <div className="eng-cell" style={{ padding: "1.5rem" }}>
-                    <div style={{ height: 85, position: "relative", overflow: "hidden", marginBottom: "1rem", borderRadius: "var(--radius-sm)", background: "rgba(255,140,60,0.025)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <div style={{ width: 48, height: 48, borderRadius: "50%", border: "2px solid rgba(255,140,60,0.2)", display: "flex", alignItems: "center", justifyContent: "center", animation: "eng-breathe 2.5s ease-in-out infinite" }}>
-                        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(255,106,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <div style={{ width: 9, height: 9, borderRadius: "50%", background: "var(--amber)", opacity: 0.45, boxShadow: "0 0 8px rgba(255,106,0,0.2)" }} />
+                  <div className="eng-cell-border--none">
+                    <div className="eng-visual">
+                      <div className="wal-ring-outer">
+                        <div className="wal-ring-mid">
+                          <div className="wal-core" />
                         </div>
                       </div>
-                      <svg viewBox="0 0 60 60" style={{ position: "absolute", width: "82%", height: "82%" }}>
+                      <svg viewBox="0 0 60 60" className="eng-cell-svg--abs">
                         <path d="M12 30 Q30 6 48 30" fill="none" stroke="rgba(255,140,60,0.1)" strokeWidth="1.5" />
                         <path d="M12 36 Q30 12 48 36" fill="none" stroke="rgba(255,140,60,0.06)" strokeWidth="1.2" />
                       </svg>
                     </div>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", letterSpacing: "0.1em", marginBottom: "0.6rem", opacity: 0.9 }}>WAL DURABILITY</div>
-                    <div style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                      <span style={{ color: "var(--white)", fontWeight: 600 }}>CRC32C</span>-checksummed WAL with <span style={{ color: "var(--white)", fontWeight: 600 }}>fsync</span> durability
+                    <div className="eng-cell-tag">WAL DURABILITY</div>
+                    <div className="eng-cell-desc">
+                      <span className="text-highlight--white">CRC32C</span>-checksummed WAL with <span className="text-highlight--white">fsync</span> durability
                     </div>
                   </div>
                 </div>
+                <DAGPlan />
               </div>
             </div>
           </div>
@@ -1236,260 +1043,210 @@ function Landing() {
 
         <div className="section-divider" />
 
-        {/* ── 4. ARCHITECTURE — Stack Cross-Section ── */}
+        {/* ── 4. ARCHITECTURE — Stack Cross-Section (Cinematic Industrial) ── */}
         <section
           id="architecture"
-          style={{
-            background: "var(--surface)",
-            borderTop: "1px solid var(--subtle)",
-            borderBottom: "1px solid var(--subtle)",
-            padding: "8rem clamp(1.5rem,5vw,4rem)",
-            position: "relative",
-            overflow: "hidden",
-          }}
+          aria-labelledby="arch-heading"
+          className="section-padded--surface section-frame"
         >
-          <div className="noise-overlay" style={{ opacity: 0.15 }} />
+          <div className="noise-overlay noise-overlay--15" />
+          <VectorSpace grid={false} />
+          {/* Pipeline SVG decoration */}
+          <svg
+            aria-hidden="true"
+            className="arch-pipeline-svg"
+            viewBox="0 0 200 600"
+            fill="none"
+          >
+            <path d="M100 0 L100 600" stroke="var(--amber)" strokeWidth="0.5" strokeDasharray="4 4" />
+            {[0, 120, 240, 360, 480].map((y, i) => (
+              <circle key={i} cx={100 + (i % 2 === 0 ? -30 : 30)} cy={y + 60} r={6} fill="var(--amber)" opacity={0.15 + i * 0.03}>
+                <animate attributeName="r" values="6;10;6" dur={`${1.5 + i * 0.3}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.15;0.4;0.15" dur={`${1.5 + i * 0.3}s`} repeatCount="indefinite" />
+              </circle>
+            ))}
+            {[0, 120, 240, 360, 480].map((y, i) => (
+              <circle key={i + 10} cx={100 + (i % 2 === 0 ? 30 : -30)} cy={y + 60} r={3} fill="var(--steel)" opacity={0.1}>
+                <animate attributeName="r" values="3;5;3" dur={`${2 + i * 0.2}s`} repeatCount="indefinite" />
+              </circle>
+            ))}
+          </svg>
           <div
-            style={{
-              maxWidth: "1200px",
-              margin: "0 auto",
-              position: "relative",
-              zIndex: 1,
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
+            className="section-split--z1"
           >
             <div>
               <span className="section-eyebrow reveal">// Architecture</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+                id="arch-heading"
+                className="section-title section-title--sm reveal reveal-delay-1"
               >
                 Built different.
                 <br />
-                <span style={{ color: "var(--amber)" }}>Runs everywhere.</span>
+                <span className="text-highlight--amber">Runs everywhere.</span>
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
-                VantaDB bridges direct native Python execution to high-performance compiled Rust
-                memory storage using PyO3 FFI boundary limits, avoiding expensive serialization or
-                server process loops.
+              <p className="section-sub reveal reveal-delay-2 section-sub--mb">
+                PyO3 FFI boundary zero-copy bridge between Python and Rust. No serialization
+                overhead, no server process. WAL + fsync + CRC32C guarantees crash-safety at
+                every layer.
               </p>
               <div className="reveal reveal-delay-3">
                 <Link
                   to="/architecture"
-                  className="nav-cta"
-                  style={{
-                    display: "inline-block",
-                    padding: "0.85rem 2rem",
-                    textDecoration: "none",
-                    fontSize: "0.8rem",
-                  }}
+                  className="cta-link nav-cta"
                 >
                   View Deep FFI Architecture →
                 </Link>
               </div>
             </div>
-            <div className="reveal reveal-delay-2">
-              <ArchCrossSection />
+            <div className="reveal reveal-delay-2 arch-side-col">
+              <div className="reveal--rel">
+                <ArchCrossSection />
+                <div className="anime-logo-deco"><AnimeMorphLogo size={80} /></div>
+              </div>
+              <Flamegraph />
             </div>
           </div>
         </section>
 
-        {/* ── 5. INTEGRATIONS — Compatibility Matrix ── */}
+        {/* ── 5. INTEGRATIONS — Ecosystem Hub (Cinematic Industrial) ── */}
         <section
           id="integrations"
-          style={{
-            padding: "8rem clamp(1.5rem,5vw,4rem)",
-            position: "relative",
-            overflow: "hidden",
-          }}
+          aria-labelledby="integrations-heading"
+          className="section-padded--integrations section-frame"
         >
-          <div className="noise-overlay" style={{ opacity: 0.12 }} />
+          <div className="noise-overlay noise-overlay--12" />
+          <IOMultiplexing />
+          {/* Hub+spoke SVG decoration */}
+          <svg
+            aria-hidden="true"
+            className="eco-hub-svg"
+            viewBox="0 0 400 400"
+            fill="none"
+          >
+            <circle cx="200" cy="200" r="80" stroke="var(--amber)" strokeWidth="0.5" strokeDasharray="2 6" />
+            <circle cx="200" cy="200" r="140" stroke="var(--steel)" strokeWidth="0.3" strokeDasharray="1 8" />
+            <circle cx="200" cy="200" r="10" fill="var(--amber)" opacity="0.3">
+              <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
+            </circle>
+            {[0, 60, 120, 180, 240, 300].map((angle, i) => {
+              const rad = angle * Math.PI / 180;
+              const x = 200 + 80 * Math.cos(rad);
+              const y = 200 + 80 * Math.sin(rad);
+              return (
+                <g key={i}>
+                  <line x1={200} y1={200} x2={x} y2={y} stroke="var(--steel)" strokeWidth="0.3" opacity={0.2} />
+                  <circle cx={x} cy={y} r={4} fill="var(--steel)" opacity={0.15}>
+                    <animate attributeName="opacity" values="0.15;0.4;0.15" dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
+                  </circle>
+                </g>
+              );
+            })}
+          </svg>
           <div
-            style={{
-              maxWidth: "1200px",
-              margin: "0 auto",
-              position: "relative",
-              zIndex: 1,
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
+            className="section-split--z1"
           >
             <div>
               <span className="section-eyebrow reveal">// Ecosystem</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ fontSize: "clamp(2rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+                id="integrations-heading"
+                className="section-title section-title--sm reveal reveal-delay-1"
               >
                 Agnostic.
                 <br />
-                <span style={{ color: "var(--amber)" }}>Unbound.</span>
+                <span className="text-highlight--amber">Unbound.</span>
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
-                Directly connect VantaDB to your current AI agents framework. Built with first-class
-                support for LlamaIndex index traversal, LangChain vectorstores, AutoGen, and Model
-                Context Protocol (MCP).
+              <p className="section-sub reveal reveal-delay-2 section-sub--mb">
+                VantaDB plugs into any AI agent framework via direct FFI bindings.
+                LangChain vectorstores, LlamaIndex index traversal, AutoGen tools,
+                and Model Context Protocol — all with the same local-first contract.
               </p>
               <div className="reveal reveal-delay-3">
                 <Link
                   to="/integrations"
-                  className="nav-cta"
-                  style={{
-                    display: "inline-block",
-                    padding: "0.85rem 2rem",
-                    textDecoration: "none",
-                    fontSize: "0.8rem",
-                  }}
+                  className="cta-link nav-cta"
                 >
                   Explore Orbit Ecosystem →
                 </Link>
               </div>
             </div>
-            <div className="reveal reveal-delay-2" style={{ position: "relative" }}>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "0.75rem",
-                }}
-              >
+            <div className="reveal reveal-delay-2 reveal--rel">
+              <div className="int-grid">
                 {[
                   {
                     name: "LangChain",
                     protocol: "VectorStore",
                     icon: (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="var(--amber)" d="M7.53 15.975a7.53 7.53 0 0 0 2.206-5.325A7.54 7.54 0 0 0 7.53 5.325L2.205 0A7.54 7.54 0 0 0 0 5.325a7.54 7.54 0 0 0 2.205 5.325zm11.144.493a7.54 7.54 0 0 0-5.325-2.206a7.54 7.54 0 0 0-5.325 2.206l5.325 5.325a7.54 7.54 0 0 0 5.325 2.205A7.54 7.54 0 0 0 24 21.793zM2.219 21.78a7.54 7.54 0 0 0 5.325 2.205v-7.53H.014a7.54 7.54 0 0 0 2.205 5.325M20.73 8.595a7.53 7.53 0 0 0-5.327-2.206a7.53 7.53 0 0 0-5.325 2.207l5.325 5.325z"/>
+                        <path fill="var(--steel)" d="M7.53 15.975a7.53 7.53 0 0 0 2.206-5.325A7.54 7.54 0 0 0 7.53 5.325L2.205 0A7.54 7.54 0 0 0 0 5.325a7.54 7.54 0 0 0 2.205 5.325zm11.144.493a7.54 7.54 0 0 0-5.325-2.206a7.54 7.54 0 0 0-5.325 2.206l5.325 5.325a7.54 7.54 0 0 0 5.325 2.205A7.54 7.54 0 0 0 24 21.793zM2.219 21.78a7.54 7.54 0 0 0 5.325 2.205v-7.53H.014a7.54 7.54 0 0 0 2.205 5.325M20.73 8.595a7.53 7.53 0 0 0-5.327-2.206a7.53 7.53 0 0 0-5.325 2.207l5.325 5.325z"/>
                       </svg>
                     ),
-                    accent: "#FF6A00",
                   },
                   {
                     name: "LlamaIndex",
                     protocol: "Index Traversal",
                     icon: (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="var(--amber)" d="M15.5 17.3c-2.1.9-4.4.5-5.2.2 0 .2 0 .9-.1 1.8 0 .9-.3 1.5-.5 1.7v2.3c.1-.6.6-.9.8-1.1.1-1.2-.1-2.2-.2-2.6-.2.5-.5 1.5-.7 2.1-.1.4-.3.9-.7 1.3h-1c0-.6.3-.8.5-.8.1-.2.3-.7.5-1.5.1-.8-.1-2.3-.2-3v-2c-1.5-.8-2.1-1.6-2.5-2.6-.3-.7-.2-1.8-.1-2.3-.1-.2-.4-.6-.5-1.2-.1-.9-.1-1.5 0-1.9-.1 0-.3-.6-.3-1.8 0-1.1.4-1.8.5-2v-.5c-.7 0-1.3-.3-1.7-.7-.4-.4-.1-1 .1-1.2.3-.2.5 0 .8-.1.4-.1.6-.2.8-.5.2-.7 0-1.6-.1-2.1.6.1 1 .6 1.1.8V0c.7.3 2 1.2 2.4 2.9.4 1.4.6 4.4.7 5.8 1.8 0 4.1-.3 6.2.2 1.9.4 2.8 1.2 3.8 1.2s1.6-.6 2.3-.1c.7.5 1.1 1.8 1 2.8-.1.8-.7 1.1-1 1.1-.4 1.3 0 2.5.2 3v1.8c.1.2.3.7.3 1.4 0 .7-.2 1.1-.3 1.3.2 1-.1 2.2-.2 2.6h-1.3c.2-.4.4-.5.5-.5.2-1.2.1-2.3 0-2.7-.7-.4-1.2-1.1-1.3-1.5 0 .3 0 .7-.3 1.9-.3.8-.8 1.3-.9 1.5v1h-1.3c0-.6.3-.7.5-.7.2-.4.8-1 .8-2.2 0-1-.7-1.5-1.2-2.4-.3-.5-.4-1.5-.3-2Z"/>
+                        <path fill="var(--steel)" d="M15.5 17.3c-2.1.9-4.4.5-5.2.2 0 .2 0 .9-.1 1.8 0 .9-.3 1.5-.5 1.7v2.3c.1-.6.6-.9.8-1.1.1-1.2-.1-2.2-.2-2.6-.2.5-.5 1.5-.7 2.1-.1.4-.3.9-.7 1.3h-1c0-.6.3-.8.5-.8.1-.2.3-.7.5-1.5.1-.8-.1-2.3-.2-3v-2c-1.5-.8-2.1-1.6-2.5-2.6-.3-.7-.2-1.8-.1-2.3-.1-.2-.4-.6-.5-1.2-.1-.9-.1-1.5 0-1.9-.1 0-.3-.6-.3-1.8 0-1.1.4-1.8.5-2v-.5c-.7 0-1.3-.3-1.7-.7-.4-.4-.1-1 .1-1.2.3-.2.5 0 .8-.1.4-.1.6-.2.8-.5.2-.7 0-1.6-.1-2.1.6.1 1 .6 1.1.8V0c.7.3 2 1.2 2.4 2.9.4 1.4.6 4.4.7 5.8 1.8 0 4.1-.3 6.2.2 1.9.4 2.8 1.2 3.8 1.2s1.6-.6 2.3-.1c.7.5 1.1 1.8 1 2.8-.1.8-.7 1.1-1 1.1-.4 1.3 0 2.5.2 3v1.8c.1.2.3.7.3 1.4 0 .7-.2 1.1-.3 1.3.2 1-.1 2.2-.2 2.6h-1.3c.2-.4.4-.5.5-.5.2-1.2.1-2.3 0-2.7-.7-.4-1.2-1.1-1.3-1.5 0 .3 0 .7-.3 1.9-.3.8-.8 1.3-.9 1.5v1h-1.3c0-.6.3-.7.5-.7.2-.4.8-1 .8-2.2 0-1-.7-1.5-1.2-2.4-.3-.5-.4-1.5-.3-2Z"/>
                       </svg>
                     ),
-                    accent: "#FF8C38",
                   },
                   {
                     name: "AutoGen",
                     protocol: "Tool API",
                     icon: (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="24" height="24" rx="2" fill="var(--amber)" opacity="0.15"/>
-                        <path fill="var(--amber)" d="M8.16 7.18 5.84 14.25h-1.87l2.92-8.53h1.19l.08 1.46Zm1.93 7.07-2.32-7.07-.19-1.46h1.2l3.19 8.53h-1.88Zm-.1-3.18v1.38H5.48v-1.38h4.51Zm9.43-1.3v3.38c-.13.16-.34.34-.62.52-.27.18-.63.34-1.07.47-.44.14-.97.2-1.59.2a4.2 4.2 0 0 1-1.5-.27 2.64 2.64 0 0 1-1.17-.8 3.32 3.32 0 0 1-.75-1.29c-.18-.51-.27-1.1-.27-1.75v-.53c0-.66.09-1.24.26-1.76.17-.51.41-.94.73-1.3.32-.35.7-.62 1.13-.8.44-.18.93-.28 1.46-.28.74 0 1.35.12 1.83.36.48.24.84.57 1.09.99.25.43.41.91.47 1.46h-1.7a1.9 1.9 0 0 0-.2-.76c-.11-.21-.3-.38-.52-.5-.22-.13-.51-.19-.87-.19-.3 0-.56.06-.78.18-.23.12-.42.3-.58.52-.16.23-.27.52-.35.86-.09.34-.13.74-.13 1.18v.55c0 .44.04.84.13 1.17.08.34.2.63.38.86.17.23.38.4.63.52.25.12.54.18.87.18.28 0 .51-.03.69-.07.19-.05.34-.1.45-.17.12-.07.21-.14.27-.2v-1.52h-1.61v-1.26h3.36Z"/>
+                        <rect width="24" height="24" rx="2" fill="var(--steel)" opacity="0.15"/>
+                        <path fill="var(--steel)" d="M8.16 7.18 5.84 14.25h-1.87l2.92-8.53h1.19l.08 1.46Zm1.93 7.07-2.32-7.07-.19-1.46h1.2l3.19 8.53h-1.88Zm-.1-3.18v1.38H5.48v-1.38h4.51Zm9.43-1.3v3.38c-.13.16-.34.34-.62.52-.27.18-.63.34-1.07.47-.44.14-.97.2-1.59.2a4.2 4.2 0 0 1-1.5-.27 2.64 2.64 0 0 1-1.17-.8 3.32 3.32 0 0 1-.75-1.29c-.18-.51-.27-1.1-.27-1.75v-.53c0-.66.09-1.24.26-1.76.17-.51.41-.94.73-1.3.32-.35.7-.62 1.13-.8.44-.18.93-.28 1.46-.28.74 0 1.35.12 1.83.36.48.24.84.57 1.09.99.25.43.41.91.47 1.46h-1.7a1.9 1.9 0 0 0-.2-.76c-.11-.21-.3-.38-.52-.5-.22-.13-.51-.19-.87-.19-.3 0-.56.06-.78.18-.23.12-.42.3-.58.52-.16.23-.27.52-.35.86-.09.34-.13.74-.13 1.18v.55c0 .44.04.84.13 1.17.08.34.2.63.38.86.17.23.38.4.63.52.25.12.54.18.87.18.28 0 .51-.03.69-.07.19-.05.34-.1.45-.17.12-.07.21-.14.27-.2v-1.52h-1.61v-1.26h3.36Z"/>
                       </svg>
                     ),
-                    accent: "#FFC107",
                   },
                   {
                     name: "MCP",
                     protocol: "Model Context",
                     icon: (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="var(--amber)" d="M13.85 0a4.16 4.16 0 0 0-2.95 1.217L1.456 10.66a.835.835 0 0 0 0 1.18.835.835 0 0 0 1.18 0l9.442-9.442a2.49 2.49 0 0 1 3.541 0 2.49 2.49 0 0 1 0 3.541L8.59 12.97l-.1.1a.835.835 0 0 0 0 1.18.835.835 0 0 0 1.18 0l.1-.098 7.03-7.034a2.49 2.49 0 0 1 3.542 0l.049.05a2.49 2.49 0 0 1 0 3.54l-8.54 8.54a1.96 1.96 0 0 0 0 2.755l1.753 1.753a.835.835 0 0 0 1.18 0 .835.835 0 0 0 0-1.18l-1.753-1.753a.266.266 0 0 1 0-.394l8.54-8.54a4.185 4.185 0 0 0 0-5.9l-.05-.05A4.16 4.16 0 0 0 13.85 0m0 3.333a.84.84 0 0 0-.59.245L6.275 10.56a4.186 4.186 0 0 0 0 5.902 4.186 4.186 0 0 0 5.902 0L19.16 9.48a.835.835 0 0 0 0-1.18.835.835 0 0 0-1.18 0l-6.985 6.984a2.49 2.49 0 0 1-3.54 0 2.49 2.49 0 0 1 0-3.54l6.983-6.985a.835.835 0 0 0 0-1.18.84.84 0 0 0-.59-.245"/>
+                        <path fill="var(--steel)" d="M13.85 0a4.16 4.16 0 0 0-2.95 1.217L1.456 10.66a.835.835 0 0 0 0 1.18.835.835 0 0 0 1.18 0l9.442-9.442a2.49 2.49 0 0 1 3.541 0 2.49 2.49 0 0 1 0 3.541L8.59 12.97l-.1.1a.835.835 0 0 0 0 1.18.835.835 0 0 0 1.18 0l.1-.098 7.03-7.034a2.49 2.49 0 0 1 3.542 0l.049.05a2.49 2.49 0 0 1 0 3.54l-8.54 8.54a1.96 1.96 0 0 0 0 2.755l1.753 1.753a.835.835 0 0 0 1.18 0 .835.835 0 0 0 0-1.18l-1.753-1.753a.266.266 0 0 1 0-.394l8.54-8.54a4.185 4.185 0 0 0 0-5.9l-.05-.05A4.16 4.16 0 0 0 13.85 0m0 3.333a.84.84 0 0 0-.59.245L6.275 10.56a4.186 4.186 0 0 0 0 5.902 4.186 4.186 0 0 0 5.902 0L19.16 9.48a.835.835 0 0 0 0-1.18.835.835 0 0 0-1.18 0l-6.985 6.984a2.49 2.49 0 0 1-3.54 0 2.49 2.49 0 0 1 0-3.54l6.983-6.985a.835.835 0 0 0 0-1.18.84.84 0 0 0-.59-.245"/>
                       </svg>
                     ),
-                    accent: "#FF6A00",
                   },
                   {
                     name: "Python SDK",
                     protocol: "Direct FFI",
                     icon: (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="var(--amber)" d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/>
+                        <path fill="var(--steel)" d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/>
                       </svg>
                     ),
-                    accent: "#FF8C38",
                   },
                   {
                     name: "Custom SDK",
                     protocol: "REST / gRPC",
                     icon: (
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="4" y="8" width="16" height="10" rx="1" stroke="var(--amber)" strokeWidth="1.2"/>
-                        <path d="M8 12l3 3 5-5" stroke="var(--amber)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <rect x="4" y="8" width="16" height="10" rx="1" stroke="var(--steel)" strokeWidth="1.2"/>
+                        <path d="M8 12l3 3 5-5" stroke="var(--steel)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     ),
-                    accent: "#FFC107",
                   },
                 ].map((fw, i) => (
-                  <div key={i} className="glow-card" style={{ border: "1px solid rgba(255,106,0,0.06)" }}>
-                    <div
-                      style={{
-                        background: "var(--surface)",
-                        borderRadius: "calc(var(--radius-md) - 1px)",
-                        margin: "1px",
-                        padding: "1.25rem 1rem",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "0.75rem",
-                      }}
-                    >
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                      <div
-                        style={{
-                          width: 36,
-                          height: 36,
-                          borderRadius: "var(--radius-sm)",
-                          background: "rgba(255,106,0,0.04)",
-                          border: "1px solid rgba(255,106,0,0.06)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
-                      >
+                  <div key={i} className="glow-card">
+                    <div className="int-card-inner">
+                    <div className="int-card-row">
+                      <div className="int-icon-box">
                         {fw.icon}
                       </div>
                       <div>
-                        <div
-                          style={{
-                            fontFamily: "var(--font-display)",
-                            fontSize: "0.85rem",
-                            fontWeight: 600,
-                            color: "var(--white)",
-                            letterSpacing: "-0.01em",
-                          }}
-                        >
+                        <div className="int-name">
                           {fw.name}
                         </div>
-                        <div
-                          style={{
-                            fontFamily: "var(--font-mono)",
-                            fontSize: "0.6rem",
-                            color: "var(--steel)",
-                            marginTop: "0.1rem",
-                          }}
-                        >
+                        <div className="int-protocol">
                           {fw.protocol}
                         </div>
                       </div>
                     </div>
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.3rem",
-                        alignSelf: "flex-start",
-                        padding: "0.2rem 0.5rem",
-                        borderRadius: "4px",
-                        background: "rgba(255,106,0,0.06)",
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "0.55rem",
-                        color: "var(--amber-soft)",
-                        letterSpacing: "0.06em",
-                      }}
-                    >
-                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === 2 ? "#febc2e" : "#28c840", display: "inline-block" }} />
-                      {i === 2 ? "BETA" : "STABLE"}
+                    <div className="int-badge">
+                      <span className="status-dot" style={{ background: i >= 4 ? "var(--warn)" : "var(--success)" }} />
+                      {i >= 4 ? "BETA" : "STABLE"}
                     </div>
                   </div>
                 </div>
@@ -1501,146 +1258,160 @@ function Landing() {
 
         <div className="section-divider" />
 
-        {/* ── 6. USE CASES — Application Cards ── */}
+        {/* ── 6. USE CASES — Data Flow Terminal Cards (NEW) ── */}
         <section
           id="use-cases"
-          style={{ padding: "8rem clamp(1.5rem,5vw,4rem)", maxWidth: "1200px", margin: "0 auto" }}
+          aria-labelledby="use-cases-heading"
+          className="section-padded--engine"
         >
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: "6rem",
-              alignItems: "center",
-            }}
+            className="section-split"
           >
             <div>
               <span className="section-eyebrow reveal">// Use Cases</span>
               <h2
-                className="section-title reveal reveal-delay-1"
-                style={{ fontSize: "clamp(2.5rem,4vw,3.2rem)", marginBottom: "1.5rem" }}
+                id="use-cases-heading"
+                className="section-title section-title--md reveal reveal-delay-1"
               >
                 Where VantaDB
                 <br />
-                <span style={{ color: "var(--amber)" }}>fits perfectly.</span>
+                <span className="text-highlight--amber">fits perfectly.</span>
               </h2>
-              <p className="section-sub reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
+              <p className="section-sub section-sub--mb reveal reveal-delay-2">
                 Persistent scratchpads, memory that survives agent crashes, AST parsing context
                 databases, and secure edge execution contexts with zero network footprints.
               </p>
               <div className="reveal reveal-delay-3">
                 <Link
                   to="/use-cases"
-                  className="nav-cta"
-                  style={{
-                    display: "inline-block",
-                    padding: "0.85rem 2rem",
-                    textDecoration: "none",
-                    fontSize: "0.8rem",
-                  }}
+                  className="cta-link nav-cta"
                 >
                   View Design Patterns & Code →
                 </Link>
               </div>
             </div>
-            <div className="reveal reveal-delay-2 tl-wrap" style={{ position: "relative", paddingLeft: "3rem", minHeight: "320px" }}>
-              {/* Vertical rail */}
-              <div className="tl-rail" style={{ position: "absolute", left: "16px", top: "10px", bottom: "10px", width: "1px", background: "linear-gradient(to bottom, var(--amber), rgba(255,106,0,0.04))" }} />
-              {[
-                {
-                  title: "AI Agents Memory",
-                  tags: ["≤1ms read", "crash-safe", "zero-config"],
-                  desc: "Persistent conversation history for agent runtimes — survives restarts, no external database.",
-                },
-                {
-                  title: "Local-First RAG",
-                  tags: ["zero deps", "on-device", "BM25+HNSW"],
-                  desc: "Full hybrid search without spinning up a server or installing separate infrastructure.",
-                },
-                {
-                  title: "Codebase Intelligence",
-                  tags: ["30K loc/s", "AST-aware", "semantic"],
-                  desc: "Parse, index and search codebases with structural awareness and context preservation.",
-                },
-              ].map((uc, i) => (
-                <div key={i} className="tl-item" style={{ display: "flex", gap: "1rem", marginBottom: i < 2 ? "2rem" : 0 }}>
-                  {/* Animated dot */}
-                  <div style={{ position: "relative", flexShrink: 0, width: 32, height: 32, marginTop: "0.15rem" }}>
-                    <div className="tl-dot" style={{ width: 32, height: 32, borderRadius: "50%", border: "1.5px solid rgba(255,106,0,0.35)", background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--amber)", position: "relative", zIndex: 1 }}>{i + 1}</div>
-                    <div className="tl-pulse-ring" style={{ position: "absolute", inset: -5, borderRadius: "50%", border: "1px solid rgba(255,106,0,0.12)" }} />
-                  </div>
-                  {/* Content */}
-                  <div style={{ flex: 1, paddingTop: "0.2rem" }}>
-                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.25rem" }}>
-                      <span style={{ fontFamily: "var(--font-display)", fontSize: "0.85rem", fontWeight: 600, color: "var(--white)", letterSpacing: "-0.02em" }}>{uc.title}</span>
-                      <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
-                        {uc.tags.map((t, ti) => (
-                          <span key={ti} style={{ fontFamily: "var(--font-mono)", fontSize: "0.5rem", color: "var(--amber-soft)", background: "rgba(255,106,0,0.06)", padding: "0.1rem 0.4rem", borderRadius: "3px", letterSpacing: "0.03em" }}>{t}</span>
-                        ))}
-                      </div>
+            <div className="reveal reveal-delay-2 uc-col">
+              {/* Featured card — AI Agents Memory */}
+              <div className="term-window section-frame">
+                <div className="term-titlebar">
+                  <span className="term-dot term-dot--red" />
+                  <span className="term-dot term-dot--yellow" />
+                  <span className="term-dot term-dot--green" />
+                  <span className="term-label">USE CASE 01</span>
+                </div>
+                <div className="uc-featured-body">
+                  <div className="uc-content">
+                    <div className="uc-card-title">AI Agents Memory</div>
+                    <div className="uc-tag-row">
+                      <span className="tl-tag">≤1ms read</span>
+                      <span className="tl-tag">crash-safe</span>
+                      <span className="tl-tag">zero-config</span>
                     </div>
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", color: "var(--muted)", lineHeight: 1.55, margin: 0 }}>{uc.desc}</p>
+                    <p className="uc-desc">
+                      Persistent conversation history for agent runtimes — survives restarts, no external database.
+                    </p>
+                  </div>
+                  {/* SVG data flow */}
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="uc-svg">
+                    <circle cx="20" cy="40" r="8" stroke="var(--steel)" strokeWidth="1" fill="none" opacity="0.4" />
+                    <circle cx="60" cy="40" r="8" stroke="var(--amber)" strokeWidth="1" fill="none" opacity="0.4" />
+                    <path d="M28 40 Q40 20 52 40" stroke="var(--amber)" strokeWidth="0.8" fill="none" strokeDasharray="2 2" opacity="0.5">
+                      <animate attributeName="strokeDashoffset" from="0" to="20" dur="2s" repeatCount="indefinite" />
+                    </path>
+                    <circle cx="40" cy="40" r="3" fill="var(--amber)" opacity="0.5">
+                      <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+                </div>
+              </div>
+              {/* Two smaller cards side by side */}
+              <div className="uc-grid-2">
+                {/* Card 2: Local-First RAG */}
+                <div className="term-window">
+                  <div className="term-titlebar">
+                    <span className="term-dot term-dot--red" />
+                    <span className="term-dot term-dot--yellow" />
+                    <span className="term-dot term-dot--green" />
+                    <span className="term-label">USE CASE 02</span>
+                  </div>
+                  <div className="uc-card-pad">
+                    <div className="uc-card-flex">
+                      <div className="uc-content">
+                        <div className="uc-card-title--sm">Local-First RAG</div>
+                        <div className="uc-tag-row">
+                          <span className="tl-tag">zero deps</span>
+                          <span className="tl-tag">on-device</span>
+                        </div>
+                        <p className="uc-desc--sm">
+                          Full hybrid search without spinning up a server.
+                        </p>
+                      </div>
+                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="uc-svg--mt">
+                        <rect x="10" y="14" width="28" height="20" rx="2" stroke="var(--steel)" strokeWidth="0.8" opacity="0.3" fill="none" />
+                        <path d="M18 24l4 4 8-8" stroke="var(--amber)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              ))}
+                {/* Card 3: Codebase Intelligence */}
+                <div className="term-window">
+                  <div className="term-titlebar">
+                    <span className="term-dot term-dot--red" />
+                    <span className="term-dot term-dot--yellow" />
+                    <span className="term-dot term-dot--green" />
+                    <span className="term-label">USE CASE 03</span>
+                  </div>
+                  <div className="uc-card-pad">
+                    <div className="uc-card-flex">
+                      <div className="uc-content">
+                        <div className="uc-card-title--sm">Codebase Intelligence</div>
+                        <div className="uc-tag-row">
+                          <span className="tl-tag">30K loc/s</span>
+                          <span className="tl-tag">AST-aware</span>
+                        </div>
+                        <p className="uc-desc--sm">
+                          Parse, index and search codebases with structural awareness.
+                        </p>
+                      </div>
+                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="uc-svg--mt">
+                        <path d="M16 16h16v16H16z" stroke="var(--steel)" strokeWidth="0.8" opacity="0.3" fill="none" />
+                        <path d="M24 22l-4 4 4 4" stroke="var(--amber)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                        <path d="M24 22l4 4-4 4" stroke="var(--amber)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <div className="section-divider" />
 
-        {/* ── 7. CTA MINIMAL ── */}
+        {/* ── 7. CTA — Cinematic Industrial (unified) ── */}
         <section
-          style={{
-            padding: "10rem clamp(1.5rem,5vw,4rem)",
-            position: "relative",
-            overflow: "hidden",
-            textAlign: "center",
-            backgroundImage: "url('/bg_singularity_cta.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          id="cta"
+          aria-labelledby="cta-heading"
+          className="cta-section section-frame"
         >
-          <div className="noise-overlay" style={{ opacity: 0.08 }} />
+          <div className="noise-overlay noise-overlay--10" />
+          <HybridCube />
           <div
-            className="reveal"
-            style={{
-              position: "relative",
-              maxWidth: "640px",
-              margin: "0 auto",
-            }}
+            className="reveal cta-content"
           >
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2.8rem,5vw,4rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.04em",
-                color: "var(--white)",
-                lineHeight: 1.1,
-                margin: "0 0 1.5rem",
-              }}
-            >
+            {/* Glow ring decoration */}
+            <div className="cta-glow-ring" />
+            <h2 id="cta-heading" className="cta-heading">
               Memory that
               <br />
-              <span style={{ color: "var(--amber)" }}>never escapes.</span>
+              <span className="text-highlight--amber">never escapes.</span>
             </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "1rem",
-                color: "var(--muted)",
-                lineHeight: 1.7,
-                maxWidth: "460px",
-                margin: "0 auto 2.5rem",
-              }}
-            >
+            <p className="cta-desc">
               Start building AI agents with persistent, hybrid-searchable memory. Apache 2.0. One pip install.
             </p>
-            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <div className="cta-actions">
               <button
                 className="btn-primary"
-                style={{ fontSize: "0.9rem", padding: "1rem 2.25rem" }}
                 onClick={() => navigator.clipboard?.writeText("pip install vantadb-py")}
               >
                 pip install vantadb-py
@@ -1649,8 +1420,7 @@ function Landing() {
                 href="https://github.com/ness-e/Vantadb"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-ghost"
-                style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+                className="btn-ghost--link btn-ghost"
               >
                 View on GitHub
               </a>

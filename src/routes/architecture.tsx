@@ -17,30 +17,10 @@ export const Route = createFileRoute("/architecture")({
 
 function SpecRow({ label, val, desc }: { label: string; val: string; desc: string }) {
   return (
-    <tr style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.03)" }}>
-      <td
-        style={{
-          padding: "1.25rem 1rem",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.8rem",
-          color: "var(--white)",
-        }}
-      >
-        {label}
-      </td>
-      <td
-        style={{
-          padding: "1.25rem 1rem",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.8rem",
-          color: "var(--amber)",
-        }}
-      >
-        {val}
-      </td>
-      <td style={{ padding: "1.25rem 1rem", fontSize: "0.85rem", color: "var(--muted)" }}>
-        {desc}
-      </td>
+    <tr className="spec-table-row">
+      <td className="spec-table-cell spec-table-label">{label}</td>
+      <td className="spec-table-cell spec-table-value">{val}</td>
+      <td className="spec-table-desc">{desc}</td>
     </tr>
   );
 }
@@ -100,117 +80,51 @@ function ArchitecturePage() {
   }, []);
 
   return (
-    <div style={{ background: "var(--background)", minHeight: "100vh" }}>
+    <div className="page-wrapper">
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Architecture</span>
-        <h1
-          className="title-accent reveal reveal-delay-1"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-            fontWeight: 700,
-            letterSpacing: "-0.04em",
-            margin: "0.5rem 0 1.5rem",
-          }}
-        >
+        <h1 className="title-accent reveal reveal-delay-1">
           Built different.
           <br />
           Runs everywhere.
         </h1>
-        <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
+        <p className="section-sub reveal reveal-delay-2 desc-text">
           VantaDB compiles to a single native library wrapper. No extra TCP connections, no separate
           processes to start. Just pure memory speed.
         </p>
       </header>
 
-      <main
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}
-      >
+      <main className="main-content">
         {/* ── Layered depth section (isometric pseudo-3D stack) ── */}
-        <section
-          style={{
-            padding: "4rem 0 8rem",
-            borderBottom: "1px solid var(--subtle)",
-            display: "grid",
-            gridTemplateColumns: "1.2fr 1fr",
-            gap: "6rem",
-            alignItems: "center",
-          }}
-        >
+        <section className="arch-section">
           <div className="reveal">
             <span className="section-eyebrow">// Depth Layout</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 1.5rem" }}>
+            <h2 className="section-title section-title--compact">
               In-Process Stack depth
             </h2>
-            <p className="section-sub" style={{ marginBottom: "2rem" }}>
+            <p className="section-sub section-sub--mb-sm">
               Hover over or click any layer in the isometric stack to analyze the technology stack,
               data flow bounds, and implementation specifics.
             </p>
 
-            <div
-              style={{
-                minHeight: "180px",
-                background: "var(--surface)",
-                border: "1px solid rgba(255,106,0,0.08)",
-                padding: "2rem",
-                borderRadius: "var(--radius-lg)",
-              }}
-            >
+            <div className="arch-detail-panel">
               {activeLayer !== null ? (
                 <div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.65rem",
-                      color: "var(--amber)",
-                      textTransform: "uppercase",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
+                  <div className="arch-detail-tech">
                     {layers.find((l) => l.index === activeLayer)?.tech}
                   </div>
-                  <h4
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      color: "var(--white)",
-                      fontSize: "1.2rem",
-                      margin: "0 0 0.75rem",
-                    }}
-                  >
+                  <h4 className="arch-detail-name">
                     {layers.find((l) => l.index === activeLayer)?.name}
                   </h4>
-                  <p
-                    style={{
-                      fontSize: "0.85rem",
-                      color: "var(--muted)",
-                      margin: "0 0 1rem",
-                      lineHeight: 1.6,
-                    }}
-                  >
+                  <p className="arch-detail-desc">
                     {layers.find((l) => l.index === activeLayer)?.desc}
                   </p>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.72rem",
-                      color: "var(--steel)",
-                    }}
-                  >
+                  <div className="arch-detail-spec">
                     API surface: {layers.find((l) => l.index === activeLayer)?.spec}
                   </div>
                 </div>
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "140px",
-                    color: "var(--steel)",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.8rem",
-                  }}
-                >
+                <div className="arch-empty-state">
                   // Hover over the stack layers to view details
                 </div>
               )}
@@ -229,23 +143,10 @@ function ArchitecturePage() {
                   onClick={() => setActiveLayer(layer.index)}
                 >
                   <div className="isometric-layer-info">
-                    <span
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontSize: "0.85rem",
-                        fontWeight: 600,
-                        color: "var(--white)",
-                      }}
-                    >
+                    <span className="arch-layer-name">
                       {layer.name}
                     </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "0.62rem",
-                        color: "var(--amber)",
-                      }}
-                    >
+                    <span className="arch-layer-index">
                       L0{5 - layer.index}
                     </span>
                   </div>
@@ -256,62 +157,25 @@ function ArchitecturePage() {
         </section>
 
         {/* ── Section: Hardware Limits & Specifications ── */}
-        <section style={{ padding: "6rem 0" }}>
+        <section className="arch-spec-section">
           <div className="reveal">
             <span className="section-eyebrow">// Specifications</span>
-            <h2 className="section-title" style={{ margin: "0.5rem 0 2rem" }}>
+            <h2 className="section-title section-title--arch-sm">
               Operational limits & Concurrency model
             </h2>
           </div>
 
-          <div
-            className="reveal reveal-delay-1"
-            style={{
-              background: "var(--surface)",
-              border: "1px solid rgba(255,106,0,0.06)",
-              borderRadius: "var(--radius-lg)",
-              overflow: "hidden",
-            }}
-          >
-            <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+          <div className="arch-table-card reveal reveal-delay-1">
+            <table className="arch-spec-table">
               <thead>
-                <tr
-                  style={{
-                    background: "rgba(0,0,0,0.2)",
-                    borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-                  }}
-                >
-                  <th
-                    style={{
-                      padding: "1.25rem 1rem",
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.9rem",
-                      color: "var(--white)",
-                      fontWeight: 600,
-                    }}
-                  >
+                <tr className="arch-table-head-row">
+                  <th className="arch-table-th">
                     Parameter
                   </th>
-                  <th
-                    style={{
-                      padding: "1.25rem 1rem",
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.9rem",
-                      color: "var(--white)",
-                      fontWeight: 600,
-                    }}
-                  >
+                  <th className="arch-table-th">
                     VantaDB Limits
                   </th>
-                  <th
-                    style={{
-                      padding: "1.25rem 1rem",
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.9rem",
-                      color: "var(--white)",
-                      fontWeight: 600,
-                    }}
-                  >
+                  <th className="arch-table-th">
                     Technical Details & Behavior
                   </th>
                 </tr>

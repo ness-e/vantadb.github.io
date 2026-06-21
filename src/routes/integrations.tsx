@@ -192,66 +192,33 @@ hits = db.search_memory(
   const activeIntegration = integrations.find((i) => i.id === selectedSat) || integrations[0];
 
   return (
-    <div style={{ background: "var(--background)", minHeight: "100vh" }}>
+    <div className="page-wrapper">
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// Ecosystem</span>
-        <h1
-          className="title-accent reveal reveal-delay-1"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-            fontWeight: 700,
-            letterSpacing: "-0.04em",
-            margin: "0.5rem 0 1.5rem",
-          }}
-        >
+        <h1 className="title-accent reveal reveal-delay-1">
           Fits your stack.
           <br />
           Not the other way.
         </h1>
-        <p className="section-sub reveal reveal-delay-2" style={{ maxWidth: "680px", margin: 0 }}>
+        <p className="section-sub reveal reveal-delay-2 desc-text">
           Connect VantaDB directly to the frameworks you already know. Built for first-class Python
           and Rust ecosystems.
         </p>
       </header>
 
-      <main
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 5vw, 4rem) 8rem" }}
-      >
+      <main className="main-content">
         {/* ── Section: Orbit Universe and Code panel ── */}
-        <section
-          style={{
-            padding: "4rem 0",
-            display: "grid",
-            gridTemplateColumns: "1.2fr 1fr",
-            gap: "6rem",
-            alignItems: "center",
-          }}
-        >
+        <section className="int-section">
           <div className="reveal">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "baseline",
-                marginBottom: "1rem",
-              }}
-            >
-              <h2 className="section-title" style={{ margin: 0 }}>
+            <div className="int-header">
+              <h2 className="section-title section-title--no-mb">
                 {activeIntegration.name}
               </h2>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.68rem",
-                  color: "var(--amber)",
-                  letterSpacing: "0.1em",
-                }}
-              >
+              <span className="int-tag">
                 {activeIntegration.tag}
               </span>
             </div>
-            <p className="section-sub" style={{ marginBottom: "2rem" }}>
+            <p className="section-sub section-sub--mb-sm">
               {activeIntegration.desc}
             </p>
 
@@ -269,48 +236,23 @@ hits = db.search_memory(
           <div className="reveal reveal-delay-2">
             <div className="orbit-universe">
               {/* Sun (VantaDB Core) */}
-              <div
-                style={{
-                  position: "absolute",
-                  width: "70px",
-                  height: "70px",
-                  background: "var(--amber)",
-                  borderRadius: "50%",
-                  boxShadow: "var(--shadow-glow), 0 0 50px rgba(255,106,0,0.4)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 10,
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    color: "#050507",
-                  }}
-                >
+              <div className="int-core">
+                <span className="int-core-label">
                   VantaDB
                 </span>
               </div>
 
               {/* Inner Orbit track (Python & MCP) */}
-              <div
-                className="orbit-track inner"
-                style={{ "--orbit-speed": "32s" } as React.CSSProperties}
-              >
+              <div className="orbit-track inner">
                 <button
-                  className={`orbit-satellite ${selectedSat === "python" ? "active" : ""}`}
-                  style={{ top: "0", left: "calc(50% - 22px)" }}
+                  className={`orbit-satellite orbit-satellite--top ${selectedSat === "python" ? "active" : ""}`}
                   onClick={() => setSelectedSat("python")}
                   title="Python SDK Native"
                 >
                   <IconPython />
                 </button>
                 <button
-                  className={`orbit-satellite ${selectedSat === "mcp" ? "active" : ""}`}
-                  style={{ bottom: "0", left: "calc(50% - 22px)" }}
+                  className={`orbit-satellite orbit-satellite--bottom ${selectedSat === "mcp" ? "active" : ""}`}
                   onClick={() => setSelectedSat("mcp")}
                   title="Model Context Protocol"
                 >
@@ -319,21 +261,16 @@ hits = db.search_memory(
               </div>
 
               {/* Middle Orbit track (LangChain & LlamaIndex) */}
-              <div
-                className="orbit-track middle"
-                style={{ "--orbit-speed": "48s" } as React.CSSProperties}
-              >
+              <div className="orbit-track middle">
                 <button
-                  className={`orbit-satellite ${selectedSat === "langchain" ? "active" : ""}`}
-                  style={{ top: "50%", left: "-22px", transform: "translateY(-50%)" }}
+                  className={`orbit-satellite orbit-satellite--left ${selectedSat === "langchain" ? "active" : ""}`}
                   onClick={() => setSelectedSat("langchain")}
                   title="LangChain"
                 >
                   <IconLangChain />
                 </button>
                 <button
-                  className={`orbit-satellite ${selectedSat === "llamaindex" ? "active" : ""}`}
-                  style={{ top: "50%", right: "-22px", transform: "translateY(-50%)" }}
+                  className={`orbit-satellite orbit-satellite--right ${selectedSat === "llamaindex" ? "active" : ""}`}
                   onClick={() => setSelectedSat("llamaindex")}
                   title="LlamaIndex"
                 >

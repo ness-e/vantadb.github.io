@@ -95,7 +95,6 @@ function RootComponent() {
           <Link
             to="/"
             className="vanta-logo"
-            style={{ textDecoration: "none" }}
             onClick={() => setMobileOpen(false)}
             aria-label="VantaDB — inicio"
           >

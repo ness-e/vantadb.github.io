@@ -3,11 +3,10 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
-import glsl from "vite-plugin-glsl";
 import path from "path";
 
 export default defineConfig({
-  plugins: [TanStackRouterVite(), react(), tailwindcss(), tsConfigPaths(), glsl()],
+  plugins: [TanStackRouterVite(), react(), tailwindcss(), tsConfigPaths()],
   // Base path for Vercel deployment
   base: "/",
   resolve: {
