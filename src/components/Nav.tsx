@@ -2,145 +2,25 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { VantaDBLogoFull } from "./VantaDBLogo";
-import { NavDropdown } from "./NavDropdown";
 
-interface NavChild {
+interface NavItem {
   label: string;
   to: string;
   external?: boolean;
 }
 
-interface NavItem {
-  label: string;
-  to?: string;
-  children?: NavChild[];
-}
-
 const NAV_ITEMS: NavItem[] = [
-  {
-    label: "Product",
-    children: [
-      { label: "Engine", to: "/engine" },
-      { label: "Architecture", to: "/architecture" },
-      { label: "Integrations", to: "/integrations" },
-      { label: "Use Cases", to: "/use-cases" },
-    ],
-  },
-  {
-    label: "Why VantaDB",
-    children: [
-      { label: "vs. Vector DBs", to: "/cost" },
-      { label: "Latency", to: "/latency" },
-      { label: "Storage", to: "/storage" },
-      { label: "Config", to: "/config" },
-      { label: "Maintenance", to: "/maint" },
-    ],
-  },
-  {
-    label: "Solutions",
-    children: [
-      { label: "AI Agents", to: "/solutions/ai-agents" },
-      { label: "Local RAG", to: "/solutions/local-rag" },
-      { label: "IDE Tooling", to: "/solutions/ai-ide-tooling" },
-    ],
-  },
-  { label: "Docs", to: "/docs" },
-  { label: "Pricing", to: "/pricing" },
-  {
-    label: "Company",
-    children: [
-      { label: "About", to: "/about" },
-      { label: "Blog", to: "/blog" },
-      { label: "Community", to: "/about/community" },
-      { label: "Contact", to: "/about/contact" },
-    ],
-  },
+  { label: "ENGINE", to: "/engine" },
+  { label: "ARCHITECTURE", to: "/architecture" },
+  { label: "AGENTS", to: "/solutions/ai-agents" },
+  { label: "DOCS", to: "/docs" },
+  { label: "PRICING", to: "/pricing" },
 ];
 
 function isItemActive(item: NavItem, pathname: string): boolean {
-  if (item.to) return pathname === item.to;
-  if (item.children) {
-    return item.children.some((c) => !c.external && pathname.startsWith(c.to));
-  }
+  if (pathname === item.to) return true;
+  if (item.to !== "/" && pathname.startsWith(item.to + "/")) return true;
   return false;
-}
-
-function MobileNavItem({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
-  const [expanded, setExpanded] = useState(false);
-  const location = useLocation();
-  const active = isItemActive(item, location.pathname);
-
-  if (item.to) {
-    return (
-      <Link
-        to={item.to as any}
-        className={`nav-drawer-link${active ? " active" : ""}`}
-        onClick={onNavigate}
-      >
-        {item.label}
-      </Link>
-    );
-  }
-
-  return (
-    <div className="nav-drawer-group">
-      <button
-        className={`nav-drawer-group-toggle${active ? " active" : ""}`}
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-      >
-        {item.label}
-        <svg
-          className={`nav-drawer-chevron${expanded ? " open" : ""}`}
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M3.5 4.5l2.5 3 2.5-3" />
-        </svg>
-      </button>
-      <AnimatePresence initial={false}>
-        {expanded && (
-          <motion.div
-            className="nav-drawer-sublist"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.15, ease: "easeInOut" }}
-          >
-            {item.children?.map((child) =>
-              child.external ? (
-                <a
-                  key={child.label}
-                  href={child.to}
-                  className="nav-drawer-sublink"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={onNavigate}
-                >
-                  {child.label}
-                </a>
-              ) : (
-                <Link
-                  key={child.label}
-                  to={child.to as any}
-                  className="nav-drawer-sublink"
-                  onClick={onNavigate}
-                >
-                  {child.label}
-                </Link>
-              ),
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
 }
 
 export function Nav() {
@@ -202,25 +82,16 @@ export function Nav() {
         </Link>
 
         <div className="nav-desktop">
-          {NAV_ITEMS.map((item) =>
-            item.children ? (
-              <NavDropdown
-                key={item.label}
-                label={item.label}
-                items={item.children}
-                isActive={isItemActive(item, location.pathname)}
-              />
-            ) : (
-              <Link
-                key={item.label}
-                to={item.to as any}
-                className={`nav-link${isItemActive(item, location.pathname) ? " active" : ""}`}
-                activeOptions={{ exact: true }}
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to as any}
+              className={`nav-link${isItemActive(item, location.pathname) ? " active" : ""}`}
+              activeProps={{ className: "active" }}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
 
         <div className="nav-actions">
@@ -314,7 +185,14 @@ export function Nav() {
               </div>
               <div className="nav-drawer-body">
                 {NAV_ITEMS.map((item) => (
-                  <MobileNavItem key={item.label} item={item} onNavigate={handleCloseMobile} />
+                  <Link
+                    key={item.label}
+                    to={item.to as any}
+                    className={`nav-drawer-link${isItemActive(item, location.pathname) ? " active" : ""}`}
+                    onClick={handleCloseMobile}
+                  >
+                    {item.label}
+                  </Link>
                 ))}
               </div>
               <div className="nav-drawer-footer">

@@ -23,23 +23,16 @@
 @import "./swiss-cta.css";
 @import "./footer.css";
 
-@import "./effects.css";
 @import "./animations.css";
 @import "./layout.css";
 @import "./buttons.css";
-@import "./cards.css";
 @import "./nav.css";
 @import "./terminal.css";
 @import "./logo.css";
-@import "./visualizations.css";
 @import "./engine.css";
 @import "./architecture.css";
 @import "./integrations.css";
-@import "./use-cases.css";
 @import "./docs.css";
+@import "./swiss-back-to-top.css";
 @import "./pricing.css";
-@import "./comparison.css";
 @import "./utilities.css";
-
-/* Split playground */
-@import "./split-playground.css";

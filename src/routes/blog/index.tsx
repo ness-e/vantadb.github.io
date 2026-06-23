@@ -137,7 +137,14 @@ function BlogIndex() {
                         {post.description}
                       </p>
                     )}
-                    <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginTop: "0.25rem" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "0.4rem",
+                        flexWrap: "wrap",
+                        marginTop: "0.25rem",
+                      }}
+                    >
                       {post.author && (
                         <span
                           style={{

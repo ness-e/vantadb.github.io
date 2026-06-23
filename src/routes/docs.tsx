@@ -180,7 +180,13 @@ function DocsPage() {
       <SwissSubpageHero
         num="00"
         eyebrow="Documentation"
-        title={<span>Start in 60<br />seconds.</span>}
+        title={
+          <span>
+            Start in 60
+            <br />
+            seconds.
+          </span>
+        }
         sub="Comprehensive guides, SDK references, and configuration reference for VantaDB — the embedded database for AI agents."
       />
 
@@ -191,12 +197,11 @@ function DocsPage() {
             id={s.id}
             className={`engine-section${i < sections.length - 1 ? " engine-section--bordered" : ""}`}
           >
-            <span className="swiss-eyebrow">{s.num} / 06 — {s.title}</span>
+            <span className="swiss-eyebrow">
+              {s.num} / 06 — {s.title}
+            </span>
 
-            <div
-              className="swiss-grid-12"
-              style={{ alignItems: "start", marginTop: "3rem" }}
-            >
+            <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem" }}>
               {/* Description left */}
               <div className="col-span-4">
                 <h2

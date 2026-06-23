@@ -17,6 +17,8 @@
   --deep-space: oklch(96% 0.003 85);
   --void: oklch(94% 0.004 85);
   --surface: #ffffff;
+  --surface-hover: #f5f3ec;
+  --surface-alt: #f0eee8;
   --surface-raised: oklch(92% 0.003 85);
   --surface-glass: rgba(249, 248, 246, 0.85);
   --surface-overlay: #ffffff;
@@ -37,8 +39,8 @@
 
   --white: #000000; /* In Swiss light design, 'white' titles map to black for high contrast */
   --frost: oklch(20% 0.005 85);
-  --muted: oklch(40% 0.01 80);
-  --subtle: oklch(88% 0.004 85);
+  --muted: oklch(35% 0.01 80); /* Más oscuro para mejor contraste */
+  --subtle: oklch(85% 0.005 85); /* Un gris claro más notorio para divisores sutiles */
   --border: oklch(15% 0.008 265);
   --border-strong: #000000;
 

@@ -7,10 +7,10 @@
 /* ── Shell ── */
 .swiss-hero {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(100svh - 64px);
   display: flex;
   align-items: flex-end;
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
 }
@@ -62,13 +62,21 @@
 }
 
 @keyframes grid-drift-v {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -52; }
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -52;
+  }
 }
 
 @keyframes grid-drift-h {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: 86; }
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 86;
+  }
 }
 
 /* ── Content inner ── */
@@ -79,7 +87,7 @@
   margin: 0 auto;
   width: 100%;
   padding: 0 clamp(1.5rem, 5vw, 4rem);
-  padding-top: 10rem; /* push below nav */
+  padding-top: 5rem; /* push below nav */
 }
 
 /* ── Eyebrow row ── */
@@ -108,16 +116,27 @@
   color: var(--amber);
 }
 
+.swiss-hero__tech-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  padding: 2px 8px;
+}
+
 /* ── Headline — typographic mass ── */
 .swiss-hero__headline {
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 0.92;
   letter-spacing: -0.04em;
-  font-size: clamp(4.5rem, 11vw, 10rem);
-  margin: 0 0 3rem;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  margin: 0 0 2rem;
   gap: 0;
 }
 
@@ -137,6 +156,10 @@
 }
 
 /* ── Sub ── */
+.swiss-hero__text-col {
+  max-width: 66%; /* Aprox 8 de 12 columnas */
+}
+
 .swiss-hero__sub {
   font-family: var(--font-sans);
   font-size: clamp(1rem, 1.8vw, 1.15rem);
@@ -263,18 +286,18 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .swiss-hero {
-    min-height: 100svh;
-    padding-bottom: 4rem;
+    min-height: calc(100svh - 64px);
+    padding-bottom: 2rem;
     align-items: flex-start;
   }
 
   .swiss-hero__inner {
-    padding-top: 8rem;
+    padding-top: 4rem;
   }
 
   .swiss-hero__headline {
-    font-size: clamp(3.2rem, 14vw, 5.5rem);
-    margin-bottom: 2rem;
+    font-size: clamp(3rem, 12vw, 4.5rem);
+    margin-bottom: 1.5rem;
   }
 
   .swiss-hero__headline-line--indent {

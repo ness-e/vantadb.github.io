@@ -51,7 +51,13 @@ function LatencyPage() {
       <SwissSubpageHero
         num="07"
         eyebrow="Latency Performance"
-        title={<span>1.2ms p50.<br />No network.</span>}
+        title={
+          <span>
+            1.2ms p50.
+            <br />
+            No network.
+          </span>
+        }
         sub="VantaDB runs in your process — no network round-trip, no serialization overhead, no cold starts. Every microsecond matters when your agent is waiting."
       />
 
@@ -59,28 +65,120 @@ function LatencyPage() {
         {/* Section 1: Comparison */}
         <section className="engine-section engine-section--bordered">
           <span className="swiss-eyebrow">01 / 03 — Comparison</span>
-          <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem", gap: "1px" }}>
-            <div className="col-span-6" style={{ border: "1px solid var(--border)", padding: "2.5rem" }}>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--steel)", marginBottom: "2rem", textTransform: "uppercase" }}>
+          <div
+            className="swiss-grid-12"
+            style={{ alignItems: "start", marginTop: "3rem", gap: "1px" }}
+          >
+            <div
+              className="col-span-6"
+              style={{ border: "1px solid var(--border)", padding: "2.5rem" }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  color: "var(--steel)",
+                  marginBottom: "2rem",
+                  textTransform: "uppercase",
+                }}
+              >
                 Legacy — ~200ms
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.9rem",
+                }}
+              >
                 {LEGACY_ITEMS.map((item, i) => (
-                  <li key={i} style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✗</span>
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--muted)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#ff3b30",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✗
+                    </span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="col-span-6" style={{ border: "1px solid var(--border)", borderLeft: "2px solid var(--amber)", padding: "2.5rem", background: "var(--surface)" }}>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--amber)", marginBottom: "2rem", textTransform: "uppercase" }}>
+            <div
+              className="col-span-6"
+              style={{
+                border: "1px solid var(--border)",
+                borderLeft: "2px solid var(--amber)",
+                padding: "2.5rem",
+                background: "var(--surface)",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  color: "var(--amber)",
+                  marginBottom: "2rem",
+                  textTransform: "uppercase",
+                }}
+              >
                 VantaDB — 1.2ms
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.9rem",
+                }}
+              >
                 {VANTA_ITEMS.map((item, i) => (
-                  <li key={i} style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--foreground)", lineHeight: 1.5 }}>
-                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--foreground)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "var(--amber)",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✓
+                    </span>
                     {item}
                   </li>
                 ))}
@@ -92,13 +190,38 @@ function LatencyPage() {
         {/* Section 2: Pipeline Simulator */}
         <section className="engine-section engine-section--bordered">
           <span className="swiss-eyebrow">02 / 03 — Pipeline Impact</span>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-0.04em", margin: "1.25rem 0 3rem", lineHeight: 1.05 }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(1.5rem, 3vw, 2rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              margin: "1.25rem 0 3rem",
+              lineHeight: 1.05,
+            }}
+          >
             Multi-query impact.
           </h2>
 
-          <div style={{ border: "1px solid var(--border)", padding: "2.5rem", marginBottom: "1px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--steel)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>
-              <span>Queries in pipeline: <span style={{ color: "var(--foreground)", fontWeight: 700 }}>{pipelineSize}</span></span>
+          <div
+            style={{ border: "1px solid var(--border)", padding: "2.5rem", marginBottom: "1px" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.65rem",
+                color: "var(--steel)",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <span>
+                Queries in pipeline:{" "}
+                <span style={{ color: "var(--foreground)", fontWeight: 700 }}>{pipelineSize}</span>
+              </span>
               <span>Drag to adjust</span>
             </div>
             <input
@@ -111,24 +234,129 @@ function LatencyPage() {
             />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1px", background: "var(--border)", border: "1px solid var(--border)" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+            }}
+          >
             <div style={{ background: "var(--background)", padding: "2rem 2.5rem" }}>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--steel)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.5rem" }}>LEGACY</div>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", fontWeight: 800, letterSpacing: "-0.05em", color: "#ff3b30", lineHeight: 1 }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--steel)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                LEGACY
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "2.5rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.05em",
+                  color: "#ff3b30",
+                  lineHeight: 1,
+                }}
+              >
                 {(legacyTotal / 1000).toFixed(1)}s
               </div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--steel)", marginTop: "0.5rem" }}>{pipelineSize} × 200ms</div>
-            </div>
-            <div style={{ background: "var(--surface-raised)", padding: "2rem 2.5rem", borderLeft: "2px solid var(--amber)" }}>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.5rem" }}>VANTADB</div>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", fontWeight: 800, letterSpacing: "-0.05em", color: "var(--amber)", lineHeight: 1 }}>
-                {vantaTotal < 1000 ? `${Math.round(vantaTotal)}ms` : `${(vantaTotal / 1000).toFixed(1)}s`}
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--steel)",
+                  marginTop: "0.5rem",
+                }}
+              >
+                {pipelineSize} × 200ms
               </div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--steel)", marginTop: "0.5rem" }}>{pipelineSize} × 1.2ms</div>
             </div>
-            <div style={{ background: "var(--background)", padding: "2rem 2.5rem", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "3rem", fontWeight: 800, letterSpacing: "-0.05em", color: "var(--foreground)", lineHeight: 1 }}>{speedup}×</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", textTransform: "uppercase", letterSpacing: "0.08em", marginTop: "0.5rem" }}>Faster</div>
+            <div
+              style={{
+                background: "var(--surface-raised)",
+                padding: "2rem 2.5rem",
+                borderLeft: "2px solid var(--amber)",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--amber)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                VANTADB
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "2.5rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.05em",
+                  color: "var(--amber)",
+                  lineHeight: 1,
+                }}
+              >
+                {vantaTotal < 1000
+                  ? `${Math.round(vantaTotal)}ms`
+                  : `${(vantaTotal / 1000).toFixed(1)}s`}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--steel)",
+                  marginTop: "0.5rem",
+                }}
+              >
+                {pipelineSize} × 1.2ms
+              </div>
+            </div>
+            <div
+              style={{
+                background: "var(--background)",
+                padding: "2rem 2.5rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "3rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.05em",
+                  color: "var(--foreground)",
+                  lineHeight: 1,
+                }}
+              >
+                {speedup}×
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--amber)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Faster
+              </div>
             </div>
           </div>
         </section>
@@ -138,11 +366,52 @@ function LatencyPage() {
           <span className="swiss-eyebrow">03 / 03 — Where the Milliseconds Go</span>
           <div style={{ border: "1px solid var(--border)", marginTop: "3rem" }}>
             {/* Header */}
-            <div style={{ display: "grid", gridTemplateColumns: "120px 1fr 80px 80px", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "2px solid var(--border)", background: "var(--surface)" }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--steel)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Phase</span>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "120px 1fr 80px 80px",
+                gap: "1rem",
+                padding: "0.75rem 1.5rem",
+                borderBottom: "2px solid var(--border)",
+                background: "var(--surface)",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--steel)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                Phase
+              </span>
               <span />
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "#ff3b30", textTransform: "uppercase", letterSpacing: "0.06em", textAlign: "right" }}>Legacy</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", textTransform: "uppercase", letterSpacing: "0.06em", textAlign: "right" }}>Vanta</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "#ff3b30",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  textAlign: "right",
+                }}
+              >
+                Legacy
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--amber)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  textAlign: "right",
+                }}
+              >
+                Vanta
+              </span>
             </div>
             {BREAKDOWN.map((row, i) => (
               <div
@@ -156,17 +425,67 @@ function LatencyPage() {
                   alignItems: "center",
                 }}
               >
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted)" }}>{row.label}</span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                  }}
+                >
+                  {row.label}
+                </span>
                 <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                  <div style={{ height: "6px", background: "var(--surface)", position: "relative" }}>
-                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${row.legacyW}%`, background: "#ff3b30", opacity: 0.7 }} />
+                  <div
+                    style={{ height: "6px", background: "var(--surface)", position: "relative" }}
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: `${row.legacyW}%`,
+                        background: "#ff3b30",
+                        opacity: 0.7,
+                      }}
+                    />
                   </div>
-                  <div style={{ height: "6px", background: "var(--surface)", position: "relative" }}>
-                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${row.vantaW}%`, background: "var(--amber)", opacity: 0.9 }} />
+                  <div
+                    style={{ height: "6px", background: "var(--surface)", position: "relative" }}
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: `${row.vantaW}%`,
+                        background: "var(--amber)",
+                        opacity: 0.9,
+                      }}
+                    />
                   </div>
                 </div>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "#ff3b30", textAlign: "right" }}>{row.legacy}</span>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "var(--amber)", textAlign: "right" }}>{row.vanta}</span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.72rem",
+                    color: "#ff3b30",
+                    textAlign: "right",
+                  }}
+                >
+                  {row.legacy}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.72rem",
+                    color: "var(--amber)",
+                    textAlign: "right",
+                  }}
+                >
+                  {row.vanta}
+                </span>
               </div>
             ))}
           </div>

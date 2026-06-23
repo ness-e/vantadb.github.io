@@ -19,7 +19,7 @@
 .swiss-benchmark__title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--foreground);
@@ -86,7 +86,7 @@
 .swiss-benchmark__cell-value {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.04em;
   color: var(--foreground);
   line-height: 1;

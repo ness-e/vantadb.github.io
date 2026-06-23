@@ -72,13 +72,28 @@ const tiers = [
 ];
 
 const comparisonRows = [
-  { feature: "Deployment", free: "Single-node, embedded", pro: "Multi-node, embedded", ent: "On-prem, air-gapped" },
+  {
+    feature: "Deployment",
+    free: "Single-node, embedded",
+    pro: "Multi-node, embedded",
+    ent: "On-prem, air-gapped",
+  },
   { feature: "Vector limit", free: "10M", pro: "100M", ent: "Unlimited" },
-  { feature: "Query engines", free: "HNSW + IVF + BM25", pro: "HNSW + IVF + BM25 + RRF", ent: "All engines + custom" },
+  {
+    feature: "Query engines",
+    free: "HNSW + IVF + BM25",
+    pro: "HNSW + IVF + BM25 + RRF",
+    ent: "All engines + custom",
+  },
   { feature: "Replication", free: "None", pro: "WAL-based multi-node", ent: "WAL + geo-redundant" },
   { feature: "Auth", free: "None", pro: "API key", ent: "SSO / SAML / OIDC + RBAC" },
   { feature: "Audit log", free: "None", pro: "Basic", ent: "Full + compliance export" },
-  { feature: "Support", free: "Community (Discord)", pro: "Priority email + Discord", ent: "Dedicated SLA" },
+  {
+    feature: "Support",
+    free: "Community (Discord)",
+    pro: "Priority email + Discord",
+    ent: "Dedicated SLA",
+  },
   { feature: "License", free: "MIT", pro: "MIT", ent: "MIT + enterprise terms" },
 ];
 
@@ -214,7 +229,17 @@ function PricingPage() {
                   </span>
                 </div>
 
-                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    margin: 0,
+                    padding: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.6rem",
+                    flex: 1,
+                  }}
+                >
                   {tier.features.map((f) => (
                     <li
                       key={f}
@@ -227,7 +252,15 @@ function PricingPage() {
                         lineHeight: 1.4,
                       }}
                     >
-                      <span style={{ color: tier.featured ? "var(--amber)" : "var(--steel)", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
+                      <span
+                        style={{
+                          color: tier.featured ? "var(--amber)" : "var(--steel)",
+                          fontFamily: "var(--font-mono)",
+                          flexShrink: 0,
+                        }}
+                      >
+                        ✓
+                      </span>
                       {f}
                     </li>
                   ))}
@@ -281,10 +314,62 @@ function PricingPage() {
             >
               <thead>
                 <tr style={{ borderBottom: "2px solid var(--border)" }}>
-                  <th style={{ padding: "1rem 1.5rem", textAlign: "left", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--steel)", fontWeight: 600 }}>Feature</th>
-                  <th style={{ padding: "1rem 1.5rem", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--steel)", fontWeight: 600 }}>Free</th>
-                  <th style={{ padding: "1rem 1.5rem", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--amber)", fontWeight: 600 }}>Pro</th>
-                  <th style={{ padding: "1rem 1.5rem", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--steel)", fontWeight: 600 }}>Enterprise</th>
+                  <th
+                    style={{
+                      padding: "1rem 1.5rem",
+                      textAlign: "left",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.6rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "var(--steel)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Feature
+                  </th>
+                  <th
+                    style={{
+                      padding: "1rem 1.5rem",
+                      textAlign: "center",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.6rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "var(--steel)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Free
+                  </th>
+                  <th
+                    style={{
+                      padding: "1rem 1.5rem",
+                      textAlign: "center",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.6rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "var(--amber)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Pro
+                  </th>
+                  <th
+                    style={{
+                      padding: "1rem 1.5rem",
+                      textAlign: "center",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.6rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "var(--steel)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Enterprise
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -296,10 +381,43 @@ function PricingPage() {
                       background: i % 2 === 0 ? "var(--background)" : "var(--surface)",
                     }}
                   >
-                    <td style={{ padding: "0.9rem 1.5rem", fontWeight: 600, color: "var(--foreground)" }}>{row.feature}</td>
-                    <td style={{ padding: "0.9rem 1.5rem", textAlign: "center", color: "var(--muted)" }}>{row.free}</td>
-                    <td style={{ padding: "0.9rem 1.5rem", textAlign: "center", color: "var(--foreground)", fontWeight: 500 }}>{row.pro}</td>
-                    <td style={{ padding: "0.9rem 1.5rem", textAlign: "center", color: "var(--muted)" }}>{row.ent}</td>
+                    <td
+                      style={{
+                        padding: "0.9rem 1.5rem",
+                        fontWeight: 600,
+                        color: "var(--foreground)",
+                      }}
+                    >
+                      {row.feature}
+                    </td>
+                    <td
+                      style={{
+                        padding: "0.9rem 1.5rem",
+                        textAlign: "center",
+                        color: "var(--muted)",
+                      }}
+                    >
+                      {row.free}
+                    </td>
+                    <td
+                      style={{
+                        padding: "0.9rem 1.5rem",
+                        textAlign: "center",
+                        color: "var(--foreground)",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {row.pro}
+                    </td>
+                    <td
+                      style={{
+                        padding: "0.9rem 1.5rem",
+                        textAlign: "center",
+                        color: "var(--muted)",
+                      }}
+                    >
+                      {row.ent}
+                    </td>
                   </tr>
                 ))}
               </tbody>

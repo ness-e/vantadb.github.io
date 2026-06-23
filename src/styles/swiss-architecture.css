@@ -25,7 +25,7 @@
 .swiss-arch-title {
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.05;
   color: var(--foreground);
@@ -61,7 +61,7 @@
   fill: var(--background);
   stroke: var(--border);
   stroke-width: 1px;
-  transition: 
+  transition:
     stroke 200ms var(--ease-cut),
     fill 200ms var(--ease-cut);
   cursor: pointer;
@@ -147,7 +147,7 @@
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
+
   .swiss-arch-visual {
     padding: 1.5rem;
   }

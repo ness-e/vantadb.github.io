@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 // ── Swiss Hero — 100% Typographic + Animated Grid Background ───────────────
 // Animated grid: SVG hairlines with stroke-dashoffset drift (CSS only, no GSAP)
@@ -22,8 +26,43 @@ export function SwissHero() {
     });
   }
 
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+      // Grid animation
+      tl.fromTo(
+        ".swiss-hero__grid-line",
+        { opacity: 0, strokeDashoffset: 100 },
+        {
+          opacity: (i, el) => (el.classList.contains("swiss-hero__grid-line--h") ? 0.3 : 0.5),
+          strokeDashoffset: 0,
+          duration: 1.5,
+          stagger: { each: 0.05, from: "random" },
+        },
+      )
+        // Accent line
+        .fromTo(
+          ".swiss-hero__accent-line",
+          { opacity: 0, scaleY: 0 },
+          { opacity: 0.9, scaleY: 1, duration: 1, transformOrigin: "top" },
+          "-=1",
+        )
+        // Content reveal
+        .fromTo(
+          ".swiss-hero__reveal",
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, stagger: 0.1 },
+          "-=0.8",
+        );
+    },
+    { scope: containerRef },
+  );
+
   return (
-    <section aria-label="VantaDB hero" className="swiss-hero">
+    <section ref={containerRef} aria-label="VantaDB hero" className="swiss-hero">
       {/* ── Animated Grid Background ─────────────────────────────────── */}
       <div aria-hidden="true" className="swiss-hero__grid-bg">
         <svg
@@ -71,31 +110,32 @@ export function SwissHero() {
 
       {/* ── Content ───────────────────────────────────────────────────── */}
       <div className="swiss-hero__inner">
-        {/* Eyebrow */}
-        <div className="swiss-hero__eyebrow-row">
-          <span className="swiss-hero__index">01 / 08</span>
-          <span className="swiss-hero__eyebrow">
-            Open-source embedded vector database
-          </span>
+        {/* Labels Técnicos */}
+        <div className="swiss-hero__eyebrow-row swiss-hero__reveal">
+          <span className="swiss-hero__tech-label">[RUST-NATIVE]</span>
+          <span className="swiss-hero__tech-label">[IN-PROCESS]</span>
+          <span className="swiss-hero__tech-label">[ZERO-SERVERS]</span>
         </div>
 
-        {/* Main headline — typographic mass */}
-        <h1 className="swiss-hero__headline">
-          <span className="swiss-hero__headline-line">Memory</span>
-          <span className="swiss-hero__headline-line swiss-hero__headline-line--indent">
-            for AI
-          </span>
-          <span className="swiss-hero__headline-line swiss-hero__headline-line--accent">
-            Agents.
-          </span>
-        </h1>
+        {/* Main headline — asimétrico */}
+        <div className="swiss-hero__text-col">
+          <h1 className="swiss-hero__headline">
+            <span className="swiss-hero__headline-line swiss-hero__reveal">Memory</span>
+            <span className="swiss-hero__headline-line swiss-hero__headline-line--indent swiss-hero__reveal">
+              for AI
+            </span>
+            <span className="swiss-hero__headline-line swiss-hero__headline-line--accent swiss-hero__reveal">
+              Agents.
+            </span>
+          </h1>
 
-        {/* Sub-statement */}
-        <p className="swiss-hero__sub">
-          SQL + vector + full-text search in one Rust binary.
-          <br />
-          Sub-millisecond hybrid queries. Zero infrastructure.
-        </p>
+          {/* Sub-statement */}
+          <p className="swiss-hero__sub swiss-hero__reveal">
+            SQL + vector + full-text search in one Rust binary.
+            <br />
+            Sub-millisecond hybrid queries. Zero infrastructure.
+          </p>
+        </div>
 
         {/* Install strip */}
         <div className="swiss-hero__install-row">
@@ -154,21 +194,6 @@ export function SwissHero() {
               GITHUB
             </a>
           </div>
-        </div>
-
-        {/* Proof strip */}
-        <div className="swiss-hero__proof-strip">
-          {[
-            { value: "< 1ms", label: "Hybrid queries" },
-            { value: "~400KB", label: "Binary size" },
-            { value: "MIT", label: "License" },
-            { value: "Rust", label: "Runtime" },
-          ].map((item) => (
-            <div className="swiss-hero__proof-item" key={item.label}>
-              <span className="swiss-hero__proof-value">{item.value}</span>
-              <span className="swiss-hero__proof-label">{item.label}</span>
-            </div>
-          ))}
         </div>
       </div>
     </section>

@@ -1,5 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Link } from "@tanstack/react-router";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 // ── Swiss Benchmark Grid — Bento asimétrico 6 métricas ─────────────────────
 // Swiss rule: numbers are the design element. No charts. No fluff.
@@ -58,34 +63,69 @@ const METRICS = [
 export function SwissBenchmarkGrid() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Intersection Observer reveal
-  useEffect(() => {
-    const cells = sectionRef.current?.querySelectorAll("[data-reveal]");
-    if (!cells) return;
+  useGSAP(
+    () => {
+      // Reveal general
+      gsap.fromTo(
+        "[data-reveal]",
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".swiss-benchmark__bento",
+            start: "top 80%",
+          },
+        },
+      );
 
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).style.opacity = "1";
-            (e.target as HTMLElement).style.transform = "translateY(0)";
-            obs.unobserve(e.target);
-          }
+      // Count-up para el valor Hero (< 1ms)
+      const heroVal = document.querySelector(".swiss-benchmark__cell-value--xl");
+      if (heroVal) {
+        const obj = { val: 10 };
+        gsap.to(obj, {
+          val: 1,
+          duration: 1.5,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: heroVal,
+            start: "top 85%",
+          },
+          onUpdate: () => {
+            heroVal.innerHTML = `&lt; ${Math.round(obj.val)}ms`;
+          },
         });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
-    );
+      }
 
-    cells.forEach((c, i) => {
-      const el = c as HTMLElement;
-      el.style.opacity = "0";
-      el.style.transform = "translateY(16px)";
-      el.style.transition = `opacity 0.3s var(--ease-cut) ${i * 0.06}s, transform 0.3s var(--ease-cut) ${i * 0.06}s`;
-      obs.observe(el);
-    });
+      // Count-up para "10x faster" y "400KB"
+      document.querySelectorAll(".swiss-benchmark__cell-value.count-up").forEach((el) => {
+        const targetText = el.getAttribute("data-target") || "";
+        const numericMatch = targetText.match(/\d+/);
+        if (!numericMatch) return;
+        const targetNum = parseInt(numericMatch[0], 10);
+        const prefix = targetText.substring(0, numericMatch.index);
+        const suffix = targetText.substring(numericMatch.index! + numericMatch[0].length);
 
-    return () => obs.disconnect();
-  }, []);
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: targetNum,
+          duration: 1.5,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+          },
+          onUpdate: () => {
+            el.innerHTML = `${prefix}${Math.round(obj.val)}${suffix}`;
+          },
+        });
+      });
+    },
+    { scope: sectionRef },
+  );
 
   return (
     <section className="swiss-section" ref={sectionRef}>
@@ -100,8 +140,8 @@ export function SwissBenchmarkGrid() {
               don't lie.
             </h2>
             <p className="section-sub">
-              Every metric is measured in isolation on commodity hardware.
-              No cloud infrastructure. No managed services.
+              Every metric is measured in isolation on commodity hardware. No cloud infrastructure.
+              No managed services.
             </p>
           </div>
         </div>
@@ -109,19 +149,12 @@ export function SwissBenchmarkGrid() {
         {/* Bento grid */}
         <div className="swiss-benchmark__bento">
           {/* Large hero metric */}
-          <div
-            className="swiss-benchmark__cell swiss-benchmark__cell--hero"
-            data-reveal
-          >
+          <div className="swiss-benchmark__cell swiss-benchmark__cell--hero" data-reveal>
             <span className="swiss-benchmark__cell-value swiss-benchmark__cell-value--xl">
               &lt; 1ms
             </span>
-            <span className="swiss-benchmark__cell-label">
-              Hybrid Query Latency
-            </span>
-            <span className="swiss-benchmark__cell-sub">
-              SQL + vector + FTS in a single call
-            </span>
+            <span className="swiss-benchmark__cell-label">Hybrid Query Latency</span>
+            <span className="swiss-benchmark__cell-sub">SQL + vector + FTS in a single call</span>
             <Link className="swiss-benchmark__cell-link" to="/latency">
               VIEW BENCHMARK →
             </Link>
@@ -129,17 +162,21 @@ export function SwissBenchmarkGrid() {
 
           {/* Right column: 5 smaller cells */}
           <div className="swiss-benchmark__grid-right">
-            {METRICS.slice(1).map((m) => (
-              <div
-                className="swiss-benchmark__cell"
-                data-reveal
-                key={m.id}
-              >
-                <span className="swiss-benchmark__cell-value">{m.value}</span>
-                <span className="swiss-benchmark__cell-label">{m.label}</span>
-                <span className="swiss-benchmark__cell-sub">{m.sub}</span>
-              </div>
-            ))}
+            {METRICS.slice(1).map((m) => {
+              const isNumeric = /\d/.test(m.value) && m.id !== "license";
+              return (
+                <div className="swiss-benchmark__cell" data-reveal key={m.id}>
+                  <span
+                    className={`swiss-benchmark__cell-value ${isNumeric ? "count-up" : ""}`}
+                    data-target={isNumeric ? m.value : undefined}
+                  >
+                    {isNumeric ? "0" : m.value}
+                  </span>
+                  <span className="swiss-benchmark__cell-label">{m.label}</span>
+                  <span className="swiss-benchmark__cell-sub">{m.sub}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 

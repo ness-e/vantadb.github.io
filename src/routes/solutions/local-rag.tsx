@@ -109,7 +109,16 @@ function LocalRagPage() {
               >
                 Cloud RAG leaks data
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {COMPARISON.problems.map((p, i) => (
                   <li
                     key={i}
@@ -122,7 +131,17 @@ function LocalRagPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✗</span>
+                    <span
+                      style={{
+                        color: "#ff3b30",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✗
+                    </span>
                     {p}
                   </li>
                 ))}
@@ -151,7 +170,16 @@ function LocalRagPage() {
               >
                 Local-first, zero exposure
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {COMPARISON.solutions.map((s, i) => (
                   <li
                     key={i}
@@ -164,7 +192,17 @@ function LocalRagPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
+                    <span
+                      style={{
+                        color: "var(--amber)",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✓
+                    </span>
                     {s}
                   </li>
                 ))}

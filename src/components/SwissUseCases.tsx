@@ -60,7 +60,9 @@ export function SwissUseCases() {
         <div className="swiss-use-cases-grid">
           {USE_CASES.map((uc) => (
             <div key={uc.id} className="swiss-use-case-card">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <div
+                style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}
+              >
                 <span className="swiss-use-case-tag">{uc.tag}</span>
                 <span className="swiss-use-case-num">{uc.num}</span>
               </div>

@@ -48,12 +48,36 @@ const CHANNELS = [
 ];
 
 const WAYS = [
-  { num: "01", title: "Report a bug", desc: "Found something broken? Open a GitHub issue with reproduction steps." },
-  { num: "02", title: "Submit a PR", desc: "Check the good-first-issue label. We review PRs within 48 hours." },
-  { num: "03", title: "Write docs", desc: "Docs are never done. Fix a typo, clarify a section, add an example." },
-  { num: "04", title: "Build an integration", desc: "LangChain, LlamaIndex, or your own framework — we'd love to link to it." },
-  { num: "05", title: "Share your project", desc: "Built something with VantaDB? Let us know and we'll feature it." },
-  { num: "06", title: "Run a benchmark", desc: "Test VantaDB against your workload and share the results." },
+  {
+    num: "01",
+    title: "Report a bug",
+    desc: "Found something broken? Open a GitHub issue with reproduction steps.",
+  },
+  {
+    num: "02",
+    title: "Submit a PR",
+    desc: "Check the good-first-issue label. We review PRs within 48 hours.",
+  },
+  {
+    num: "03",
+    title: "Write docs",
+    desc: "Docs are never done. Fix a typo, clarify a section, add an example.",
+  },
+  {
+    num: "04",
+    title: "Build an integration",
+    desc: "LangChain, LlamaIndex, or your own framework — we'd love to link to it.",
+  },
+  {
+    num: "05",
+    title: "Share your project",
+    desc: "Built something with VantaDB? Let us know and we'll feature it.",
+  },
+  {
+    num: "06",
+    title: "Run a benchmark",
+    desc: "Test VantaDB against your workload and share the results.",
+  },
 ];
 
 function CommunityPage() {

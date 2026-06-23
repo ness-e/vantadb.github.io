@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 import { Nav } from "../components/Nav";
 import { SwissFooter } from "../components/SwissFooter";
+import { SwissBackToTop } from "../components/SwissBackToTop";
 
 function NotFoundComponent() {
   return (
@@ -143,6 +144,9 @@ function RootComponent() {
 
         {/* ── Footer (Swiss OLED) ── */}
         <SwissFooter />
+
+        {/* ── Floating Utilities ── */}
+        <SwissBackToTop />
       </div>
     </QueryClientProvider>
   );

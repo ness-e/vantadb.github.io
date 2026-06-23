@@ -94,7 +94,13 @@ function UseCasesPage() {
       <SwissSubpageHero
         num="12"
         eyebrow="Use Cases"
-        title={<span>Built for agents<br />that need context.</span>}
+        title={
+          <span>
+            Built for agents
+            <br />
+            that need context.
+          </span>
+        }
         sub="Eight production-tested patterns for persistent memory, hybrid search, and agentic data — all running in-process with zero external dependencies."
       />
 
@@ -130,7 +136,13 @@ function UseCasesPage() {
                   ((e.currentTarget as HTMLDivElement).style.background = "var(--background)")
                 }
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                  }}
+                >
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",

@@ -120,7 +120,7 @@
 
 .pricing-cta {
   width: 100%;
-  text-align: center;
+  text-align: left;
   display: block;
 }
 
@@ -182,7 +182,7 @@
 }
 
 .pricing-table th:not(:first-child) {
-  text-align: center;
+  text-align: left;
 }
 
 .pricing-table .th-free {
@@ -214,7 +214,7 @@
 }
 
 .pricing-table td:not(:first-child) {
-  text-align: center;
+  text-align: left;
 }
 
 .pricing-table .td-free {

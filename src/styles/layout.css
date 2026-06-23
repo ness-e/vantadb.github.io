@@ -149,7 +149,7 @@
 
 /* Section padded patterns */
 .section-padded--engine {
-  padding: 8rem clamp(1.5rem, 5vw, 4rem);
+  padding: 5rem clamp(1.5rem, 5vw, 4rem);
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
@@ -159,13 +159,13 @@
   background: var(--surface);
   border-top: 1px solid var(--subtle);
   border-bottom: 1px solid var(--subtle);
-  padding: 8rem clamp(1.5rem, 5vw, 4rem);
+  padding: 5rem clamp(1.5rem, 5vw, 4rem);
   position: relative;
   overflow: hidden;
 }
 
 .section-padded--integrations {
-  padding: 8rem clamp(1.5rem, 5vw, 4rem);
+  padding: 5rem clamp(1.5rem, 5vw, 4rem);
   position: relative;
   overflow: hidden;
 }
@@ -197,7 +197,7 @@
 }
 
 .section-wrapper--qs {
-  padding: 7rem clamp(1.5rem, 5vw, 4rem) 8rem;
+  padding: 5rem clamp(1.5rem, 5vw, 4rem) 5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -352,7 +352,7 @@
   font-size: 0.6rem;
   color: var(--muted);
   margin-top: 0.25rem;
-  text-align: center;
+  text-align: left;
 }
 
 .stack-arrow {
@@ -430,7 +430,7 @@
 }
 .bottom-nav {
   margin-top: 3rem;
-  text-align: center;
+  text-align: left;
 }
 .back-link {
   display: inline-block;
@@ -477,7 +477,7 @@ section {
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .page-header-extended {
-    padding: 8rem clamp(1.25rem, 4vw, 2rem) 3rem;
+    padding: 5rem clamp(1.25rem, 4vw, 2rem) 2.5rem;
   }
   .main-content {
     padding: 0 clamp(1.25rem, 4vw, 2rem) 6rem;
@@ -498,7 +498,7 @@ section {
     gap: 3rem;
   }
   .page-header-extended {
-    padding: 7rem clamp(1rem, 4vw, 2rem) 2.5rem;
+    padding: 4rem clamp(1rem, 4vw, 2rem) 2rem;
   }
   .main-content {
     padding: 0 clamp(1rem, 4vw, 2rem) 5rem;
@@ -697,7 +697,7 @@ section {
 .metric-item {
   background: var(--surface);
   padding: 2.2rem 1.5rem;
-  text-align: center;
+  text-align: left;
   transition: background 150ms var(--ease-out);
 }
 
@@ -755,6 +755,13 @@ section {
   transform: translateX(-50%);
   z-index: 1;
 }
+
+.action-btn:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
 .cl-release-header {
   display: flex;
   align-items: baseline;

@@ -22,7 +22,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "VantaDB — Embedded Vector Database for AI Agents" },
       {
         property: "og:description",
-        content: "SQL + vector + full-text search in one Rust binary. Sub-millisecond hybrid queries.",
+        content:
+          "SQL + vector + full-text search in one Rust binary. Sub-millisecond hybrid queries.",
       },
     ],
   }),
@@ -59,4 +60,3 @@ function IndexPage() {
     </main>
   );
 }
-

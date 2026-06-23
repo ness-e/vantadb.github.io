@@ -14,7 +14,7 @@
 .swiss-qs__title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 3.8rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--block-dark-text);
@@ -171,8 +171,13 @@
 }
 
 @keyframes term-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .swiss-qs__terminal-py {

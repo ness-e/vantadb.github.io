@@ -1,4 +1,10 @@
+import { useRef } from "react";
 import { Link } from "@tanstack/react-router";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 // ── Swiss Core Engine — 6 features en grid OLED ────────────────────────────
 // Swiss rule: feature grid as taxonomy table. No icons decorativos.
@@ -49,8 +55,49 @@ const FEATURES = [
 ];
 
 export function SwissCoreEngine() {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      // Reveal section header
+      gsap.fromTo(
+        ".swiss-section-header > *",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".swiss-section-header",
+            start: "top 80%",
+          },
+        },
+      );
+
+      // Staggered reveal for feature cards
+      gsap.fromTo(
+        ".swiss-core__feature",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".swiss-core__grid",
+            start: "top 75%",
+          },
+        },
+      );
+    },
+    { scope: containerRef },
+  );
+
   return (
-    <section className="swiss-section">
+    <section ref={containerRef} className="swiss-section">
       <div className="swiss-inner">
         {/* Section header — bordered */}
         <div className="swiss-section-header swiss-section-header--bordered">
@@ -62,8 +109,8 @@ export function SwissCoreEngine() {
               One binary.
             </h2>
             <p className="section-sub">
-              VantaDB replaces the entire retrieval stack — no
-              orchestration, no round-trips, no separate services.
+              VantaDB replaces the entire retrieval stack — no orchestration, no round-trips, no
+              separate services.
             </p>
           </div>
         </div>
@@ -74,9 +121,7 @@ export function SwissCoreEngine() {
             <div className="swiss-core__feature" key={feat.id}>
               {/* Index + tag */}
               <div className="swiss-core__feature-meta">
-                <span className="swiss-index">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                <span className="swiss-index">{String(i + 1).padStart(2, "0")}</span>
                 <span className="swiss-core__feature-tag">{feat.tag}</span>
               </div>
 

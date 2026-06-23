@@ -14,21 +14,22 @@
   justify-content: space-between;
   padding: 0 clamp(1.5rem, 5vw, 4rem);
   height: 64px;
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(249, 248, 246, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   will-change: transform;
   transform: translateY(0);
-  transition: 
+  transition:
     transform 200ms var(--ease-cut),
     border-color 150ms var(--ease-cut),
     background-color 150ms var(--ease-cut);
 }
 
 .vanta-nav--scrolled {
-  background: rgba(10, 10, 10, 0.95);
-  border-bottom: 1px solid var(--foreground);
+  background: rgba(249, 248, 246, 0.95);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .vanta-nav--hidden {
@@ -156,7 +157,7 @@
 }
 
 .nav-dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.04);
   color: var(--foreground);
 }
 

@@ -164,9 +164,7 @@ function ChangelogPage() {
     .map((r) => ({
       ...r,
       changes:
-        activeFilter === "all"
-          ? r.changes
-          : r.changes.filter((c) => c.type === activeFilter),
+        activeFilter === "all" ? r.changes : r.changes.filter((c) => c.type === activeFilter),
     }))
     .filter((r) => r.changes.length > 0);
 
@@ -339,9 +337,7 @@ function ChangelogPage() {
                         alignItems: "baseline",
                         padding: "0.85rem 0",
                         borderBottom:
-                          ci < release.changes.length - 1
-                            ? "1px solid var(--border)"
-                            : "none",
+                          ci < release.changes.length - 1 ? "1px solid var(--border)" : "none",
                       }}
                     >
                       <span
@@ -376,8 +372,22 @@ function ChangelogPage() {
         </div>
 
         {/* Semver note */}
-        <section className="engine-section" style={{ borderTop: "1px solid var(--border)", marginTop: "1px", background: "var(--surface)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: "3rem", alignItems: "start" }}>
+        <section
+          className="engine-section"
+          style={{
+            borderTop: "1px solid var(--border)",
+            marginTop: "1px",
+            background: "var(--surface)",
+          }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "220px 1fr",
+              gap: "3rem",
+              alignItems: "start",
+            }}
+          >
             <div>
               <span
                 style={{

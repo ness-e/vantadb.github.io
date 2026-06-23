@@ -11,8 +11,8 @@
 
 .swiss-ecosystem-title {
   font-family: var(--font-display);
-  fontSize: clamp(2.2rem, 4.5vw, 3.2rem);
-  font-weight: 800;
+  fontsize: clamp(2.2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--block-dark-text);
@@ -40,7 +40,7 @@
   transition: background-color 150ms var(--ease-cut);
   cursor: default;
   flex-grow: 1;
-  text-align: center;
+  text-align: left;
 }
 
 .swiss-ecosystem-cell:hover {

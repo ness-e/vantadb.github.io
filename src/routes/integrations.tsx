@@ -144,7 +144,13 @@ function IntegrationsPage() {
       <SwissSubpageHero
         num="03"
         eyebrow="Ecosystem & Integrations"
-        title={<span>Fits your stack.<br />Not the other way.</span>}
+        title={
+          <span>
+            Fits your stack.
+            <br />
+            Not the other way.
+          </span>
+        }
         sub="Connect VantaDB directly to the frameworks you already know. Built for first-class Python and Rust ecosystems."
       />
 
@@ -153,10 +159,7 @@ function IntegrationsPage() {
         <section className="engine-section engine-section--bordered">
           <span className="swiss-eyebrow">01 / 02 — Framework Connectors</span>
 
-          <div
-            className="swiss-grid-12"
-            style={{ alignItems: "start", marginTop: "3rem" }}
-          >
+          <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem" }}>
             {/* Selector */}
             <div className="col-span-4">
               <div
@@ -174,14 +177,10 @@ function IntegrationsPage() {
                     onClick={() => setSelectedId(int.id)}
                     style={{
                       background:
-                        selectedId === int.id
-                          ? "var(--surface-raised)"
-                          : "var(--background)",
+                        selectedId === int.id ? "var(--surface-raised)" : "var(--background)",
                       border: "none",
                       borderLeft:
-                        selectedId === int.id
-                          ? "2px solid var(--amber)"
-                          : "2px solid transparent",
+                        selectedId === int.id ? "2px solid var(--amber)" : "2px solid transparent",
                       padding: "1.5rem 1.25rem",
                       cursor: "pointer",
                       textAlign: "left",
@@ -194,10 +193,7 @@ function IntegrationsPage() {
                         fontSize: "0.55rem",
                         textTransform: "uppercase",
                         letterSpacing: "0.08em",
-                        color:
-                          selectedId === int.id
-                            ? "var(--amber)"
-                            : "var(--steel)",
+                        color: selectedId === int.id ? "var(--amber)" : "var(--steel)",
                         marginBottom: "0.25rem",
                       }}
                     >
@@ -208,10 +204,7 @@ function IntegrationsPage() {
                         fontFamily: "var(--font-display)",
                         fontSize: "0.9rem",
                         fontWeight: 700,
-                        color:
-                          selectedId === int.id
-                            ? "var(--foreground)"
-                            : "var(--muted)",
+                        color: selectedId === int.id ? "var(--foreground)" : "var(--muted)",
                       }}
                     >
                       {int.label}
@@ -362,12 +355,10 @@ function IntegrationsPage() {
                   cursor: "default",
                 }}
                 onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "var(--surface-raised)")
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--surface-raised)")
                 }
                 onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "var(--background)")
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--background)")
                 }
               >
                 <div

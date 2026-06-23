@@ -1,0 +1,1 @@
+"text-align: center on 9 block elements\nFonts found: Outfit, ui-sans-serif, system-ui, sans-serif | \"Space Grotesk\", ui-sans-serif, sans-serif | \"JetBrains Mono\", ui-monospace, monospace\nDark background sections (rgb(10,10,10) or #000): 17\nElements with amber/orange text color: 31\nTotal DOM elements: 433"

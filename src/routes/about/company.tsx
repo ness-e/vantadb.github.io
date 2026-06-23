@@ -73,10 +73,7 @@ function CompanyPage() {
         {/* Purpose */}
         <section className="engine-section engine-section--bordered">
           <span className="swiss-eyebrow">01 / 03 — Purpose</span>
-          <div
-            className="swiss-grid-12"
-            style={{ alignItems: "start", marginTop: "3rem" }}
-          >
+          <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem" }}>
             <div className="col-span-5">
               <h2
                 style={{
@@ -102,9 +99,9 @@ function CompanyPage() {
                   margin: 0,
                 }}
               >
-                Every AI agent, every RAG pipeline, every intelligent application deserves a database
-                that embeds as easily as SQLite but understands vectors, text, and SQL — without
-                requiring a dedicated infrastructure team.
+                Every AI agent, every RAG pipeline, every intelligent application deserves a
+                database that embeds as easily as SQLite but understands vectors, text, and SQL —
+                without requiring a dedicated infrastructure team.
               </p>
             </div>
           </div>
@@ -189,10 +186,7 @@ function CompanyPage() {
             The AI stack shouldn't need a database team.
           </h2>
 
-          <div
-            className="swiss-grid-12"
-            style={{ alignItems: "start", gap: "1px" }}
-          >
+          <div className="swiss-grid-12" style={{ alignItems: "start", gap: "1px" }}>
             <div
               className="col-span-6"
               style={{ border: "1px solid var(--border)", padding: "2.5rem" }}
@@ -210,13 +204,38 @@ function CompanyPage() {
               >
                 The alternatives
               </h3>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.85rem",
+                }}
+              >
                 {COMPARISON_LEFT.map((item, i) => (
                   <li
                     key={i}
-                    style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.4 }}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--muted)",
+                      lineHeight: 1.4,
+                    }}
                   >
-                    <span style={{ color: "#ff3b30", fontFamily: "var(--font-mono)", fontWeight: 700, flexShrink: 0 }}>✗</span>
+                    <span
+                      style={{
+                        color: "#ff3b30",
+                        fontFamily: "var(--font-mono)",
+                        fontWeight: 700,
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✗
+                    </span>
                     {item}
                   </li>
                 ))}
@@ -245,13 +264,38 @@ function CompanyPage() {
               >
                 VantaDB
               </h3>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.85rem",
+                }}
+              >
                 {COMPARISON_RIGHT.map((item, i) => (
                   <li
                     key={i}
-                    style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--foreground)", lineHeight: 1.4 }}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--foreground)",
+                      lineHeight: 1.4,
+                    }}
                   >
-                    <span style={{ color: "var(--amber)", fontFamily: "var(--font-mono)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    <span
+                      style={{
+                        color: "var(--amber)",
+                        fontFamily: "var(--font-mono)",
+                        fontWeight: 700,
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✓
+                    </span>
                     {item}
                   </li>
                 ))}

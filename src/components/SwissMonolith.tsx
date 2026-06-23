@@ -33,17 +33,14 @@ export function SwissMonolith() {
             <br />
             That's the
             <br />
-            <span className="swiss-monolith__headline--orange">whole</span>{" "}
-            install.
+            <span className="swiss-monolith__headline--orange">whole</span> install.
           </p>
         </div>
 
         {/* Install block — the centerpiece */}
         <div className="swiss-monolith__install-block">
           <div className="swiss-monolith__install-prefix">$</div>
-          <code className="swiss-monolith__install-cmd">
-            pip install vantadb
-          </code>
+          <code className="swiss-monolith__install-cmd">pip install vantadb</code>
           <button
             ref={copyRef}
             aria-label="Copy install command"

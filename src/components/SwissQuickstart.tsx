@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import gsap from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP, TextPlugin);
 
 // ── Swiss Quickstart — Terminal + 4 pasos ──────────────────────────────────
 // Swiss rule: process as typography. Each step is a module on the grid.
@@ -33,6 +38,17 @@ const STEPS = [
 
 export function SwissQuickstart() {
   const [activeStep, setActiveStep] = useState(0);
+  const codeRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (codeRef.current) {
+      gsap.to(codeRef.current, {
+        duration: Math.max(0.4, STEPS[activeStep]!.cmd.length * 0.015),
+        text: STEPS[activeStep]!.cmd,
+        ease: "none",
+      });
+    }
+  }, [activeStep]);
 
   return (
     <section className="swiss-section swiss-section--dark">
@@ -77,16 +93,14 @@ export function SwissQuickstart() {
           {/* Right: Code terminal */}
           <div className="swiss-qs__terminal">
             <div className="swiss-qs__terminal-bar">
-              <span className="swiss-qs__terminal-step">
-                STEP {STEPS[activeStep]!.num}
-              </span>
+              <span className="swiss-qs__terminal-step">STEP {STEPS[activeStep]!.num}</span>
               <span className="swiss-qs__terminal-title">
                 {STEPS[activeStep]!.title.toUpperCase()}
               </span>
             </div>
             <div className="swiss-qs__terminal-body">
               <pre className="swiss-qs__terminal-code">
-                <code>{STEPS[activeStep]!.cmd}</code>
+                <code ref={codeRef}></code>
               </pre>
             </div>
             <div className="swiss-qs__terminal-footer">

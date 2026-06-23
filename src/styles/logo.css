@@ -165,7 +165,7 @@ a.vdb-logo-full,
   flex-direction: column;
   align-items: center;
   gap: 0.4em;
-  text-align: center;
+  text-align: left;
 }
 
 /* ─── WORDMARK ─── */
@@ -195,21 +195,12 @@ a.vdb-logo-full,
   justify-content: center;
   background: var(--surface);
   border: 1px solid rgba(255, 106, 0, 0.15);
-  box-shadow:
-    0 0 0 1px rgba(255, 106, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  transition:
-    border-color 200ms var(--ease-out),
-    box-shadow 200ms var(--ease-out);
+  transition: border-color 200ms var(--ease-cut);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .vdb-badge:hover {
     border-color: rgba(255, 106, 0, 0.4);
-    box-shadow:
-      0 0 0 1px rgba(255, 106, 0, 0.1),
-      0 0 20px rgba(255, 106, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -277,9 +268,9 @@ a.vdb-logo-full,
 @media (max-width: 640px) {
   .footer-brand-group {
     align-items: center;
-    text-align: center;
+    text-align: left;
   }
   .footer-tagline {
-    text-align: center;
+    text-align: left;
   }
 }

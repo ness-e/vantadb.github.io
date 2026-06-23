@@ -4,8 +4,8 @@
 
 /* ── CTA section ── */
 .cta-section {
-  text-align: center;
-  padding: 8rem clamp(1.5rem, 5vw, 4rem);
+  text-align: left;
+  padding: 4rem clamp(1.5rem, 5vw, 4rem);
   position: relative;
   overflow: hidden;
   /* Swiss: línea superior definitoria */
@@ -37,10 +37,10 @@
 
 /* ── CTA variant (with background image) ── */
 .cta-section-bg {
-  padding: 10rem clamp(1.5rem, 5vw, 4rem);
+  padding: 5rem clamp(1.5rem, 5vw, 4rem);
   position: relative;
   overflow: hidden;
-  text-align: center;
+  text-align: left;
   background-color: var(--background);
 }
 
@@ -216,13 +216,13 @@
 
 /* ── Text helpers ── */
 .text-center {
-  text-align: center;
+  text-align: left;
 }
 .text-center--mb {
   margin-bottom: 2.5rem;
 }
 .text-center--mb-lg {
-  text-align: center;
+  text-align: left;
   margin-bottom: 3.5rem;
 }
 .text-highlight--amber {
@@ -255,7 +255,10 @@
   .footer-bottom {
     flex-direction: column;
     gap: 0.5rem;
-    text-align: center;
+    text-align: left;
+  }
+  .swiss-section {
+    padding: 3.5rem 1.25rem;
   }
   .cta-section {
     padding: 5rem 1.25rem;

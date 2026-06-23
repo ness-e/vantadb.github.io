@@ -77,7 +77,13 @@ function AiAgentsPage() {
       <SwissSubpageHero
         num="01"
         eyebrow="Solution — AI Agent Memory"
-        title={<span>Memory that<br />doesn't forget.</span>}
+        title={
+          <span>
+            Memory that
+            <br />
+            doesn't forget.
+          </span>
+        }
         sub="Give your AI agent persistent memory — conversation history, tool call results, learned preferences, and ephemeral state — all in one embedded database that lives inside your agent process."
       />
 
@@ -110,7 +116,16 @@ function AiAgentsPage() {
               >
                 Stateless agents
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {PROBLEMS.map((p, i) => (
                   <li
                     key={i}
@@ -123,7 +138,14 @@ function AiAgentsPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)" }}>
+                    <span
+                      style={{
+                        color: "#ff3b30",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
                       {p.icon}
                     </span>
                     {p.text}
@@ -155,7 +177,16 @@ function AiAgentsPage() {
               >
                 Embedded memory
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {SOLUTIONS_LIST.map((s, i) => (
                   <li
                     key={i}
@@ -168,7 +199,14 @@ function AiAgentsPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)" }}>
+                    <span
+                      style={{
+                        color: "var(--amber)",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
                       {s.icon}
                     </span>
                     {s.text}

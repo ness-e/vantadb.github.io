@@ -97,12 +97,10 @@ function ContactPage() {
                   transition: "background-color 150ms var(--ease-cut)",
                 }}
                 onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "var(--surface-raised)")
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--surface-raised)")
                 }
                 onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "var(--background)")
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--background)")
                 }
               >
                 <span
@@ -157,10 +155,7 @@ function ContactPage() {
         {/* Security disclosure */}
         <section className="engine-section">
           <span className="swiss-eyebrow">02 / 02 — Security</span>
-          <div
-            className="swiss-grid-12"
-            style={{ alignItems: "start", marginTop: "3rem" }}
-          >
+          <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem" }}>
             <div className="col-span-4">
               <h2
                 style={{

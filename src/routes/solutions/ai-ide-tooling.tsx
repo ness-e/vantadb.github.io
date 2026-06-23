@@ -89,7 +89,16 @@ function IdeToolingPage() {
               >
                 Code search is still text-only
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {PROBLEMS.map((p, i) => (
                   <li
                     key={i}
@@ -102,7 +111,17 @@ function IdeToolingPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✗</span>
+                    <span
+                      style={{
+                        color: "#ff3b30",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✗
+                    </span>
                     {p}
                   </li>
                 ))}
@@ -131,7 +150,16 @@ function IdeToolingPage() {
               >
                 Semantic, embedded
               </h2>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {BENEFITS.map((s, i) => (
                   <li
                     key={i}
@@ -144,7 +172,17 @@ function IdeToolingPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
+                    <span
+                      style={{
+                        color: "var(--amber)",
+                        fontWeight: 700,
+                        minWidth: "1rem",
+                        fontFamily: "var(--font-mono)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✓
+                    </span>
                     {s}
                   </li>
                 ))}
@@ -189,12 +227,10 @@ function IdeToolingPage() {
                   transition: "background-color 150ms var(--ease-cut)",
                 }}
                 onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "var(--surface-raised)")
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--surface-raised)")
                 }
                 onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLDivElement).style.background =
-                    "var(--background)")
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--background)")
                 }
               >
                 <span
@@ -268,7 +304,10 @@ function IdeToolingPage() {
                 margin: 0,
               }}
             >
-              Each code unit (function, class, module) is indexed as a vector embedding plus structured AST metadata (name, signature, dependencies, docstring). Queries use hybrid search: BM25 for symbol matching, HNSW for semantic similarity, with RRF fusion for final ranking.
+              Each code unit (function, class, module) is indexed as a vector embedding plus
+              structured AST metadata (name, signature, dependencies, docstring). Queries use hybrid
+              search: BM25 for symbol matching, HNSW for semantic similarity, with RRF fusion for
+              final ranking.
             </p>
           </div>
         </section>

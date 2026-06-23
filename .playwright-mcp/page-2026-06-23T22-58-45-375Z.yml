@@ -1,0 +1,391 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - link "VantaDB — home" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "VantaDB" [ref=e6]:
+        - img [ref=e7]
+        - generic [ref=e16]: VantaDB
+    - generic [ref=e17]:
+      - button "Product" [ref=e19] [cursor=pointer]:
+        - text: Product
+        - img [ref=e20]
+      - button "Why VantaDB" [ref=e23] [cursor=pointer]:
+        - text: Why VantaDB
+        - img [ref=e24]
+      - button "Solutions" [ref=e27] [cursor=pointer]:
+        - text: Solutions
+        - img [ref=e28]
+      - link "Docs" [ref=e30] [cursor=pointer]:
+        - /url: /docs
+      - link "Pricing" [ref=e31] [cursor=pointer]:
+        - /url: /pricing
+      - button "Company" [ref=e33] [cursor=pointer]:
+        - text: Company
+        - img [ref=e34]
+    - generic [ref=e36]:
+      - link "GitHub" [ref=e37] [cursor=pointer]:
+        - /url: https://github.com/ness-e/Vantadb
+        - img [ref=e38]
+      - link "Get Started" [ref=e40] [cursor=pointer]:
+        - /url: https://pypi.org/project/vantadb-py/
+        - text: Get Started
+        - img [ref=e41]
+  - main [ref=e44]:
+    - region "VantaDB hero" [ref=e45]:
+      - generic:
+        - img
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]: 01 / 08
+          - generic [ref=e49]: Open-source embedded vector database
+        - heading "Memory for AI Agents." [level=1] [ref=e50]:
+          - generic [ref=e51]: Memory
+          - generic [ref=e52]: for AI
+          - generic [ref=e53]: Agents.
+        - paragraph [ref=e54]:
+          - text: SQL + vector + full-text search in one Rust binary.
+          - text: Sub-millisecond hybrid queries. Zero infrastructure.
+        - generic [ref=e55]:
+          - group [ref=e56]:
+            - generic [ref=e57]: $
+            - code [ref=e58]: pip install vantadb
+            - button "Copy install command" [ref=e59] [cursor=pointer]:
+              - img [ref=e60]
+              - text: COPY
+          - generic [ref=e63]:
+            - link "GET STARTED" [ref=e64] [cursor=pointer]:
+              - /url: /docs
+            - link "GITHUB" [ref=e65] [cursor=pointer]:
+              - /url: https://github.com/ness-e/Vantadb
+              - img [ref=e66]
+              - text: GITHUB
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - generic [ref=e70]: < 1ms
+            - generic [ref=e71]: Hybrid queries
+          - generic [ref=e72]:
+            - generic [ref=e73]: ~400KB
+            - generic [ref=e74]: Binary size
+          - generic [ref=e75]:
+            - generic [ref=e76]: MIT
+            - generic [ref=e77]: License
+          - generic [ref=e78]:
+            - generic [ref=e79]: Rust
+            - generic [ref=e80]: Runtime
+    - generic [ref=e82]:
+      - generic [ref=e83]:
+        - generic [ref=e84]: 02 / 08 — Performance
+        - generic [ref=e85]:
+          - heading "Numbers don't lie." [level=2] [ref=e86]:
+            - text: Numbers
+            - text: don't lie.
+          - paragraph [ref=e87]: Every metric is measured in isolation on commodity hardware. No cloud infrastructure. No managed services.
+      - generic [ref=e88]:
+        - generic [ref=e89]:
+          - generic [ref=e90]: < 1ms
+          - generic [ref=e91]: Hybrid Query Latency
+          - generic [ref=e92]: SQL + vector + FTS in a single call
+          - link "VIEW BENCHMARK →" [ref=e93] [cursor=pointer]:
+            - /url: /latency
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - generic [ref=e96]: ~400KB
+            - generic [ref=e97]: Binary Size
+            - generic [ref=e98]: Embedded, zero deps
+          - generic [ref=e99]:
+            - generic [ref=e100]: 10× faster
+            - generic [ref=e101]: vs Chroma + SQLite stack
+            - generic [ref=e102]: Eliminating round trips
+          - generic [ref=e103]:
+            - generic [ref=e104]: < 8MB
+            - generic [ref=e105]: RAM Overhead
+            - generic [ref=e106]: Edge & mobile ready
+          - generic [ref=e107]:
+            - generic [ref=e108]: "3"
+            - generic [ref=e109]: Unified Engines
+            - generic [ref=e110]: SQL · Vector · FTS — one call
+          - generic [ref=e111]:
+            - generic [ref=e112]: MIT
+            - generic [ref=e113]: License
+            - generic [ref=e114]: No vendor lock-in
+      - generic [ref=e116]:
+        - text: Benchmarks vs Chroma + SQLite + BM25 on M2 MacBook Pro. See
+        - link "methodology →" [ref=e117] [cursor=pointer]:
+          - /url: /latency
+    - generic [ref=e120]:
+      - generic [ref=e121]:
+        - generic [ref=e122]: 03 / 08 — Quickstart
+        - heading "Zero to running." [level=2] [ref=e123]:
+          - text: Zero to
+          - text: running.
+        - list [ref=e124]:
+          - button "01 Install Single package. No native dependencies. Works on macOS, Linux, Windows, Android, iOS." [ref=e125] [cursor=pointer]:
+            - generic [ref=e126]: "01"
+            - generic [ref=e127]:
+              - generic [ref=e128]: Install
+              - paragraph [ref=e129]: Single package. No native dependencies. Works on macOS, Linux, Windows, Android, iOS.
+          - button "02 Initialize One import. The database file is created automatically." [ref=e130] [cursor=pointer]:
+            - generic [ref=e131]: "02"
+            - generic [ref=e132]:
+              - generic [ref=e133]: Initialize
+              - paragraph [ref=e134]: One import. The database file is created automatically.
+          - button "03 Store Embeddings are generated automatically. No external model needed." [ref=e135] [cursor=pointer]:
+            - generic [ref=e136]: "03"
+            - generic [ref=e137]:
+              - generic [ref=e138]: Store
+              - paragraph [ref=e139]: Embeddings are generated automatically. No external model needed.
+          - button "04 Query Semantic + keyword + SQL in one call. No orchestration layer." [ref=e140] [cursor=pointer]:
+            - generic [ref=e141]: "04"
+            - generic [ref=e142]:
+              - generic [ref=e143]: Query
+              - paragraph [ref=e144]: Semantic + keyword + SQL in one call. No orchestration layer.
+        - link "FULL DOCS →" [ref=e146] [cursor=pointer]:
+          - /url: /docs
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - generic [ref=e149]: STEP 01
+          - generic [ref=e150]: INSTALL
+        - code [ref=e153]: pip install vantadb
+        - generic [ref=e154]:
+          - generic [ref=e155]:
+            - generic [ref=e156]: $
+            - generic [ref=e157]: _
+          - generic [ref=e158]: Python 3.9+
+    - generic [ref=e160]:
+      - generic [ref=e161]:
+        - generic [ref=e162]: 04 / 08 — Core Engine
+        - generic [ref=e163]:
+          - heading "Three engines. One binary." [level=2] [ref=e164]:
+            - text: Three engines.
+            - text: One binary.
+          - paragraph [ref=e165]: VantaDB replaces the entire retrieval stack — no orchestration, no round-trips, no separate services.
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - generic [ref=e168]:
+            - generic [ref=e169]: "01"
+            - generic [ref=e170]: HYBRID SEARCH
+          - heading "One query, three engines." [level=3] [ref=e172]
+          - paragraph [ref=e173]: VantaDB merges SQL filters, vector similarity (HNSW), and full-text search (BM25) in a single API call. No pipeline glue code.
+          - link "LEARN MORE →" [ref=e174] [cursor=pointer]:
+            - /url: /engine
+        - generic [ref=e175]:
+          - generic [ref=e176]:
+            - generic [ref=e177]: "02"
+            - generic [ref=e178]: EMBEDDED
+          - heading "No server. No infra." [level=3] [ref=e180]
+          - paragraph [ref=e181]: Ships as a ~400KB binary. Import it like a library. Works on Raspberry Pi, mobile devices, and serverless edge runtimes.
+          - link "LEARN MORE →" [ref=e182] [cursor=pointer]:
+            - /url: /architecture
+        - generic [ref=e183]:
+          - generic [ref=e184]:
+            - generic [ref=e185]: "03"
+            - generic [ref=e186]: RUST RUNTIME
+          - heading "Memory-safe by design." [level=3] [ref=e188]
+          - paragraph [ref=e189]: Written in Rust. No GC pauses, no data races, no undefined behavior. Predictable latency under concurrent load.
+          - link "LEARN MORE →" [ref=e190] [cursor=pointer]:
+            - /url: /engine
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - generic [ref=e193]: "04"
+            - generic [ref=e194]: PYTHON SDK
+          - heading "pip install. Done." [level=3] [ref=e196]
+          - paragraph [ref=e197]: Native Python bindings via PyO3. Works in Jupyter, FastAPI, LangChain, and any Python 3.9+ environment.
+          - link "LEARN MORE →" [ref=e198] [cursor=pointer]:
+            - /url: /integrations
+        - generic [ref=e199]:
+          - generic [ref=e200]:
+            - generic [ref=e201]: "05"
+            - generic [ref=e202]: DURABILITY
+          - heading "WAL persistence." [level=3] [ref=e204]
+          - paragraph [ref=e205]: Write-Ahead Log for crash recovery. ACID semantics on every transaction. Your data survives power loss.
+          - link "LEARN MORE →" [ref=e206] [cursor=pointer]:
+            - /url: /engine
+        - generic [ref=e207]:
+          - generic [ref=e208]:
+            - generic [ref=e209]: "06"
+            - generic [ref=e210]: MIT LICENSE
+          - heading "Ship without asking." [level=3] [ref=e212]
+          - paragraph [ref=e213]: No seat limits. No usage fees. No vendor lock-in. Build on VantaDB in open-source or commercial products alike.
+          - link "LEARN MORE →" [ref=e214] [cursor=pointer]:
+            - /url: /about
+    - generic [ref=e216]:
+      - generic [ref=e217]:
+        - generic [ref=e218]: 05 / 08 — Use Cases
+        - heading "Where VantaDB works." [level=2] [ref=e219]
+      - generic [ref=e220]:
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]: AI Agents
+            - generic [ref=e224]: "01"
+          - heading "Persistent agent memory." [level=3] [ref=e225]
+          - paragraph [ref=e226]: Give your agents a memory that persists across sessions. Store facts, embeddings, and structured context in one place.
+          - link "Explore →" [ref=e227] [cursor=pointer]:
+            - /url: /solutions/ai-agents
+            - generic [ref=e228]: Explore
+            - generic [ref=e229]: →
+        - generic [ref=e230]:
+          - generic [ref=e231]:
+            - generic [ref=e232]: Local RAG
+            - generic [ref=e233]: "02"
+          - heading "RAG without the cloud." [level=3] [ref=e234]
+          - paragraph [ref=e235]: Run retrieval-augmented generation fully offline. No API calls to external embedding services. Your data stays local.
+          - link "Explore →" [ref=e236] [cursor=pointer]:
+            - /url: /solutions/local-rag
+            - generic [ref=e237]: Explore
+            - generic [ref=e238]: →
+        - generic [ref=e239]:
+          - generic [ref=e240]:
+            - generic [ref=e241]: IDE Tooling
+            - generic [ref=e242]: "03"
+          - heading "Context for AI coding." [level=3] [ref=e243]
+          - paragraph [ref=e244]: Power AI IDE assistants with codebase-aware semantic search. Index and query your entire project in milliseconds.
+          - link "Explore →" [ref=e245] [cursor=pointer]:
+            - /url: /solutions/ai-ide-tooling
+            - generic [ref=e246]: Explore
+            - generic [ref=e247]: →
+    - generic [ref=e249]:
+      - generic [ref=e250]: 06 / 08 — Ecosystem
+      - heading "Works with your stack." [level=2] [ref=e251]
+      - generic [ref=e252]:
+        - generic [ref=e253]: LangChain
+        - generic [ref=e254]: LlamaIndex
+        - generic [ref=e255]: FastAPI
+        - generic [ref=e256]: Jupyter
+        - generic [ref=e257]: Transformers
+        - generic [ref=e258]: Sentence-Transformers
+        - generic [ref=e259]: PyO3
+        - generic [ref=e260]: SQLite
+        - generic [ref=e261]: Rust
+      - link "SEE ALL INTEGRATIONS" [ref=e263] [cursor=pointer]:
+        - /url: /integrations
+    - generic [ref=e265]:
+      - generic [ref=e267]: 07 / 08 — Architecture
+      - generic [ref=e268]:
+        - generic [ref=e269]:
+          - heading "Three layers. One file." [level=2] [ref=e270]:
+            - text: Three layers.
+            - text: One file.
+          - paragraph [ref=e271]: VantaDB stacks a SQL engine, an HNSW vector index, and a BM25 full-text index in a single embedded binary. No IPC, no sockets, no network overhead.
+          - link "VIEW ARCHITECTURE →" [ref=e273] [cursor=pointer]:
+            - /url: /architecture
+        - generic [ref=e274]:
+          - generic [ref=e275]:
+            - generic [ref=e276]: SYSTEM_BLUEPRINT_V2.0
+            - generic [ref=e277]: INTERACTIVE
+          - img "Database architecture diagram" [ref=e278]:
+            - generic: "[01] CLIENT API & BINDINGS"
+            - generic: RUST / PY
+            - generic: "[02] HYBRID QUERY PLANNER"
+            - generic: SQL + VEC
+            - generic: "[03] STORAGE ENGINE & WAL"
+            - generic: .DB FILE
+          - generic [ref=e282]:
+            - generic [ref=e283]: VantaDB Stack Overview
+            - generic [ref=e284]: Hover over the blueprint layers to inspect how VantaDB coordinates queries and storage inside a single embedded Rust binary.
+    - region "Get started with VantaDB" [ref=e285]:
+      - generic [ref=e286]:
+        - generic [ref=e287]:
+          - generic [ref=e288]: 08 / 08
+          - generic [ref=e289]: Deploy
+        - paragraph [ref=e291]:
+          - text: One command.
+          - text: That's the
+          - text: whole install.
+        - generic [ref=e292]:
+          - generic [ref=e293]: $
+          - code [ref=e294]: pip install vantadb
+          - button "Copy install command" [ref=e295] [cursor=pointer]:
+            - generic [ref=e296]: COPY
+            - img [ref=e297]
+        - generic [ref=e300]:
+          - link "READ THE DOCS" [ref=e301] [cursor=pointer]:
+            - /url: /docs
+          - link "VIEW ON GITHUB" [ref=e302] [cursor=pointer]:
+            - /url: https://github.com/ness-e/Vantadb
+        - generic [ref=e303]:
+          - generic [ref=e304]: MIT LICENSE
+          - generic [ref=e306]: OPEN SOURCE
+          - generic [ref=e308]: ZERO INFRA
+  - contentinfo [ref=e309]:
+    - generic [ref=e311]:
+      - generic [ref=e312]:
+        - generic [ref=e313]: Product
+        - list [ref=e314]:
+          - listitem [ref=e315]:
+            - link "Engine" [ref=e316] [cursor=pointer]:
+              - /url: /engine
+          - listitem [ref=e317]:
+            - link "Architecture" [ref=e318] [cursor=pointer]:
+              - /url: /architecture
+          - listitem [ref=e319]:
+            - link "Integrations" [ref=e320] [cursor=pointer]:
+              - /url: /integrations
+          - listitem [ref=e321]:
+            - link "Use Cases" [ref=e322] [cursor=pointer]:
+              - /url: /use-cases
+          - listitem [ref=e323]:
+            - link "Cost" [ref=e324] [cursor=pointer]:
+              - /url: /cost
+          - listitem [ref=e325]:
+            - link "Latency" [ref=e326] [cursor=pointer]:
+              - /url: /latency
+          - listitem [ref=e327]:
+            - link "Storage" [ref=e328] [cursor=pointer]:
+              - /url: /storage
+          - listitem [ref=e329]:
+            - link "Maintenance" [ref=e330] [cursor=pointer]:
+              - /url: /maint
+      - generic [ref=e331]:
+        - generic [ref=e332]: Solutions
+        - list [ref=e333]:
+          - listitem [ref=e334]:
+            - link "AI Agents" [ref=e335] [cursor=pointer]:
+              - /url: /solutions/ai-agents
+          - listitem [ref=e336]:
+            - link "Local RAG" [ref=e337] [cursor=pointer]:
+              - /url: /solutions/local-rag
+          - listitem [ref=e338]:
+            - link "AI IDE Tooling" [ref=e339] [cursor=pointer]:
+              - /url: /solutions/ai-ide-tooling
+      - generic [ref=e340]:
+        - generic [ref=e341]: Developers
+        - list [ref=e342]:
+          - listitem [ref=e343]:
+            - link "Documentation" [ref=e344] [cursor=pointer]:
+              - /url: /docs
+          - listitem [ref=e345]:
+            - link "Config Reference" [ref=e346] [cursor=pointer]:
+              - /url: /config
+          - listitem [ref=e347]:
+            - link "Pricing" [ref=e348] [cursor=pointer]:
+              - /url: /pricing
+          - listitem [ref=e349]:
+            - link "Changelog" [ref=e350] [cursor=pointer]:
+              - /url: /changelog
+      - generic [ref=e351]:
+        - generic [ref=e352]: Resources
+        - list [ref=e353]:
+          - listitem [ref=e354]:
+            - link "Blog" [ref=e355] [cursor=pointer]:
+              - /url: /blog
+      - generic [ref=e356]:
+        - generic [ref=e357]: Company
+        - list [ref=e358]:
+          - listitem [ref=e359]:
+            - link "About" [ref=e360] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e361]:
+            - link "Company" [ref=e362] [cursor=pointer]:
+              - /url: /about/company
+          - listitem [ref=e363]:
+            - link "Community" [ref=e364] [cursor=pointer]:
+              - /url: /about/community
+          - listitem [ref=e365]:
+            - link "Contact" [ref=e366] [cursor=pointer]:
+              - /url: /about/contact
+    - generic [ref=e367]:
+      - generic [ref=e368]: © 2026 VantaDB — Embedded Cognitive Memory
+      - link "GitHub" [ref=e370] [cursor=pointer]:
+        - /url: https://github.com/vantadb
+        - img [ref=e371]
+        - text: GitHub
