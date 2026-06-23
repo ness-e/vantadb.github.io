@@ -6,7 +6,11 @@ export const Route = createFileRoute("/about/contact")({
   head: () => ({
     meta: [
       { title: "VantaDB — Contact" },
-      { name: "description", content: "Get in touch with the VantaDB team. Enterprise inquiries, partnerships, security reports, or general questions." },
+      {
+        name: "description",
+        content:
+          "Get in touch with the VantaDB team. Enterprise inquiries, partnerships, security reports, or general questions.",
+      },
     ],
   }),
   component: ContactPage,
@@ -26,7 +30,13 @@ function ContactPage() {
     <PageShell>
       <HeroSubpage
         eyebrow="// Contact"
-        title={<>Get in touch.<br />We read everything.</>}
+        title={
+          <>
+            Get in touch.
+            <br />
+            We read everything.
+          </>
+        }
         subtitle="Whether you're evaluating VantaDB for your enterprise, interested in a partnership, or just want to say hello — we'd love to hear from you."
         stats={[
           { value: "48h", label: "Response time" },
@@ -45,12 +55,15 @@ function ContactPage() {
             {contacts.map((c) => (
               <div key={c.channel} className="arch-card reveal">
                 <div className="arch-title">{c.channel}</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--amber)", marginTop: "0.5rem" }}>
-                  {c.type === "email" ? (
-                    <span>{c.detail}</span>
-                  ) : (
-                    <span>{c.detail}</span>
-                  )}
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.85rem",
+                    color: "var(--amber)",
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  {c.type === "email" ? <span>{c.detail}</span> : <span>{c.detail}</span>}
                 </div>
               </div>
             ))}
@@ -62,9 +75,10 @@ function ContactPage() {
             <span className="section-eyebrow">// Security</span>
             <h2 className="section-title section-title--compact">Responsible disclosure</h2>
             <p className="section-sub" style={{ margin: "0 auto" }}>
-              Found a security vulnerability? Email security@vantadb.dev. We practice responsible disclosure
-              and will work with you to validate, fix, and release a patch before public disclosure.
-              We don't have a formal bug bounty program yet, but we'll credit you in the release notes.
+              Found a security vulnerability? Email security@vantadb.dev. We practice responsible
+              disclosure and will work with you to validate, fix, and release a patch before public
+              disclosure. We don't have a formal bug bounty program yet, but we'll credit you in the
+              release notes.
             </p>
           </div>
         </section>

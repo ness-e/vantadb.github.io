@@ -104,7 +104,9 @@
   gap: 0.6rem;
 }
 
-.pricing-feature-item:last-child { border-bottom: none; }
+.pricing-feature-item:last-child {
+  border-bottom: none;
+}
 
 .pricing-feature-check {
   color: var(--amber);
@@ -183,9 +185,18 @@
   text-align: center;
 }
 
-.pricing-table .th-free { color: var(--foreground); font-weight: 700; }
-.pricing-table .th-pro  { color: var(--amber); font-weight: 700; }
-.pricing-table .th-ent  { color: var(--foreground); font-weight: 700; }
+.pricing-table .th-free {
+  color: var(--foreground);
+  font-weight: 700;
+}
+.pricing-table .th-pro {
+  color: var(--amber);
+  font-weight: 700;
+}
+.pricing-table .th-ent {
+  color: var(--foreground);
+  font-weight: 700;
+}
 
 .pricing-table td {
   padding: 0.75rem 1rem;
@@ -193,7 +204,9 @@
   background: #ffffff;
 }
 
-.pricing-table tr:last-child td { border-bottom: none; }
+.pricing-table tr:last-child td {
+  border-bottom: none;
+}
 
 .pricing-table td:first-child {
   color: var(--foreground);
@@ -204,9 +217,16 @@
   text-align: center;
 }
 
-.pricing-table .td-free { color: var(--muted); }
-.pricing-table .td-pro  { color: var(--amber); font-weight: 700; }
-.pricing-table .td-ent  { color: var(--muted); }
+.pricing-table .td-free {
+  color: var(--muted);
+}
+.pricing-table .td-pro {
+  color: var(--amber);
+  font-weight: 700;
+}
+.pricing-table .td-ent {
+  color: var(--muted);
+}
 
 /* ── FAQ ── */
 .pricing-faq-list {

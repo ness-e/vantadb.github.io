@@ -9,7 +9,11 @@ export const Route = createFileRoute("/latency")({
   head: () => ({
     meta: [
       { title: "VantaDB — Sub-Millisecond Latency" },
-      { name: "description", content: "1.2ms p50 in-process latency vs 200ms+ for cloud vector databases. VantaDB eliminates network round-trips." },
+      {
+        name: "description",
+        content:
+          "1.2ms p50 in-process latency vs 200ms+ for cloud vector databases. VantaDB eliminates network round-trips.",
+      },
     ],
   }),
   component: LatencyPage,
@@ -27,7 +31,13 @@ function LatencyPage() {
     <PageShell>
       <HeroSubpage
         eyebrow="// Latency Performance"
-        title={<>1.2ms p50.<br />No network.</>}
+        title={
+          <>
+            1.2ms p50.
+            <br />
+            No network.
+          </>
+        }
         subtitle="VantaDB runs in your process — no network round-trip, no serialization overhead, no cold starts. Every microsecond matters when your agent is waiting."
         stats={[
           { value: "1.2ms", label: "VantaDB p50" },
@@ -42,22 +52,43 @@ function LatencyPage() {
             <span className="section-eyebrow">// Legacy Path</span>
             <h2 className="section-title section-title--compact">~200ms per query</h2>
             <ul className="comparison-list">
-              <li><span className="icon-cross">✗</span> Network round-trip: 50-80ms (TLS + serialization)</li>
-              <li><span className="icon-cross">✗</span> Remote index traversal: 40-60ms</li>
-              <li><span className="icon-cross">✗</span> Result serialization: 20-30ms</li>
-              <li><span className="icon-cross">✗</span> Cache miss penalty: 100ms+ to S3 fallback</li>
-              <li><span className="icon-cross">✗</span> Cold start: 2-5s (serverless DB wake)</li>
+              <li>
+                <span className="icon-cross">✗</span> Network round-trip: 50-80ms (TLS +
+                serialization)
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Remote index traversal: 40-60ms
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Result serialization: 20-30ms
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Cache miss penalty: 100ms+ to S3 fallback
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Cold start: 2-5s (serverless DB wake)
+              </li>
             </ul>
           </div>
           <div className="reveal reveal-delay-1">
             <span className="section-eyebrow">// VantaDB Path</span>
             <h2 className="section-title section-title--compact">1.2ms in-process</h2>
             <ul className="comparison-list">
-              <li><span className="icon-check">✓</span> Zero network: same-process memory access</li>
-              <li><span className="icon-check">✓</span> HNSW graph traversal: 0.4-0.8ms</li>
-              <li><span className="icon-check">✓</span> BM25 intersection: 0.2-0.4ms</li>
-              <li><span className="icon-check">✓</span> No serialization: zero-copy result passing</li>
-              <li><span className="icon-check">✓</span> No cold start: process is always warm</li>
+              <li>
+                <span className="icon-check">✓</span> Zero network: same-process memory access
+              </li>
+              <li>
+                <span className="icon-check">✓</span> HNSW graph traversal: 0.4-0.8ms
+              </li>
+              <li>
+                <span className="icon-check">✓</span> BM25 intersection: 0.2-0.4ms
+              </li>
+              <li>
+                <span className="icon-check">✓</span> No serialization: zero-copy result passing
+              </li>
+              <li>
+                <span className="icon-check">✓</span> No cold start: process is always warm
+              </li>
             </ul>
           </div>
         </section>
@@ -96,7 +127,9 @@ function LatencyPage() {
             <div className="ops-card-vanta reveal reveal-delay-1">
               <span className="section-eyebrow mb-4">VantaDB</span>
               <div className="text-[2.5rem] font-bold text-[var(--amber)] font-display tracking-tight leading-none">
-                {vantaTotal < 1000 ? `${Math.round(vantaTotal)}ms` : `${(vantaTotal / 1000).toFixed(1)}s`}
+                {vantaTotal < 1000
+                  ? `${Math.round(vantaTotal)}ms`
+                  : `${(vantaTotal / 1000).toFixed(1)}s`}
               </div>
               <div className="font-mono text-[0.65rem] text-[var(--steel)] mt-2">
                 {pipelineSize} queries × 1.2ms each
@@ -120,31 +153,55 @@ function LatencyPage() {
           <div className="latency-bars max-w-xl mx-auto">
             <div className="latency-bar reveal">
               <span className="latency-bar-col latency-bar-col--label">Network</span>
-              <span className="latency-bar-col latency-bar-col--bar" style={{ "--legacy-w": "35%", "--vanta-w": "0%" } as React.CSSProperties}>
-                <span className="latency-bar-fill latency-bar-fill--legacy" /><span className="latency-bar-fill latency-bar-fill--vanta" />
+              <span
+                className="latency-bar-col latency-bar-col--bar"
+                style={{ "--legacy-w": "35%", "--vanta-w": "0%" } as React.CSSProperties}
+              >
+                <span className="latency-bar-fill latency-bar-fill--legacy" />
+                <span className="latency-bar-fill latency-bar-fill--vanta" />
               </span>
-              <span className="latency-bar-col latency-bar-col--value"><span className="lb-legacy">70ms</span> <span className="lb-vanta">0ms</span></span>
+              <span className="latency-bar-col latency-bar-col--value">
+                <span className="lb-legacy">70ms</span> <span className="lb-vanta">0ms</span>
+              </span>
             </div>
             <div className="latency-bar reveal reveal-delay-1">
               <span className="latency-bar-col latency-bar-col--label">Index search</span>
-              <span className="latency-bar-col latency-bar-col--bar" style={{ "--legacy-w": "25%", "--vanta-w": "50%" } as React.CSSProperties}>
-                <span className="latency-bar-fill latency-bar-fill--legacy" /><span className="latency-bar-fill latency-bar-fill--vanta" />
+              <span
+                className="latency-bar-col latency-bar-col--bar"
+                style={{ "--legacy-w": "25%", "--vanta-w": "50%" } as React.CSSProperties}
+              >
+                <span className="latency-bar-fill latency-bar-fill--legacy" />
+                <span className="latency-bar-fill latency-bar-fill--vanta" />
               </span>
-              <span className="latency-bar-col latency-bar-col--value"><span className="lb-legacy">50ms</span> <span className="lb-vanta">0.6ms</span></span>
+              <span className="latency-bar-col latency-bar-col--value">
+                <span className="lb-legacy">50ms</span> <span className="lb-vanta">0.6ms</span>
+              </span>
             </div>
             <div className="latency-bar reveal reveal-delay-2">
               <span className="latency-bar-col latency-bar-col--label">Serialize</span>
-              <span className="latency-bar-col latency-bar-col--bar" style={{ "--legacy-w": "15%", "--vanta-w": "0%" } as React.CSSProperties}>
-                <span className="latency-bar-fill latency-bar-fill--legacy" /><span className="latency-bar-fill latency-bar-fill--vanta" />
+              <span
+                className="latency-bar-col latency-bar-col--bar"
+                style={{ "--legacy-w": "15%", "--vanta-w": "0%" } as React.CSSProperties}
+              >
+                <span className="latency-bar-fill latency-bar-fill--legacy" />
+                <span className="latency-bar-fill latency-bar-fill--vanta" />
               </span>
-              <span className="latency-bar-col latency-bar-col--value"><span className="lb-legacy">25ms</span> <span className="lb-vanta">0ms</span></span>
+              <span className="latency-bar-col latency-bar-col--value">
+                <span className="lb-legacy">25ms</span> <span className="lb-vanta">0ms</span>
+              </span>
             </div>
             <div className="latency-bar reveal reveal-delay-3">
               <span className="latency-bar-col latency-bar-col--label">Cache fill</span>
-              <span className="latency-bar-col latency-bar-col--bar" style={{ "--legacy-w": "20%", "--vanta-w": "0%" } as React.CSSProperties}>
-                <span className="latency-bar-fill latency-bar-fill--legacy" /><span className="latency-bar-fill latency-bar-fill--vanta" />
+              <span
+                className="latency-bar-col latency-bar-col--bar"
+                style={{ "--legacy-w": "20%", "--vanta-w": "0%" } as React.CSSProperties}
+              >
+                <span className="latency-bar-fill latency-bar-fill--legacy" />
+                <span className="latency-bar-fill latency-bar-fill--vanta" />
               </span>
-              <span className="latency-bar-col latency-bar-col--value"><span className="lb-legacy">45ms</span> <span className="lb-vanta">0.6ms</span></span>
+              <span className="latency-bar-col latency-bar-col--value">
+                <span className="lb-legacy">45ms</span> <span className="lb-vanta">0.6ms</span>
+              </span>
             </div>
           </div>
         </section>
@@ -154,8 +211,9 @@ function LatencyPage() {
             <span className="section-eyebrow">// Why Latency Matters</span>
             <h2 className="section-title section-title--compact">Agents can't wait</h2>
             <p className="section-sub">
-              Every 100ms of added latency in a RAG pipeline compounds across retrievals, re-rankings,
-              and generation steps. VantaDB's in-process architecture removes the bottleneck entirely.
+              Every 100ms of added latency in a RAG pipeline compounds across retrievals,
+              re-rankings, and generation steps. VantaDB's in-process architecture removes the
+              bottleneck entirely.
             </p>
           </div>
         </section>

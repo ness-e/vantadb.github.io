@@ -8,7 +8,11 @@ export const Route = createFileRoute("/maint")({
   head: () => ({
     meta: [
       { title: "VantaDB — Zero Maintenance Operations" },
-      { name: "description", content: "No daemons to monitor, no clusters to scale, no patches to schedule. VantaDB runs as an embedded library — your app IS the database server." },
+      {
+        name: "description",
+        content:
+          "No daemons to monitor, no clusters to scale, no patches to schedule. VantaDB runs as an embedded library — your app IS the database server.",
+      },
     ],
   }),
   component: MaintPage,
@@ -21,7 +25,13 @@ function MaintPage() {
     <PageShell>
       <HeroSubpage
         eyebrow="// Operations & Maintenance"
-        title={<>Zero ops.<br />Just upgrade.</>}
+        title={
+          <>
+            Zero ops.
+            <br />
+            Just upgrade.
+          </>
+        }
         subtitle="No daemons to monitor, no clusters to scale, no patches to schedule. VantaDB runs embedded in your process — the database is just another import."
         stats={[
           { value: "0", label: "Daemons to monitor" },
@@ -36,22 +46,47 @@ function MaintPage() {
             <span className="section-eyebrow">// Legacy Ops</span>
             <h2 className="section-title section-title--compact">Three services to maintain</h2>
             <ul className="comparison-list">
-              <li><span className="icon-cross">✗</span> Pinecone: monitor pod health, scale pods, watch quotas</li>
-              <li><span className="icon-cross">✗</span> Redis: replication lag, OOM handling, failover testing</li>
-              <li><span className="icon-cross">✗</span> S3: lifecycle policies, bucket versioning, access audits</li>
-              <li><span className="icon-cross">✗</span> Network: DNS changes, TLS certs, firewall rules</li>
-              <li><span className="icon-cross">✗</span> Alerting: 3+ dashboards, pager duty rotations</li>
+              <li>
+                <span className="icon-cross">✗</span> Pinecone: monitor pod health, scale pods,
+                watch quotas
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Redis: replication lag, OOM handling, failover
+                testing
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> S3: lifecycle policies, bucket versioning,
+                access audits
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Network: DNS changes, TLS certs, firewall
+                rules
+              </li>
+              <li>
+                <span className="icon-cross">✗</span> Alerting: 3+ dashboards, pager duty rotations
+              </li>
             </ul>
           </div>
           <div className="reveal reveal-delay-1">
             <span className="section-eyebrow">// VantaDB Ops</span>
             <h2 className="section-title section-title--compact">Nothing to maintain</h2>
             <ul className="comparison-list">
-              <li><span className="icon-check">✓</span> No daemon to monitor — runs in your process</li>
-              <li><span className="icon-check">✓</span> No cluster scaling — uses your app's resources</li>
-              <li><span className="icon-check">✓</span> No network config — local file access only</li>
-              <li><span className="icon-check">✓</span> No dashboards — your app's observability is enough</li>
-              <li><span className="icon-check">✓</span> Upgrades: `pip install --upgrade vantadb-py`</li>
+              <li>
+                <span className="icon-check">✓</span> No daemon to monitor — runs in your process
+              </li>
+              <li>
+                <span className="icon-check">✓</span> No cluster scaling — uses your app's resources
+              </li>
+              <li>
+                <span className="icon-check">✓</span> No network config — local file access only
+              </li>
+              <li>
+                <span className="icon-check">✓</span> No dashboards — your app's observability is
+                enough
+              </li>
+              <li>
+                <span className="icon-check">✓</span> Upgrades: `pip install --upgrade vantadb-py`
+              </li>
             </ul>
           </div>
         </section>
@@ -78,9 +113,7 @@ function MaintPage() {
                   <span>{task}</span>
                 </div>
               ))}
-              <div className="ops-total-time text-danger">
-                ~4 hours/week
-              </div>
+              <div className="ops-total-time text-danger">~4 hours/week</div>
             </div>
 
             <div className="ops-card-vanta reveal reveal-delay-1">
@@ -96,9 +129,7 @@ function MaintPage() {
                   <span>{task}</span>
                 </div>
               ))}
-              <div className="ops-total-time text-amber">
-                ~30 seconds/week
-              </div>
+              <div className="ops-total-time text-amber">~30 seconds/week</div>
             </div>
           </div>
         </section>
@@ -108,9 +139,9 @@ function MaintPage() {
             <span className="section-eyebrow">// Embedded Architecture</span>
             <h2 className="section-title section-title--compact">Your app IS the server</h2>
             <p className="section-sub">
-              Because VantaDB runs as an embedded library (not a separate server process), there's nothing
-              to deploy, monitor, or scale independently. Your application's lifecycle IS the database lifecycle.
-              No pager duty. No 2 AM wakeups.
+              Because VantaDB runs as an embedded library (not a separate server process), there's
+              nothing to deploy, monitor, or scale independently. Your application's lifecycle IS
+              the database lifecycle. No pager duty. No 2 AM wakeups.
             </p>
           </div>
         </section>

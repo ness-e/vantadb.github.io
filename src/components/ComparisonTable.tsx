@@ -3,11 +3,46 @@ import { useEffect, useRef, useState } from "react";
 import { TypewriterTitle } from "./TypewriterTitle";
 
 const items = [
-  { label: "STORAGE", full: "Storage Architecture", oldVal: "Pinecone + Redis + S3", vantaVal: "pip install vantadb-py", oldBadge: "3 DEPS", vantaBadge: "1 CMD" },
-  { label: "COST", full: "Infrastructure Cost", oldVal: "~$200/mo + latency floor", vantaVal: "$0 runtime", oldBadge: "$200+", vantaBadge: "FREE" },
-  { label: "LATENCY", full: "p99 Query Latency", oldVal: "200ms (network bound)", vantaVal: "1.2ms (in-process)", oldBadge: "200ms", vantaBadge: "1.2ms" },
-  { label: "CONFIG", full: "Configuration & Schema", oldVal: "Complex migrations", vantaVal: "Zero config", oldBadge: "COMPLEX", vantaBadge: "ZERO" },
-  { label: "MAINT", full: "Maintenance", oldVal: "3 services to monitor", vantaVal: "0 daemon deps", oldBadge: "3 SVC", vantaBadge: "0 DEPS" },
+  {
+    label: "STORAGE",
+    full: "Storage Architecture",
+    oldVal: "Pinecone + Redis + S3",
+    vantaVal: "pip install vantadb-py",
+    oldBadge: "3 DEPS",
+    vantaBadge: "1 CMD",
+  },
+  {
+    label: "COST",
+    full: "Infrastructure Cost",
+    oldVal: "~$200/mo + latency floor",
+    vantaVal: "$0 runtime",
+    oldBadge: "$200+",
+    vantaBadge: "FREE",
+  },
+  {
+    label: "LATENCY",
+    full: "p99 Query Latency",
+    oldVal: "200ms (network bound)",
+    vantaVal: "1.2ms (in-process)",
+    oldBadge: "200ms",
+    vantaBadge: "1.2ms",
+  },
+  {
+    label: "CONFIG",
+    full: "Configuration & Schema",
+    oldVal: "Complex migrations",
+    vantaVal: "Zero config",
+    oldBadge: "COMPLEX",
+    vantaBadge: "ZERO",
+  },
+  {
+    label: "MAINT",
+    full: "Maintenance",
+    oldVal: "3 services to monitor",
+    vantaVal: "0 daemon deps",
+    oldBadge: "3 SVC",
+    vantaBadge: "0 DEPS",
+  },
 ];
 
 const metrics = [
@@ -17,8 +52,12 @@ const metrics = [
   { value: "MIT", label: "license" },
 ];
 
-function TerminalCell({ item, active, onDone }: {
-  item: typeof items[number];
+function TerminalCell({
+  item,
+  active,
+  onDone,
+}: {
+  item: (typeof items)[number];
   active: boolean;
   onDone: () => void;
 }) {
@@ -39,7 +78,10 @@ function TerminalCell({ item, active, onDone }: {
 
   useEffect(() => {
     if (phase !== "visible") return;
-    const t = setTimeout(() => { setPhase("done"); onDone(); }, 2200);
+    const t = setTimeout(() => {
+      setPhase("done");
+      onDone();
+    }, 2200);
     return () => clearTimeout(t);
   }, [phase, onDone]);
 
@@ -54,7 +96,12 @@ function TerminalCell({ item, active, onDone }: {
       onClick={handleClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); } }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
     >
       <div className="term-cell-titlebar">
         <span className="term-cell-dot term-cell-dot--red" />
@@ -91,7 +138,10 @@ export function ComparisonTable() {
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) { setActiveIdx(0); obs.disconnect(); }
+        if (entry.isIntersecting) {
+          setActiveIdx(0);
+          obs.disconnect();
+        }
       },
       { threshold: 0.15 },
     );
@@ -113,7 +163,8 @@ export function ComparisonTable() {
         <span className="section-eyebrow">// VantaDB vs. The Stack</span>
         <TypewriterTitle phase={activeIdx} />
         <p className="section-sub section-sub--centered">
-          A side-by-side comparison of every infrastructure layer — complexity, cost, and performance.
+          A side-by-side comparison of every infrastructure layer — complexity, cost, and
+          performance.
         </p>
       </div>
 

@@ -17,13 +17,15 @@ export function IOMultiplexing({ style }: Props) {
     const cvs = canvas;
     const c2d = ctx;
 
-    let W = 0, H = 0;
+    let W = 0,
+      H = 0;
     const LANES = 4;
     const DOTS_PER_LANE = 25;
     const SPEED = 1.2;
 
     interface Dot {
-      x: number; y: number;
+      x: number;
+      y: number;
       speed: number;
       state: "queued" | "processed";
       progress: number;
@@ -86,11 +88,11 @@ export function IOMultiplexing({ style }: Props) {
         }
 
         const isProc = d.state === "processed";
-        const alpha = isProc ? 0.15 + 0.35 * (d.progress - 0.7) / 0.3 : 0.1 + 0.2 * d.progress / 0.3;
+        const alpha = isProc
+          ? 0.15 + (0.35 * (d.progress - 0.7)) / 0.3
+          : 0.1 + (0.2 * d.progress) / 0.3;
         const radius = isProc ? 3 : 2;
-        const color = isProc
-          ? `rgba(80,220,100,${alpha})`
-          : `rgba(255,255,255,${alpha})`;
+        const color = isProc ? `rgba(80,220,100,${alpha})` : `rgba(255,255,255,${alpha})`;
 
         c2d.beginPath();
         c2d.arc(d.x, d.y, radius, 0, Math.PI * 2);
@@ -108,12 +110,20 @@ export function IOMultiplexing({ style }: Props) {
     resize();
     initDots();
 
-    const obs = new IntersectionObserver(([entry]) => { paused = !entry.isIntersecting; }, { threshold: 0 });
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        paused = !entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
     obs.observe(cvs);
 
     gsap.ticker.add(draw);
 
-    const onResize = () => { resize(); initDots(); };
+    const onResize = () => {
+      resize();
+      initDots();
+    };
     window.addEventListener("resize", onResize);
 
     return () => {
@@ -123,11 +133,5 @@ export function IOMultiplexing({ style }: Props) {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="bg-canvas"
-      style={{ opacity: 0.5, ...style }}
-    />
-  );
+  return <canvas ref={canvasRef} className="bg-canvas" style={{ opacity: 0.5, ...style }} />;
 }

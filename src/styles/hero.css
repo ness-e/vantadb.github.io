@@ -139,7 +139,9 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 150ms var(--ease-out), transform 100ms;
+  transition:
+    background 150ms var(--ease-out),
+    transform 100ms;
 }
 
 .hero-install-copy:hover {
@@ -169,7 +171,9 @@
   padding: 8px 18px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  transition: color 150ms var(--ease-out), background 150ms var(--ease-out);
+  transition:
+    color 150ms var(--ease-out),
+    background 150ms var(--ease-out);
 }
 
 .hero-ghost:hover {
@@ -240,8 +244,13 @@
 }
 
 @keyframes heroCursorBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ── Responsive ── */

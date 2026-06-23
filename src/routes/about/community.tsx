@@ -6,25 +6,64 @@ export const Route = createFileRoute("/about/community")({
   head: () => ({
     meta: [
       { title: "VantaDB — Community" },
-      { name: "description", content: "Join the VantaDB community. Contribute on GitHub, discuss on Discord, ask questions, and help shape the future of embedded AI data infrastructure." },
+      {
+        name: "description",
+        content:
+          "Join the VantaDB community. Contribute on GitHub, discuss on Discord, ask questions, and help shape the future of embedded AI data infrastructure.",
+      },
     ],
   }),
   component: CommunityPage,
 });
 
 const channels = [
-  { name: "GitHub", desc: "Star the repo, open issues, submit PRs, and follow development.", href: "https://github.com/vantadb/vantadb", cta: "github.com/vantadb/vantadb" },
-  { name: "Discord", desc: "Real-time chat with the team and community. Ask questions, share projects, get help.", href: "#", cta: "Join our Discord" },
-  { name: "GitHub Discussions", desc: "Long-form discussions, feature proposals, and Q&A.", href: "https://github.com/vantadb/vantadb/discussions", cta: "Start a discussion" },
-  { name: "X / Twitter", desc: "Follow for release announcements, benchmarks, and ecosystem news.", href: "#", cta: "@vantadb" },
+  {
+    name: "GitHub",
+    desc: "Star the repo, open issues, submit PRs, and follow development.",
+    href: "https://github.com/vantadb/vantadb",
+    cta: "github.com/vantadb/vantadb",
+  },
+  {
+    name: "Discord",
+    desc: "Real-time chat with the team and community. Ask questions, share projects, get help.",
+    href: "#",
+    cta: "Join our Discord",
+  },
+  {
+    name: "GitHub Discussions",
+    desc: "Long-form discussions, feature proposals, and Q&A.",
+    href: "https://github.com/vantadb/vantadb/discussions",
+    cta: "Start a discussion",
+  },
+  {
+    name: "X / Twitter",
+    desc: "Follow for release announcements, benchmarks, and ecosystem news.",
+    href: "#",
+    cta: "@vantadb",
+  },
 ];
 
 const ways = [
-  { title: "Report a bug", desc: "Found something broken? Open a GitHub issue with reproduction steps." },
-  { title: "Submit a PR", desc: "Check the good-first-issue label. We review PRs within 48 hours." },
-  { title: "Write docs", desc: "Docs are never done. Fix a typo, clarify a section, add an example." },
-  { title: "Build an integration", desc: "LangChain, LlamaIndex, or your own framework — we'd love to link to it." },
-  { title: "Share your project", desc: "Built something with VantaDB? Let us know and we'll feature it." },
+  {
+    title: "Report a bug",
+    desc: "Found something broken? Open a GitHub issue with reproduction steps.",
+  },
+  {
+    title: "Submit a PR",
+    desc: "Check the good-first-issue label. We review PRs within 48 hours.",
+  },
+  {
+    title: "Write docs",
+    desc: "Docs are never done. Fix a typo, clarify a section, add an example.",
+  },
+  {
+    title: "Build an integration",
+    desc: "LangChain, LlamaIndex, or your own framework — we'd love to link to it.",
+  },
+  {
+    title: "Share your project",
+    desc: "Built something with VantaDB? Let us know and we'll feature it.",
+  },
   { title: "Run a benchmark", desc: "Test VantaDB against your workload and share the results." },
 ];
 
@@ -33,7 +72,13 @@ function CommunityPage() {
     <PageShell>
       <HeroSubpage
         eyebrow="// Community"
-        title={<>Built in the open.<br />With the community.</>}
+        title={
+          <>
+            Built in the open.
+            <br />
+            With the community.
+          </>
+        }
         subtitle="VantaDB is open source, and the community is at the center of everything we build. Join us on GitHub, Discord, and beyond."
         stats={[
           { value: "MIT", label: "License" },
@@ -50,10 +95,23 @@ function CommunityPage() {
           </div>
           <div className="grid-2" style={{ marginTop: "1rem" }}>
             {channels.map((ch) => (
-              <div key={ch.name} className="arch-card reveal" style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                key={ch.name}
+                className="arch-card reveal"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <div className="arch-title">{ch.name}</div>
-                <div className="arch-desc" style={{ flex: 1 }}>{ch.desc}</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--amber)", marginTop: "1rem" }}>
+                <div className="arch-desc" style={{ flex: 1 }}>
+                  {ch.desc}
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.7rem",
+                    color: "var(--amber)",
+                    marginTop: "1rem",
+                  }}
+                >
                   {ch.cta} →
                 </div>
               </div>
@@ -81,7 +139,8 @@ function CommunityPage() {
             <span className="section-eyebrow">// Code of Conduct</span>
             <h2 className="section-title section-title--compact">Safe and welcoming</h2>
             <p className="section-sub" style={{ margin: "0 auto" }}>
-              We're committed to a harassment-free experience for everyone. Our code of conduct applies to all community spaces — GitHub, Discord, and events.
+              We're committed to a harassment-free experience for everyone. Our code of conduct
+              applies to all community spaces — GitHub, Discord, and events.
             </p>
           </div>
         </section>

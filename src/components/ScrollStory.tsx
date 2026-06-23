@@ -66,31 +66,39 @@ export function ScrollStory({
           if (i === 0) return;
           const fromY = i * panelHeight;
           const toY = -fromY;
-          timeline.to(panelsEl, {
-            y: `${toY}vh`,
-            duration: 1,
-            ease: "none",
-          }, fromY / totalMove);
+          timeline.to(
+            panelsEl,
+            {
+              y: `${toY}vh`,
+              duration: 1,
+              ease: "none",
+            },
+            fromY / totalMove,
+          );
         });
 
         // Entrance animation for each panel
         panelNodes.forEach((panel, i) => {
           const el = panel.querySelector(".scroll-panel-content");
           if (!el) return;
-          gsap.fromTo(el, { opacity: 0, y: 24 }, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: panel,
-              start: "top bottom",
-              end: "top 30%",
-              scrub: 1,
-              containerAnimation: timeline,
-              id: `story-${id}-panel-${i}`,
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: panel,
+                start: "top bottom",
+                end: "top 30%",
+                scrub: 1,
+                containerAnimation: timeline,
+                id: `story-${id}-panel-${i}`,
+              },
             },
-          });
+          );
         });
       });
 
@@ -103,7 +111,7 @@ export function ScrollStory({
     }, section);
 
     return () => ctx.revert();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, stableKey.current, start, end, scrub]);
 
   return (

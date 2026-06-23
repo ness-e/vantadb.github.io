@@ -17,7 +17,9 @@
   padding: 0.5rem 0;
   opacity: 0;
   transform: translateX(-16px);
-  transition: opacity 900ms cubic-bezier(0.23, 1, 0.32, 1), transform 900ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition:
+    opacity 900ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 900ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .sp-layout.ready .sp-sidebar {
   opacity: 1;
@@ -73,8 +75,12 @@
   font-size: 0.55rem;
   flex-shrink: 0;
 }
-.sp-sidebar-icon.active-dot { color: var(--amber); }
-.sp-sidebar-icon.done-dot { color: #28c840; }
+.sp-sidebar-icon.active-dot {
+  color: var(--amber);
+}
+.sp-sidebar-icon.done-dot {
+  color: #28c840;
+}
 
 /* Main content area */
 .sp-content {
@@ -94,8 +100,14 @@
 }
 
 @keyframes sp-enter {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Stagger reveal for output lines */
@@ -108,8 +120,14 @@
   display: flex;
 }
 @keyframes out-line-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Typing cursor */
@@ -123,8 +141,13 @@
   display: inline-block;
 }
 @keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Block header */

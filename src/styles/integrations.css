@@ -50,8 +50,12 @@
   border-radius: 0;
 }
 
-.int-selector-card:nth-child(2n) { border-right: none; }
-.int-selector-card:nth-last-child(-n+2) { border-bottom: none; }
+.int-selector-card:nth-child(2n) {
+  border-right: none;
+}
+.int-selector-card:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
 
 .int-selector-card:hover {
   background: var(--surface);
@@ -108,8 +112,12 @@
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
-.int-card-inner:nth-child(2n) { border-right: none; }
-.int-card-inner:nth-last-child(-n+2) { border-bottom: none; }
+.int-card-inner:nth-child(2n) {
+  border-right: none;
+}
+.int-card-inner:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
 
 /* Swiss icon box — hairline negra */
 .int-icon-box {

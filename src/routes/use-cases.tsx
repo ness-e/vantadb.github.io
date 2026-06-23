@@ -92,15 +92,29 @@ function UseCasesPage() {
             {cases.map((c, i) => (
               <div key={i} className={`tactile-card reveal reveal-delay-${Math.min(i, 4)}`}>
                 <div className="uc-card-header">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="var(--amber)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
                     <path d={c.icon} />
                   </svg>
-                  <h3 className="uc-card-title" style={{ margin: 0 }}>{c.title}</h3>
+                  <h3 className="uc-card-title" style={{ margin: 0 }}>
+                    {c.title}
+                  </h3>
                 </div>
                 <p className="uc-card-desc">{c.desc}</p>
                 <div className="tl-tag-group">
                   {c.tags.map((tag) => (
-                    <span key={tag} className="tl-tag">{tag}</span>
+                    <span key={tag} className="tl-tag">
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -111,7 +125,17 @@ function UseCasesPage() {
         <div className="section-divider" />
 
         <section style={{ padding: "4rem 0" }}>
-          <h2 className="reveal" style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 700, color: "var(--white)", letterSpacing: "-0.03em", margin: "0 0 0.5rem" }}>
+          <h2
+            className="reveal"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "2rem",
+              fontWeight: 700,
+              color: "var(--white)",
+              letterSpacing: "-0.03em",
+              margin: "0 0 0.5rem",
+            }}
+          >
             Pipeline
             <br />
             <span style={{ color: "var(--amber)" }}>Memory → Search → Persist</span>
@@ -130,9 +154,9 @@ function UseCasesPage() {
                     <span className="ss-step">01</span>
                     <h3 className="ss-title">Memory</h3>
                     <p className="ss-desc">
-                      Embeddings and metadata are written to the LSM-tree engine with
-                      immediate durability. The WAL guarantees crash recovery — every
-                      vector, every key, every byte.
+                      Embeddings and metadata are written to the LSM-tree engine with immediate
+                      durability. The WAL guarantees crash recovery — every vector, every key, every
+                      byte.
                     </p>
                     <div className="tl-tag-group">
                       <span className="tl-tag">write-ahead log</span>
@@ -149,9 +173,8 @@ function UseCasesPage() {
                     <span className="ss-step">02</span>
                     <h3 className="ss-title">Search</h3>
                     <p className="ss-desc">
-                      HNSW vector index + BM25 lexical index fused via RRF in a single
-                      call. Sub-millisecond latency with zero network — all computation
-                      is in-process.
+                      HNSW vector index + BM25 lexical index fused via RRF in a single call.
+                      Sub-millisecond latency with zero network — all computation is in-process.
                     </p>
                     <div className="tl-tag-group">
                       <span className="tl-tag">HNSW</span>
@@ -168,9 +191,9 @@ function UseCasesPage() {
                     <span className="ss-step">03</span>
                     <h3 className="ss-title">Persist</h3>
                     <p className="ss-desc">
-                      Everything lives in a single portable DB file. Backup via SCP,
-                      move across machines, survive process kills — no reindexing, no
-                      restore procedure, no cloud egress.
+                      Everything lives in a single portable DB file. Backup via SCP, move across
+                      machines, survive process kills — no reindexing, no restore procedure, no
+                      cloud egress.
                     </p>
                     <div className="tl-tag-group">
                       <span className="tl-tag">single file</span>

@@ -32,11 +32,7 @@ export function NavDropdown({ label, items, isActive }: NavDropdownProps) {
   }, []);
 
   return (
-    <div
-      className="nav-dropdown"
-      onMouseEnter={handleOpen}
-      onMouseLeave={handleClose}
-    >
+    <div className="nav-dropdown" onMouseEnter={handleOpen} onMouseLeave={handleClose}>
       <button
         className={`nav-dropdown-toggle${isActive ? " active" : ""}`}
         onClick={handleClick}
@@ -106,7 +102,7 @@ export function NavDropdown({ label, items, isActive }: NavDropdownProps) {
                 >
                   {item.label}
                 </Link>
-              )
+              ),
             )}
           </motion.div>
         )}

@@ -11,7 +11,10 @@ export interface BlogPost {
   html: string;
 }
 
-function parseFrontmatter(raw: string): { data: Record<string, string | string[]>; content: string } {
+function parseFrontmatter(raw: string): {
+  data: Record<string, string | string[]>;
+  content: string;
+} {
   const match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
   if (!match) return { data: {}, content: raw };
   const data: Record<string, string | string[]> = {};
@@ -19,16 +22,26 @@ function parseFrontmatter(raw: string): { data: Record<string, string | string[]
     const idx = line.indexOf(":");
     if (idx === -1) continue;
     let key = line.slice(0, idx).trim();
-    let val: string | string[] = line.slice(idx + 1).trim().replace(/^["']|["']$/g, "");
+    let val: string | string[] = line
+      .slice(idx + 1)
+      .trim()
+      .replace(/^["']|["']$/g, "");
     if (val.startsWith("[") && val.endsWith("]")) {
-      val = val.slice(1, -1).split(",").map((s) => s.trim().replace(/^["']|["']$/g, ""));
+      val = val
+        .slice(1, -1)
+        .split(",")
+        .map((s) => s.trim().replace(/^["']|["']$/g, ""));
     }
     data[key] = val;
   }
   return { data, content: match[2] };
 }
 
-const modules = import.meta.glob("/content/blog/*.md", { query: "?raw", import: "default", eager: true });
+const modules = import.meta.glob("/content/blog/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
 
 export function getAllPosts(): BlogPost[] {
   const posts: BlogPost[] = [];

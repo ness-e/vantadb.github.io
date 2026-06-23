@@ -20,8 +20,12 @@ export function SIMDVectorized() {
     const interval = setInterval(() => {
       tick = (tick + 1) % ROWS;
 
-      scalarActive.forEach((c) => { c.style.opacity = "0"; });
-      simdActive.forEach((c) => { c.style.opacity = "0"; });
+      scalarActive.forEach((c) => {
+        c.style.opacity = "0";
+      });
+      simdActive.forEach((c) => {
+        c.style.opacity = "0";
+      });
 
       if (scalarCells[tick]) {
         const cell = scalarCells[tick].querySelector<HTMLDivElement>(".simd-active");
@@ -42,10 +46,7 @@ export function SIMDVectorized() {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="simd-container"
-    >
+    <div ref={containerRef} className="simd-container">
       {/* Scalar column */}
       <div className="simd-col simd-scalar">
         <div className="simd-col-header simd-col-header--scalar">SCALAR</div>

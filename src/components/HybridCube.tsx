@@ -20,7 +20,7 @@ function CubeScene() {
     for (let i = 0; i < GRID_COUNT; i++) {
       const row = Math.floor(i / side);
       const col = i % side;
-      pos[i * 3]     = (col / side - 0.5) * 14;
+      pos[i * 3] = (col / side - 0.5) * 14;
       pos[i * 3 + 1] = (row / side - 0.5) * 14;
       pos[i * 3 + 2] = -6;
     }
@@ -36,10 +36,18 @@ function CubeScene() {
         trigger: "#cta",
         start: "top bottom",
         end: "bottom top",
-        onEnter: () => { scrollDriven.current = true; },
-        onLeave: () => { scrollDriven.current = false; },
-        onEnterBack: () => { scrollDriven.current = true; },
-        onLeaveBack: () => { scrollDriven.current = false; },
+        onEnter: () => {
+          scrollDriven.current = true;
+        },
+        onLeave: () => {
+          scrollDriven.current = false;
+        },
+        onEnterBack: () => {
+          scrollDriven.current = true;
+        },
+        onLeaveBack: () => {
+          scrollDriven.current = false;
+        },
         onUpdate: (self) => {
           const rot = self.progress * Math.PI * 2;
           el.rotation.x = rot * 0.5;
@@ -72,18 +80,9 @@ function CubeScene() {
       {/* Puntos en grilla negros — visibles sobre fondo claro */}
       <points ref={gridRef}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[gridPositions, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[gridPositions, 3]} />
         </bufferGeometry>
-        <pointsMaterial
-          size={0.06}
-          color="#000000"
-          opacity={0.15}
-          transparent
-          sizeAttenuation
-        />
+        <pointsMaterial size={0.06} color="#000000" opacity={0.15} transparent sizeAttenuation />
       </points>
     </group>
   );

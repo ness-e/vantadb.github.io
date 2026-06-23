@@ -27,10 +27,7 @@ export function HNSWIsometric() {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="hnsw-container"
-    >
+    <div ref={containerRef} className="hnsw-container">
       {[0, 1, 2].map((layer) => (
         <div
           key={layer}
@@ -71,7 +68,7 @@ export function HNSWIsometric() {
               style={{
                 width: 4 + (2 - layer) * 2,
                 height: 4 + (2 - layer) * 2,
-                borderRadius: "0px", /* Square dots — Swiss precision */
+                borderRadius: "0px" /* Square dots — Swiss precision */,
                 background: "var(--amber)",
                 opacity: 0.5,
               }}
@@ -79,9 +76,7 @@ export function HNSWIsometric() {
           ))}
         </div>
       ))}
-      <div className="hnsw-label">
-        M=32 · ef_construction=200 · ef_search=40
-      </div>
+      <div className="hnsw-label">M=32 · ef_construction=200 · ef_search=40</div>
     </div>
   );
 }

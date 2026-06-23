@@ -9,9 +9,10 @@ export function PageShell({ children }: PageShellProps) {
     window.scrollTo({ top: 0, behavior: "instant" });
 
     const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add("is-visible");
-      }),
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("is-visible");
+        }),
       { threshold: 0.08 },
     );
 
@@ -21,9 +22,5 @@ export function PageShell({ children }: PageShellProps) {
     return () => obs.disconnect();
   }, []);
 
-  return (
-    <div className="page-wrapper">
-      {children}
-    </div>
-  );
+  return <div className="page-wrapper">{children}</div>;
 }

@@ -1,5 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter, useMatches } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  useMatches,
+} from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 
 import { Nav } from "../components/Nav";
@@ -66,7 +72,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { title: "VantaDB — Embedded Vector Database for AI Agents" },
-      { name: "description", content: "Open-source embedded vector database. SQL + vector + full-text search in one Rust binary. MIT licensed. Sub-millisecond hybrid queries, zero infrastructure." },
+      {
+        name: "description",
+        content:
+          "Open-source embedded vector database. SQL + vector + full-text search in one Rust binary. MIT licensed. Sub-millisecond hybrid queries, zero infrastructure.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "VantaDB" },
       { property: "og:image", content: "https://vantadb.dev/og/default.svg" },
@@ -76,9 +86,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://vantadb.dev/og/default.svg" },
       { name: "theme-color", content: "#ff5500" },
     ],
-    links: [
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
-    ],
+    links: [{ rel: "icon", href: "/favicon.png", type: "image/png" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -88,7 +96,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "VantaDB",
           applicationCategory: "DatabaseApplication",
           operatingSystem: "Linux, macOS, Windows, Android, iOS",
-          description: "Open-source embedded vector database unifying SQL, vector search, and full-text search in a single Rust binary.",
+          description:
+            "Open-source embedded vector database unifying SQL, vector search, and full-text search in a single Rust binary.",
           license: "MIT",
           offers: {
             "@type": "Offer",

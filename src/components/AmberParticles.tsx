@@ -49,7 +49,7 @@ export function AmberParticles() {
     };
 
     initializeGrid();
-    
+
     let time = 0;
 
     function draw() {
@@ -76,13 +76,16 @@ export function AmberParticles() {
 
       // Draw precision micro-elements at grid intersections
       for (const dot of dots) {
-        const alpha = Math.max(0, dot.maxAlpha * (0.3 + 0.7 * Math.sin(time * dot.speed + dot.phase)));
-        
+        const alpha = Math.max(
+          0,
+          dot.maxAlpha * (0.3 + 0.7 * Math.sin(time * dot.speed + dot.phase)),
+        );
+
         ctx!.fillStyle = `rgba(255, 85, 0, ${alpha})`;
-        
+
         // Draw 3x3px square dot instead of circle
         ctx!.fillRect(dot.x - 1, dot.y - 1, 3, 3);
-        
+
         // Occasionally draw a tiny crosshair decoration (10px span) at random spots
         if (dot.maxAlpha > 0.09 && Math.sin(time * 0.1 + dot.phase) > 0.95) {
           ctx!.strokeStyle = `rgba(255, 85, 0, ${alpha * 0.4})`;

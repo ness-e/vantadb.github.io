@@ -37,8 +37,8 @@ const storyPanels = [
         <span className="section-eyebrow">Layer 1</span>
         <h2 className="ss-title">Python SDK</h2>
         <p className="ss-desc">
-          Direct importable Python library offering namespace queries, hybrid search
-          fusing, and structured JSON FFI calls. Zero-copy from Python to Rust.
+          Direct importable Python library offering namespace queries, hybrid search fusing, and
+          structured JSON FFI calls. Zero-copy from Python to Rust.
         </p>
         <div className="ss-metrics">
           <div className="ss-metric">
@@ -64,8 +64,8 @@ const storyPanels = [
         <span className="section-eyebrow">Layer 2</span>
         <h2 className="ss-title">PyO3 FFI Boundary</h2>
         <p className="ss-desc">
-          Fast FFI boundary compilation translating Python dicts to Rust structs
-          without heap allocation loops. Stable boundary guarantees no GIL contention.
+          Fast FFI boundary compilation translating Python dicts to Rust structs without heap
+          allocation loops. Stable boundary guarantees no GIL contention.
         </p>
         <div className="ss-metrics">
           <div className="ss-metric">
@@ -91,8 +91,8 @@ const storyPanels = [
         <span className="section-eyebrow">Layer 3</span>
         <h2 className="ss-title">Core Engine</h2>
         <p className="ss-desc">
-          Splits queries into lexical inverted indexes and HNSW indexes, calculating
-          Reciprocal Rank Fusion relevance in parallel across all available cores.
+          Splits queries into lexical inverted indexes and HNSW indexes, calculating Reciprocal Rank
+          Fusion relevance in parallel across all available cores.
         </p>
         <div className="ss-metrics">
           <div className="ss-metric">
@@ -118,8 +118,8 @@ const storyPanels = [
         <span className="section-eyebrow">Layer 4</span>
         <h2 className="ss-title">Log-Structured Storage</h2>
         <p className="ss-desc">
-          In-process log-structured merge-tree engine managing blocks, WAL buffers,
-          compaction runs, and transaction safety with CRC32C integrity checks.
+          In-process log-structured merge-tree engine managing blocks, WAL buffers, compaction runs,
+          and transaction safety with CRC32C integrity checks.
         </p>
         <div className="ss-metrics">
           <div className="ss-metric">
@@ -163,12 +163,10 @@ function ArchitecturePage() {
         <section className="arch-section">
           <div className="reveal">
             <span className="section-eyebrow">// Cross Section</span>
-            <h2 className="section-title section-title--compact">
-              Runtime profile & data flow
-            </h2>
+            <h2 className="section-title section-title--compact">Runtime profile & data flow</h2>
             <p className="section-sub section-sub--mb-sm">
-              Visual breakdown of the in-process stack, hot paths, and per-layer
-              CPU time distribution.
+              Visual breakdown of the in-process stack, hot paths, and per-layer CPU time
+              distribution.
             </p>
           </div>
           <div className="reveal reveal-delay-1">

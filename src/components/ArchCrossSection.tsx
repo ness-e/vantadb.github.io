@@ -27,11 +27,30 @@ export function ArchCrossSection() {
         <div className="arch-rail" />
         <div className="hex-tunnel">
           {hexBytes.map((b, i) => (
-            <span key={i} style={{ position: "absolute", left: Math.random() > 0.5 ? "0" : "auto", right: Math.random() > 0.5 ? "0.2rem" : "auto", fontFamily: "var(--font-mono)", fontSize: "0.48rem", color: "var(--steel)", opacity: 0.2, animation: "tunnel-down 2.8s linear infinite", animationDelay: `${i * 0.28}s` }}>{b}</span>
+            <span
+              key={i}
+              style={{
+                position: "absolute",
+                left: Math.random() > 0.5 ? "0" : "auto",
+                right: Math.random() > 0.5 ? "0.2rem" : "auto",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.48rem",
+                color: "var(--steel)",
+                opacity: 0.2,
+                animation: "tunnel-down 2.8s linear infinite",
+                animationDelay: `${i * 0.28}s`,
+              }}
+            >
+              {b}
+            </span>
           ))}
         </div>
         {layers.map((l, i) => (
-          <div key={i} className="arch-layer-row" style={{ marginBottom: i < layers.length - 1 ? "0.4rem" : 0 }}>
+          <div
+            key={i}
+            className="arch-layer-row"
+            style={{ marginBottom: i < layers.length - 1 ? "0.4rem" : 0 }}
+          >
             <div
               className="arch-bar"
               style={{

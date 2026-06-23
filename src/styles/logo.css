@@ -5,32 +5,57 @@
 /* ─── KEYFRAMES ─── */
 
 @keyframes vdbDrawStroke {
-  to { stroke-dashoffset: 0; }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 @keyframes vdbOrbitAppear {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes vdbOrbitSpin {
-  from { transform: rotate(-12deg); }
-  to { transform: rotate(348deg); }
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(348deg);
+  }
 }
 
 @keyframes vdbOrbitSpinReverse {
-  from { transform: rotate(-12deg); }
-  to { transform: rotate(-372deg); }
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(-372deg);
+  }
 }
 
 @keyframes vdbSingularityPulse {
-  0%, 100% { opacity: 1; filter: drop-shadow(0 0 3px rgba(255, 106, 0, 0.6)); }
-  50% { opacity: 0.85; filter: drop-shadow(0 0 8px rgba(255, 106, 0, 1)); }
+  0%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px rgba(255, 106, 0, 0.6));
+  }
+  50% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 8px rgba(255, 106, 0, 1));
+  }
 }
 
 @keyframes vdbCoreAppear {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ─── MARK BASE ─── */
@@ -170,14 +195,21 @@ a.vdb-logo-full,
   justify-content: center;
   background: var(--surface);
   border: 1px solid rgba(255, 106, 0, 0.15);
-  box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  box-shadow:
+    0 0 0 1px rgba(255, 106, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .vdb-badge:hover {
     border-color: rgba(255, 106, 0, 0.4);
-    box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.1), 0 0 20px rgba(255, 106, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 0 0 1px rgba(255, 106, 0, 0.1),
+      0 0 20px rgba(255, 106, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 

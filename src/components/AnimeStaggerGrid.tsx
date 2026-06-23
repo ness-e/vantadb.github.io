@@ -33,7 +33,9 @@ export function AnimeStaggerGrid({ rows = 10, cols = 10, style }: Props) {
       easing: "easeInOutQuad",
     });
 
-    return () => { anim.pause(); };
+    return () => {
+      anim.pause();
+    };
   }, [rows, cols]);
 
   return (
@@ -49,10 +51,7 @@ export function AnimeStaggerGrid({ rows = 10, cols = 10, style }: Props) {
       }}
     >
       {Array.from({ length: rows * cols }).map((_, i) => (
-        <div
-          key={i}
-          className="stagger-dot stagger-dot-cell"
-        />
+        <div key={i} className="stagger-dot stagger-dot-cell" />
       ))}
     </div>
   );

@@ -31,7 +31,9 @@ export function AnimeMorphLogo({ size = 120, style }: Props) {
       loop: true,
     });
 
-    return () => { anim.pause(); };
+    return () => {
+      anim.pause();
+    };
   }, []);
 
   return (

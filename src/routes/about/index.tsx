@@ -5,17 +5,41 @@ export const Route = createFileRoute("/about/")({
   head: () => ({
     meta: [
       { title: "About VantaDB — The Database That Thinks With You" },
-      { name: "description", content: "Learn about VantaDB: an embeddable, open-source vector database built for AI agents, local RAG, and intelligent applications." },
+      {
+        name: "description",
+        content:
+          "Learn about VantaDB: an embeddable, open-source vector database built for AI agents, local RAG, and intelligent applications.",
+      },
     ],
   }),
   component: AboutIndex,
 });
 
 const sections = [
-  { title: "Company", desc: "Who we are, our values, and why we build VantaDB.", href: "/about/company", slug: "company" },
-  { title: "Roadmap", desc: "What we're building and where we're headed — transparent engineering milestones.", href: "/about/roadmap", slug: "roadmap" },
-  { title: "Community", desc: "Join the community. Contribute, ask questions, and help shape the future of embedded AI data.", href: "/about/community", slug: "community" },
-  { title: "Contact", desc: "Get in touch with the team. Enterprise inquiries, partnerships, or just to say hi.", href: "/about/contact", slug: "contact" },
+  {
+    title: "Company",
+    desc: "Who we are, our values, and why we build VantaDB.",
+    href: "/about/company",
+    slug: "company",
+  },
+  {
+    title: "Roadmap",
+    desc: "What we're building and where we're headed — transparent engineering milestones.",
+    href: "/about/roadmap",
+    slug: "roadmap",
+  },
+  {
+    title: "Community",
+    desc: "Join the community. Contribute, ask questions, and help shape the future of embedded AI data.",
+    href: "/about/community",
+    slug: "community",
+  },
+  {
+    title: "Contact",
+    desc: "Get in touch with the team. Enterprise inquiries, partnerships, or just to say hi.",
+    href: "/about/contact",
+    slug: "contact",
+  },
 ];
 
 function AboutIndex() {
@@ -24,11 +48,13 @@ function AboutIndex() {
       <header className="page-header-extended">
         <span className="section-eyebrow reveal">// About VantaDB</span>
         <h1 className="section-title reveal reveal-delay-1">
-          The database<br />
+          The database
+          <br />
           <span className="title-accent">that thinks with you.</span>
         </h1>
         <p className="section-sub desc-text reveal reveal-delay-2">
-          We're building the data infrastructure for the AI era — embedded, open-source, and engineered for sub-millisecond performance.
+          We're building the data infrastructure for the AI era — embedded, open-source, and
+          engineered for sub-millisecond performance.
         </p>
       </header>
 

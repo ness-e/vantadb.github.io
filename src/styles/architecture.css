@@ -116,8 +116,14 @@
   font-size: 0.8rem;
 }
 
-.spec-table-label { color: var(--foreground); font-weight: 600; }
-.spec-table-value { color: var(--amber); font-weight: 700; }
+.spec-table-label {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.spec-table-value {
+  color: var(--amber);
+  font-weight: 700;
+}
 
 .spec-table-desc {
   padding: 1.25rem 1rem;

@@ -21,7 +21,7 @@ export function useTextScramble() {
       update: () => {
         const revealed = Math.floor(state.p * length);
         let result = originalText.slice(0, revealed);
-        
+
         for (let i = revealed; i < length; i++) {
           if (originalText[i] === " ") {
             result += " ";
@@ -29,13 +29,13 @@ export function useTextScramble() {
             result += GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
           }
         }
-        
+
         el.innerText = result;
       },
       complete: () => {
         el.innerText = originalText;
         isScrambling.current = false;
-      }
+      },
     });
   }, []);
 

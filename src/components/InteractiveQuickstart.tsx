@@ -2,12 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { highlightCode, liveHighlight } from "./terminal-utils";
 
 const steps: {
-  title: string; label: string;
-  pythonCode: string; rustCode: string;
-  pythonOutput: string[]; rustOutput: string[];
+  title: string;
+  label: string;
+  pythonCode: string;
+  rustCode: string;
+  pythonOutput: string[];
+  rustOutput: string[];
 }[] = [
   {
-    title: "INSTALL", label: "pip install",
+    title: "INSTALL",
+    label: "pip install",
     pythonCode: "pip install vantadb-py",
     rustCode: 'cargo add vantadb\n# Cargo.toml\nvantadb = "0.1"',
     pythonOutput: [
@@ -20,7 +24,7 @@ const steps: {
       "✓ Ready for building target bindings",
     ],
     rustOutput: [
-      '$ cargo add vantadb',
+      "$ cargo add vantadb",
       "    Updating crates.io index",
       "      Adding vantadb v0.1.4 to dependencies",
       "✓ Pure Rust core, zero bindings layer",
@@ -28,7 +32,8 @@ const steps: {
     ],
   },
   {
-    title: "INITIALIZE", label: "Open local DB",
+    title: "INITIALIZE",
+    label: "Open local DB",
     pythonCode: 'import vantadb_py as vanta\n\ndb = vanta.VantaDB("./agent_memory")',
     rustCode: 'use vantadb::VantaDB;\n\nlet db = VantaDB::open("./agent_memory")?;',
     pythonOutput: [
@@ -46,7 +51,8 @@ const steps: {
     ],
   },
   {
-    title: "STORE", label: "Put record",
+    title: "STORE",
+    label: "Put record",
     pythonCode:
       'db.put(\n  "memories",\n  "key-1",\n  "Agent learned user prefers async Python",\n  vector=[0.12, 0.88, 0.54],\n  metadata={"priority": "high"}\n)',
     rustCode:
@@ -66,7 +72,8 @@ const steps: {
     ],
   },
   {
-    title: "SEARCH", label: "Hybrid search",
+    title: "SEARCH",
+    label: "Hybrid search",
     pythonCode:
       'hits = db.search_memory(\n  "memories",\n  query_vector=[0.11, 0.89, 0.55],\n  top_k=5\n)',
     rustCode:
@@ -115,7 +122,9 @@ export function InteractiveQuickstart() {
       await navigator.clipboard.writeText(code);
       setCopied(key);
       setTimeout(() => setCopied(null), 2000);
-    } catch { /* clipboard unavailable */ }
+    } catch {
+      /* clipboard unavailable */
+    }
   };
 
   const outColor = (line: string) =>
@@ -158,7 +167,9 @@ export function InteractiveQuickstart() {
         }, 300);
       }
     }, speed);
-    return () => { clearInterval(t); };
+    return () => {
+      clearInterval(t);
+    };
   }, [codeText, outputLines.length]);
 
   return (
@@ -176,12 +187,19 @@ export function InteractiveQuickstart() {
       <div className={`sp-layout ${ready ? "ready" : ""}`}>
         <nav className="sp-sidebar" aria-label="Quickstart steps">
           {steps.map((s, idx) => {
-            const status = activeIdx === idx ? "active" : completed.has(idx) ? "completed" : "pending";
+            const status =
+              activeIdx === idx ? "active" : completed.has(idx) ? "completed" : "pending";
             return (
-              <button key={idx} className={`sp-sidebar-item ${status}`} onClick={() => navigate(idx)}>
+              <button
+                key={idx}
+                className={`sp-sidebar-item ${status}`}
+                onClick={() => navigate(idx)}
+              >
                 <span className="sp-sidebar-num">{String(idx + 1).padStart(2, "0")}</span>
                 <span>{s.title}</span>
-                <span className={`sp-sidebar-icon ${status === "active" ? "active-dot" : status === "completed" ? "done-dot" : ""}`}>
+                <span
+                  className={`sp-sidebar-icon ${status === "active" ? "active-dot" : status === "completed" ? "done-dot" : ""}`}
+                >
                   {status === "active" ? "●" : status === "completed" ? "✓" : ""}
                 </span>
               </button>
@@ -193,7 +211,9 @@ export function InteractiveQuickstart() {
           <div className="tl-window">
             <div className="tl-titlebar">
               <div className="tl-dot-group">
-                <span className="tl-dot" /><span className="tl-dot" /><span className="tl-dot" />
+                <span className="tl-dot" />
+                <span className="tl-dot" />
+                <span className="tl-dot" />
               </div>
               <span className="tl-title">vantadb — interactive shell v0.1</span>
               <div className="tl-legend">
@@ -210,42 +230,95 @@ export function InteractiveQuickstart() {
               </div>
 
               <div className="sp-lang-tabs">
-                <button className={`sp-lang-tab ${lang === "python" ? "active" : ""}`} onClick={() => setLang("python")}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+                <button
+                  className={`sp-lang-tab ${lang === "python" ? "active" : ""}`}
+                  onClick={() => setLang("python")}
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
                   Python SDK
                 </button>
-                <button className={`sp-lang-tab ${lang === "rust" ? "active" : ""}`} onClick={() => setLang("rust")}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /></svg>
+                <button
+                  className={`sp-lang-tab ${lang === "rust" ? "active" : ""}`}
+                  onClick={() => setLang("rust")}
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
                   Rust Core (FFI)
                 </button>
               </div>
 
               <div className="sp-code-wrap" key={`code-${copyKey}`}>
-                <button className="sp-copy-btn" onClick={() => copyCode(copyKey, codeText)} aria-label="Copy code">
+                <button
+                  className="sp-copy-btn"
+                  onClick={() => copyCode(copyKey, codeText)}
+                  aria-label="Copy code"
+                >
                   {copied === copyKey ? (
                     <span className="sp-copied-label">Copied</span>
                   ) : (
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
                   )}
                 </button>
                 <div className="sp-code">
-                  {typingDone ? highlightCode(codeText, lang) : liveHighlight(codeText, typedCount, lang, true)}
+                  {typingDone
+                    ? highlightCode(codeText, lang)
+                    : liveHighlight(codeText, typedCount, lang, true)}
                 </div>
               </div>
 
               <div className="sp-output" key={`out-${copyKey}`}>
                 {outputLines.slice(0, outRevealed).map((line, lIdx) => (
-                  <div key={lIdx} className="sp-out-line" style={{ color: outColor(line) }}>{line}</div>
+                  <div key={lIdx} className="sp-out-line" style={{ color: outColor(line) }}>
+                    {line}
+                  </div>
                 ))}
-                {outRevealed > 0 && outRevealed <= outputLines.length && typingDone && <span className="typing-cursor typing-cursor--out">▊</span>}
+                {outRevealed > 0 && outRevealed <= outputLines.length && typingDone && (
+                  <span className="typing-cursor typing-cursor--out">▊</span>
+                )}
               </div>
             </div>
 
             <div className="term-footer">
               <span className="term-prompt">$</span>
-              <span className="term-query term-query--anim">MATCH (n) WHERE n.vector &lt;=&gt; [0.85, 0.12] RETURN n</span>
+              <span className="term-query term-query--anim">
+                MATCH (n) WHERE n.vector &lt;=&gt; [0.85, 0.12] RETURN n
+              </span>
               <span className="term-cursor-block" />
             </div>
           </div>

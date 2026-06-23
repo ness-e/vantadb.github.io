@@ -111,52 +111,40 @@ const VantaDBMark: React.FC<{
       {/* ── ACCRETION DISK / ORBIT RING ────────── */}
       {/* Ellipse centered on singularity vertex, tilted -12deg */}
       <g transform="rotate(-12, 32, 54)">
-      <ellipse
-        className="vdb-orbit"
-        cx="32"
-        cy="54"
-        rx="16"
-        ry="5.5"
-        stroke={accentColor}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.65} ${ORBIT_CIRCUMFERENCE * 0.35}`}
-      />
+        <ellipse
+          className="vdb-orbit"
+          cx="32"
+          cy="54"
+          rx="16"
+          ry="5.5"
+          stroke={accentColor}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.65} ${ORBIT_CIRCUMFERENCE * 0.35}`}
+        />
       </g>
 
       {/* ── SECONDARY ORBIT (outer, dimmer) ───── */}
       <g transform="rotate(-12, 32, 54)">
-      <ellipse
-        className="vdb-orbit vdb-orbit--outer"
-        cx="32"
-        cy="54"
-        rx="22"
-        ry="7.5"
-        stroke={accentColor}
-        strokeWidth="1"
-        strokeLinecap="round"
-        strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.4} ${ORBIT_CIRCUMFERENCE * 0.6}`}
-      />
+        <ellipse
+          className="vdb-orbit vdb-orbit--outer"
+          cx="32"
+          cy="54"
+          rx="22"
+          ry="7.5"
+          stroke={accentColor}
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeDasharray={`${ORBIT_CIRCUMFERENCE * 0.4} ${ORBIT_CIRCUMFERENCE * 0.6}`}
+        />
       </g>
 
       {/* ── SINGULARITY POINT (event horizon) ─── */}
       {/* Rendered last — always on top */}
-      <circle
-        className="vdb-singularity"
-        cx="32"
-        cy="54"
-        r="3.5"
-        fill={accentColor}
-      />
+      <circle className="vdb-singularity" cx="32" cy="54" r="3.5" fill={accentColor} />
 
       {/* ── INNER VOID (dark core inside singularity) */}
-      <circle
-        cx="32"
-        cy="54"
-        r="1.5"
-        fill="var(--background, #050507)"
-        className="vdb-void-core"
-      />
+      <circle cx="32" cy="54" r="1.5" fill="var(--background, #050507)" className="vdb-void-core" />
     </svg>
   );
 };

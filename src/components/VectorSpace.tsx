@@ -15,11 +15,13 @@ export function VectorSpace({ style, grid = true }: Props) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let W = 0, H = 0;
+    let W = 0,
+      H = 0;
     const particles: { x: number; y: number; vx: number; vy: number; r: number }[] = [];
     const COUNT = 80;
     const REPEL_RADIUS = 250;
-    let mouseX = -9999, mouseY = -9999;
+    let mouseX = -9999,
+      mouseY = -9999;
     let paused = false;
 
     const cvs = canvas;
@@ -102,7 +104,12 @@ export function VectorSpace({ style, grid = true }: Props) {
     resize();
     initParticles();
 
-    const obs = new IntersectionObserver(([entry]) => { paused = !entry.isIntersecting; }, { threshold: 0 });
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        paused = !entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
     obs.observe(cvs);
 
     gsap.ticker.add(draw);
@@ -112,8 +119,14 @@ export function VectorSpace({ style, grid = true }: Props) {
       mouseX = e.clientX - rect.left;
       mouseY = e.clientY - rect.top;
     };
-    const onLeave = () => { mouseX = -9999; mouseY = -9999; };
-    const onResize = () => { resize(); initParticles(); };
+    const onLeave = () => {
+      mouseX = -9999;
+      mouseY = -9999;
+    };
+    const onResize = () => {
+      resize();
+      initParticles();
+    };
 
     cvs.addEventListener("mousemove", onMove);
     cvs.addEventListener("mouseleave", onLeave);
@@ -128,11 +141,5 @@ export function VectorSpace({ style, grid = true }: Props) {
     };
   }, [grid]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="bg-canvas"
-      style={{ opacity: 0.6, ...style }}
-    />
-  );
+  return <canvas ref={canvasRef} className="bg-canvas" style={{ opacity: 0.6, ...style }} />;
 }

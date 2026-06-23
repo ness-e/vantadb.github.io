@@ -29,22 +29,22 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (triggerOnce && hasTriggered.current) return;
-            
+
             // Add a temporary decoding class for extra flair if defined in CSS
             el.classList.add("text-decoding");
             scramble(el, text, duration);
-            
+
             setTimeout(() => {
               el.classList.remove("text-decoding");
             }, duration);
-            
+
             hasTriggered.current = true;
           } else if (!triggerOnce) {
             hasTriggered.current = false;
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(el);

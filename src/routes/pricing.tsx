@@ -7,7 +7,11 @@ export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
       { title: "VantaDB — Pricing: Free. Open Core. Enterprise Ready." },
-      { name: "description", content: "VantaDB is MIT open core. Free tier for solo devs, Pro tier for teams, Enterprise for compliance-heavy deployments." },
+      {
+        name: "description",
+        content:
+          "VantaDB is MIT open core. Free tier for solo devs, Pro tier for teams, Enterprise for compliance-heavy deployments.",
+      },
     ],
   }),
   component: PricingPage,
@@ -69,13 +73,28 @@ const tiers = [
 ];
 
 const comparisonRows = [
-  { feature: "Deployment", free: "Single-node, embedded", pro: "Multi-node, embedded", ent: "On-prem, air-gapped" },
+  {
+    feature: "Deployment",
+    free: "Single-node, embedded",
+    pro: "Multi-node, embedded",
+    ent: "On-prem, air-gapped",
+  },
   { feature: "Vector limit", free: "10M", pro: "100M", ent: "Unlimited" },
-  { feature: "Query engines", free: "HNSW + IVF + BM25", pro: "HNSW + IVF + BM25 + hybrid RRF", ent: "All engines + custom" },
+  {
+    feature: "Query engines",
+    free: "HNSW + IVF + BM25",
+    pro: "HNSW + IVF + BM25 + hybrid RRF",
+    ent: "All engines + custom",
+  },
   { feature: "Replication", free: "None", pro: "WAL-based multi-node", ent: "WAL + geo-redundant" },
   { feature: "Auth", free: "None", pro: "API key", ent: "SSO / SAML / OIDC + RBAC" },
   { feature: "Audit log", free: "None", pro: "Basic", ent: "Full + compliance export" },
-  { feature: "Support", free: "Community (Discord)", pro: "Priority email + Discord", ent: "Dedicated SLA" },
+  {
+    feature: "Support",
+    free: "Community (Discord)",
+    pro: "Priority email + Discord",
+    ent: "Dedicated SLA",
+  },
   { feature: "License", free: "MIT", pro: "MIT", ent: "MIT + enterprise terms" },
 ];
 
@@ -86,7 +105,13 @@ function PricingPage() {
     <PageShell>
       <HeroSubpage
         eyebrow="// Pricing"
-        title={<>Free to build.<br />Fair to scale.</>}
+        title={
+          <>
+            Free to build.
+            <br />
+            Fair to scale.
+          </>
+        }
         subtitle="VantaDB is MIT open core. Start building with zero cost and zero friction. Upgrade only when your team needs replication, priority support, or compliance features."
         stats={[
           { value: "MIT", label: "Open core" },
@@ -104,9 +129,7 @@ function PricingPage() {
                 className={`pricing-card reveal ${tier.featured ? "pricing-card--featured" : ""}`}
                 style={{ transitionDelay: `${i * 0.08}s` }}
               >
-                {tier.featured && (
-                  <span className="pricing-badge">Most Popular</span>
-                )}
+                {tier.featured && <span className="pricing-badge">Most Popular</span>}
                 <div className="pricing-name">{tier.name}</div>
                 <div className="pricing-tagline">{tier.tagline}</div>
                 <div className="pricing-price-wrap">
@@ -171,10 +194,22 @@ function PricingPage() {
             <h2 className="section-title section-title--compact">Common questions</h2>
             <div className="pricing-faq-list">
               {[
-                { q: "Is VantaDB really free?", a: "Yes. The core engine is MIT licensed and free forever. No vector limits in the free tier (up to 10M), no hidden pricing, no per-query fees." },
-                { q: "What counts as a seat?", a: "A seat is one developer who compiles or deploys VantaDB. CI/CD agents, production replicas, and end users of your application do not count as seats." },
-                { q: "Can I use VantaDB in a commercial product?", a: "Yes. The MIT license allows unrestricted use, modification, and distribution. No royalties, no attribution required." },
-                { q: "Do you offer managed cloud hosting?", a: "VantaDB is designed to be embedded — we don't offer a cloud-hosted version. For managed infrastructure, the Enterprise tier includes deployment support and on-premise SLAs." },
+                {
+                  q: "Is VantaDB really free?",
+                  a: "Yes. The core engine is MIT licensed and free forever. No vector limits in the free tier (up to 10M), no hidden pricing, no per-query fees.",
+                },
+                {
+                  q: "What counts as a seat?",
+                  a: "A seat is one developer who compiles or deploys VantaDB. CI/CD agents, production replicas, and end users of your application do not count as seats.",
+                },
+                {
+                  q: "Can I use VantaDB in a commercial product?",
+                  a: "Yes. The MIT license allows unrestricted use, modification, and distribution. No royalties, no attribution required.",
+                },
+                {
+                  q: "Do you offer managed cloud hosting?",
+                  a: "VantaDB is designed to be embedded — we don't offer a cloud-hosted version. For managed infrastructure, the Enterprise tier includes deployment support and on-premise SLAs.",
+                },
               ].map((faq, i) => (
                 <div
                   key={faq.q}

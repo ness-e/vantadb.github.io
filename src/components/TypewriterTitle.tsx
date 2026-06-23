@@ -19,7 +19,10 @@ export function TypewriterTitle({ phase }: { phase: number | null }) {
   }, []);
 
   useEffect(() => {
-    if (phase === null) { setCharCount(0); return; }
+    if (phase === null) {
+      setCharCount(0);
+      return;
+    }
 
     const baseIdx = phase < phrases.length ? phase : 0;
     setCurrentIdx(baseIdx);
@@ -38,7 +41,10 @@ export function TypewriterTitle({ phase }: { phase: number | null }) {
       setCharCount(0);
       let ci = 0;
       const ti = setInterval(() => {
-        if (cancelled) { clearInterval(ti); return; }
+        if (cancelled) {
+          clearInterval(ti);
+          return;
+        }
         ci++;
         setCharCount(ci);
         if (ci >= full.length) {
@@ -46,12 +52,17 @@ export function TypewriterTitle({ phase }: { phase: number | null }) {
           setTimeout(() => {
             if (cancelled) return;
             const di = setInterval(() => {
-              if (cancelled) { clearInterval(di); return; }
+              if (cancelled) {
+                clearInterval(di);
+                return;
+              }
               ci--;
               setCharCount(ci);
               if (ci <= 0) {
                 clearInterval(di);
-                setTimeout(() => { if (!cancelled) cb(); }, GAP);
+                setTimeout(() => {
+                  if (!cancelled) cb();
+                }, GAP);
               }
             }, DEL_SPEED);
           }, PAUSE);
@@ -73,7 +84,9 @@ export function TypewriterTitle({ phase }: { phase: number | null }) {
       loop();
     }
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [phase]);
 
   const renderText = () => {
@@ -86,13 +99,9 @@ export function TypewriterTitle({ phase }: { phase: number | null }) {
       <>
         <span>{full.slice(0, Math.min(count, a))}</span>
         {count > a && (
-          <span className="text-highlight--amber">
-            {full.slice(a, Math.min(count, b))}
-          </span>
+          <span className="text-highlight--amber">{full.slice(a, Math.min(count, b))}</span>
         )}
-        {count > b && (
-          <span>{full.slice(b, count)}</span>
-        )}
+        {count > b && <span>{full.slice(b, count)}</span>}
       </>
     );
   };

@@ -62,10 +62,7 @@ export function EpochGCGrid() {
       style={{ gridTemplateColumns: `repeat(${COLS}, 10px)` }}
     >
       {Array.from({ length: ROWS * COLS }).map((_, i) => (
-        <div
-          key={i}
-          className="epoch-cell"
-        />
+        <div key={i} className="epoch-cell" />
       ))}
     </div>
   );

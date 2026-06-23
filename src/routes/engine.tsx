@@ -32,8 +32,16 @@ function GraphTopology() {
     { x: 460, y: 60, label: "namespace:db", size: 12 },
   ];
   const edges = [
-    [0, 1], [0, 3], [0, 2], [1, 4], [2, 4],
-    [2, 5], [3, 6], [4, 7], [1, 7], [2, 6],
+    [0, 1],
+    [0, 3],
+    [0, 2],
+    [1, 4],
+    [2, 4],
+    [2, 5],
+    [3, 6],
+    [4, 7],
+    [1, 7],
+    [2, 6],
   ];
 
   const isEdgeHighlighted = (a: number, b: number) => {
@@ -56,8 +64,10 @@ function GraphTopology() {
         <line
           key={i}
           className="graph-edge"
-          x1={nodes[a].x} y1={nodes[a].y}
-          x2={nodes[b].x} y2={nodes[b].y}
+          x1={nodes[a].x}
+          y1={nodes[a].y}
+          x2={nodes[b].x}
+          y2={nodes[b].y}
           stroke={isEdgeHighlighted(a, b) ? "rgba(139,158,183,0.8)" : "rgba(139,158,183,0.18)"}
           strokeWidth={isEdgeHighlighted(a, b) ? "2" : "1"}
         />
@@ -70,20 +80,26 @@ function GraphTopology() {
           onMouseLeave={() => setActiveNode(null)}
         >
           <circle
-            cx={n.x} cy={n.y} r={n.size * 3.5}
-            fill="url(#ng)" filter="url(#ng2)"
+            cx={n.x}
+            cy={n.y}
+            r={n.size * 3.5}
+            fill="url(#ng)"
+            filter="url(#ng2)"
             opacity={activeNode === i ? 1 : 0.6}
           />
           <circle
             className="graph-node-ring"
-            cx={n.x} cy={n.y} r={n.size}
+            cx={n.x}
+            cy={n.y}
+            r={n.size}
             fill="rgba(139,158,183,0.08)"
             stroke={activeNode === i ? "var(--steel)" : "rgba(139,158,183,0.4)"}
             strokeWidth="1"
           />
           <circle cx={n.x} cy={n.y} r={n.size * 0.45} fill="#FF6A00" />
           <text
-            x={n.x} y={n.y - n.size - 5}
+            x={n.x}
+            y={n.y - n.size - 5}
             textAnchor="middle"
             fill={activeNode === i ? "var(--foreground)" : "rgba(0,0,0,0.18)"}
             fontSize="8"
@@ -110,12 +126,8 @@ function RRFWeightsSlider() {
   return (
     <div className="slider-container">
       <div className="rrf-header">
-        <h4 className="rrf-title">
-          Interactive Reciprocal Rank Fusion (RRF) Planner
-        </h4>
-        <span className="rrf-latency">
-          PLANNER LATENCY: {queryLatency}ms
-        </span>
+        <h4 className="rrf-title">Interactive Reciprocal Rank Fusion (RRF) Planner</h4>
+        <span className="rrf-latency">PLANNER LATENCY: {queryLatency}ms</span>
       </div>
       <p className="rrf-description">
         Adjust the slider to balance lexical matching (BM25) and vector embedding similarity (HNSW).
@@ -128,7 +140,9 @@ function RRFWeightsSlider() {
       </div>
 
       <input
-        type="range" min="0" max="100"
+        type="range"
+        min="0"
+        max="100"
         value={bm25Weight}
         onChange={(e) => setBm25Weight(Number(e.target.value))}
         className="rrf-slider"
@@ -259,14 +273,15 @@ function ArchitecturePipeline() {
   return (
     <section className="engine-section reveal">
       <span className="section-eyebrow reveal">Pipeline</span>
-      <h2 className="section-title reveal reveal-delay-1">
-        End-to-End Engine Architecture
-      </h2>
+      <h2 className="section-title reveal reveal-delay-1">End-to-End Engine Architecture</h2>
       <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
-        Every query flows through a unified pipeline — from lexical parsing through
-        vector recall, fusion ranking, graph traversal, and finally durable persistence.
+        Every query flows through a unified pipeline — from lexical parsing through vector recall,
+        fusion ranking, graph traversal, and finally durable persistence.
       </p>
-      <div className="tactile-card reveal reveal-delay-3" style={{ padding: "2rem 1.5rem", overflowX: "auto" }}>
+      <div
+        className="tactile-card reveal reveal-delay-3"
+        style={{ padding: "2rem 1.5rem", overflowX: "auto" }}
+      >
         <div className="arch-pipeline-track">
           {stages.map((s, i) => (
             <div key={s.name} className="arch-pipeline-stage">
@@ -275,8 +290,20 @@ function ArchitecturePipeline() {
                 <div className="arch-pipeline-desc">{s.desc}</div>
               </div>
               {i < stages.length - 1 && (
-                <svg className="arch-pipeline-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14m-4-4l4 4-4 4" stroke="var(--subtle)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  className="arch-pipeline-arrow"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M5 12h14m-4-4l4 4-4 4"
+                    stroke="var(--subtle)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               )}
             </div>
@@ -297,18 +324,75 @@ function EnginePage() {
       content: (
         <div className="ss-panel-inner" style={{ maxWidth: 640 }}>
           <span className="section-eyebrow">01 — LEXICAL</span>
-          <h2 className="ss-title" style={{ fontSize: "clamp(2.5rem,5vw,3.5rem)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1rem" }}>BM25 Text Search</h2>
-          <p className="ss-desc" style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}>
-            Full-text lexical search at 1.2ms p99 with 100% recall. Zero infrastructure, one pip install.
+          <h2
+            className="ss-title"
+            style={{
+              fontSize: "clamp(2.5rem,5vw,3.5rem)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            BM25 Text Search
+          </h2>
+          <p
+            className="ss-desc"
+            style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}
+          >
+            Full-text lexical search at 1.2ms p99 with 100% recall. Zero infrastructure, one pip
+            install.
           </p>
           <div className="ss-metrics" style={{ display: "flex", gap: "2.5rem" }}>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>1.2ms</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>p99 latency</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                1.2ms
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                p99 latency
+              </span>
             </div>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>100%</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>recall</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                100%
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                recall
+              </span>
             </div>
           </div>
         </div>
@@ -319,18 +403,75 @@ function EnginePage() {
       content: (
         <div className="ss-panel-inner" style={{ maxWidth: 640 }}>
           <span className="section-eyebrow">02 — VECTOR</span>
-          <h2 className="ss-title" style={{ fontSize: "clamp(2.5rem,5vw,3.5rem)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1rem" }}>HNSW Vector Recall</h2>
-          <p className="ss-desc" style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}>
-            Hierarchical Navigable Small World graphs for sub-50ms approximate nearest neighbor search across 10M+ vectors.
+          <h2
+            className="ss-title"
+            style={{
+              fontSize: "clamp(2.5rem,5vw,3.5rem)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            HNSW Vector Recall
+          </h2>
+          <p
+            className="ss-desc"
+            style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}
+          >
+            Hierarchical Navigable Small World graphs for sub-50ms approximate nearest neighbor
+            search across 10M+ vectors.
           </p>
           <div className="ss-metrics" style={{ display: "flex", gap: "2.5rem" }}>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>M=16</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>connections/node</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                M=16
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                connections/node
+              </span>
             </div>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>Cosine</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>distance metric</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                Cosine
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                distance metric
+              </span>
             </div>
           </div>
         </div>
@@ -341,18 +482,75 @@ function EnginePage() {
       content: (
         <div className="ss-panel-inner" style={{ maxWidth: 640 }}>
           <span className="section-eyebrow">03 — FUSION</span>
-          <h2 className="ss-title" style={{ fontSize: "clamp(2.5rem,5vw,3.5rem)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1rem" }}>RRF Scoring</h2>
-          <p className="ss-desc" style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}>
-            Reciprocal Rank Fusion combines BM25 and HNSW rankings into a single relevance score with dynamic weight tuning.
+          <h2
+            className="ss-title"
+            style={{
+              fontSize: "clamp(2.5rem,5vw,3.5rem)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            RRF Scoring
+          </h2>
+          <p
+            className="ss-desc"
+            style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}
+          >
+            Reciprocal Rank Fusion combines BM25 and HNSW rankings into a single relevance score
+            with dynamic weight tuning.
           </p>
           <div className="ss-metrics" style={{ display: "flex", gap: "2.5rem" }}>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>2-in-1</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>search modes</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                2-in-1
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                search modes
+              </span>
             </div>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>98%</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>fused recall@10</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                98%
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                fused recall@10
+              </span>
             </div>
           </div>
         </div>
@@ -366,18 +564,75 @@ function EnginePage() {
       content: (
         <div className="ss-panel-inner" style={{ maxWidth: 640 }}>
           <span className="section-eyebrow">01 — PERSISTENCE</span>
-          <h2 className="ss-title" style={{ fontSize: "clamp(2.5rem,5vw,3.5rem)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1rem" }}>WAL Journal</h2>
-          <p className="ss-desc" style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}>
-            Append-only write-ahead log with CRC32C checksumming. Every mutation is fsynced before acknowledgment — zero data loss on power failure.
+          <h2
+            className="ss-title"
+            style={{
+              fontSize: "clamp(2.5rem,5vw,3.5rem)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            WAL Journal
+          </h2>
+          <p
+            className="ss-desc"
+            style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}
+          >
+            Append-only write-ahead log with CRC32C checksumming. Every mutation is fsynced before
+            acknowledgment — zero data loss on power failure.
           </p>
           <div className="ss-metrics" style={{ display: "flex", gap: "2.5rem" }}>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>CRC32C</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>integrity check</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                CRC32C
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                integrity check
+              </span>
             </div>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>fsync</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>on every write</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                fsync
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                on every write
+              </span>
             </div>
           </div>
         </div>
@@ -388,18 +643,75 @@ function EnginePage() {
       content: (
         <div className="ss-panel-inner" style={{ maxWidth: 640 }}>
           <span className="section-eyebrow">02 — RESILIENCE</span>
-          <h2 className="ss-title" style={{ fontSize: "clamp(2.5rem,5vw,3.5rem)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1rem" }}>Crash Recovery</h2>
-          <p className="ss-desc" style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}>
-            Automatic WAL replay on engine.open(). Checksum verification catches corruption before it reaches runtime indexes. Recovery completes in under 1ms.
+          <h2
+            className="ss-title"
+            style={{
+              fontSize: "clamp(2.5rem,5vw,3.5rem)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            Crash Recovery
+          </h2>
+          <p
+            className="ss-desc"
+            style={{ fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: 560 }}
+          >
+            Automatic WAL replay on engine.open(). Checksum verification catches corruption before
+            it reaches runtime indexes. Recovery completes in under 1ms.
           </p>
           <div className="ss-metrics" style={{ display: "flex", gap: "2.5rem" }}>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>&lt;1ms</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>recovery time</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                &lt;1ms
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                recovery time
+              </span>
             </div>
             <div className="ss-metric">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--amber)" }}>Auto</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--steel)", display: "block" }}>replay on open</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--amber)",
+                }}
+              >
+                Auto
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--steel)",
+                  display: "block",
+                }}
+              >
+                replay on open
+              </span>
             </div>
           </div>
         </div>
@@ -428,7 +740,8 @@ function EnginePage() {
                 Graph Topology
               </h2>
               <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
-                Hover nodes to explore the live knowledge graph. VantaDB stores directed weighted adjacency lists in-process — no external Graph servers required.
+                Hover nodes to explore the live knowledge graph. VantaDB stores directed weighted
+                adjacency lists in-process — no external Graph servers required.
               </p>
               <ul className="spec-list reveal reveal-delay-3">
                 {[
@@ -459,7 +772,8 @@ function EnginePage() {
                 Tune RRF Fusion Weights
               </h2>
               <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
-                Drag the slider to balance BM25 lexical weight against HNSW vector similarity. The RRF planner recomputes fused recall in real time.
+                Drag the slider to balance BM25 lexical weight against HNSW vector similarity. The
+                RRF planner recomputes fused recall in real time.
               </p>
               <ul className="spec-list reveal reveal-delay-3">
                 {[
@@ -491,7 +805,9 @@ function EnginePage() {
                 Durability: WAL + CRC32C Verification
               </h2>
               <p className="section-sub reveal reveal-delay-2 section-sub--mb-sm">
-                VantaDB guarantees ACID durability by forcing log flushes inside the Write-Ahead Log before returning write confirmations. Checksum validation prevents corrupted sectors from reaching runtime indexes.
+                VantaDB guarantees ACID durability by forcing log flushes inside the Write-Ahead Log
+                before returning write confirmations. Checksum validation prevents corrupted sectors
+                from reaching runtime indexes.
               </p>
               <ul className="spec-list reveal reveal-delay-3">
                 {[

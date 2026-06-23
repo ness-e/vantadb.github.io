@@ -201,16 +201,10 @@ hits = db.search_memory(
         <section className="int-section">
           <div className="reveal">
             <div className="int-header">
-              <h2 className="section-title section-title--no-mb">
-                {activeIntegration.name}
-              </h2>
-              <span className="int-tag">
-                {activeIntegration.tag}
-              </span>
+              <h2 className="section-title section-title--no-mb">{activeIntegration.name}</h2>
+              <span className="int-tag">{activeIntegration.tag}</span>
             </div>
-            <p className="section-sub section-sub--mb-sm">
-              {activeIntegration.desc}
-            </p>
+            <p className="section-sub section-sub--mb-sm">{activeIntegration.desc}</p>
 
             <pre className="code-block-premium">
               <button

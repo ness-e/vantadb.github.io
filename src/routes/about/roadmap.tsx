@@ -6,7 +6,11 @@ export const Route = createFileRoute("/about/roadmap")({
   head: () => ({
     meta: [
       { title: "VantaDB — Engineering Roadmap" },
-      { name: "description", content: "Transparent engineering roadmap for VantaDB. Track milestones, KPI targets, and architectural decisions for the embedded vector database." },
+      {
+        name: "description",
+        content:
+          "Transparent engineering roadmap for VantaDB. Track milestones, KPI targets, and architectural decisions for the embedded vector database.",
+      },
     ],
   }),
   component: RoadmapPage,
@@ -96,11 +100,7 @@ const phases = [
       "VantaDB Cloud beta + business model",
       "Pitch deck, enterprise pilots, case studies",
     ],
-    exitCriteria: [
-      "10+ enterprise pilots",
-      "$10K+ MRR",
-      "3+ published case studies",
-    ],
+    exitCriteria: ["10+ enterprise pilots", "$10K+ MRR", "3+ published case studies"],
   },
 ];
 
@@ -109,7 +109,13 @@ function RoadmapPage() {
     <PageShell>
       <HeroSubpage
         eyebrow="// Roadmap"
-        title={<>What we're building.<br />What's next.</>}
+        title={
+          <>
+            What we're building.
+            <br />
+            What's next.
+          </>
+        }
         subtitle="Transparent engineering milestones for VantaDB. No marketing dates — just quantitative exit criteria and honest status updates."
         stats={[
           { value: "4", label: "Phases completed" },
@@ -129,51 +135,141 @@ function RoadmapPage() {
                 borderBottom: i < phases.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
               }}
             >
-              <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "1rem" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 700, color: "var(--white)", letterSpacing: "-0.03em", margin: 0 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "1rem",
+                  marginBottom: "1rem",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.2rem",
+                    fontWeight: 700,
+                    color: "var(--white)",
+                    letterSpacing: "-0.03em",
+                    margin: 0,
+                  }}
+                >
                   {phase.name}
                 </h3>
-                <span style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.62rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: phase.label === "Completed" || phase.label === "In progress" ? "var(--amber)" : "var(--steel)",
-                  background: phase.label === "Completed" || phase.label === "In progress" ? "var(--amber-dim)" : "var(--surface)",
-                  padding: "0.15rem 0.6rem",
-                  borderRadius: "var(--radius-pill)",
-                }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.62rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color:
+                      phase.label === "Completed" || phase.label === "In progress"
+                        ? "var(--amber)"
+                        : "var(--steel)",
+                    background:
+                      phase.label === "Completed" || phase.label === "In progress"
+                        ? "var(--amber-dim)"
+                        : "var(--surface)",
+                    padding: "0.15rem 0.6rem",
+                    borderRadius: "var(--radius-pill)",
+                  }}
+                >
                   {phase.label}
                 </span>
               </div>
 
-              {'metrics' in phase && phase.metrics && (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "1rem" }}>
+              {"metrics" in phase && phase.metrics && (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: "1rem",
+                    marginBottom: "1rem",
+                  }}
+                >
                   {phase.metrics.map((m) => (
-                    <div key={m.label} style={{ background: "var(--surface)", padding: "1rem", borderRadius: "var(--radius-md)", border: "1px solid rgba(255,106,0,0.06)" }}>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--steel)", marginBottom: "0.3rem" }}>{m.label}</div>
-                      <div style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "var(--amber)" }}>{m.achieved}</div>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--steel-light)" }}>target: {m.target}</div>
+                    <div
+                      key={m.label}
+                      style={{
+                        background: "var(--surface)",
+                        padding: "1rem",
+                        borderRadius: "var(--radius-md)",
+                        border: "1px solid rgba(255,106,0,0.06)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.62rem",
+                          color: "var(--steel)",
+                          marginBottom: "0.3rem",
+                        }}
+                      >
+                        {m.label}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: "1.1rem",
+                          fontWeight: 700,
+                          color: "var(--amber)",
+                        }}
+                      >
+                        {m.achieved}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.62rem",
+                          color: "var(--steel-light)",
+                        }}
+                      >
+                        target: {m.target}
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
 
-              {'items' in phase && phase.items && (
+              {"items" in phase && phase.items && (
                 <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1rem" }}>
                   {phase.items.map((item) => (
-                    <li key={item} style={{ fontSize: "0.85rem", color: "var(--muted)", padding: "0.25rem 0", display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                      <span style={{ color: phase.label === "Completed" ? "var(--success)" : phase.label === "In progress" ? "var(--amber)" : "var(--steel)" }}>◆</span>
+                    <li
+                      key={item}
+                      style={{
+                        fontSize: "0.85rem",
+                        color: "var(--muted)",
+                        padding: "0.25rem 0",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.6rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color:
+                            phase.label === "Completed"
+                              ? "var(--success)"
+                              : phase.label === "In progress"
+                                ? "var(--amber)"
+                                : "var(--steel)",
+                        }}
+                      >
+                        ◆
+                      </span>
                       {item}
                     </li>
                   ))}
                 </ul>
               )}
 
-              {'exitCriteria' in phase && phase.exitCriteria && (
+              {"exitCriteria" in phase && phase.exitCriteria && (
                 <details style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem" }}>
-                  <summary style={{ color: "var(--steel)", cursor: "pointer", padding: "0.4rem 0" }}>Exit criteria</summary>
+                  <summary
+                    style={{ color: "var(--steel)", cursor: "pointer", padding: "0.4rem 0" }}
+                  >
+                    Exit criteria
+                  </summary>
                   <ul style={{ listStyle: "none", padding: "0.5rem 0 0 1rem", margin: 0 }}>
                     {phase.exitCriteria.map((c) => (
                       <li key={c} style={{ color: "var(--steel-light)", padding: "0.15rem 0" }}>
@@ -192,8 +288,9 @@ function RoadmapPage() {
             <span className="section-eyebrow">// Philosophy</span>
             <h2 className="section-title section-title--compact">How we build</h2>
             <p className="section-sub" style={{ margin: "0 auto" }}>
-              Engineering milestones, not marketing dates. Stability before features. Radical transparency —
-              roadmap is public, status updates are weekly, and known issues are documented. No surprises.
+              Engineering milestones, not marketing dates. Stability before features. Radical
+              transparency — roadmap is public, status updates are weekly, and known issues are
+              documented. No surprises.
             </p>
           </div>
         </section>

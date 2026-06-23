@@ -253,7 +253,9 @@
 }
 
 .graph-edge {
-  transition: stroke 150ms, stroke-width 150ms;
+  transition:
+    stroke 150ms,
+    stroke-width 150ms;
 }
 
 .graph-node-group {

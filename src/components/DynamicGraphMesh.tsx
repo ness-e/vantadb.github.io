@@ -14,12 +14,14 @@ export function DynamicGraphMesh({ style }: Props) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let W = 0, H = 0;
+    let W = 0,
+      H = 0;
     const nodes: { x: number; y: number; vx: number; vy: number; r: number }[] = [];
     const NODE_COUNT = 60;
     const CONNECT_DIST = 150;
     const REPEL_RADIUS = 180;
-    let mouseX = -9999, mouseY = -9999;
+    let mouseX = -9999,
+      mouseY = -9999;
     let paused = false;
 
     const cvs = canvas;
@@ -101,7 +103,12 @@ export function DynamicGraphMesh({ style }: Props) {
     resize();
     initNodes();
 
-    const obs = new IntersectionObserver(([entry]) => { paused = !entry.isIntersecting; }, { threshold: 0 });
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        paused = !entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
     obs.observe(cvs);
 
     const ticker = gsap.ticker.add(draw);
@@ -111,8 +118,14 @@ export function DynamicGraphMesh({ style }: Props) {
       mouseX = e.clientX - rect.left;
       mouseY = e.clientY - rect.top;
     };
-    const onLeave = () => { mouseX = -9999; mouseY = -9999; };
-    const onResize = () => { resize(); initNodes(); };
+    const onLeave = () => {
+      mouseX = -9999;
+      mouseY = -9999;
+    };
+    const onResize = () => {
+      resize();
+      initNodes();
+    };
 
     cvs.addEventListener("mousemove", onMove);
     cvs.addEventListener("mouseleave", onLeave);
@@ -127,11 +140,5 @@ export function DynamicGraphMesh({ style }: Props) {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="bg-canvas"
-      style={{ opacity: 0.7, ...style }}
-    />
-  );
+  return <canvas ref={canvasRef} className="bg-canvas" style={{ opacity: 0.7, ...style }} />;
 }

@@ -219,7 +219,7 @@
   display: grid;
   grid-template-columns: 80px repeat(4, 1fr);
   gap: 1px;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .chart-table-header {
@@ -253,7 +253,7 @@
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--foreground);
-  border-left: 1px solid rgba(255,255,255,0.03);
+  border-left: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .chart-table-col-vis {
@@ -268,7 +268,7 @@
   height: 6px;
   border-radius: 3px;
   background: var(--bar-color);
-  transition: width 1s cubic-bezier(0.23,1,0.32,1);
+  transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .chart-table-col-num {
@@ -305,20 +305,22 @@
 .stack-card {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-md);
   background: var(--surface);
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   border-left: 3px solid var(--accent, var(--amber));
 }
 
 .stack-card--single {
   border-left-color: var(--amber);
   background: var(--amber-dim);
-  border-color: rgba(255,106,0,0.15);
+  border-color: rgba(255, 106, 0, 0.15);
 }
 
 .stack-card-name {
@@ -374,7 +376,7 @@
   height: 12px;
   border-radius: 6px;
   overflow: hidden;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .latency-bar-fill--legacy {
@@ -382,7 +384,7 @@
   height: 100%;
   background: var(--crimson);
   border-radius: 6px 0 0 6px;
-  transition: width 1s cubic-bezier(0.23,1,0.32,1);
+  transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .latency-bar-fill--vanta {
@@ -390,7 +392,7 @@
   height: 100%;
   background: var(--amber);
   border-radius: 0 6px 6px 0;
-  transition: width 1s cubic-bezier(0.23,1,0.32,1);
+  transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .latency-bar-col--value {
@@ -400,8 +402,12 @@
   gap: 0.5rem;
 }
 
-.lb-legacy { color: var(--crimson); }
-.lb-vanta { color: var(--amber); }
+.lb-legacy {
+  color: var(--crimson);
+}
+.lb-vanta {
+  color: var(--amber);
+}
 
 .section-narrow {
   padding: 4rem 0;
@@ -718,7 +724,13 @@ section {
   bottom: 0;
   left: 3.75rem;
   width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--subtle) 5%, var(--subtle) 95%, transparent);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--subtle) 5%,
+    var(--subtle) 95%,
+    transparent
+  );
 }
 .cl-release {
   position: relative;

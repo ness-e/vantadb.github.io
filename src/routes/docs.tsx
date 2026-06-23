@@ -6,7 +6,11 @@ export const Route = createFileRoute("/docs")({
   head: () => ({
     meta: [
       { title: "VantaDB — Documentation" },
-      { name: "description", content: "Get started with VantaDB: embedded database for AI agents. Installation, quickstart, SDK reference, and guides." },
+      {
+        name: "description",
+        content:
+          "Get started with VantaDB: embedded database for AI agents. Installation, quickstart, SDK reference, and guides.",
+      },
     ],
   }),
   component: DocsPage,
@@ -197,12 +201,8 @@ function DocsPage() {
           >
             <div className="reveal">
               <span className="section-eyebrow reveal">// {s.title}</span>
-              <h2 className="section-title section-title--sm reveal reveal-delay-1">
-                {s.title}
-              </h2>
-              <p className="section-sub section-sub--mb reveal reveal-delay-2">
-                {s.desc}
-              </p>
+              <h2 className="section-title section-title--sm reveal reveal-delay-1">{s.title}</h2>
+              <p className="section-sub section-sub--mb reveal reveal-delay-2">{s.desc}</p>
             </div>
             <div className="tactile-card reveal reveal-delay-2" style={{ marginTop: "1.5rem" }}>
               <div className="term-window" style={{ border: "none", background: "transparent" }}>
@@ -212,8 +212,18 @@ function DocsPage() {
                   <span className="term-dot term-dot--green" />
                   <span className="term-label">{s.id}</span>
                 </div>
-                <pre style={{ margin: 0, padding: "1.25rem 1.5rem", fontSize: "0.8125rem", lineHeight: 1.6, overflowX: "auto" }}>
-                  <code style={{ fontFamily: "var(--font-mono)", color: "var(--steel)" }}>{s.code}</code>
+                <pre
+                  style={{
+                    margin: 0,
+                    padding: "1.25rem 1.5rem",
+                    fontSize: "0.8125rem",
+                    lineHeight: 1.6,
+                    overflowX: "auto",
+                  }}
+                >
+                  <code style={{ fontFamily: "var(--font-mono)", color: "var(--steel)" }}>
+                    {s.code}
+                  </code>
                 </pre>
               </div>
             </div>
