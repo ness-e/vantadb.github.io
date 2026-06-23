@@ -1,0 +1,265 @@
+/* ═══════════════════════════════════════════════════════════
+   VantaDB — Swiss Visualizations Stylesheet
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── DAGPlan ── */
+.dag-plan-container {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.dag-plan-header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--steel);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.dag-plan-prompt {
+  color: var(--amber);
+}
+
+.dag-plan-node-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.dag-plan-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.dag-plan-node {
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: default;
+  transition: all 150ms var(--ease-out);
+  text-align: center;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.dag-plan-node:hover {
+  border-color: var(--border-strong);
+  background: var(--amber-dim);
+}
+
+.dag-plan-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--amber);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.dag-plan-desc {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+.dag-plan-arrow {
+  position: absolute;
+  right: -0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--border);
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  z-index: 1;
+}
+
+.dag-plan-detail {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--void);
+  border: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  color: var(--frost);
+  line-height: 1.5;
+  animation: fadeIn 150ms var(--ease-out);
+}
+
+/* ── Flamegraph ── */
+.fg-outer {
+  width: 100%;
+}
+
+.fg-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--steel);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.fg-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  position: relative;
+}
+
+.fg-row {
+  display: flex;
+  width: 100%;
+  gap: 1px;
+  position: relative;
+}
+
+.framebar-inner {
+  flex: 1;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  cursor: default;
+  transition: background 150ms var(--ease-out);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  overflow: hidden;
+}
+
+.framebar-wrapper {
+  display: flex;
+  gap: 1px;
+}
+
+.framebar-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 150ms var(--ease-out);
+  color: var(--foreground);
+}
+
+.framebar-inner:hover .framebar-label {
+  color: var(--amber);
+}
+
+.framebar-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--amber);
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ── HNSW Isometric ── */
+.hnsw-container {
+  width: 100%;
+  height: 100%;
+  perspective: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hnsw-label {
+  position: absolute;
+  bottom: 8%;
+  font-size: 0.55rem;
+  font-family: var(--font-mono);
+  color: var(--steel);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ── Node canvas ── */
+.node-canvas {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--void);
+}
+
+.node {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-sm); /* Sharp squares */
+  background: var(--amber);
+  border: 1px solid var(--border-strong);
+  transform: translate(-50%, -50%);
+}
+
+.node-large {
+  width: 12px;
+  height: 12px;
+  background: var(--amber-light);
+}
+
+.node-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  transform: translate(8px, -50%);
+}
+
+/* ── Hybrid Cube ── */
+.hybrid-cube {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Graph Topology SVG ── */
+.graph-topology-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.graph-edge {
+  transition: stroke 150ms, stroke-width 150ms;
+}
+
+.graph-node-group {
+  cursor: pointer;
+}
+
+.graph-node-ring {
+  transition: stroke 150ms;
+}

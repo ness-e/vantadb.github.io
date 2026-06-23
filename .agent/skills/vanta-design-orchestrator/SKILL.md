@@ -1,11 +1,11 @@
 ---
 name: vanta-design-orchestrator
-description: Master orchestrator and role definition for local UI/UX design tools and skills. Integrates Krug UX, Impeccable CLI, Emil animation philosophy, Motion library, Anime.js, GSAP (8 skills), Three.js/Shader pipeline, SEO audit, mobile design patterns, video production (HyperFrames/Remotion), Theme Factory, Canvas Design, Algorithmic Art, and Brandkit.
+description: Master orchestrator and role definition for local UI/UX design tools, brand strategy, and skills. Integrates business model design, brand platform strategy, decision hierarchy (Business > Brand > Marketing > Design), Krug UX, Impeccable CLI, Emil animation philosophy, Motion library, Anime.js, GSAP (8 skills), Three.js/Shader pipeline, SEO audit, mobile design patterns, video production (HyperFrames/Remotion), Theme Factory, Canvas Design, Algorithmic Art, Brandkit, Visual Review pipeline (Playwright CLI + ImageMagick + pixelmatch + squoosh + sharp + CSS audit), image-edit, argent-screenshot-diff, and 5 skills.sh ecosystem skills (prototype, to-prd, handoff, extract-design-system, just-scrape).
 ---
 
 # Vanta Design Orchestrator
 
-Punto de entrada central para las **170+ habilidades de diseño** del workspace VantaDB. Define el perfil de rol, documenta cada herramienta en profundidad y establece el protocolo de orquestación para que todas trabajen en conjunto sin interferencias. Incluye **capas condicionales opcionales** que se activan según las necesidades del proyecto: Video, 3D Avanzado, y SEO + Mobile.
+Punto de entrada central para las **170+ habilidades de diseño** del workspace VantaDB, más **5 skills del ecosistema skills.sh** (prototype, to-prd, handoff, extract-design-system, just-scrape). Define el perfil de rol, documenta cada herramienta en profundidad y establece el protocolo de orquestación para que todas trabajen en conjunto sin interferencias. Incluye **capas condicionales opcionales** que se activan según las necesidades del proyecto: Video, 3D Avanzado, y SEO + Mobile.
 
 ---
 
@@ -32,6 +32,12 @@ Punto de entrada central para las **170+ habilidades de diseño** del workspace 
 >
 > **Investigación UX & Estrategia**
 > persona, empathy-map, journey-map, user-flow, sitemap, card-sort, tree-test, usability-test, a-b-test, heuristic, nielsen, krug, fitts, hick, miller, doherty, von-restorff, gestalt, proximity, similarity, closure, continuity, common-region, figure-ground, jtbd, jobs-to-be-done, competitive-analysis, benchmark, north-star, design-brief, design-principles, metrics, kpi, heart-framework, sus, nps, csat, task-completion, time-on-task, error-rate, conversion, retention, activation, churn, funnel, cohort, segment, qualitative, quantitative, interview, survey, diary-study, affinity-diagram, synthesis, insight, hypothesis, assumption, validation, discovery, ideation, diverge, converge, sprint, workshop, critique, review, retrospective, stakeholder, alignment, raci, okr.
+>
+> **Estrategia de Negocio y Marca**
+> business-model, modelo-de-negocio, bmc, canvas, value-proposition, propuesta-de-valor, customer-profile, value-map, pain-reliever, gain-creator, brand-platform, plataforma-de-marca, propósito, vision, mission, valores, brand-territory, territorio-de-marca, arquetipo, archetype, personalidad-de-marca, naming, nombre-de-marca, brand-strategy, jerarquía-de-decisiones, decision-hierarchy, desirability, feasibility, viability, deseabilidad, factibilidad, viabilidad, plan-de-activación, go-to-market, touchpoint, psicología-del-color, color-psychology, sensory-branding, identidad-sensorial, brand-scent, imperfectismo, adaptive-identity, identidad-adaptativa, brand-voice, voz-de-marca, tone-of-voice, tono, verbal-identity, design-metrics, métricas-de-diseño, CAC, LTV, brand-equity, HEART, OKR-diseño, lean-design, MVP, producto-mínimo-viable, pivot, build-measure-learn, trademark, marca-registrada, propiedad-intelectual, IP, legal-protection, contrato-de-diseño, ecodiseño, eco-design, prompt-engineering-estrategia, IA-en-diseño, human-curator, curador-humano, trends-2026, tendencias-diseño, ROAS, burn-rate, runway, MRR, ARR, NRR, share-of-search, AI-visibility, brand-documentation, brand-book, MIC, manual-identidad-visual, brand-guide, brand-kit, decision-log, discovery-diagnosis, digital-brand-manual, validación, hipótesis-de-diseño, evidence-based-design, 5-porqués, five-whys, causa-raíz, root-cause, triple-balance, identidad-fragmentada, diseño-modular, responsive-logo, brand-scalability, curaduría-humana, IA-responsable, gobernanza-IA, ethical-AI, productización-diseño, servicio-productizado, design-subscription, metodología-fija, capacitación-de-marca, etapa-formativa, brand-governance, escalabilidad-de-marca, prototype, prototipo-desechable, throwaway-code, to-prd, prd-desde-conversación, handoff-entre-agentes, handoff-docs, extract-design-system, extraer-tokens-sitio, design-token-extractor, reverse-engineer-design, just-scrape, scrapegraphai, raspado-web, extraer-contenido-web, web-scraper-ia.
+>
+> **Infraestructura y Herramientas Open Source**
+> playwright, puppeteer, browserless, duckduckgo-search, searxng, tavily, figma-api, github-api, satori, sharp, pillow, glypher, subfont, fonttools, svgo, lucide, phosphor, stylelint, purgecss, critters, lighthouse, axe-core, pa11y, storybook, shadcn-ui, radix-ui, threejs, lottie, rive, chroma-js, culori, tool-registry, herramientas-open-source, scraping, inspeccionar-página, extraer-css, optimizar-imágenes, optimizar-fuentes, auditar-accesibilidad, auditar-rendimiento, generar-og-image, crowler, navegador-headless, buscador-web, meta-search.
 
 > Bajo este rol, tu comportamiento se regirá por:
 >
@@ -50,6 +56,7 @@ No todos los proyectos necesitan todas las capas. Al iniciar una tarea de diseñ
 - **Video** — ¿El proyecto incluye producción de video, motion graphics o composiciones animadas? (HyperFrames, Remotion)
 - **3D Avanzado** — ¿El proyecto usa escenas Three.js complejas, shaders personalizados o geometría 3D interactiva?
 - **SEO + Mobile** — ¿El proyecto necesita optimización SEO, diseño mobile-first o estrategia de visibilidad en buscadores/LLMs?
+- **Visual Review** — ¿El proyecto necesita revisión visual automatizada (screenshots, CSS audit, diff, optimización de assets)?
 
 ### Flujo de decisión
 
@@ -66,8 +73,12 @@ graph TD
     SIGUE2 --> PSEO
     PSEO{¿Incluye SEO o Mobile?} -->|Sí| C11[Carga CAPA 11 - SEO + Mobile]
     PSEO -->|No| SIGUE3[Saltar CAPA 11]
-    C11 --> FLUJO
-    SIGUE3 --> FLUJO
+    C11 --> PVR
+    SIGUE3 --> PVR
+    PVR{¿Incluye visual review?} -->|Sí| C12[Carga CAPA 12 - Visual Review]
+    PVR -->|No| SIGUE4[Saltar CAPA 12]
+    C12 --> FLUJO
+    SIGUE4 --> FLUJO
     FLUJO[Flujo estándar CAPA 1-8]
 
     style INICIO fill:#1a1a2e,stroke:#16213e,color:#e0e0e0
@@ -77,6 +88,8 @@ graph TD
     style C9 fill:#2a2a1a,stroke:#4a4a2a,color:#fff
     style C10 fill:#1a2a2a,stroke:#2a4a4a,color:#fff
     style C11 fill:#2a1a2a,stroke:#4a2a4a,color:#fff
+    style PVR fill:#2a1a2a,stroke:#4a2a4a,color:#fff
+    style C12 fill:#1a2a2a,stroke:#2a4a4a,color:#fff
     style FLUJO fill:#1e1e24,stroke:#3a3a3a,color:#fff
 ```
 
@@ -98,9 +111,67 @@ Cuando el usuario pide algo, el agente NO usa una sola skill — combina varias 
 | **Escena 3D / WebGL** | `threejs-fundamentals` → `threejs-geometry` → `threejs-materials` → `threejs-interaction` → `threejs-animation` → `threejs-shaders` (solo si se necesita efecto no-PBR) | Mantener 60fps. Fallback `prefers-reduced-motion`. No cargar todos — solo los que apliquen al caso |
 | **SEO completo** | `roier-seo` (auditoría técnica) → `ai-seo` (AI visibility) → `seo` (correcciones on-page) | Para proyecto nuevo, integrar desde el inicio. Para existente, correr roier-seo primero |
 | **App mobile** (iOS/Android nativo o responsive) | `sleek-design-mobile-apps` → `ui-design` (responsive-design, spacing) → `interaction-design` (gestos, touch targets, Fitts) → `ux-heuristics` (mobile usability) | Verificar en 3 tamaños (4.7", 6.1", 6.7"). Touch targets 44×44pt mínimo |
+| **Estrategia de contenido / UX writing** | `strategy/brand-platform.md` → `strategy/verbal-identity.md` (voz + tono) → `strategy/content-strategy.md` (auditoría + modelo + governance) → `writing-guidelines` (auditar) → `ai-seo` (optimizar) | El contenido es diseño. Cada palabra es una decisión de UX |
+| **Crítica de diseño estructurada** | `infrastructure/design-critique-templates.md` (elegir plantilla: rápida, completa, heurística, a11y, marca, motion, copy) → skill de auditoría correspondiente → `impeccable` (polish) → `plan-design-review` (reporte) | Usar plantilla según contexto. Siempre priorizar hallazgos por severidad |
+| **Estrategia de marca / brand platform** | `strategy/business-model-design.md` (BMC + VPC) → `strategy/brand-platform.md` (propósito, visión, valores, territorio, arquetipos) → `strategy/decision-hierarchy.md` (Biz > Brand > Mkt > Design) → `strategy/verbal-identity.md` (voz + tono) | Empieza por el modelo de negocio, no por el logo. Solo después pasar a `brandkit` para ejecución visual |
+| **Business Model Canvas** | `strategy/business-model-design.md` (BMC completo) → `strategy/decision-hierarchy.md` (mapear diseño a bloques críticos) → `strategy/lean-design.md` (MVP scope) | Si el BMC no está definido, detener diseño y preguntar. Sin modelo de negocio claro, el diseño no tiene dirección |
+| **Naming de producto/marca** | `strategy/brand-platform.md` (territorio + personalidad → criterios de naming) → `strategy/legal-protection.md` (búsqueda de anterioridad, clases de Niza) → `reference-design-contract` | Verificar disponibilidad legal ANTES de diseñar el logo. El naming debe ser registrable |
+| **Psicología del color / paleta estratégica** | `strategy/sensory-identity.md` (psicología + significado por industria) → `ui-ux-pro-max` (paleta HSL/OKLCH) → `ui-design` (color-system con compliance WCAG) | Cada color debe justificarse psicológicamente. No elegir colores por gusto personal |
+| **Guía de voz y tono (verbal identity)** | `strategy/verbal-identity.md` (dimensiones de voz, matriz de tono por canal) → `strategy/brand-platform.md` (alinear con territorio) → `designer-toolkit/ux-writing` (microcopy) → `writing-guidelines` (auditar) | La voz es constante. El tono varía por canal y contexto. Documentar ambas |
+| **MVP / Lean Design** | `strategy/lean-design.md` (definir hipótesis + MVP scope) → `strategy/business-model-design.md` (validar contra BMC) → `prototyping-testing` (plan de validación) → Fase 1-2 (ejecución mínima) | No diseñar features que no validan la hipótesis core. Postergar animaciones y pulido |
+| **Métricas de diseño / ROI** | `strategy/metrics-framework.md` (CAC, LTV, HEART, brand equity) → `strategy/business-model-design.md` (vincular a BMC) → `design-ops/design-impact-reporting` | Toda decisión de diseño debe trazarse a una métrica. Si no se puede medir, no se implementa |
+| **Métricas financieras** (ROAS, Burn Rate, Runway, MRR, ARR, NRR) | `strategy/metrics-framework.md` §3-4 (ROAS + CASH metrics) → `strategy/business-model-design.md` (vincular a BMC) → `design-ops/design-impact-reporting` | Segmentar por stage de empresa: Seed (Runway/Burn) → Series A (MRR/NRR) → Series B+ (Share of Search, AI Visibility) |
+| **Share of Search / AI Visibility** | `strategy/metrics-framework.md` §1 (Share of Search + AI Visibility) → `ai-seo` (llms.txt, OKF, AI citations) → `seo` (structured data) | SoS correlaciona con market share a 3-6 meses. Trackear en ChatGPT/Claude/Perplexity |
+| **Diagnóstico de marca completo** (Discovery & Diagnosis) | `strategy/brand-documentation.md` §1 (Discovery & Diagnosis) → `strategy/business-model-design.md` (BMC) → `strategy/brand-platform.md` (Brand Platform draft) → `strategy/legal-protection.md` (Risk assessment) → `strategy/brand-operations.md` (RACI + Stress testing) | Ejecutar ANTES de diseñar cualquier activo. Stakeholder alignment es requisito para avanzar |
+| **Brand Book** (manual aspiracional de marca) | `strategy/brand-documentation.md` §2 (Brand Book structure) → `strategy/brand-platform.md` (Brand Soul) → `strategy/verbal-identity.md` (sección 5) → `strategy/sensory-identity.md` (secciones 2-3) → `brandkit` (board visual preliminar) → `canvas-design` (assets finales) | 30-50 páginas. Formato vivo (web + PDF). Mostrar, no decir: cada regla con ejemplo ✅/❌ |
+| **MIC — Manual de Identidad Visual** (Brand Guide técnico) | `strategy/brand-documentation.md` §3 (MIC structure) → `strategy/sensory-identity.md` (color specs OKLCH/HEX/CMYK/Pantone, shape psychology, logo classification) → `ui-ux-pro-max` (paleta + tipografía técnica) → `design-systems` (tokens) | 15-25 páginas. La audiencia son diseñadores y desarrolladores. Incluir motion tokens, WCAG ratios, dark mode values |
+| **Manual de Marca Digital** | `strategy/brand-documentation.md` §4 (Digital Manual) → `design-systems` (tokens digitales) → `ui-design` (responsive specs) → `strategy/sensory-identity.md` (color values por medio) | Cubre web, email, social, video, ads, docs. Dark mode nativo obligatorio |
+| **Brand Kit** (repositorio de activos) | `strategy/brand-documentation.md` §6 (Brand Kit structure) → `brandkit` (generar board) → `canvas-design` (assets finales) → `design-systems` (tokens export) | Publicar en Google Drive / Brandfolder / GitHub. Versionar con semver. README con licencia de uso |
+| **Decision Log de marca** | `strategy/brand-documentation.md` §5 (Decision Log format) → `design-md` (documentar) → `strategy/brand-operations.md` (RACI + governor) | Registrar toda decisión de diseño con fundamento estratégico. Crítico para evitar deriva de marca |
+| **Auditoría de consistencia de marca** | `strategy/brand-platform.md` (brand platform como referencia) → `strategy/verbal-identity.md` (voz real vs documentada) → `visual-critique` (consistencia visual) → `strategy/legal-protection.md` (verificar registrabilidad) | Auditoría completa: estrategia + visual + verbal + legal |
+| **Protección legal de marca** | `strategy/legal-protection.md` (trademark, copyright, trade dress) → `strategy/brand-platform.md` (naming clearance) → `reference-design-contract` (contrato) | Ejecutar antes de lanzar. El 100% de los assets debe tener cobertura legal |
+| **Sonic branding / identidad sonora** | `strategy/sonic-kinetic-identity.md` (sonic logo + sistema adaptativo) → `strategy/brand-platform.md` (alinear con territorio) → producción de audio externa | El sonic logo debe ser reconocible en 2-5 notas, flexible para UI sounds y brand track, y compatible con asistentes de voz |
+| **Kinetic typography** | `strategy/sonic-kinetic-identity.md` (patrones + técnica) → `motion` o `animejs` (según framework) → `design-motion-principles` (auditar) | GPU-accelerated (transform + opacity). `prefers-reduced-motion` obligatorio. Variable fonts preferidos |
+| **Co-branding / convivencia de marca** | `strategy/brand-operations.md` (jerarquía, proporciones, clear space) → `strategy/brand-platform.md` (alinear territorio) → `brand-guidelines` | Siempre preguntar: ¿quién lidera? Definir proporción 60:40, 50:50 o 80:20 según el rol |
+| **Identity stress testing** | `strategy/brand-operations.md` (6 tests: favicon, monochrome, thermal, blur, cluttered, extreme sizing) → `canvas-design` (variantes correctas) → `design-md` | No lanzar sin pasar el favicon test (16×16) y el monochrome test (1-bit) |
+| **RACI / gobernanza operativa** | `strategy/brand-operations.md` (RACI matrix + SLA) → `design-ops` (workflow setup) | Definir Responsible/Accountable/Consulted/Informed para cada activo de marca |
+| **Changelog de marca** | `strategy/brand-operations.md` (formato semver) → `design-md` (documentar) → publicación en web de marca | Semver estricto. Público. Cada cambio vinculado a issue/ticket |
+| **Engineering as marketing** | `strategy/brand-operations.md` (herramientas gratuitas) → `strategy/business-model-design.md` (alinear con BMC) → Lovable/Bolt/v0 para construir | Buscar keywords "calculator", "free tool", "checker" en el nicho. 500+ búsquedas/mes mínimo |
+| **Churned analysis** | `strategy/brand-operations.md` (metodología + entrevistas) → `strategy/metrics-framework.md` (métricas) → `design-research` (entrevistas) | Segmentar churn por etapa: onboarding, feature usage, support, UX friction |
+| **Elevator pitch** | `strategy/brand-operations.md` (fórmula + variantes) → `strategy/brand-platform.md` (alinear con plataforma de marca) | "Para [PÚBLICO], [MARCA] es la [CATEGORÍA] que [BENEFICIO] porque [RAZÓN DE CREER]" |
+| **Validación de hipótesis de diseño** (Ciclo de Validación) | `strategy/validation-sustainability.md` §1 (hipótesis → MVP → validación → escalar/pivotar) → `strategy/lean-design.md` (MVP scope) → `prototype` (throwaway code para test rápido) → `prototyping-testing` (test plan) → `strategy/metrics-framework.md` (medir impacto) | Toda feature es una hipótesis hasta que se valida con n>500. Postergar animaciones y branding hasta validar. Usar `prototype` para explorar lógica o variantes UI antes de invertir en producción |
+| **Prototipo desechable** (throwaway code para preguntas de diseño) | `prototype` (2 ramas: terminal para lógica/estado, UI variations para exploración visual) → `strategy/validation-sustainability.md` §1 (integrar hallazgos al ciclo) → `frontend-design` (producción) | Elegir rama según la pregunta: "¿funciona esta lógica?" → terminal app; "¿cómo se ve?" → UI variations múltiples en una ruta. Eliminar el prototipo una vez validado |
+| **PRD desde conversación** | `to-prd` (sintetizar conversación → PRD estructurado + issues) → `strategy/business-model-design.md` (validar contra BMC) → `strategy/decision-hierarchy.md` (alinear prioridades) | El PRD debe vincular cada feature a una métrica o hipótesis. Publicar directamente al tracker de issues |
+| **Handoff entre agentes** | `handoff` (documento de handoff estructurado) → skill destino según la tarea | Usar cuando se pasa contexto de un agente a otro. Incluir decisión log, estado actual, y siguientes pasos explícitos |
+| **Test A/B Estratégico** | `strategy/validation-sustainability.md` §1.5 (filosofías de producto, no colores) → `design-research` (entrevistas post-test) → `strategy/metrics-framework.md` (métricas vinculadas) | Comenzar por tests estratégicos (filosofía de producto) antes que visuales. Registrar todo |
+| **5 Porqués / Causa Raíz** | `strategy/validation-sustainability.md` §2 (5 Whys + brechas de experiencia) → `design-research` (entrevistas profundas) → `strategy/business-model-design.md` (revisar BMC) | Aplicar en discovery, post-mortem de features, y análisis de churn. No parar en el primer "por qué" |
+| **Triple Balance** (Deseabilidad × Factibilidad × Viabilidad) | `strategy/validation-sustainability.md` §3 (matriz de decisión 3×3) → `strategy/business-model-design.md` (viabilidad económica) → `strategy/decision-hierarchy.md` (jerarquía de decisiones) | Evaluar antes de cada fase de diseño. Si un pilar falla, detener y re-planificar |
+| **Identidad Adaptativa / Escalabilidad** | `strategy/validation-sustainability.md` §4 (responsive logo, color adaptativo, identidad fragmentada) → `strategy/sensory-identity.md` (color specs por medio) → `ui-ux-pro-max` (tokens responsivos) → `design-systems` (tokens adaptativos) | Sistema de 3 variantes de logo. Dark mode como default. Probar en favicon 16×16 antes de lanzar |
+| **Curaduría Humana / IA Responsable** | `strategy/validation-sustainability.md` §6 (8 reglas de gobernanza IA) → `strategy/trends-2026.md` (IA genera → humano cura) → `strategy/legal-protection.md` (licencias IP) | Toda generación IA debe ser curada por un humano. Revelar al cliente qué partes son asistidas por IA |
+| **Productización de servicios de diseño** | `strategy/validation-sustainability.md` §7 (scope fijo → pricing → etapa formativa) → `strategy/brand-documentation.md` §4-6 (Brand Kit + Manual Digital) → plataforma de cobro recurrente | Vender resultados, no horas. Incluir capacitación al cliente (plantillas Canva + tutorial) |
+| **Inspeccionar sitio web / extraer diseño de referencia** | Playwright (headless browser + CSS computed) + `infrastructure/tool-registry.md` §1 (browser automation) + Trafilatura (contenido) + DuckDuckGo Search (referencias) + `extract-design-system` (reverse-engineer tokens → JSON+CSS) | Renderizar SPA, extraer tokens de diseño de competidores, capturar screenshots de secciones específicas. `extract-design-system` genera tokens.css listo para importar |
+| **Extraer tokens de diseño de sitio público** | `extract-design-system` (npx extract-design-system <url>) → chroma.js (convertir a OKLCH) → `design-systems` (formalizar tokens) → `ui-ux-pro-max` (paleta técnica) | Extraer colors, typography, spacing, radius, shadows de cualquier sitio web público. Útil para competitive analysis o inspiración. Salida: tokens.json + tokens.css |
+| **Raspar / extraer contenido web con IA** | `just-scrape` (just-scrape extract/search/scrape/crawl) → Trafilatura (marcdown estructurado) + `infrastructure/tool-registry.md` §2 (web search) | Search web, scrape single page, crawl docs, extraer JSON estructurado. Útil para competitive intelligence, research, content audits |
+| **Buscar componentes / librerías / código ejemplo** | GitHub API (code search) + DuckDuckGo Search + `infrastructure/tool-registry.md` §2 (web search) + SearXNG (meta search) | Buscar en `raw.githubusercontent.com` implementaciones de referencia. 5,000 requests/hora gratis |
+| **Optimizar assets para producción** | Glypher (font subsetting) + Sharp (image resizing/WebP) + SVGO (SVG optimization) + PurgeCSS (CSS unused) + `infrastructure/tool-registry.md` §7-9 | Reducir fuentes de 200KB→5KB, imágenes a WebP/AVIF, SVG -50% tamaño, CSS -90% |
+| **Generar OG image / social card programática** | Satori (HTML+CSS → SVG) + Sharp (SVG → PNG) + `infrastructure/tool-registry.md` §6 (image generation) | OG images dinámicas 1200×630. Social cards para cada página sin diseño manual |
+| **Estrategia de accesibilidad completa** | `strategy/accessibility-strategy.md` (estándares + checklist) → `ui-design` (aplicar) → `ux-heuristics` (evaluar) → `web-design-guidelines` (compliancia) → `infrastructure/tool-registry.md` §10 (auditar) | WCAG 2.2 AA mínimo. Incluir desde discovery, no post-lanzamiento |
+| **Auditar accesibilidad WCAG completa** | axe-core (violaciones + sugerencias) + Pa11y (CLI auditoría) + Lighthouse CI (score gate) + `infrastructure/tool-registry.md` §10 (a11y) | Gate de calidad obligatorio. No publicar con violaciones WCAG 2.2 AA |
+| **Auditar performance (Lighthouse)** | Lighthouse CI (performance + SEO + best practices) + Critters (critical CSS inline) + `infrastructure/tool-registry.md` §9 (CSS performance) | Score mínimo 90 en Performance, Accessibility, SEO. Gate CI/CD |
+| **Extraer tokens de diseño de Figma** | Figma REST API (JSON completo de nodos) + `infrastructure/tool-registry.md` §3 (design APIs) + chroma.js (convertir colores a OKLCH) | Leer archivos públicos Figma para inspiración o extraer design system existente |
+| **Componentes UI base para proyecto** | shadcn/ui (init + components) + Radix UI (primitives headless) + `infrastructure/tool-registry.md` §11 (component tools) | Copiar + customizar. Accesibilidad WCAG incorporada. Custom styling vía tokens |
+| **Color science avanzada** | chroma.js (interpolación, escalas, contraste) + culori (OKLCH nativo, 10KB) + `infrastructure/tool-registry.md` §13 (color science) | Paletas programáticas, verificación WCAG, conversión entre espacios de color |
 | **Sistema de diseño / tokens** | `design-systems` (tokenize) → `ui-ux-pro-max` (paleta + tipografía) → `ui-design` (color-system, type-scale, spacing-system) → `design-systems` (component-spec, accessibility-audit) | El flujo produce `MASTER.md` con tokens globales → semánticos → de componente |
 | **Formulario / onboarding / flujo** | `interaction-design` (form-design, state-machine, onboarding-design) → `ux-heuristics` (prevención de errores, recuperación) → `frontend-design` (estructura semántica) → `ui-design` (visual) | State machine primero (idle → loading → success/error), luego UI |
-| **Refactor / rediseño** | `impeccable` (shape → audit → polish) → `visual-critique` → `design-motion-principles` (si hay animaciones existentes) → `ui-ux-pro-max` (si cambia identidad) → `web-design-guidelines` | No tocar lo que funciona. `audit` primero para diagnosticar |
+| **Refactor / rediseño** | `impeccable` (shape → audit → polish) → `visual-critique` → `design-motion-principles` (si hay animaciones existentes) → `visual-review` (capturar + auditar CSS + diff) → `ui-ux-pro-max` (si cambia identidad) → `web-design-guidelines` | No tocar lo que funciona. `audit` primero para diagnosticar |
+| **Visual review / inspección visual** (capturar, auditar, detectar errores visuales) | `visual-review` (SKILL.md + scripts) → `screenshot` (captura) → `screenshots-marketing` (marketing shots) → `full-page-screenshot` (full page CDP) → `image-edit` (post-process) → `image-manipulation-image-magick` (ImageMagick pipeline) | Pipeline autónomo: el agente captura, audita y repara sin intervención. Ver `.agent/skills/visual-review/` |
+| **Auditoría CSS visual automática** (contraste, font-size, overflow, heading hierarchy, touch targets) | `visual-review/scripts/audit-css.mjs` (playwright-cli eval) → leer reporte → `impeccable` (fix) → `visual-review-pipeline` (re-auditar) | El agente corrige basado en el reporte. Sin necesidad de que el usuario describa el error |
+| **Visual regression testing** (comparar screenshots actual vs baseline) | `visual-review/scripts/visual-regression.mjs` (pixelmatch diff) → `image-manipulation-image-magick` (ImageMagick montage) → analizar diff → corregir | Detectar regresiones visuales no intencionales post-cambio |
+| **Optimizar imágenes para producción** | `visual-review/scripts/optimize-assets.mjs` (squoosh + cwebp + sharp + ImageMagick) → verificar tamaño → integrar en build | Pipeline: PNG→strip, JPG→WebP/AVIF, compresión lossless |
+| **Procesar imágenes con ImageMagick** | `image-manipulation-image-magick` (SKILL.md) → `magick convert/resize/composite/montage/compare` | Redimensionar, overlay, diff, convertir formatos, añadir bordes/texto |
+| **Editar imágenes con IA** (generar, editar, upscale, restaurar) | `image-edit` (SKILL.md) → `fal-image-edit` → `fal-upscale` → `fal-restore` | Post-procesado de screenshots o assets con IA |
+| **Comparar screenshots** (pixel diff visual regression) | `argent-screenshot-diff` (SKILL.md) → `visual-review/scripts/visual-regression.mjs` (pixelmatch) → reporte diff | Detectar cambios visuales entre commits |
+| **Pipe completo: ver página → detectar errores → corregir** | `visual-review/scripts/visual-review-pipeline.mjs` (screenshots + CSS audit + report) → leer issues → `impeccable` (fix) → re-ejecutar pipeline para confirmar | Ciclo autónomo sin intervención del usuario |
 | **Timeline / SVG / stagger** (animaciones coreografiadas, morphing SVG) | `animejs` (timeline API, stagger grid, SVG morph) → `motion` (si necesita integración React) → `design-motion-principles` (audit) | `animejs` es la opción correcta para SVG pesado, timelines con posicionamiento relativo y stagger avanzado desde centro/grid |
 | **Branding / Logo / Identidad** | `brandkit` (brand-kit overview image, logo system) → `canvas-design` (design philosophy + .png/.pdf output) → `algorithmic-art` (generative logo animation via p5.js) → `theme-factory` (aplicar paleta/tipografía a slides o decks) | brandkit genera la board visual; canvas-design crea assets finales; algorithmic-art anima el logo; theme-factory estiliza presentaciones |
 | **Arte generativo / abstracto** | `algorithmic-art` (p5.js generative, seeded randomness, interactive viewer) → `canvas-design` (static art, print-ready .pdf) | algorithmic-art produce HTML interactivo; canvas-design produce PDF/PNG estático para impresión |
@@ -170,10 +241,10 @@ Cuando el usuario pide algo, el agente NO usa una sola skill — combina varias 
 
 > 💡 **Regla**: Cada tarea carga MÍNIMO 2-3 skills. Nunca resolver un pedido complejo con una sola skill.
 >
-> 🔗 **Routing detallado**: Ver `routing/ROUTING.md` para la tabla maestra de 50+ combinaciones.
-> 📦 **Presets**: Ver `configs/project-presets.json` para 18 configuraciones predefinidas por tipo de proyecto.
+> 🔗 **Routing detallado**: Ver `routing/ROUTING.md` para la tabla maestra de 95+ combinaciones.
+> 📦 **Presets**: Ver `configs/project-presets.json` para 20 configuraciones predefinidas por tipo de proyecto.
 > 🔧 **Script**: Ejecutar `scripts/skill-bridge.ps1` para listar skills, rutas, y detectar conflictos.
-> 📖 **Ejemplos**: Ver `examples/examples.md` para 10 patrones de uso combinado.
+> 📖 **Ejemplos**: Ver `examples/examples.md` para 20 patrones de uso combinado (incluye workflows con skills.sh ecosystem).
 > 🏭 **Workflows**: Ver `workflows/` para pipelines completos listos para usar.
 
 ---
@@ -767,6 +838,94 @@ graph LR
 
 ### ──────────────────────────────────────────
 
+### CAPA 12 — VISUAL REVIEW [OPCIONAL]
+
+### ──────────────────────────────────────────
+
+> ⚠️ **Capa condicional.** Se activa SOLO si el proyecto necesita revisión visual automatizada (screenshots, CSS audit, visual regression, optimización de assets). Preguntar al usuario al iniciar la tarea.
+
+Esta capa proporciona un pipeline autónomo para que el agente capture, audite, detecte errores visuales y los corrija sin intervención del usuario.
+
+### Stack de herramientas
+
+| Herramienta | Rol |
+|---|---|
+| **Playwright CLI** | Screenshots full-page en múltiples viewports + inspección DOM + console errors |
+| **ImageMagick** (`magick.exe`) | Redimensionar, comparar (diff), overlay, convertir formatos |
+| **Libwebp** (`cwebp.exe`) | Convertir PNG/JPEG → WebP |
+| **sharp-cli** | Procesamiento rápido de imágenes (redimensionar, metadatos) |
+| **pixelmatch + pngjs** | Diff pixel-level para visual regression testing |
+| **@squoosh/cli** | Compresión con códecs modernos (avif, webp2) |
+
+### Skills del ecosistema
+
+| Skill | Installs | Rol |
+|---|---|---|
+| `image-edit` (agentspace-so) | 271K | Edición de imágenes con IA |
+| `image-manipulation-image-magick` (github) | 9.2K | Conocimiento de ImageMagick para el agente |
+| `argent-screenshot-diff` (software-mansion) | 2K | Screenshot diffing para regression |
+
+### Scripts del módulo visual-review
+
+- **`visual-review-pipeline.mjs`** — Pipeline completo: captura screenshots (3 viewports) → corre CSS audit → genera reporte HTML con issues priorizados
+- **`audit-css.mjs`** — Eval script para Playwright: chequea contrast ratio, font-size mínimo, heading hierarchy, overflow, touch targets, console errors
+- **`visual-regression.mjs`** — Compara screenshots actual vs baseline con pixelmatch, reporta diferencias
+- **`optimize-assets.mjs`** — Optimiza imágenes en build output (squoosh + cwebp + sharp + ImageMagick)
+
+### Flujo Visual Review
+
+```mermaid
+graph LR
+    CAPTURE[Capturar screenshots<br/>3 viewports] -->|playwright-cli| AUDIT[CSS Audit<br/>font-size, contraste,<br/>headings, overflow]
+    AUDIT -->|audit-css.mjs| REPORT[Reporte HTML<br/>issues priorizados]
+    CAPTURE --> SCREENSHOTS[PNG assets]
+    SCREENSHOTS -->|optimize-assets.mjs| OPTIMIZED[WebP/AVIF<br/>optimizados]
+    REPORT -->|leer issues| FIX[Agente corrige]
+    FIX -->|re-ejecutar| CAPTURE
+
+    style CAPTURE fill:#1a1a2e,stroke:#16213e,color:#e0e0e0
+    style AUDIT fill:#2a1a1a,stroke:#4a2a2a,color:#fff
+    style REPORT fill:#1a2a1a,stroke:#2a4a2a,color:#fff
+    style SCREENSHOTS fill:#1a2a2a,stroke:#2a4a4a,color:#fff
+    style OPTIMIZED fill:#2a1a2a,stroke:#4a2a4a,color:#fff
+    style FIX fill:#1e241e,stroke:#2f4a2f,color:#fff
+```
+
+### Modo de uso autónomo
+
+El agente ejecuta este pipeline sin intervención del usuario:
+
+```bash
+# 1. Pipeline completo
+node .agent/skills/visual-review/scripts/visual-review-pipeline.mjs \
+  --url http://localhost:3000 \
+  --routes /,/about,/pricing,/blog,/docs,/download
+
+# 2. Leer reporte HTML generado en screenshots/visual-review-report.html
+# 3. Aplicar fixes según issues detectados
+# 4. Re-ejecutar pipeline para confirmar
+# 5. Optimizar assets
+node .agent/skills/visual-review/scripts/optimize-assets.mjs --input dist/assets
+```
+
+### Criterios de auditoría CSS
+
+| Check | Regla | Severidad |
+|---|---|---|
+| Font-size mínimo | Texto < 11px | warn |
+| Contraste | Opacidad < 0.3 en texto | warn |
+| Heading hierarchy | Skip de nivel (h2→h4) | warn |
+| Touch targets | < 44×44px | info |
+| Alt text | Img sin alt o alt="" | info |
+| Overflow | Elementos clip-eados | info |
+| Console errors | Cualquier error JS | error |
+
+---
+
+
+
+### ──────────────────────────────────────────
+
 ### CAPA 12 — BRANDING, ARTE GENERATIVO Y TEMATIZACIÓN
 
 ### ──────────────────────────────────────────
@@ -846,18 +1005,38 @@ Skills importadas del repositorio [nexu-io/open-design](https://github.com/nexu-
 
 ### Archivos auxiliares del orquestador
 
-El orquestador incluye los siguientes archivos para facilitar el uso de las 170+ skills:
+El orquestador incluye los siguientes archivos para facilitar el uso de las 170+ skills (13 documentos de estrategia):
 
 | Archivo | Propósito |
 |:--------|:----------|
-| `configs/project-presets.json` | 18 presets de proyecto con fases y skills recomendadas |
-| `routing/ROUTING.md` | Tabla maestra de 50+ combinaciones de skills por tarea |
-| `examples/examples.md` | 10 ejemplos de uso combinado con tiempos estimados |
+| `strategy/business-model-design.md` | Business Model Canvas, Value Proposition Canvas, JTBD, diagnóstico competitivo |
+| `strategy/brand-platform.md` | Plataforma de marca (propósito, visión, misión, valores, territorio, arquetipos) + naming estratégico |
+| `strategy/decision-hierarchy.md` | Jerarquía Business > Brand > Marketing > Design + Deseabilidad × Factibilidad × Viabilidad |
+| `strategy/sensory-identity.md` | Psicología del color avanzada, formas, identidad sensorial 360°, imperfectismo curado |
+| `strategy/verbal-identity.md` | Voz de marca, tono por contexto, jerarquía de contenido, CTAs, glosario editorial |
+| `strategy/metrics-framework.md` | CAC, LTV, brand equity, Share of Search, AI Visibility, ROAS, HEART framework, reducción de fricción, OKRs de diseño, CASH metrics (Burn Rate, Runway, MRR, ARR, NRR) |
+| `strategy/lean-design.md` | MVP, Build-Measure-Learn, pivotaje, validación antes de perfección |
+| `strategy/legal-protection.md` | Trademark, copyright, naming clearance, IP, contratos de diseño, IA legal |
+| `strategy/trends-2026.md` | Identidades adaptativas, ecodiseño, imperfectismo, prompt engineering estratégico, gobernanza de IA |
+| `strategy/sonic-kinetic-identity.md` | Sonic branding (logo sonoro, sistema sonoro adaptativo, audio attribution) + kinetic typography (variable fonts, scroll-driven, GSAP, accesibilidad) |
+| `strategy/brand-operations.md` | Co-branding rules, RACI matrix, brand changelog, identity stress testing, logo classification (logotipo/isotipo/imagotipo/isologo), elevator pitch formula, churned analysis, engineering as marketing, selective specialization |
+| `strategy/brand-documentation.md` | Sistema completo de documentación de marca: Discovery & Diagnosis, Brand Book, MIC (Brand Guide técnico), Manual de Marca Digital, Decision Log, Brand Kit |
+| `strategy/validation-sustainability.md` | Validación empírica (evidencia, MVP, test A/B estratégico), 5 Porqués, Triple Balance, escalabilidad, curaduría humana, IA responsable, productización de servicios de diseño |
+| `strategy/content-strategy.md` | Estrategia de contenido: auditoría, modelo, UX writing system, governance, RACI, ciclo de vida |
+| `strategy/accessibility-strategy.md` | Estrategia de accesibilidad: WCAG 2.2 AA, checklist visual/componentes, herramientas, RACI, CI/CD |
+| `infrastructure/tool-registry.md` | Catálogo de 40+ herramientas gratuitas/open-source para browser automation, búsqueda web, APIs de diseño, agent frameworks, parsing HTML, generación de imágenes, font manipulation, SVG/iconos, CSS optimization, accesibilidad, componentes, 3D/animación, color science |
+| `infrastructure/design-critique-templates.md` | Plantillas de crítica de diseño: rápida, completa, heurística, accesibilidad, marca, motion, copy |
+| `configs/project-presets.json` | 20 presets de proyecto con fases y skills recomendadas |
+| `routing/ROUTING.md` | Tabla maestra de 95+ combinaciones de skills por tarea |
+| `examples/examples.md` | 20 ejemplos de uso combinado con tiempos estimados |
 | `workflows/landing-page-pipeline.json` | Pipeline completo de landing page (12 fases) |
 | `workflows/brand-identity-pipeline.json` | Pipeline completo de identidad de marca (11 fases) |
 | `workflows/video-production-pipeline.json` | Pipeline completo de producción de video (9 fases) |
 | `scripts/skill-bridge.ps1` | CLI PowerShell para listar skills, categorías, presets y conflictos |
 | `scripts/skill-inventory.json` | Inventario completo de las 170+ skills por categoría |
+| `strategy/SUMMARY.md` | Índice rápido de los 13 documentos estratégicos |
+| `infrastructure/analytics-setup.md` | Instrumentación de métricas: GA4, Plausible, event tracking, funnels |
+| `infrastructure/developer-handoff.md` | Especificaciones para implementación: redlines, tokens, assets |
 
 ---
 
@@ -867,6 +1046,7 @@ Para evitar contradicciones visuales o técnicas al utilizar todas las habilidad
 
 ```mermaid
 graph TD
+    P0[Pre-Fase 0: Business Strategy & Brand Foundation] -->|BMC, Brand Platform, Jerarquía| P
     P[Pre-Fase: Discovery & Research] -->|Personas, IA, Principios| A
     A[Fase 1: Estructura y UX] -->|Wireframes, Semántica, Trunk Test| B
     B[Fase 2: Identidad Visual y Tokens] -->|HSL/OKLCH, Tipografía, Anti-Slop| C
@@ -877,7 +1057,9 @@ graph TD
     C9[CAPA 9 - Video] -.->|opcional| F3
     C10[CAPA 10 - 3D Avanzado] -.->|opcional| F3
     C11[CAPA 11 - SEO + Mobile] -.->|opcional| F4
+    C12[CAPA 12 - Visual Review] -.->|opcional| F4
 
+    style P0 fill:#2a1a0e,stroke:#4a2a1e,stroke-width:2px,color:#fff
     style P fill:#1a1a2e,stroke:#16213e,stroke-width:2px,color:#e0e0e0
     style A fill:#1e1e24,stroke:#3a3a3a,stroke-width:2px,color:#fff
     style B fill:#241d24,stroke:#4a2f4a,stroke-width:2px,color:#fff
@@ -888,6 +1070,12 @@ graph TD
     style C10 fill:#1a2a2a,stroke:#2a4a4a,stroke-width:1px,color:#aaa,stroke-dasharray: 5 5
     style C11 fill:#2a1a2a,stroke:#4a2a4a,stroke-width:1px,color:#aaa,stroke-dasharray: 5 5
 ```
+
+### Pre-Fase 0: Business Strategy & Brand Foundation
+
+- **Skills:** `strategy/business-model-design.md` + `strategy/brand-platform.md` + `strategy/decision-hierarchy.md` + `strategy/lean-design.md`
+- **Acción:** Definir el modelo de negocio (BMC), propuesta de valor (Value Proposition Canvas), plataforma de marca (propósito, visión, misión, valores, territorio, arquetipos), y jerarquía de decisiones (Business > Brand > Marketing > Design). Validar viabilidad económica del proyecto antes de diseñar. Aplicar Lean Design para priorizar hipótesis críticas.
+- **Criterio de salida:** BMC completo con los 9 bloques definidos. Value Proposition Canvas con Customer Profile + Value Map. Brand platform documentada (propósito, visión, misión, 3-5 valores, territorio). Arquetipo primario + secundario seleccionados. Decision hierarchy documentada. MVP scope definido con hipótesis de validación.
 
 ### Pre-Fase: Discovery & Research
 
@@ -903,9 +1091,9 @@ graph TD
 
 ### Fase 2: Identidad Visual y Estilos (Tokens)
 
-- **Skills:** `ui-ux-pro-max` + `design-systems` + `ui-design` + `awesome-claude-design` + `sleek-design-mobile-apps` (si mobile)
-- **Acción**: Genera paleta HSL/OKLCH con `ui-ux-pro-max`. Formaliza tokens con `design-systems`. Aplica color system, typography scale, spacing system y layout grid con `ui-design`. Verifica contra Anti-Slop con `awesome-claude-design`. Elige familia estética. Si aplica mobile-first, incorpora patrones de `sleek-design-mobile-apps`.
-- **Criterio de salida**: `MASTER.md` generado. Todos los valores visuales usan tokens. Contraste AA verificado. Slop test pasado.
+- **Skills:** `strategy/sensory-identity.md` (psicología del color + forma) + `strategy/verbal-identity.md` (voz/tono → sistema editorial) + `ui-ux-pro-max` + `design-systems` + `ui-design` + `awesome-claude-design` + `sleek-design-mobile-apps` (si mobile)
+- **Acción**: Valida que la paleta de color esté fundamentada en psicología del color (85% de decisiones de compra) con `strategy/sensory-identity.md`. Define la voz y tono de marca con `strategy/verbal-identity.md`. Genera paleta HSL/OKLCH con `ui-ux-pro-max`. Formaliza tokens con `design-systems`. Aplica color system, typography scale, spacing system y layout grid con `ui-design`. Verifica contra Anti-Slop con `awesome-claude-design`. Elige familia estética. Si aplica mobile-first, incorpora patrones de `sleek-design-mobile-apps`.
+- **Criterio de salida**: `MASTER.md` generado. Todos los valores visuales usan tokens. Contraste AA verificado. Slop test pasado. Cada color tiene justificación psicológica. Voz y tono documentados en guía editorial.
 
 ### Fase 3: Interacciones, Movimiento y 3D (Motion & WebGL)
 
@@ -921,7 +1109,8 @@ graph TD
 - **Skills base:** `impeccable` + `visual-critique` + `web-design-guidelines` + `writing-guidelines` + `react-best-practices` + `vercel-optimize` + `design-ops` (sub: `design-qa-checklist`)
 - **Acción base**: Corre `/impeccable audit` → `/impeccable polish`. Ejecuta `/visual-critique:critique-screen`. Verifica guidelines de Vercel. Revisa copy con `writing-guidelines`. Optimiza React con reglas CRITICAL/HIGH. QA checklist de `design-ops`.
 - **Si CAPA 11 (SEO + Mobile) activa:** Corre `roier-seo` para auditoría Lighthouse → `ai-seo` para optimización AI visibility (OKF/llms.txt) → `seo` para correcciones on-page (meta tags, structured data, sitemap). Valida diseño mobile con `sleek-design-mobile-apps` en 3 tamaños de dispositivo.
-- **Criterio de salida**: Slop test pasado. Todas las críticas visuales en `pass`. WCAG AA compliant. Waterfalls eliminados. Copy revisado. Scores Lighthouse >90 si CAPA 11 activa.
+- **Si CAPA 12 (Visual Review) activa:** Corre `visual-review/scripts/visual-review-pipeline.mjs` para capturar screenshots en 3 viewports + auditoría CSS automática (contraste, font-size, heading hierarchy, overflow, touch targets, console errors). Revisa reporte HTML generado, aplica fixes con `impeccable`, re-ejecuta pipeline para confirmar. Optimiza assets finales con `visual-review/scripts/optimize-assets.mjs`.
+- **Criterio de salida**: Slop test pasado. Todas las críticas visuales en `pass`. WCAG AA compliant. Waterfalls eliminados. Copy revisado. Scores Lighthouse >90 si CAPA 11 activa. 0 errores de consola. Sin texto <11px. Headings sin skip de nivel. Touch targets ≥44×44px si CAPA 12 activa.
 
 ---
 
@@ -935,6 +1124,19 @@ Cuando dos skills dan directrices contradictorias, se resuelven en este orden de
 4. **Anti-Slop** (`impeccable`, `awesome-claude-design`, `design-motion-principles`) — Si pasa usabilidad pero es genérico, se refina.
 5. **SEO** (`roier-seo`, `ai-seo`, `seo`) — Si hay conflicto entre estética y visibilidad en buscadores, optimizar para ambos manteniendo accesibilidad.
 6. **Estética** (`ui-design`, `emil-design-eng`, `visual-critique`, `sleek-design-mobile-apps`) — Lo visual se adapta a los constraints anteriores.
+
+### Reglas específicas para conflictos estratégicos
+
+| Conflicto | Resolución |
+|:----------|:-----------|
+| `business-model` vs pet project del stakeholder | La data del BMC y VPC tienen prioridad sobre opiniones personales. Si el stakeholder insiste, documentar como "decisión basada en preferencia, no en evidencia" |
+| `brand-platform` (visión/misión) vs `trends-2026` (estética trendy) | La plataforma de marca tiene prioridad sobre tendencias. No adoptar un trend que contradiga el territorio de marca. El trend se adapta a la marca, no al revés |
+| `lean-design` (MVP) vs `impeccable` (perfección visual) | Un MVP funcional tiene prioridad sobre un diseño perfecto. Aplicar `impeccable audit` básico (accesibilidad, contraste) pero postergar pulido fino a iteraciones posteriores |
+| `decision-hierarchy` (Business > Brand > Marketing > Design) vs petición directa de diseño | Si el usuario pide diseño sin contexto estratégico, el orquestador debe detenerse y preguntar: "Entiendo que necesitas un diseño, pero ¿cuál es el modelo de negocio, la propuesta de valor y el territorio de marca? Sin esto, el diseño no tiene dirección estratégica" |
+| `sensory-identity` (color psychology) vs preferencia personal del cliente | La psicología del color tiene prioridad sobre gustos personales. Explicar: "El azul genera confianza, que es lo que tu fintech necesita. Cambiarlo a morado porque 'te gusta más' reduciría conversión basado en data de comportamiento" |
+| `legal-protection` vs urgencia de lanzamiento | No lanzar un nombre o logo sin verificación de disponibilidad legal. El costo de rebranding forzado es 10x el costo de verificación preventiva |
+| `metrics-framework` (CAC/LTV) vs preferencia estética | Si un cambio estético no mejora métricas, no implementarlo. Si empeora métricas, revertirlo. El diseño debe demostrar ROI |
+| `verbal-identity` vs copy creativo del equipo | La voz de marca es ley. Todo copy debe pasar por el filtro de voz/tono antes de producción. Si el equipo creativo se desvía, documentar la desviación |
 
 ### Reglas específicas para capas opcionales
 

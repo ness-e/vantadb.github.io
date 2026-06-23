@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VantaDB — boceto v2 · Cinematic Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: dark; scroll-behavior: smooth; }
+    body {
+      background: #050507;
+      color: oklch(97% 0.005 85);
+      font-family: 'Outfit', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --bg:       #050507;
+      --surface:  oklch(6% 0.012 265);
+      --raised:   oklch(10% 0.014 265);
+      --fg:       oklch(97% 0.005 85);
+      --muted:    oklch(45% 0.025 240);
+      --amber:    #ff6a00;
+      --amber-dim: rgba(255,106,0,0.12);
+      --steel:    oklch(68% 0.04 240);
+      --border:   oklch(18% 0.015 265);
+      --border2:  oklch(26% 0.018 265);
+      --radius:   8px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body:    'Outfit', system-ui, sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+    }
+
+    ::selection { background: var(--amber-dim); color: var(--fg); }
+
+    /* ── scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 2px; }
+
+    /* ── nav mock ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+      background: rgba(5,5,7,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo mark {
+      background: var(--amber);
+      color: var(--bg);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 450;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta {
+      background: var(--amber);
+      color: var(--bg) !important;
+      padding: 6px 16px;
+      border-radius: var(--radius);
+      font-weight: 600 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.04em !important;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 120px 2rem 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(255,106,0,0.05), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 70% 80%, rgba(139,158,183,0.03), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-code {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 20px 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.01em;
+    }
+    .hero-code .prompt { color: var(--amber); }
+    .hero-code .cursor {
+      display: inline-block;
+      width: 6px; height: 14px;
+      background: var(--amber);
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .accent { color: var(--amber); }
+    .hero p {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions {
+      display: flex; gap: 12px; align-items: center;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--amber);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--border2); color: var(--fg); }
+
+    /* ── section base ── */
+    section { padding: 6rem clamp(1.5rem, 4vw, 3rem); max-width: 1200px; margin: 0 auto; }
+    .section-wide { max-width: 100%; padding: 6rem clamp(1.5rem, 4vw, 3rem); }
+    .section-dark { background: var(--surface); }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .section-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-h2 .highlight { color: var(--amber); }
+    .section-desc {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .cta-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--amber);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .cta-link:hover { opacity: 0.75; }
+
+    /* ── Metrics strip ── */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .metric-card {
+      background: var(--surface);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--amber);
+    }
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-top: 6px;
+    }
+    .metric-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Split layout ── */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .split-left { position: sticky; top: 100px; }
+
+    /* ── Engine panels ── */
+    .engine-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .engine-card {
+      background: var(--surface);
+      padding: 1.75rem;
+    }
+    .engine-card:hover { background: var(--raised); }
+    .engine-step {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 4px;
+    }
+    .engine-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .engine-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .engine-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .engine-tag {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: var(--amber-dim);
+      color: var(--amber);
+    }
+
+    /* ── Arch stack ── */
+    .arch-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .arch-layer {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .arch-layer:hover { border-color: var(--border2); }
+    .arch-layer-icon {
+      width: 36px; height: 36px;
+      border-radius: 6px;
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      flex-shrink: 0;
+    }
+    .arch-layer:nth-child(1) .arch-layer-icon { background: rgba(255,106,0,0.15); color: var(--amber); }
+    .arch-layer:nth-child(2) .arch-layer-icon { background: rgba(139,158,183,0.15); color: var(--steel); }
+    .arch-layer:nth-child(3) .arch-layer-icon { background: rgba(255,106,0,0.1); color: var(--amber); }
+    .arch-layer:nth-child(4) .arch-layer-icon { background: rgba(139,158,183,0.1); color: var(--steel); }
+    .arch-layer:nth-child(5) .arch-layer-icon { background: rgba(255,106,0,0.08); color: var(--amber); }
+    .arch-layer-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .arch-layer-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ── Integration grid ── */
+    .int-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .int-card {
+      background: var(--surface);
+      padding: 1.5rem;
+    }
+    .int-card:hover { background: var(--raised); }
+    .int-card-top {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+    }
+    .int-icon {
+      width: 32px; height: 32px;
+      border-radius: 6px;
+      background: var(--amber-dim);
+      display: grid; place-items: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+    .int-name {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .int-protocol {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      color: var(--steel);
+      margin-top: 2px;
+    }
+    .int-badge {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: var(--amber-dim);
+      color: var(--amber);
+      display: inline-block;
+    }
+
+    /* ── Use case grid ── */
+    .uc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .uc-card {
+      background: var(--surface);
+      padding: 1.75rem;
+    }
+    .uc-card:hover { background: var(--raised); }
+    .uc-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: start;
+    }
+    .uc-step {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .uc-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 4px 0 8px;
+    }
+    .uc-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .uc-tags {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .uc-tag {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: var(--amber-dim);
+      color: var(--amber);
+    }
+
+    /* ── data flow diagram (pure CSS ── */
+    .flow-diagram {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+    }
+    .flow-node {
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      background: var(--amber-dim);
+      color: var(--amber);
+      white-space: nowrap;
+    }
+    .flow-arrow {
+      color: var(--border2);
+      font-size: 0.8rem;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,106,0,0.06), transparent);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .cta-section .highlight { color: var(--amber); }
+    .cta-section p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto 2rem;
+    }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; }
+
+    /* ── code block ── */
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    .code-block .kw { color: var(--amber); }
+    .code-block .str { color: var(--steel); }
+    .code-block .cm { color: var(--muted); font-style: italic; }
+    .code-block .fn { color: var(--amber); }
+
+    /* ── divider ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    /* ── pip install bar ── */
+    .pip-bar {
+      display: inline-flex; align-items: center; gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .pip-bar .prefix {
+      padding: 8px 0 8px 14px;
+      color: var(--muted);
+    }
+    .pip-bar .cmd {
+      padding: 8px 14px;
+      color: var(--fg);
+    }
+    .pip-bar .copy {
+      padding: 8px 14px;
+      background: var(--amber);
+      color: var(--bg);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── annotations ── */
+    .redesign-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: rgba(255,106,0,0.08);
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── mobile ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .split { grid-template-columns: 1fr; }
+      .split-left { position: static; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .int-grid { grid-template-columns: 1fr; }
+      .uc-grid { grid-template-columns: 1fr; }
+      .uc-card.featured { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(2rem, 8vw, 3.5rem); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="2" width="20" height="20" rx="4" stroke="#ff6a00" stroke-width="2" fill="none"/>
+      <path d="M8 12l3 3 5-5" stroke="#ff6a00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="12" cy="12" r="2" fill="#ff6a00"/>
+    </svg>
+    VantaDB <mark>v0.1</mark>
+  </div>
+  <div class="nav-links">
+    <a href="#">Product</a>
+    <a href="#">Docs</a>
+    <a href="#">Pricing</a>
+    <a href="#">Blog</a>
+    <a href="#" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="hero-code">
+    <span class="prompt">$</span>
+    <span>pip install vantadb-py &amp;&amp; python</span>
+    <span class="cursor"></span>
+  </div>
+  <h1>
+    Where context<br>
+    <span class="accent">never escapes.</span>
+  </h1>
+  <p>
+    Embedded Rust engine unifying BM25 + HNSW + GraphRAG in one binary.
+    Zero servers, one import. Sub-millisecond hybrid search.
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="navigator.clipboard?.writeText('pip install vantadb-py')">
+      pip install vantadb-py
+    </button>
+    <a href="#" class="btn-ghost">View on GitHub →</a>
+  </div>
+
+  <!-- mini code preview -->
+  <div style="width:100%;max-width:600px;margin-top:4rem;text-align:left;opacity:0.8">
+    <div class="code-block">
+      <span class="cm"># pip install vantadb-py  →  4.2MB Rust native</span><br>
+      <span class="kw">import</span> vantadb<br><br>
+      <span class="cm"># Hybrid search — BM25 + HNSW fused</span><br>
+      db = vantadb.<span class="fn">open</span>(<span class="str">"./agent-memory.db"</span>)<br>
+      docs = db.<span class="fn">query</span>(<span class="str">"what was the last experiment result?"</span>)<br>
+      <span class="cm"># → 1.2ms p99 · 100% BM25 recall · CRC32C WAL</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ METRICS ═══════════════ -->
+<section style="padding-top:0;padding-bottom:4rem">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value">1.2ms</div>
+      <div class="metric-label">p99 Query Latency</div>
+      <div class="metric-sub">BM25 + HNSW hybrid</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">32K</div>
+      <div class="metric-label">Max Vector Dims</div>
+      <div class="metric-sub">1KB fixed-size keys</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">100%</div>
+      <div class="metric-label">BM25 Recall</div>
+      <div class="metric-sub">Exact lexical match</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">0</div>
+      <div class="metric-label">External Dependencies</div>
+      <div class="metric-sub">No sidecars, no containers</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ ENGINE ═══════════════ -->
+<section>
+  <div class="split">
+    <div class="split-left">
+      <span class="section-eyebrow">// Engine</span>
+      <h2 class="section-h2">
+        Four operations.<br>
+        <span class="highlight">One Rust binary.</span>
+      </h2>
+      <p class="section-desc">
+        Lexical search, vector indexing, graph traversal, and crash-safe
+        persistence — fused into a single embedded engine with zero external
+        infrastructure.
+      </p>
+      <a href="#" class="cta-link">Explore the engine →</a>
+    </div>
+    <div>
+      <div class="engine-strip">
+        <div class="engine-card">
+          <div class="engine-step">01 — Lexical</div>
+          <div class="engine-title">BM25 Full-Text Search</div>
+          <div class="engine-desc">Tokenized BM25 with 100% recall at 1.2ms p99. Zero sidecars, no separate indexing pipeline.</div>
+          <div class="engine-tags">
+            <span class="engine-tag">1.2ms p99</span>
+            <span class="engine-tag">100% recall</span>
+          </div>
+        </div>
+        <div class="engine-card">
+          <div class="engine-step">02 — Vector</div>
+          <div class="engine-title">HNSW Vector Index</div>
+          <div class="engine-desc">Hierarchical Navigable Small World graphs. Supports 32K dimensions with sub-millisecond query times.</div>
+          <div class="engine-tags">
+            <span class="engine-tag">&lt;1ms query</span>
+            <span class="engine-tag">32K dims</span>
+          </div>
+        </div>
+        <div class="engine-card">
+          <div class="engine-step">03 — Graph</div>
+          <div class="engine-title">GraphRAG</div>
+          <div class="engine-desc">Weighted-edge graph relations enabling multi-hop reasoning across entities and agent memory.</div>
+          <div class="engine-tags">
+            <span class="engine-tag">0.2ms hop</span>
+            <span class="engine-tag">weighted edges</span>
+          </div>
+        </div>
+        <div class="engine-card">
+          <div class="engine-step">04 — Durable</div>
+          <div class="engine-title">WAL Persistence</div>
+          <div class="engine-desc">CRC32C-checksummed Write-Ahead Log with fsync. Crash-safe recovery, zero data loss.</div>
+          <div class="engine-tags">
+            <span class="engine-tag">CRC32C</span>
+            <span class="engine-tag">fsync</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ ARCHITECTURE ═══════════════ -->
+<section class="section-dark" style="border-radius:0;max-width:100%">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="split">
+      <div class="split-left">
+        <span class="section-eyebrow">// Architecture</span>
+        <h2 class="section-h2">
+          Zero-copy from<br>
+          <span class="highlight">Python to Rust.</span>
+        </h2>
+        <p class="section-desc">
+          PyO3 FFI bridge with zero serialization overhead. WAL + CRC32C
+          checksums at every layer. Runs on Linux, macOS, Windows, Android,
+          and iOS — no container required.
+        </p>
+        <a href="#" class="cta-link">View Deep FFI Architecture →</a>
+      </div>
+      <div>
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <div class="arch-layer-icon">SDK</div>
+            <div>
+              <div class="arch-layer-title">Python / JS SDK</div>
+              <div class="arch-layer-sub">PyO3 FFI · 0-copy serialization</div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-icon">FFI</div>
+            <div>
+              <div class="arch-layer-title">FFI Bridge</div>
+              <div class="arch-layer-sub">PyO3 · napi-rs · C ABI</div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-icon">WAL</div>
+            <div>
+              <div class="arch-layer-title">Write-Ahead Log</div>
+              <div class="arch-layer-sub">CRC32C · fsync · crash recovery</div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-icon">ENG</div>
+            <div>
+              <div class="arch-layer-title">Query Engine</div>
+              <div class="arch-layer-sub">BM25 + HNSW + GraphRAG fused</div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-icon">STO</div>
+            <div>
+              <div class="arch-layer-title">Storage Backend</div>
+              <div class="arch-layer-sub">Memory-mapped · zero-copy reads</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ INTEGRATIONS ═══════════════ -->
+<section>
+  <div class="split">
+    <div class="split-left">
+      <span class="section-eyebrow">// Ecosystem</span>
+      <h2 class="section-h2">
+        Drop-in for any<br>
+        <span class="highlight">agent framework.</span>
+      </h2>
+      <p class="section-desc">
+        LangChain vectorstores, LlamaIndex index traversal, AutoGen tools, MCP
+        servers — all connect via direct FFI bindings. No HTTP bridge, no
+        sidecar process.
+      </p>
+      <a href="#" class="cta-link">Explore Ecosystem →</a>
+    </div>
+    <div>
+      <div class="int-grid">
+        <div class="int-card">
+          <div class="int-card-top">
+            <div class="int-icon">LC</div>
+            <div>
+              <div class="int-name">LangChain</div>
+              <div class="int-protocol">VectorStore</div>
+            </div>
+          </div>
+          <div class="int-badge">STABLE</div>
+        </div>
+        <div class="int-card">
+          <div class="int-card-top">
+            <div class="int-icon">LI</div>
+            <div>
+              <div class="int-name">LlamaIndex</div>
+              <div class="int-protocol">Index Traversal</div>
+            </div>
+          </div>
+          <div class="int-badge">STABLE</div>
+        </div>
+        <div class="int-card">
+          <div class="int-card-top">
+            <div class="int-icon">AG</div>
+            <div>
+              <div class="int-name">AutoGen</div>
+              <div class="int-protocol">Tool API</div>
+            </div>
+          </div>
+          <div class="int-badge">STABLE</div>
+        </div>
+        <div class="int-card">
+          <div class="int-card-top">
+            <div class="int-icon">MC</div>
+            <div>
+              <div class="int-name">MCP</div>
+              <div class="int-protocol">Model Context</div>
+            </div>
+          </div>
+          <div class="int-badge">STABLE</div>
+        </div>
+        <div class="int-card">
+          <div class="int-card-top">
+            <div class="int-icon">Py</div>
+            <div>
+              <div class="int-name">Python SDK</div>
+              <div class="int-protocol">Direct FFI</div>
+            </div>
+          </div>
+          <div class="int-badge">BETA</div>
+        </div>
+        <div class="int-card">
+          <div class="int-card-top">
+            <div class="int-icon">R</div>
+            <div>
+              <div class="int-name">Custom SDK</div>
+              <div class="int-protocol">REST / gRPC</div>
+            </div>
+          </div>
+          <div class="int-badge">BETA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ USE CASES ═══════════════ -->
+<section>
+  <div class="split">
+    <div class="split-left">
+      <span class="section-eyebrow">// Use Cases</span>
+      <h2 class="section-h2">
+        Built for agents<br>
+        <span class="highlight">that need context.</span>
+      </h2>
+      <p class="section-desc">
+        Persistent agent memory, local-first RAG pipelines, codebase intelligence, and
+        edge environments with zero network footprint.
+      </p>
+      <a href="#" class="cta-link">View Design Patterns →</a>
+    </div>
+    <div>
+      <div class="uc-grid">
+        <div class="uc-card featured">
+          <div>
+            <span class="uc-step">01 — Memory</span>
+            <div class="uc-title">AI Agents Memory</div>
+            <div class="uc-desc">Persistent conversation history for agent runtimes — survives restarts, no external database.</div>
+            <div class="uc-tags">
+              <span class="uc-tag">≤1ms read</span>
+              <span class="uc-tag">crash-safe</span>
+              <span class="uc-tag">zero-config</span>
+            </div>
+          </div>
+          <div class="flow-diagram">
+            <span class="flow-node">Agent</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-node">VantaDB</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-node">Memory</span>
+          </div>
+        </div>
+        <div class="uc-card">
+          <span class="uc-step">02 — RAG</span>
+          <div class="uc-title">Local-First RAG</div>
+          <div class="uc-desc">Full hybrid search without spinning up a server. On-device indexing and retrieval.</div>
+          <div class="uc-tags">
+            <span class="uc-tag">zero deps</span>
+            <span class="uc-tag">on-device</span>
+          </div>
+        </div>
+        <div class="uc-card">
+          <span class="uc-step">03 — IDE</span>
+          <div class="uc-title">Codebase Intelligence</div>
+          <div class="uc-desc">Parse, index and search codebases at 30K loc/s with structural awareness.</div>
+          <div class="uc-tags">
+            <span class="uc-tag">30K loc/s</span>
+            <span class="uc-tag">AST-aware</span>
+          </div>
+        </div>
+        <div class="uc-card">
+          <span class="uc-step">04 — Edge</span>
+          <div class="uc-title">Edge / Mobile</div>
+          <div class="uc-desc">iOS, Android, embedded Linux — 4.2MB binary, zero network required at runtime.</div>
+          <div class="uc-tags">
+            <span class="uc-tag">4.2MB</span>
+            <span class="uc-tag">cross-compile</span>
+          </div>
+        </div>
+        <div class="uc-card">
+          <span class="uc-step">05 — Multi-agent</span>
+          <div class="uc-title">Multi-Agent Coordination</div>
+          <div class="uc-desc">Shared context across agent instances with WAL-backed conflict resolution.</div>
+          <div class="uc-tags">
+            <span class="uc-tag">WAL sync</span>
+            <span class="uc-tag">shared ctx</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="cta-section">
+  <h2>
+    Context that<br>
+    <span class="highlight">never fragments.</span>
+  </h2>
+  <p>
+    BM25 + HNSW + GraphRAG in a single Rust binary.<br>
+    Apache 2.0 — go build.
+  </p>
+  <div class="cta-actions">
+    <div class="pip-bar">
+      <span class="prefix">$</span>
+      <span class="cmd">pip install vantadb-py</span>
+      <span class="copy" onclick="navigator.clipboard?.writeText('pip install vantadb-py')">COPY</span>
+    </div>
+    <a href="#" class="btn-ghost">View on GitHub</a>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer style="border-top:1px solid var(--border);padding:3rem clamp(1.5rem,4vw,3rem);text-align:center">
+  <div style="font-family:var(--font-display);font-size:0.85rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:4px">VantaDB</div>
+  <div style="font-size:0.7rem;color:var(--muted)">Apache 2.0 · Embedded cognitive memory for AI agents</div>
+  <div style="margin-top:1rem;display:flex;gap:1.5rem;justify-content:center;font-size:0.7rem">
+    <a href="#" style="color:var(--muted);text-decoration:none">Engine</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">Architecture</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">Integrations</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">Pricing</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
-import { useEffect, useState, useCallback } from "react";
+import { Outlet, Link, createRootRouteWithContext, useRouter, useMatches } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "motion/react";
 
+import { Nav } from "../components/Nav";
 import { VantaDBLogoFull } from "../components/VantaDBLogo";
 
 function NotFoundComponent() {
@@ -62,6 +63,47 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  head: () => ({
+    meta: [
+      { title: "VantaDB — Embedded Vector Database for AI Agents" },
+      { name: "description", content: "Open-source embedded vector database. SQL + vector + full-text search in one Rust binary. MIT licensed. Sub-millisecond hybrid queries, zero infrastructure." },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "VantaDB" },
+      { property: "og:image", content: "https://vantadb.dev/og/default.svg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://vantadb.dev/og/default.svg" },
+      { name: "theme-color", content: "#ff6a00" },
+    ],
+    links: [
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "VantaDB",
+          applicationCategory: "DatabaseApplication",
+          operatingSystem: "Linux, macOS, Windows, Android, iOS",
+          description: "Open-source embedded vector database unifying SQL, vector search, and full-text search in a single Rust binary.",
+          license: "MIT",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+          },
+          author: {
+            "@type": "Organization",
+            name: "VantaDB",
+            url: "https://vantadb.dev",
+          },
+        }),
+      },
+    ],
+  }),
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
@@ -69,142 +111,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 40);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMobileOpen(false);
-  }, []);
+  const matches = useMatches();
+  const routeId = matches[matches.length - 1]?.routeId;
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="page-container">
-        {/* ── Navigation ── */}
-        <nav className={`vanta-nav${scrolled ? " vanta-nav--scrolled" : ""}`} id="main-nav">
-          {/* Logo — VantaDB animated SVG mark + wordmark */}
-          <Link
-            to="/"
-            className="vanta-logo"
-            onClick={() => setMobileOpen(false)}
-            aria-label="VantaDB — inicio"
+        <Nav />
+
+        {/* Dynamic content with route transitions */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={routeId}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
           >
-            <VantaDBLogoFull size="sm" />
-          </Link>
-
-          {/* Center nav links */}
-          <div className={`nav-center${mobileOpen ? " nav-center--open" : ""}`}>
-            <ul className="nav-links" role="navigation">
-              <li>
-                <Link
-                  to="/engine"
-                  activeProps={{ className: "active" }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Engine
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/architecture"
-                  activeProps={{ className: "active" }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Architecture
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/integrations"
-                  activeProps={{ className: "active" }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Integrations
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/use-cases"
-                  activeProps={{ className: "active" }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Use Cases
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Right CTA group */}
-          <div className="nav-actions">
-            <a
-              href="https://github.com/ness-e/Vantadb"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-github-link"
-              aria-label="GitHub"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-              </svg>
-            </a>
-            <a
-              href="https://pypi.org/project/vantadb-py/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-cta"
-              id="nav-get-started"
-            >
-              Get Started
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M2.5 6h7M6.5 3l3 3-3 3" />
-              </svg>
-            </a>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className={`nav-hamburger${mobileOpen ? " nav-hamburger--open" : ""}`}
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-            aria-expanded={mobileOpen}
-            id="nav-hamburger"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </nav>
-
-        {/* Mobile overlay */}
-        {mobileOpen && <div className="nav-overlay" onClick={() => setMobileOpen(false)} />}
-
-        {/* Dynamic content */}
-        <Outlet />
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
 
         {/* ── Footer ── */}
         <footer className="vanta-footer">
@@ -215,7 +141,7 @@ function RootComponent() {
             </div>
             <div className="footer-columns">
               <div className="footer-col">
-                <h4 className="footer-col-title">Product</h4>
+                <h3 className="footer-col-title">Product</h3>
                 <ul>
                   <li>
                     <Link to="/engine">Engine</Link>
@@ -232,7 +158,7 @@ function RootComponent() {
                 </ul>
               </div>
               <div className="footer-col">
-                <h4 className="footer-col-title">Resources</h4>
+                <h3 className="footer-col-title">Resources</h3>
                 <ul>
                   <li>
                     <a
@@ -267,7 +193,7 @@ function RootComponent() {
           </div>
           <div className="footer-bottom">
             <div className="footer-copy">© 2026 VantaDB</div>
-            <div className="footer-license">Apache 2.0 License</div>
+            <div className="footer-license">MIT License</div>
           </div>
         </footer>
       </div>

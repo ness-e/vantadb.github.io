@@ -1,13 +1,38 @@
 {
   "meta": {
     "description": "Project type presets for Vanta Design Orchestrator",
-    "version": "2.0.0",
-    "total_presets": 18
+    "version": "2.2.0",
+    "total_presets": 20
   },
   "presets": {
+    "brand-strategy": {
+      "name": "Brand Strategy / Business Foundation",
+      "phases": {
+        "business": ["strategy/business-model-design", "strategy/decision-hierarchy"],
+        "brand": ["strategy/brand-platform", "strategy/verbal-identity", "strategy/sensory-identity"],
+        "metrics": ["strategy/metrics-framework", "strategy/lean-design"],
+        "legal": ["strategy/legal-protection", "strategy/trends-2026"],
+        "handoff": ["design-md", "reference-design-contract"],
+        "skills-sh": ["to-prd", "extract-design-system"]
+      },
+      "recommended_skills": ["creative-director", "design-brief", "design-consultation", "domain-name-brainstormer"]
+    },
+    "startup-consulting": {
+      "name": "Startup Consulting / Lean Validation",
+      "phases": {
+        "business-model": ["strategy/business-model-design", "strategy/lean-design"],
+        "brand-foundation": ["strategy/brand-platform", "strategy/decision-hierarchy"],
+        "mvp-scope": ["strategy/lean-design", "strategy/metrics-framework"],
+        "ux-validation": ["prototyping-testing", "design-research"],
+        "visual-mvp": ["ui-ux-pro-max", "ui-design", "frontend-design"],
+        "legal": ["strategy/legal-protection", "reference-design-contract"]
+      },
+      "recommended_skills": ["domain-name-brainstormer", "reference-design-contract", "design-brief", "creative-director", "prototype", "to-prd"]
+    },
     "landing-page": {
       "name": "Landing Page / Marketing Site",
       "phases": {
+        "strategy": ["strategy/business-model-design", "strategy/brand-platform", "strategy/decision-hierarchy"],
         "discovery": ["design-research", "ux-strategy"],
         "structure": ["ux-heuristics", "frontend-design"],
         "visual": ["ui-ux-pro-max", "ui-design", "awesome-claude-design", "gpt-tasteskill"],
@@ -15,7 +40,8 @@
         "audit": ["impeccable-design-polish", "visual-critique", "web-design-guidelines"],
         "seo": ["ai-seo", "seo", "roier-seo"],
         "branding": ["brandkit", "theme-factory"],
-        "imagegen": ["fal-generate", "imagegen"]
+        "imagegen": ["fal-generate", "imagegen"],
+        "skills-sh": ["extract-design-system", "prototype"]
       },
       "recommended_skills": ["shadcn-ui", "poster-hero", "screenshots-marketing"]
     },
@@ -35,6 +61,7 @@
     "brand-identity": {
       "name": "Brand Identity / Logo System",
       "phases": {
+        "strategy": ["strategy/brand-platform", "strategy/sensory-identity", "strategy/verbal-identity"],
         "discovery": ["creative-director", "design-brief", "design-consultation"],
         "concept": ["brandkit", "color-expert", "design-md"],
         "execution": ["canvas-design", "algorithmic-art", "theme-factory"],
@@ -186,6 +213,7 @@
     "full-product": {
       "name": "Full Product (Landing + Dashboard + Docs + Brand)",
       "phases": {
+        "strategy": ["strategy/business-model-design", "strategy/brand-platform", "strategy/decision-hierarchy"],
         "discovery": ["design-research", "ux-strategy", "creative-director"],
         "brand": ["brandkit", "color-expert", "design-md", "theme-factory"],
         "landing": ["taste-skill", "frontend-design", "ui-ux-pro-max", "gpt-tasteskill"],
@@ -203,6 +231,7 @@
     "redesign": {
       "name": "Redesign / Refactor Existing Project",
       "phases": {
+        "strategy": ["strategy/business-model-design", "strategy/decision-hierarchy", "strategy/brand-platform"],
         "audit": ["redesign-skill", "impeccable-design-polish", "visual-critique", "design-review"],
         "research": ["design-research", "competitive-ads-extractor"],
         "strategy": ["creative-director", "design-consultation"],
@@ -210,7 +239,8 @@
         "rebuild": ["taste-skill", "frontend-design", "shadcn-ui"],
         "motion": ["emilkowalski-motion", "design-motion-principles"],
         "seo": ["ai-seo", "roier-seo", "seo"],
-        "qa": ["pr-feedback-quality-gate", "react-best-practices"]
+        "qa": ["pr-feedback-quality-gate", "react-best-practices"],
+        "skills-sh": ["extract-design-system", "just-scrape"]
       },
       "recommended_skills": ["reference-design-contract", "design-md", "docx"]
     },

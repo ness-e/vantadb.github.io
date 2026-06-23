@@ -30,6 +30,7 @@ export function IOMultiplexing({ style }: Props) {
     }
 
     const dots: Dot[] = [];
+    let paused = false;
 
     function resize() {
       const parent = cvs.parentElement;
@@ -61,6 +62,7 @@ export function IOMultiplexing({ style }: Props) {
     }
 
     function draw() {
+      if (paused) return;
       c2d.clearRect(0, 0, W, H);
 
       for (let lane = 0; lane < LANES; lane++) {
@@ -105,12 +107,17 @@ export function IOMultiplexing({ style }: Props) {
 
     resize();
     initDots();
+
+    const obs = new IntersectionObserver(([entry]) => { paused = !entry.isIntersecting; }, { threshold: 0 });
+    obs.observe(cvs);
+
     gsap.ticker.add(draw);
 
     const onResize = () => { resize(); initDots(); };
     window.addEventListener("resize", onResize);
 
     return () => {
+      obs.disconnect();
       gsap.ticker.remove(draw);
       window.removeEventListener("resize", onResize);
     };

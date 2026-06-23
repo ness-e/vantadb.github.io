@@ -1,0 +1,282 @@
+/* ═══════════════════════════════════════════════════════════
+   VantaDB — Swiss Comparison & Metrics Pages Stylesheet
+   ═══════════════════════════════════════════════════════════ */
+
+/* Comparison Grid & Cards (Ops/Maintenance) */
+.ops-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .ops-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ops-card {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  transition: background 150ms var(--ease-out), border-color 150ms var(--ease-out), transform 150ms var(--ease-spring);
+  box-shadow: none;
+}
+
+.ops-card:hover {
+  background: var(--surface-raised);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.ops-card-vanta {
+  background: var(--amber-dim);
+  border-radius: var(--radius-sm);
+  padding: 2.5rem;
+  border: 1.5px solid var(--border);
+  transition: background 150ms var(--ease-out), border-color 150ms var(--ease-out), transform 150ms var(--ease-spring);
+  box-shadow: none;
+}
+
+.ops-card-vanta:hover {
+  background: rgba(255, 85, 0, 0.12);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.ops-task {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+
+.ops-total-time {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* Cost & Performance Tables */
+.chart-section {
+  margin-top: 5rem;
+  padding: 2rem 0;
+}
+
+.chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.chart-table-row {
+  display: grid;
+  grid-template-columns: 120px repeat(4, 1fr);
+  align-items: center;
+  padding: 1.25rem 1rem;
+  background: var(--surface);
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .chart-table-row {
+    grid-template-columns: 90px repeat(4, 1fr);
+    gap: 0.75rem;
+    font-size: 0.82rem;
+  }
+}
+
+.chart-table-header {
+  background: var(--void);
+  border-bottom: 1px solid var(--border);
+  color: var(--steel-light);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.chart-table-footer {
+  border-top: 1.5px solid var(--border-strong);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: var(--surface-raised);
+}
+
+.chart-table-col-label {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--foreground);
+}
+
+.chart-table-col-value {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+}
+
+.chart-table-col-vis {
+  width: 100%;
+  height: 8px;
+  background: var(--void);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.chart-table-col-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--bar-color);
+  width: var(--bar-w);
+  border-radius: var(--radius-sm);
+  transition: width 0.8s var(--ease-out);
+}
+
+.chart-table-col-num {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Latency Comparison Bars */
+.latency-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.latency-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.latency-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+}
+
+.latency-provider {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--foreground);
+}
+
+.latency-value {
+  color: var(--amber);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.latency-value-slow {
+  color: var(--steel);
+}
+
+.latency-track {
+  width: 100%;
+  height: 14px;
+  background: var(--void);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+  box-shadow: none;
+}
+
+.latency-fill {
+  height: 100%;
+  background: var(--bar-color);
+  width: var(--bar-w);
+  transition: width 0.8s var(--ease-out);
+}
+
+/* Storage Architecture Diagrams */
+.storage-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--void);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.storage-layer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  position: relative;
+}
+
+.storage-layer-active {
+  border-color: var(--border-strong);
+  border-width: 1.5px;
+  background: var(--surface);
+}
+
+.storage-layer-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.storage-layer-desc {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Responsive 3-Column Grid */
+.three-column-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .three-column-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

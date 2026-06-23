@@ -1,6 +1,56 @@
-# Master Routing Table — 170+ Skills
+# Master Routing Table — 170+ Skills + 11 Strategy Docs + 5 skills.sh Skills + Operations
 
 > Cómo combinar skills según la tarea del usuario. Cada fila = combo recomendado.
+
+---
+
+## 0. Estrategia de Negocio y Marca (Pre-Fase 0)
+
+| Tarea | Pipeline de Skills | Prioridad |
+|:------|:-------------------|:----------|
+| **Business Model Canvas completo** | `strategy/business-model-design.md` (9 bloques) → `strategy/decision-hierarchy.md` (mapeo a diseño) → `strategy/lean-design.md` (MVP scope) | ALTA |
+| **Brand platform desde cero** | `strategy/brand-platform.md` (propósito, visión, misión, valores, territorio, arquetipos) → `strategy/verbal-identity.md` (voz) → `strategy/sensory-identity.md` (psicología del color) | ALTA |
+| **Naming estratégico + legal clearance** | `strategy/brand-platform.md` (territorio + criterios de naming) → `strategy/legal-protection.md` (búsqueda, clases Niza, registrabilidad) → `domain-name-brainstormer` (dominio) | ALTA |
+| **Estrategia de color (psicología + accesibilidad)** | `strategy/sensory-identity.md` (significados por industria) → `ui-ux-pro-max` (paleta OKLCH) → `ui-design` (WCAG compliance) | ALTA |
+| **Verbal identity / guía de voz y tono** | `strategy/verbal-identity.md` (dimensiones, matriz por canal) → `designer-toolkit/ux-writing` (microcopy) → `writing-guidelines` (auditar) | ALTA |
+| **Lean Design / MVP scope** | `strategy/lean-design.md` (hipótesis → scope → validación) → `strategy/business-model-design.md` (alinear con BMC) → `prototyping-testing` (test plan) | MEDIA |
+| **Métricas de diseño y ROI** | `strategy/metrics-framework.md` (CAC, LTV, HEART, brand equity) → `design-ops/design-impact-reporting` | MEDIA |
+| **Auditoría estratégica de marca completa** | `strategy/brand-platform.md` (referencia) → `strategy/verbal-identity.md` (voz) → `visual-critique` (visual) → `strategy/legal-protection.md` (legal) | ALTA |
+| **Protección legal / trademark** | `strategy/legal-protection.md` (trademark, copyright, trade dress, IA legal) → `reference-design-contract` (contrato) | ALTA |
+| **Tendencias 2026** | `strategy/trends-2026.md` (adaptive identity, eco-design, imperfectismo, prompt strategy) → `awesome-claude-design` (anti-slop check) | MEDIA |
+| **Identidad sensorial 360°** | `strategy/sensory-identity.md` (color + forma + sonido + tacto + olfato) → `canvas-design` (arte) → `algorithmic-art` (generativo) | BAJA |
+| **Sonic branding / identidad sonora** | `strategy/sonic-kinetic-identity.md` (sonic logo, sistema adaptativo, audio attribution) → `strategy/brand-platform.md` (alinear con territorio) | ALTA |
+| **Kinetic typography** | `strategy/sonic-kinetic-identity.md` (patrones, variable fonts, scroll-driven) → `motion` o `animejs` (implementación) → `design-motion-principles` (auditar accesibilidad) | MEDIA |
+| **Co-branding rules** | `strategy/brand-operations.md` (jerarquía, proporciones 60:40/50:50/80:20, clear space, decision tree) → `brand-guidelines` (documentar) | ALTA |
+| **RACI matrix + SLA** | `strategy/brand-operations.md` (RACI por activo + SLA) → `design-ops` (workflow setup) | MEDIA |
+| **Brand changelog** | `strategy/brand-operations.md` (formato semver, público, trazable) → `design-md` (documentar) | BAJA |
+| **Identity stress testing** | `strategy/brand-operations.md` (6 tests + sistema responsive + minimum size) → `canvas-design` (variantes) | ALTA |
+| **Engineering as marketing** | `strategy/brand-operations.md` (free tools, satellite apps, vibe coding) → `strategy/business-model-design.md` (alinear con BMC) → Lovable/Bolt/v0 | MEDIA |
+| **Churned analysis** | `strategy/brand-operations.md` (metodología, cohortes, entrevistas) → `strategy/metrics-framework.md` → `design-research` | MEDIA |
+| **Elevator pitch** | `strategy/brand-operations.md` (fórmula + variantes por contexto) → `strategy/brand-platform.md` (alinear) | BAJA |
+| **Estrategia de contenido / UX writing** | `strategy/brand-platform.md` → `strategy/verbal-identity.md` (voz + tono) → `strategy/content-strategy.md` (auditoría + modelo + governance) → `writing-guidelines` (auditar) → `ai-seo` (optimizar) | ALTA |
+| **Estrategia de accesibilidad** | `strategy/accessibility-strategy.md` (estándares + checklist) → `ui-design` (aplicar) → `ux-heuristics` (evaluar) → `web-design-guidelines` (compliancia) → `infrastructure/tool-registry.md` §10 (auditar herramientas) | ALTA |
+| **Crítica de diseño / design critique** | `infrastructure/design-critique-templates.md` (elegir plantilla: rápida/completa/heurística/a11y/marca/motion/copy) → skill de auditoría correspondiente → `impeccable` (polish) → `plan-design-review` (reporte) | MEDIA |
+| **Selective specialization** | `strategy/brand-operations.md` (matriz segmento/mensaje/canal) → `ui-ux-pro-max` (pricing page por segmento) | BAJA |
+| **Logo classification** | `strategy/brand-operations.md` o `strategy/sensory-identity.md` (logotipo/isotipo/imagotipo/isologo) → `brandkit` (ejecución) | MEDIA |
+| **Métricas financieras (CASH)** | `strategy/metrics-framework.md` §3-4 (ROAS, Burn Rate, Runway, MRR, ARR, NRR) → `strategy/business-model-design.md` (vincular a BMC) → `design-ops/design-impact-reporting` | ALTA |
+| **Share of Search + AI Visibility** | `strategy/metrics-framework.md` §1 (SoS, AI Visibility) → `ai-seo` (llms.txt, OKF) → `seo` (structured data) | ALTA |
+| **Discovery & Diagnosis de marca** | `strategy/brand-documentation.md` §1 (diagnóstico completo) → `strategy/business-model-design.md` (BMC) → `strategy/brand-platform.md` (platform draft) → `strategy/legal-protection.md` (risk) → `strategy/brand-operations.md` (RACI + stress testing) | ALTA |
+| **Brand Book aspiracional** | `strategy/brand-documentation.md` §2 (estructura 30-50pp) → `strategy/brand-platform.md` (alma) → `strategy/verbal-identity.md` (voz) → `strategy/sensory-identity.md` (color/forma) → `brandkit` (board visual) → `canvas-design` (assets) | ALTA |
+| **MIC — Manual de Identidad Visual (Brand Guide técnico)** | `strategy/brand-documentation.md` §3 (estructura 15-25pp) → `strategy/sensory-identity.md` (specs color) → `ui-ux-pro-max` (paleta técnica) → `design-systems` (tokens) → `ui-design` (responsivo) | ALTA |
+| **Manual de Marca Digital** | `strategy/brand-documentation.md` §4 (digital specs) → `design-systems` (tokens digitales) → `ui-design` (responsive) → `strategy/sensory-identity.md` (valores por medio) | MEDIA |
+| **Brand Kit (carpeta de activos)** | `strategy/brand-documentation.md` §6 (estructura carpeta) → `brandkit` (board) → `canvas-design` (assets finales) → `design-systems` (tokens export) | ALTA |
+| **Decision Log de marca** | `strategy/brand-documentation.md` §5 (formato D-año-seq) → `design-md` (documentar) → `strategy/brand-operations.md` (governance) | MEDIA |
+| **Validación de hipótesis de diseño (Ciclo EVP)** | `strategy/validation-sustainability.md` §1 (hipótesis → MVP → validación → escalar/pivotar) → `strategy/lean-design.md` (MVP scope) → `prototype` (throwaway code) → `prototyping-testing` (test plan) → `strategy/metrics-framework.md` (medir) | ALTA |
+| **Test A/B Estratégico** | `strategy/validation-sustainability.md` §1.5 (filosofías vs colores) → `design-research` (entrevistas post-test) → `strategy/metrics-framework.md` | MEDIA |
+| **5 Porqués / Causa Raíz** | `strategy/validation-sustainability.md` §2 (5 Whys + brechas de experiencia) → `design-research` (entrevistas profundas) → `strategy/business-model-design.md` (revisar BMC) | ALTA |
+| **Triple Balance (D×F×V)** | `strategy/validation-sustainability.md` §3 (matriz 3×3) → `strategy/business-model-design.md` (viabilidad) → `strategy/decision-hierarchy.md` | ALTA |
+| **Identidad Adaptativa / Escalabilidad** | `strategy/validation-sustainability.md` §4 (responsive logo, fragmentada, modular) → `strategy/sensory-identity.md` (specs por medio) → `ui-ux-pro-max` (tokens) → `design-systems` | MEDIA |
+| **Curaduría Humana / IA Responsable** | `strategy/validation-sustainability.md` §6 (8 reglas gobernanza) → `strategy/trends-2026.md` (IA genera → humano cura) → `strategy/legal-protection.md` (licencias) | ALTA |
+| **Productización del diseño** | `strategy/validation-sustainability.md` §7 (scope fijo → pricing → etapa formativa) → `strategy/brand-documentation.md` §4-6 (Brand Kit) → plataforma recurrente | BAJA |
+| **Prototipo desechable (throwaway code)** | `prototype` (2 ramas: terminal app lógica/estado o UI variations exploración) → `strategy/validation-sustainability.md` §1 (integrar hallazgos) → `frontend-design` (producción si se valida) | MEDIA |
+| **PRD desde conversación / brief** | `to-prd` (sintetizar conversación → PRD estructurado + issues) → `strategy/business-model-design.md` (validar contra BMC) → `strategy/decision-hierarchy.md` (priorizar) | ALTA |
+| **Handoff entre agentes o fases** | `handoff` (documento estructurado con decisión log + estado + next steps) → skill destino | MEDIA |
 
 ---
 
@@ -14,6 +64,7 @@
 | Dashboard / admin panel | `platform-design` → `shadcn-ui` → `d3-visualization` → `ui-ux-pro-max` → `ui-design` → `react-best-practices` | ALTA |
 | Página de FAQ / help center | `faq-page` → `ux-heuristics` → `frontend-design` → `ai-seo` | BAJA |
 | Login / auth flow | `login-flow` → `interaction-design` (FSM) → `frontend-design` → `ui-design` | MEDIA |
+| Prototipo rápido (exploración visual o lógica) | `prototype` → `strategy/validation-sustainability.md` §1 (validar) → `frontend-design` (producción) | MEDIA |
 
 ## 2. Branding / Identidad
 
@@ -153,7 +204,26 @@
 | Custom shader effect | `shader-dev` → `threejs-shaders` | ALTA |
 | 3D animation | `threejs-animation` → `threejs-interaction` | ALTA |
 
-## 15. Utilidades
+## 15. Infraestructura y Herramientas Open Source
+
+| Tarea | Pipeline de Skills | Prioridad |
+|:------|:-------------------|:----------|
+| **Inspeccionar sitio web / extraer diseño** | Playwright (headless) + `extract-design-system` (tokens → JSON+CSS) + DuckDuckGo Search + Trafilatura + `infrastructure/tool-registry.md` §1-2 | ALTA |
+| **Extraer tokens de sitio público** | `extract-design-system` (npx extract-design-system <url>) → chroma.js (OKLCH) → `design-systems` (formalizar) → `ui-ux-pro-max` (paleta técnica) | ALTA |
+| **Buscar componentes / librerías / código** | GitHub API (code search) + SearXNG (meta search) + DuckDuckGo Search + `infrastructure/tool-registry.md` §2-3 | ALTA |
+| **Extraer tokens de diseño de Figma** | Figma REST API (JSON nodos) + chroma.js (convertir a OKLCH) + `infrastructure/tool-registry.md` §3 | MEDIA |
+| **Optimizar fuentes para web** | Glypher (subsetting + WOFF2) + FontTools (análisis) + `infrastructure/tool-registry.md` §7 | ALTA |
+| **Generar OG image / social card programática** | Satori (HTML+CSS→SVG) + Sharp (SVG→PNG) + `infrastructure/tool-registry.md` §6 | MEDIA |
+| **Auditar accesibilidad + performance** | axe-core (WCAG 2.2) + Lighthouse CI (perf/SEO/a11y gates) + Pa11y + `infrastructure/tool-registry.md` §9-10 | ALTA |
+| **Optimizar assets para producción** | SVGO (SVG -50%) + Sharp (WebP/AVIF) + PurgeCSS (CSS unused -90%) + Critters (critical CSS) | ALTA |
+| **Raspar contenido web con IA (scrape + search + crawl)** | `just-scrape` (just-scrape extract/search/scrape/crawl) + DuckDuckGo Search + `infrastructure/tool-registry.md` §2 | ALTA |
+| **Color science avanzada** | chroma.js (escalas, interpolación, contraste) + culori (OKLCH, 10KB) + `infrastructure/tool-registry.md` §13 | MEDIA |
+| **Componentes UI base** | shadcn/ui (init + components) + Radix UI (primitives) + Lucide (iconos) + `infrastructure/tool-registry.md` §8 | ALTA |
+| **Documentar componentes** | Storybook (catalog + visual regression) + `infrastructure/tool-registry.md` §11 | MEDIA |
+| **Instrumentar analytics** | `strategy/metrics-framework.md` → `infrastructure/analytics-setup.md` → Plausible/GA4 → Looker Studio | ALTA |
+| **Preparar handoff a desarrollo** | `infrastructure/developer-handoff.md` → `figma-implement-design` → `handoff` (skills.sh) → QA visual | ALTA |
+
+## 16. Utilidades
 
 | Tarea | Pipeline de Skills | Prioridad |
 |:------|:-------------------|:----------|

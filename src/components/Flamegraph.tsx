@@ -38,8 +38,8 @@ function FrameBar({ frame, depth }: { frame: Frame; depth: number }) {
         className="framebar-inner"
         style={{
           background: hovered
-            ? `rgba(255,140,60,${0.3 + depth * 0.05})`
-            : `rgba(255,255,255,${0.03 + depth * 0.01})`,
+            ? `rgba(255, 85, 0, ${0.45 + depth * 0.05})`
+            : `rgba(0, 0, 0, ${0.035 + depth * 0.03})`,
         }}
       >
           <span

@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { HeroSubpage } from "../components/HeroSubpage";
+import { PageShell } from "../components/PageShell";
+import { CtaSection } from "../components/CtaSection";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export const Route = createFileRoute("/cost")({
   head: () => ({
@@ -11,29 +14,32 @@ export const Route = createFileRoute("/cost")({
   component: CostPage,
 });
 
+const breakdowns = [
+  { label: "Vector DB", bills: [70, 90, 80, 0], color: "var(--amber)" },
+  { label: "Cache",    bills: [30, 0, 0, 0], color: "var(--amber-soft)" },
+  { label: "Storage",  bills: [15, 20, 18, 0], color: "var(--steel-light)" },
+  { label: "Egress",   bills: [25, 15, 20, 0], color: "var(--crimson)" },
+  { label: "Ops",      bills: [60, 50, 45, 0], color: "var(--warn)" },
+];
+
+const planNames = ["Pinecone + Redis + S3", "Weaviate Cloud", "Qdrant Cloud", "VantaDB"];
+const planTotals = [200, 175, 163, 0];
+
 function CostPage() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-    const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("is-visible"); }),
-      { threshold: 0.08 },
-    );
-    document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
+  useScrollReveal();
 
   return (
-    <div className="page-wrapper">
-      <header className="page-header-extended">
-        <span className="section-eyebrow reveal">// Infrastructure Cost</span>
-        <h1 className="title-accent reveal reveal-delay-1">
-          Zero cost
-          <br />at runtime.
-        </h1>
-        <p className="section-sub reveal reveal-delay-2 desc-text">
-          No per-vector pricing, no server bills, no hidden egress fees. VantaDB is free software — the only cost is the hardware you already own.
-        </p>
-      </header>
+    <PageShell>
+      <HeroSubpage
+        eyebrow="// Infrastructure Cost"
+        title={<>Zero cost<br />at runtime.</>}
+        subtitle="No per-vector pricing, no server bills, no hidden egress fees. VantaDB is free software — the only cost is the hardware you already own."
+        stats={[
+          { value: "$200", label: "Avg legacy cost/mo" },
+          { value: "$0", label: "VantaDB runtime" },
+          { value: "MIT", label: "License" },
+        ]}
+      />
 
       <main className="main-content">
         <section className="comparison-split">
@@ -41,11 +47,11 @@ function CostPage() {
             <span className="section-eyebrow">// Legacy Costs</span>
             <h2 className="section-title section-title--compact">~$200/mo + hidden fees</h2>
             <ul className="comparison-list">
-              <li><span className="icon-cross">✗</span> Pinecone: $70/mo (pod-based, 1M vectors)</li>
-              <li><span className="icon-cross">✗</span> Redis: $30/mo (ElastiCache serverless)</li>
-              <li><span className="icon-cross">✗</span> S3: $15/mo + API request costs</li>
-              <li><span className="icon-cross">✗</span> Network egress: unpredictable overage fees</li>
-              <li><span className="icon-cross">✗</span> Ops overhead: monitoring, scaling, patching</li>
+              <li style={{ transitionDelay: "0.05s" }}><span className="icon-cross">✗</span> Pinecone: $70/mo (pod-based, 1M vectors)</li>
+              <li style={{ transitionDelay: "0.1s" }}><span className="icon-cross">✗</span> Redis: $30/mo (ElastiCache serverless)</li>
+              <li style={{ transitionDelay: "0.15s" }}><span className="icon-cross">✗</span> S3: $15/mo + API request costs</li>
+              <li style={{ transitionDelay: "0.2s" }}><span className="icon-cross">✗</span> Network egress: unpredictable overage fees</li>
+              <li style={{ transitionDelay: "0.25s" }}><span className="icon-cross">✗</span> Ops overhead: monitoring, scaling, patching</li>
             </ul>
           </div>
           <div className="reveal reveal-delay-1">
@@ -60,6 +66,41 @@ function CostPage() {
           </div>
         </section>
 
+        <section className="chart-section">
+          <div className="reveal text-center mb-12">
+            <span className="section-eyebrow">// Cost Breakdown</span>
+            <h2 className="section-title section-title--compact">Monthly cost by provider</h2>
+          </div>
+
+          <div className="chart-table">
+            <div className="chart-table-row chart-table-header">
+              <span className="chart-table-col-label"></span>
+              {planNames.map((n) => <span key={n} className="chart-table-col-value">{n}</span>)}
+            </div>
+            {breakdowns.map((b) => (
+              <div key={b.label} className="chart-table-row reveal">
+                <span className="chart-table-col-label">{b.label}</span>
+                {b.bills.map((bill, i) => (
+                  <span key={i} className="chart-table-col-value">
+                    <span className="chart-table-col-vis" style={{ "--bar-color": b.color, "--bar-w": `${(bill / 200) * 100}%` } as React.CSSProperties}>
+                      <span className="chart-table-col-bar" />
+                    </span>
+                    <span className="chart-table-col-num">${bill}</span>
+                  </span>
+                ))}
+              </div>
+            ))}
+            <div className="chart-table-row chart-table-footer reveal reveal-delay-1">
+              <span className="chart-table-col-label">Total</span>
+              {planTotals.map((t, i) => (
+                <span key={i} className="chart-table-col-value" style={{ fontFamily: "var(--font-display)", fontWeight: 700, color: t === 0 ? "var(--amber)" : "var(--white)" }}>
+                  ${t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="section-narrow">
           <div className="reveal text-center reveal-centered">
             <span className="section-eyebrow">// Total Cost of Ownership</span>
@@ -71,12 +112,14 @@ function CostPage() {
           </div>
         </section>
 
+        <CtaSection />
+
         <nav className="bottom-nav">
           <Link to="/" className="back-link nav-cta">
             ← Back to comparison
           </Link>
         </nav>
       </main>
-    </div>
+    </PageShell>
   );
 }

@@ -1,17 +1,19 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { SingularityHero } from "@/components/SingularityHero";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { DynamicGraphMesh } from "@/components/DynamicGraphMesh";
-import { VectorSpace } from "@/components/VectorSpace";
-import { HNSWIsometric } from "@/components/HNSWIsometric";
-import { IOMultiplexing } from "@/components/IOMultiplexing";
+import { CodeGridBackground } from "@/components/CodeGridBackground";
+import { ProtocolDiagram } from "@/components/ProtocolDiagram";
+import { HNSWLayerIcon } from "@/components/HNSWLayerIcon";
 import { HybridCube } from "@/components/HybridCube";
 import { DAGPlan } from "@/components/DAGPlan";
-import { SIMDVectorized } from "@/components/SIMDVectorized";
 import { Flamegraph } from "@/components/Flamegraph";
-import { AnimeMorphLogo } from "@/components/AnimeMorphLogo";
+import { ComparisonTable } from "@/components/ComparisonTable";
+import { InteractiveQuickstart } from "@/components/InteractiveQuickstart";
+import { ArchCrossSection } from "@/components/ArchCrossSection";
+import { ScrollStory } from "@/components/ScrollStory";
+import { ScrambleText } from "@/components/ScrambleText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,7 +38,7 @@ function useGSAPReveal() {
 
     // Reduced motion → reveal everything instantly
     mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(".reveal, .eng-cell, #integrations .glow-card, .eng-svg-line", {
+      gsap.set(".reveal, #integrations .glow-card", {
         opacity: 1, y: 0, scale: 1, strokeDashoffset: 0,
       });
     });
@@ -53,24 +55,6 @@ function useGSAPReveal() {
           });
         },
       });
-
-      // Engine quadrants stagger
-      gsap.fromTo(".eng-cell",
-        { opacity: 0, y: 20, scale: 0.96 },
-        {
-          opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: ".eng-wrap", start: "top 80%", toggleActions: "play none none none" },
-        },
-      );
-
-      // Engine SVG line draw
-      gsap.fromTo(".eng-svg-line",
-        { strokeDashoffset: 400 },
-        {
-          strokeDashoffset: 0, duration: 0.8, delay: 0.4, ease: "power1.out",
-          scrollTrigger: { trigger: ".eng-wrap", start: "top 75%", toggleActions: "play none none none" },
-        },
-      );
 
       // Glow cards batch
       ScrollTrigger.batch("#integrations .glow-card", {
@@ -105,762 +89,24 @@ function useGSAPReveal() {
   }, []);
 }
 
-// ── Scanline overlay ───────────────────────────────────────────────────────────
-function Scanlines() {
-  return (
-    <div
-      aria-hidden="true"
-      className="scanlines"
-    />
-  );
-}
+// ── Scanlines — minimal overlay, still used in Landing() directly ──────────────
+function Scanlines() { return <div aria-hidden="true" className="scanlines" />; }
 
-// ── Architecture layers ─────────────────────────────────────────────────────────
-function ArchCrossSection() {
-  const layers = [
-    { name: "Python SDK", desc: "vantadb.put() / search() / get()" },
-    { name: "PyO3 Bindings", desc: "src/sdk.rs — zero-copy FFI" },
-    { name: "Query Planner", desc: "BM25 · HNSW · RRF routing" },
-    { name: "Fjall Storage", desc: "WAL + fsync + CRC32C" },
-    { name: "HNSW Core", desc: "Cosine · M · ef_construction" },
-  ];
-  const widths = [94, 86, 78, 70, 62];
-  return (
-    <div className="arch-terminal">
-      <Scanlines />
-      <div className="arch-titlebar">
-        <span className="term-dot-sm term-dot--red" />
-        <span className="term-dot-sm term-dot--yellow" />
-        <span className="term-dot-sm term-dot--green" />
-        <span className="term-label-sm">vantadb — stack depth v1.1</span>
-      </div>
-      <div className="arch-body">
-        <div className="arch-rail" />
-        {/* Tunnel flow bytes on the rail */}
-        <div className="hex-tunnel">
-          {["01", "FF", "A9", "8C", "E3", "1B", "7A", "D4", "3F", "B2"].map((b, i) => (
-            <span key={i} style={{ position: "absolute", left: Math.random() > 0.5 ? "0" : "auto", right: Math.random() > 0.5 ? "0.2rem" : "auto", fontFamily: "var(--font-mono)", fontSize: "0.48rem", color: "var(--amber)", opacity: 0.3, animation: "tunnel-down 2.8s linear infinite", animationDelay: `${i * 0.28}s` }}>{b}</span>
-          ))}
-        </div>
-        {layers.map((l, i) => (
-          <div key={i} className="arch-layer-row" style={{ marginBottom: i < layers.length - 1 ? "0.4rem" : 0 }}>
-            <div
-              className="arch-bar"
-              style={{
-                maxWidth: `${widths[i]}%`,
-                background: `linear-gradient(135deg, rgba(255,106,0,${0.02 + 0.015 * (layers.length - i)}) 0%, rgba(255,106,0,${0.06 + 0.02 * (layers.length - i)}) 100%)`,
-              }}
-            >
-                <span className="arch-bar-label">
-                  {l.name}
-                </span>
-                <span className="arch-bar-meta">
-                  {l.desc}
-                </span>
-                <span className="arch-bar-glow" />
-            </div>
-          </div>
-          ))}
-        </div>
-      </div>
-  );
-}
+// ── Architecture layers (extracted) ─────────────────────────────────────────────
+// ArchCrossSection lives in src/components/ArchCrossSection.tsx.
 
-// ── Typewriter Title Component ─────────────────────────────────────────────────
-function TypewriterTitle({ phase }: { phase: number | null }) {
-  const phrases = [
-    { pre: "", word: "One", post: " dependency, not three." },
-    { pre: "", word: "Zero", post: " cost at runtime." },
-    { pre: "", word: "In-process", post: ", not networked." },
-    { pre: "", word: "No", post: " config files needed." },
-    { pre: "", word: "Nothing", post: " to monitor." },
-  ];
-  const [charCount, setCharCount] = useState(0);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [blink, setBlink] = useState(true);
+// ── Typewriter Title (extracted) ──────────────────────────────────────────────
+// TypewriterTitle lives in src/components/TypewriterTitle.tsx.
 
-  useEffect(() => {
-    const iv = setInterval(() => setBlink((c) => !c), 530);
-    return () => clearInterval(iv);
-  }, []);
+// ── ComparisonTable (extracted) ───────────────────────────────────────────────
+// ComparisonTable + TerminalCell live in src/components/ComparisonTable.tsx.
 
-  useEffect(() => {
-    if (phase === null) { setCharCount(0); return; }
-
-    const baseIdx = phase < phrases.length ? phase : 0;
-    setCurrentIdx(baseIdx);
-
-    let cancelled = false;
-    const SPEED = 65;
-    const DEL_SPEED = 50;
-    const PAUSE = 2200;
-    const GAP = 800;
-
-    const typePhrase = (phraseIdx: number, cb: () => void) => {
-      if (cancelled) return;
-      const phrase = phrases[phraseIdx % phrases.length];
-      const full = phrase.pre + phrase.word + phrase.post;
-      setCurrentIdx(phraseIdx);
-      setCharCount(0);
-      let ci = 0;
-
-      const ti = setInterval(() => {
-        if (cancelled) { clearInterval(ti); return; }
-        ci++;
-        setCharCount(ci);
-        if (ci >= full.length) {
-          clearInterval(ti);
-          setTimeout(() => {
-            if (cancelled) return;
-            const di = setInterval(() => {
-              if (cancelled) { clearInterval(di); return; }
-              ci--;
-              setCharCount(ci);
-              if (ci <= 0) {
-                clearInterval(di);
-                setTimeout(() => { if (!cancelled) cb(); }, GAP);
-              }
-            }, DEL_SPEED);
-          }, PAUSE);
-        }
-      }, SPEED);
-    };
-
-    if (phase < phrases.length) {
-      typePhrase(phase, () => {});
-    } else {
-      let idx = 0;
-      const loop = () => {
-        typePhrase(idx, () => {
-          if (cancelled) return;
-          idx = (idx + 1) % phrases.length;
-          loop();
-        });
-      };
-      loop();
-    }
-
-    return () => { cancelled = true; };
-  }, [phase]);
-
-  const renderText = () => {
-    const phrase = phrases[currentIdx % phrases.length];
-    const full = phrase.pre + phrase.word + phrase.post;
-    const a = phrase.pre.length;
-    const b = a + phrase.word.length;
-    const count = Math.min(charCount, full.length);
-
-    return (
-      <>
-        <span>{full.slice(0, Math.min(count, a))}</span>
-        {count > a && (
-          <span className="text-highlight--amber">
-            {full.slice(a, Math.min(count, b))}
-          </span>
-        )}
-        {count > b && (
-          <span>{full.slice(b, count)}</span>
-        )}
-      </>
-    );
-  };
-
-  return (
-    <h2 className="section-title typewriter-h2">
-      {phase !== null ? renderText() : null}
-      <span className="term-cursor" />
-    </h2>
-  );
-}
-
-// ── TerminalCell ──────────────────────────────────────────────────────────────
-function TerminalCell({ item, active, onDone }: {
-  item: { label: string; full: string; oldVal: string; vantaVal: string; oldBadge: string; vantaBadge: string };
-  active: boolean;
-  onDone: () => void;
-}) {
-  const [phase, setPhase] = useState<"idle" | "visible" | "done">("idle");
-  const navigate = useNavigate();
-
-  const routeMap: Record<string, string> = {
-    STORAGE: "/storage",
-    COST: "/cost",
-    LATENCY: "/latency",
-    CONFIG: "/config",
-    MAINT: "/maint",
-  };
-
-  useEffect(() => {
-    if (active && phase === "idle") {
-      setPhase("visible");
-    }
-  }, [active, phase]);
-
-  useEffect(() => {
-    if (phase !== "visible") return;
-    const t = setTimeout(() => {
-      setPhase("done");
-      onDone();
-    }, 3000);
-    return () => clearTimeout(t);
-  }, [phase, onDone]);
-
-  const handleClick = () => {
-    const path = routeMap[item.label];
-    if (path) navigate({ to: path });
-  };
-
-  return (
-    <div
-      className={`term-cell ${phase !== "idle" ? "visible" : ""} ${phase === "done" ? "done" : ""}`}
-      onClick={handleClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); } }}
-    >
-      <div className="term-cell-titlebar">
-        <span className="term-cell-dot term-cell-dot--red" />
-        <span className="term-cell-dot term-cell-dot--yellow" />
-        <span className="term-cell-dot term-cell-dot--green" />
-        <span className="term-cell-title">{item.label}</span>
-      </div>
-      <div className="term-cell-body">
-        <div className="term-cell-metric">{item.full}</div>
-        <div className="term-cell-line old">
-          <span className="term-cell-x">✗</span>
-          <span className="term-cell-tag">LEGACY</span>
-        </div>
-        <div className="term-cell-val old">{item.oldVal}</div>
-        <div className="term-cell-score old">{item.oldBadge}</div>
-        <div className="term-cell-div" />
-        <div className="term-cell-line vanta">
-          <span className="term-cell-check">✓</span>
-          <span className="term-cell-tag vanta">VANTADB</span>
-        </div>
-        <div className="term-cell-val vanta">{item.vantaVal}</div>
-        <div className="term-cell-score vanta">{item.vantaBadge}</div>
-      </div>
-    </div>
-  );
-}
-
-// ── ComparisonTable Component ──────────────────────────────────────────────────
-function ComparisonTable() {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const items = [
-    { label: "STORAGE", full: "Storage Architecture", oldVal: "Pinecone + Redis + S3", vantaVal: "pip install vantadb", oldBadge: "3 DEPS", vantaBadge: "1 CMD" },
-    { label: "COST", full: "Infrastructure Cost", oldVal: "~$200/mo + latency floor", vantaVal: "$0 runtime", oldBadge: "$200+", vantaBadge: "FREE" },
-    { label: "LATENCY", full: "p99 Query Latency", oldVal: "200ms (network bound)", vantaVal: "1.2ms (in-process)", oldBadge: "200ms", vantaBadge: "1.2ms" },
-    { label: "CONFIG", full: "Configuration & Schema", oldVal: "Complex migrations", vantaVal: "Zero config", oldBadge: "COMPLEX", vantaBadge: "ZERO" },
-    { label: "MAINT", full: "Maintenance", oldVal: "3 services to monitor", vantaVal: "0 daemon deps", oldBadge: "3 SVC", vantaBadge: "0 DEPS" },
-  ];
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setActiveIdx(0);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const handleDone = () => {
-    setActiveIdx((prev) => {
-      if (prev === null) return null;
-      if (prev < items.length) return prev + 1;
-      return prev;
-    });
-  };
-
-  return (
-    <div
-      className="comparison-table section-wrapper--cmp"
-    >
-      <div className="reveal text-center text-center--mb">
-        <span className="section-eyebrow">// VantaDB vs. The Stack</span>
-        <TypewriterTitle phase={activeIdx} />
-        <p className="section-sub section-sub--centered">
-          A side-by-side comparison of every infrastructure layer — complexity, cost, and performance.
-        </p>
-      </div>
-
-      <div ref={containerRef} className="term-grid">
-        {items.map((item, idx) => (
-          <TerminalCell key={idx} item={item} active={activeIdx === idx} onDone={handleDone} />
-        ))}
-      </div>
-      <SIMDVectorized />
-    </div>
-  );
-}
-
-// ── Syntax highlighting helpers ──────────────────────────────────────────────
-const PY_KEYWORDS = new Set([
-  "import", "from", "as", "def", "return", "if", "else", "elif", "for", "in",
-  "while", "class", "try", "except", "finally", "with", "pass", "break",
-  "continue", "and", "or", "not", "is", "None", "True", "False", "raise",
-  "yield", "lambda", "global", "nonlocal", "assert", "del",
-]);
-const RUST_KEYWORDS = new Set([
-  "use", "fn", "let", "mut", "return", "if", "else", "for", "in", "while",
-  "loop", "match", "struct", "enum", "impl", "trait", "pub", "self", "super",
-  "crate", "where", "as", "ref", "move", "async", "await", "unsafe", "type",
-  "const", "static", "true", "false", "Some", "None", "Ok", "Err",
-]);
-const PY_BUILTINS = new Set([
-  "print", "len", "range", "int", "str", "float", "list", "dict", "set",
-  "tuple", "type", "isinstance", "hasattr", "getattr", "open", "map",
-  "filter", "sorted", "enumerate", "zip", "reversed", "super",
-]);
-
-function tokenizePython(line: string) {
-  const parts: { t: string; v: string }[] = [];
-  let i = 0;
-  while (i < line.length) {
-    if (line[i] === "#") {
-      parts.push({ t: "comment", v: line.slice(i) });
-      break;
-    }
-    if (line[i] === '"' || line[i] === "'") {
-      const q = line[i];
-      let j = i + 1;
-      while (j < line.length && line[j] !== q) j++;
-      if (line[j] === q) j++;
-      parts.push({ t: "string", v: line.slice(i, j) });
-      i = j;
-      continue;
-    }
-    if (/[\d]/.test(line[i]) && (i === 0 || !/\w/.test(line[i - 1]))) {
-      let j = i;
-      while (j < line.length && /[\d.]/.test(line[j])) j++;
-      parts.push({ t: "number", v: line.slice(i, j) });
-      i = j;
-      continue;
-    }
-    if (/\w/.test(line[i]) || line[i] === "_") {
-      let j = i;
-      while (j < line.length && (/\w/.test(line[j]) || line[j] === "_")) j++;
-      const word = line.slice(i, j);
-      if (PY_KEYWORDS.has(word)) parts.push({ t: "keyword", v: word });
-      else if (PY_BUILTINS.has(word)) parts.push({ t: "builtin", v: word });
-      else if (i > 0 && line[i - 1] === ".") parts.push({ t: "function", v: word });
-      else if (j < line.length && line[j] === "(") parts.push({ t: "function", v: word });
-      else parts.push({ t: "plain", v: word });
-      i = j;
-      continue;
-    }
-    if (/[\[\](){},.]/.test(line[i])) {
-      parts.push({ t: "punctuation", v: line[i] });
-      i++;
-      continue;
-    }
-    if (/[=+\-*/<>!&|%^~?:@]/.test(line[i])) {
-      parts.push({ t: "operator", v: line[i] });
-      i++;
-      continue;
-    }
-    parts.push({ t: "plain", v: line[i] });
-    i++;
-  }
-  return parts;
-}
-
-function tokenizeRust(line: string) {
-  const parts: { t: string; v: string }[] = [];
-  let i = 0;
-  while (i < line.length) {
-    if (line[i] === "/" && line[i + 1] === "/") {
-      parts.push({ t: "comment", v: line.slice(i) });
-      break;
-    }
-    if (line[i] === '"') {
-      let j = i + 1;
-      while (j < line.length && line[j] !== '"') {
-        if (line[j] === "\\") j++;
-        j++;
-      }
-      if (line[j] === '"') j++;
-      parts.push({ t: "string", v: line.slice(i, j) });
-      i = j;
-      continue;
-    }
-    if (line[i] === "#" && line[i + 1] === "[") {
-      let j = i;
-      while (j < line.length && line[j] !== "]") j++;
-      if (j < line.length) j++;
-      parts.push({ t: "attribute", v: line.slice(i, j) });
-      i = j;
-      continue;
-    }
-    if (/[\d]/.test(line[i]) && (i === 0 || !/\w/.test(line[i - 1]))) {
-      let j = i;
-      while (j < line.length && /[\d._]/.test(line[j])) j++;
-      parts.push({ t: "number", v: line.slice(i, j) });
-      i = j;
-      continue;
-    }
-    if (/\w/.test(line[i]) || line[i] === "_") {
-      let j = i;
-      while (j < line.length && (/\w/.test(line[j]) || line[j] === "_")) j++;
-      const word = line.slice(i, j);
-      if (RUST_KEYWORDS.has(word)) parts.push({ t: "keyword", v: word });
-      else if (j < line.length && line[j] === "(") parts.push({ t: "function", v: word });
-      else if (word.endsWith("!")) parts.push({ t: "builtin", v: word });
-      else parts.push({ t: "plain", v: word });
-      i = j;
-      continue;
-    }
-    if (/[\[\](){},.;:]/.test(line[i])) {
-      parts.push({ t: "punctuation", v: line[i] });
-      i++;
-      continue;
-    }
-    if (/[=+\-*/<>!&|%^~?:@]/.test(line[i])) {
-      parts.push({ t: "operator", v: line[i] });
-      i++;
-      continue;
-    }
-    parts.push({ t: "plain", v: line[i] });
-    i++;
-  }
-  return parts;
-}
-
-function highlightCode(code: string, lang: string) {
-  const lines = code.split("\n");
-  const tokenizer = lang === "python" ? tokenizePython : tokenizeRust;
-  return lines.map((line, lIdx) => {
-    const tokens = tokenizer(line);
-    return (
-      <div key={lIdx} className="code-line">
-        {tokens.map((t, tIdx) => (
-          <span key={tIdx} className={`token-${t.t}`}>{t.v}</span>
-        ))}
-      </div>
-    );
-  });
-}
-
-function liveHighlight(code: string, typed: number, lang: string, cursor: boolean) {
-  const visible = code.slice(0, typed);
-  const lines = visible.split("\n");
-  const tokenizer = lang === "python" ? tokenizePython : tokenizeRust;
-  return lines.map((line, lIdx) => {
-    const isLast = lIdx === lines.length - 1;
-    const tokens = tokenizer(line);
-    return (
-      <div key={lIdx} className="code-line">
-        {tokens.map((t, tIdx) => (
-          <span key={tIdx} className={`token-${t.t}`}>{t.v}</span>
-        ))}
-        {isLast && cursor && <span className="typing-cursor">▊</span>}
-      </div>
-    );
-  });
-}
-
-// ── InteractiveQuickstart Component ───────────────────────────────────────────
-function InteractiveQuickstart() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [completed, setCompleted] = useState<Set<number>>(new Set([0]));
-  const [ready, setReady] = useState(false);
-  const [lang, setLang] = useState<"python" | "rust">("python");
-  const [copied, setCopied] = useState<string | null>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => {
-      setReady(true);
-    }));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
-  const steps: {
-    title: string; label: string;
-    pythonCode: string; rustCode: string;
-    pythonOutput: string[]; rustOutput: string[];
-  }[] = [
-    {
-      title: "INSTALL", label: "pip install",
-      pythonCode: "pip install vantadb-py",
-      rustCode: 'cargo add vantadb\n# Cargo.toml\nvantadb = "0.1"',
-      pythonOutput: [
-        "$ pip install vantadb-py",
-        "Collecting vantadb-py",
-        "  Downloading vantadb_py-0.1.4-cp312-cp312-manylinux_2_34_x86_64.whl",
-        "✓ Successfully installed vantadb-py-0.1.4",
-        "      Adding vantadb v0.1.4 to dependencies",
-        "✓ Pure Rust core dependencies analyzed",
-        "✓ Ready for building target bindings",
-      ],
-      rustOutput: [
-        '$ cargo add vantadb',
-        "    Updating crates.io index",
-        "      Adding vantadb v0.1.4 to dependencies",
-        "✓ Pure Rust core, zero bindings layer",
-        "✓ Cargo.toml ready for build",
-      ],
-    },
-    {
-      title: "INITIALIZE", label: "Open local DB",
-      pythonCode: 'import vantadb_py as vanta\n\ndb = vanta.VantaDB("./agent_memory")',
-      rustCode: 'use vantadb::VantaDB;\n\nlet db = VantaDB::open("./agent_memory")?;',
-      pythonOutput: [
-        ">>> db = vanta.VantaDB('./agent_memory')",
-        "✓ Folder path validated",
-        "✓ WAL recovery completed in 0.2ms (0 entries replayed)",
-        "✓ Fjall storage backend initialized successfully",
-        "✓ Database instance live",
-      ],
-      rustOutput: [
-        'let db = VantaDB::open("./agent_memory")?;',
-        "✓ WAL recovery complete (CRC32C verified)",
-        "✓ Raw storage initialized at ./agent_memory",
-        "✓ Safe Rust wrapper initialized",
-      ],
-    },
-    {
-      title: "STORE", label: "Put record",
-      pythonCode:
-        'db.put(\n  "memories",\n  "key-1",\n  "Agent learned user prefers async Python",\n  vector=[0.12, 0.88, 0.54],\n  metadata={"priority": "high"}\n)',
-      rustCode:
-        'db.put(\n    "memories",\n    "key-1",\n    "Agent learned user prefers async Python",\n    vec![0.12, 0.88, 0.54],\n    None\n)?;',
-      pythonOutput: [
-        ">>> db.put('memories', 'key-1', ...)",
-        "✓ Key formatted and serialized to Fjall WAL",
-        "✓ HNSW Index updated for namespace 'memories'",
-        "✓ CRC32C calculated: 0x92f3a1d4",
-        "✓ Fsync flushed successfully (WAL safe)",
-      ],
-      rustOutput: [
-        'db.put("memories", "key-1", ...)?;',
-        "✓ CRC32C verified: 0x92f3a1d4",
-        "✓ WAL sync succeeded immediately",
-        "✓ Key stored and index locked",
-      ],
-    },
-    {
-      title: "SEARCH", label: "Hybrid search",
-      pythonCode:
-        'hits = db.search_memory(\n  "memories",\n  query_vector=[0.11, 0.89, 0.55],\n  top_k=5\n)',
-      rustCode:
-        'let hits = db.search_memory(\n    "memories",\n    vec![0.11, 0.89, 0.55],\n    5\n)?;',
-      pythonOutput: [
-        ">>> hits = db.search_memory('memories', ...)",
-        "🔍 Executing hybrid plan: BM25 (lexical) + HNSW (vector) + RRF fusion",
-        "→ hit key-1: 'Agent learned user prefers async Python'",
-        "  Score: 0.987 (RRF fused)",
-        "  Latency: 1.2ms (100% local FFI execution)",
-      ],
-      rustOutput: [
-        'let hits = db.search_memory("memories", ...)?;',
-        "🔍 Query plan: BM25 (lexical) + HNSW (vector) + RRF fusion",
-        "→ key-1: 'Agent learned user prefers async Python'",
-        "  Fused Score: 0.987",
-        "  Latency: 0.8ms (Rust direct call)",
-      ],
-    },
-  ];
-
-  const navigate = (idx: number) => {
-    setActiveIdx(idx);
-    setCompleted((prev) => {
-      const next = new Set(prev);
-      for (let i = 0; i <= idx; i++) next.add(i);
-      return next;
-    });
-  };
-
-  const copyCode = async (key: string, code: string) => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(key);
-      setTimeout(() => setCopied(null), 2000);
-    } catch { /* clipboard unavailable */ }
-  };
-
-  const outColor = (line: string) =>
-    line.startsWith("$") || line.startsWith("cargo") || line.startsWith("    Updating")
-      ? "var(--steel)"
-      : line.startsWith(">>>") || line.startsWith("✓")
-        ? "#28c840"
-        : line.startsWith("🔍") || line.startsWith("→") || line.startsWith("  ")
-          ? "var(--amber-soft)"
-          : "var(--frost)";
-
-  const step = steps[activeIdx];
-  const codeText = lang === "python" ? step.pythonCode : step.rustCode;
-  const outputLines = lang === "python" ? step.pythonOutput : step.rustOutput;
-  const copyKey = `${activeIdx}-${lang}`;
-
-  // Typewriter
-  const [typedCount, setTypedCount] = useState(0);
-  const [typingDone, setTypingDone] = useState(false);
-  const [outRevealed, setOutRevealed] = useState(0);
-
-  useEffect(() => {
-    setTypedCount(0);
-    setTypingDone(false);
-    setOutRevealed(0);
-    let ci = 0;
-    const speed = 45;
-    const t = setInterval(() => {
-      ci++;
-      setTypedCount(ci);
-      if (ci >= codeText.length) {
-        clearInterval(t);
-        setTimeout(() => {
-          setTypingDone(true);
-          let oi = 0;
-          const o = setInterval(() => {
-            oi++;
-            setOutRevealed(oi);
-            if (oi >= outputLines.length) clearInterval(o);
-          }, 120);
-        }, 300);
-      }
-    }, speed);
-    return () => { clearInterval(t); };
-  }, [codeText, outputLines.length]);
-
-  return (
-    <section
-      id="quickstart"
-      aria-labelledby="quickstart-heading"
-      className="section-wrapper--qs"
-    >
-      <div className="reveal text-center--mb-lg">
-        <span className="section-eyebrow">// Quickstart</span>
-        <h2
-          id="quickstart-heading"
-          className="section-title section-title--qs"
-        >
-          Get started in <span className="text-highlight--amber">seconds.</span>
-        </h2>
-        <p className="section-sub section-sub--qs">
-          Install, import and query locally. Zero dependencies. Open a file and go.
-        </p>
-      </div>
-
-      <div className={`sp-layout ${ready ? "ready" : ""}`}>
-        {/* Sidebar */}
-        <nav className="sp-sidebar" aria-label="Quickstart steps">
-          {steps.map((s, idx) => {
-            const status = activeIdx === idx ? "active" : completed.has(idx) ? "completed" : "pending";
-            return (
-              <button key={idx} className={`sp-sidebar-item ${status}`} onClick={() => navigate(idx)}>
-                <span className="sp-sidebar-num">{String(idx + 1).padStart(2, "0")}</span>
-                <span>{s.title}</span>
-                <span className={`sp-sidebar-icon ${status === "active" ? "active-dot" : status === "completed" ? "done-dot" : ""}`}>
-                  {status === "active" ? "●" : status === "completed" ? "✓" : ""}
-                </span>
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Content */}
-        <div className="sp-content" ref={contentRef}>
-          <div className="tl-window">
-            <div className="tl-titlebar">
-              <div className="tl-dot-group">
-                <span className="tl-dot" />
-                <span className="tl-dot" />
-                <span className="tl-dot" />
-              </div>
-              <span className="tl-title">vantadb — interactive shell v0.1</span>
-              <div className="tl-legend">
-                <span className="tl-legend-item text-highlight--amber">● active</span>
-                  <span className="tl-legend-item tl-legend-item--done">✓ done</span>
-                <span className="tl-legend-item">○ pending</span>
-              </div>
-            </div>
-
-            <div className="sp-block is-visible" key={copyKey}>
-              <div className="sp-block-header">
-                <span className="sp-step-title">{step.title}</span>
-                <span className="sp-step-tag">{step.label}</span>
-              </div>
-
-              <div className="sp-lang-tabs">
-                <button
-                  className={`sp-lang-tab ${lang === "python" ? "active" : ""}`}
-                  onClick={() => setLang("python")}
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                    <path d="M2 17l10 5 10-5" />
-                    <path d="M2 12l10 5 10-5" />
-                  </svg>
-                  Python SDK
-                </button>
-                <button
-                  className={`sp-lang-tab ${lang === "rust" ? "active" : ""}`}
-                  onClick={() => setLang("rust")}
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                  Rust Core (FFI)
-                </button>
-              </div>
-
-              <div className="sp-code-wrap" key={`code-${copyKey}`}>
-                <button className="sp-copy-btn" onClick={() => copyCode(copyKey, codeText)} aria-label="Copy code">
-                  {copied === copyKey ? (
-                    <span className="sp-copied-label">Copied</span>
-                  ) : (
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                    </svg>
-                  )}
-                </button>
-                <div className="sp-code">
-                  {typingDone
-                    ? highlightCode(codeText, lang)
-                    : liveHighlight(codeText, typedCount, lang, true)}
-                </div>
-              </div>
-
-              <div className="sp-output" key={`out-${copyKey}`}>
-                {outputLines.slice(0, outRevealed).map((line, lIdx) => (
-                  <div key={lIdx} className="sp-out-line" style={{ color: outColor(line) }}>{line}</div>
-                ))}
-                {outRevealed > 0 && outRevealed <= outputLines.length && typingDone && <span className="typing-cursor typing-cursor--out">▊</span>}
-              </div>
-            </div>
-                </div>
-                {/* Terminal footer with typewriter query */}
-                <div className="term-footer">
-                  <span className="term-prompt">$</span>
-                  <span className="term-query term-query--anim">MATCH (n) WHERE n.vector &lt;=&gt; [0.85, 0.12] RETURN n</span>
-                  <span className="term-cursor-block" />
-                </div>
-              </div>
-      </div>
-    </section>
-  );
-}
+// ── InteractiveQuickstart (extracted) ─────────────────────────────────────────
+// InteractiveQuickstart lives in src/components/InteractiveQuickstart.tsx.
 
 // ── Main Landing ───────────────────────────────────────────────────────────────
 function Landing() {
   useGSAPReveal();
-  const [heroReady, setHeroReady] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setHeroReady(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
@@ -872,31 +118,23 @@ function Landing() {
         @keyframes drawLine { from { stroke-dashoffset:1000; } to { stroke-dashoffset:0; } }
         @keyframes archLayerIn { from { opacity:0; transform:translateX(-16px); } to { opacity:1; transform:translateX(0); } }
         @keyframes ping { from { opacity:0.3; transform:scale(0.8); } to { opacity:1; transform:scale(1.2); } }
-        @keyframes tl-rail-grow { from { transform:scaleY(0); } to { transform:scaleY(1); } }
-        @keyframes tl-dot-in { from { opacity:0; transform:scale(0); } to { opacity:1; transform:scale(1); } }
-        @keyframes tl-pulse { 0% { box-shadow:0 0 0 0 rgba(255,106,0,0.3); } 100% { box-shadow:0 0 0 12px rgba(255,106,0,0); } }
-        @keyframes eng-wave { 0%,100% { transform:scaleY(0.15); } 50% { transform:scaleY(0.85); } }
-        @keyframes eng-ring { 0% { transform:scale(0.2); opacity:0.5; } 100% { transform:scale(1.6); opacity:0; } }
-        @keyframes eng-dot-pulse { 0%,100% { opacity:0.15; transform:scale(1); } 50% { opacity:0.7; transform:scale(1.4); } }
-        @keyframes eng-breathe { 0%,100% { opacity:0.35; transform:scale(1); } 50% { opacity:0.7; transform:scale(1.06); } }
-        @keyframes eng-line-draw { to { stroke-dashoffset:0; } }
-        @keyframes tunnel-down { 0% { transform:translateY(-24px); opacity:0; } 12% { opacity:1; } 80% { opacity:0.7; } 100% { transform:translateY(340px); opacity:0; } }
-        @keyframes query-type-in { from { max-width:0; } to { max-width:60ch; } }
-        @keyframes boot-blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
-
         .tl-pulse-ring { animation:tl-pulse 2.5s ease-out infinite; }
-        .eng-svg-line { stroke-dasharray:400; stroke-dashoffset:400; }
 
-        .glow-card { position:relative; background:var(--surface); border-radius:var(--radius-md); overflow:hidden; z-index:1; cursor:default; }
-        .glow-card::before { content:''; position:absolute; inset:0; background:radial-gradient(500px circle at var(--mx,0) var(--my,0), rgba(255,106,0,0.18), transparent 40%); z-index:-1; opacity:0; transition:opacity 0.35s ease; pointer-events:none; }
+        .glow-card { position:relative; background:var(--surface); border-radius:var(--radius-md); overflow:hidden; z-index:1; cursor:default; will-change:transform,opacity; }
+        .glow-card::before { content:''; position:absolute; inset:0; background:radial-gradient(500px circle at var(--mx,0) var(--my,0), rgba(139,158,183,0.18), transparent 40%); z-index:-1; opacity:0; transition:opacity 0.35s ease; pointer-events:none; }
         .glow-card:hover::before { opacity:1; }
+
+        .ss-panel-inner { max-width:640px; }
+        .ss-title { font-family:var(--font-display); font-size:clamp(2.5rem,5vw,4rem); font-weight:600; letter-spacing:-0.03em; line-height:1.1; color:var(--white); margin-bottom:1rem; }
+        .ss-desc { font-family:var(--font-body); font-size:1.05rem; line-height:1.7; color:var(--muted); margin-bottom:2rem; max-width:560px; }
+        .ss-metrics { display:flex; gap:2.5rem; }
+        .ss-metric { display:flex; flex-direction:column; gap:0.15rem; }
+        .ss-metric-value { font-family:var(--font-display); font-size:1.8rem; font-weight:600; letter-spacing:-0.02em; color:var(--amber); }
+        .ss-metric-label { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--steel); }
       `}</style>
 
-      {/* Gradient mesh background (fixed, aurora drift) */}
-      <div className="gradient-mesh" />
-
-      {/* Hero (immutable) */}
-      <SingularityHero ready={heroReady} />
+      {/* Hero */}
+      <SingularityHero />
 
       <div className="hero-nebula" />
 
@@ -907,139 +145,111 @@ function Landing() {
           <ComparisonTable />
         </div>
 
+        {/* ── 1b. METRICS STRIP — real benchmarks ── */}
+        <div className="metrics-strip-wrap">
+          <div className="metrics-strip">
+            <div className="metric-item reveal">
+              <span className="metric-value">1.2ms</span>
+              <span className="metric-label">p99 Query Latency</span>
+            </div>
+            <div className="metric-item reveal">
+              <span className="metric-value">32K</span>
+              <span className="metric-label">Max Vector Dims</span>
+            </div>
+            <div className="metric-item reveal">
+              <span className="metric-value">100%</span>
+              <span className="metric-label">BM25 Recall</span>
+            </div>
+            <div className="metric-item reveal">
+              <span className="metric-value">0</span>
+              <span className="metric-label">External Dependencies</span>
+            </div>
+          </div>
+        </div>
+
         {/* ── 2. INTERACTIVE QUICKSTART (Terminal Stepper) ── */}
         <InteractiveQuickstart />
 
         <div className="section-divider" />
 
-        {/* ── 3. ENGINE — Digital Core (animated quadrant matrix) ── */}
-        <section
-          id="engine"
-          aria-labelledby="engine-heading"
-          className="section-padded--engine section-frame"
-        >
-          <div className="noise-overlay noise-overlay--10" />
-          <DynamicGraphMesh />
-          <div
-            className="section-split"
-          >
-            <div>
-              <span className="section-eyebrow reveal">// Core Engine</span>
-              <h2
-                id="engine-heading"
-                className="section-title section-title--sm reveal reveal-delay-1"
-              >
-                Four memory modalities.
-                <br />
-                <span className="text-highlight--amber">One atomic contract.</span>
-              </h2>
-              <p className="section-sub reveal reveal-delay-2 section-sub--mb">
-                BM25 + HNSW unified via RRF in a single local database engine. Relations stored
-                natively as weighted graph edges. CRC32C Write-Ahead Logging for absolute crash
-                safety.
-              </p>
-              <div className="reveal reveal-delay-3">
-                <Link
-                  to="/engine"
-                  className="cta-link nav-cta"
-                >
-                  Explore Core Engine Features →
-                </Link>
-              </div>
-            </div>
-            <div className="reveal reveal-delay-2 eng-wrap">
-              <div className="term-window">
-                <Scanlines />
-                {/* Minimal title bar */}
-                <div className="term-titlebar">
-                  <span className="term-dot term-dot--red" />
-                  <span className="term-dot term-dot--yellow" />
-                  <span className="term-dot term-dot--green" />
-                  <span className="term-label">vantadb — digital core</span>
-                </div>
-
-                {/* 2×2 quadrant grid */}
-                <div className="eng-grid">
-                  {/* ── Cell 1: BM25 ── */}
-                  <div className="eng-cell-border--rb">
-                    <div className="eng-visual bm25-bar-wrap">
-                      {[0, 0.12, 0.24, 0.36, 0.48, 0.36, 0.24, 0.12].map((d, i) => (
-                        <div key={i} className="bm25-bar" style={{ animationDelay: `${d}s` }} />
-                      ))}
-                    </div>
-                    <div className="eng-cell-tag">BM25 TEXT SEARCH</div>
-                    <div className="eng-cell-desc">
-                      BM25 lexical search — <span className="accent-text">1.2ms</span> p99 at <span className="text-highlight--white">100%</span> recall
-                    </div>
-                  </div>
-
-                  {/* ── Cell 2: HNSW ── */}
-                  <div className="eng-cell-border--b">
-                    <div className="eng-visual">
-                      <HNSWIsometric />
-                    </div>
-                    <div className="eng-cell-tag">HNSW VECTOR INDEX</div>
-                    <div className="eng-cell-desc">
-                      HNSW vector index — up to <span className="text-highlight--white">32K</span> dimensions, <span className="text-highlight--white">1KB</span> keys
-                    </div>
-                  </div>
-
-                  {/* ── Cell 3: GraphRAG ── */}
-                  <div className="eng-cell-border--r">
-                    <div className="eng-visual">
-                      <svg viewBox="0 0 60 60" className="eng-cell-svg--75">
-                        <line x1="10" y1="10" x2="30" y2="10" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="10" y1="10" x2="10" y2="30" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="30" y1="10" x2="50" y2="10" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="50" y1="10" x2="50" y2="30" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="10" y1="30" x2="30" y2="30" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="30" y1="30" x2="50" y2="30" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="30" y1="30" x2="30" y2="50" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="10" y1="30" x2="10" y2="50" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="50" y1="30" x2="50" y2="50" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="10" y1="50" x2="30" y2="50" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <line x1="30" y1="50" x2="50" y2="50" stroke="rgba(255,140,60,0.12)" strokeWidth="1.2" />
-                        <circle cx="10" cy="10" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 0s" />
-                        <circle cx="30" cy="10" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 0.4s" />
-                        <circle cx="50" cy="10" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 0.8s" />
-                        <circle cx="10" cy="30" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 1.2s" />
-                        <circle cx="30" cy="30" r="4" fill="var(--amber)" opacity="0.35" animation="eng-breathe 2.4s ease-in-out infinite" />
-                        <circle cx="50" cy="30" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 0.6s" />
-                        <circle cx="10" cy="50" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 1.8s" />
-                        <circle cx="30" cy="50" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 0.2s" />
-                        <circle cx="50" cy="50" r="2.8" fill="rgba(255,140,60,0.2)" animation="eng-dot-pulse 3s ease-in-out infinite 1s" />
-                      </svg>
-                    </div>
-                    <div className="eng-cell-tag">GRAPH RAG</div>
-                    <div className="eng-cell-desc">
-                      Weighted-edge graph relations — <span className="text-highlight--amber-soft">0.2ms</span> recovery
-                    </div>
-                  </div>
-
-                  {/* ── Cell 4: WAL ── */}
-                  <div className="eng-cell-border--none">
-                    <div className="eng-visual">
-                      <div className="wal-ring-outer">
-                        <div className="wal-ring-mid">
-                          <div className="wal-core" />
-                        </div>
-                      </div>
-                      <svg viewBox="0 0 60 60" className="eng-cell-svg--abs">
-                        <path d="M12 30 Q30 6 48 30" fill="none" stroke="rgba(255,140,60,0.1)" strokeWidth="1.5" />
-                        <path d="M12 36 Q30 12 48 36" fill="none" stroke="rgba(255,140,60,0.06)" strokeWidth="1.2" />
-                      </svg>
-                    </div>
-                    <div className="eng-cell-tag">WAL DURABILITY</div>
-                    <div className="eng-cell-desc">
-                      <span className="text-highlight--white">CRC32C</span>-checksummed WAL with <span className="text-highlight--white">fsync</span> durability
-                    </div>
+        {/* ── 3. ENGINE — Scroll Story (pinning + scrub) ── */}
+        <ScrollStory
+          id="engine-core"
+          start="top top"
+          end="+=400%"
+          scrub={1.5}
+          panels={[
+            {
+              id: "bm25",
+              content: (
+                <div className="ss-panel-inner">
+                  <ScrambleText text="BM25 Text Search" className="ss-title" />
+                  <p className="ss-desc">
+                    Full-text lexical search at 1.2ms p99 with 100% recall. No sidecars, no
+                    separate indexing pipeline — the Rust engine embeds directly into your process.
+                  </p>
+                  <div className="ss-metrics">
+                    <div className="ss-metric"><span className="ss-metric-value">1.2ms</span><span className="ss-metric-label">p99 latency</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">100%</span><span className="ss-metric-label">BM25 recall</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">0</span><span className="ss-metric-label">external deps</span></div>
                   </div>
                 </div>
-                <DAGPlan />
-              </div>
-            </div>
-          </div>
-        </section>
+              ),
+            },
+            {
+              id: "hnsw",
+              content: (
+                <div className="ss-panel-inner">
+                  <ScrambleText text="HNSW Vector Index" className="ss-title" />
+                  <p className="ss-desc">
+                    Hierarchical Navigable Small World graphs for approximate nearest neighbor
+                    search. Supports up to 32K dimensions with 1KB fixed-size keys and sub-millisecond
+                    query times.
+                  </p>
+                  <div className="ss-metrics">
+                    <div className="ss-metric"><span className="ss-metric-value">32K</span><span className="ss-metric-label">max dims</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">1KB</span><span className="ss-metric-label">fixed keys</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">&lt;1ms</span><span className="ss-metric-label">query p99</span></div>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id: "graphrag",
+              content: (
+                <div className="ss-panel-inner">
+                  <ScrambleText text="GraphRAG" className="ss-title" />
+                  <p className="ss-desc">
+                    Weighted-edge graph relations with 0.2ms traversal. Enables multi-hop reasoning
+                    across entities, documents, and agent memory — all within a single Rust binary.
+                  </p>
+                  <div className="ss-metrics">
+                    <div className="ss-metric"><span className="ss-metric-value">0.2ms</span><span className="ss-metric-label">hop recovery</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">Weighted</span><span className="ss-metric-label">edge relations</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">Multi-hop</span><span className="ss-metric-label">reasoning</span></div>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id: "wal",
+              content: (
+                <div className="ss-panel-inner">
+                  <ScrambleText text="WAL Durability" className="ss-title" />
+                  <p className="ss-desc">
+                    CRC32C-checksummed Write-Ahead Log with fsync durability. Crash-safe recovery
+                    with zero data loss. Every write is journaled before acknowledgement.
+                  </p>
+                  <div className="ss-metrics">
+                    <div className="ss-metric"><span className="ss-metric-value">CRC32C</span><span className="ss-metric-label">checksum</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">fsync</span><span className="ss-metric-label">durability</span></div>
+                    <div className="ss-metric"><span className="ss-metric-value">Zero</span><span className="ss-metric-label">data loss</span></div>
+                  </div>
+                </div>
+              ),
+            },
+          ]}
+        />
 
         <div className="section-divider" />
 
@@ -1050,7 +260,7 @@ function Landing() {
           className="section-padded--surface section-frame"
         >
           <div className="noise-overlay noise-overlay--15" />
-          <VectorSpace grid={false} />
+          <CodeGridBackground />
           {/* Pipeline SVG decoration */}
           <svg
             aria-hidden="true"
@@ -1076,18 +286,13 @@ function Landing() {
           >
             <div>
               <span className="section-eyebrow reveal">// Architecture</span>
-              <h2
-                id="arch-heading"
-                className="section-title section-title--sm reveal reveal-delay-1"
-              >
-                Built different.
-                <br />
-                <span className="text-highlight--amber">Runs everywhere.</span>
-              </h2>
+              <ScrambleText
+                text="Zero-copy from Python to Rust."
+                className="section-title section-title--sm reveal"
+              />
               <p className="section-sub reveal reveal-delay-2 section-sub--mb">
-                PyO3 FFI boundary zero-copy bridge between Python and Rust. No serialization
-                overhead, no server process. WAL + fsync + CRC32C guarantees crash-safety at
-                every layer.
+                PyO3 FFI bridge with zero serialization overhead. WAL + CRC32C checksums at every
+                layer. Runs on Linux, macOS, Windows, Android, and iOS — no container required.
               </p>
               <div className="reveal reveal-delay-3">
                 <Link
@@ -1101,7 +306,7 @@ function Landing() {
             <div className="reveal reveal-delay-2 arch-side-col">
               <div className="reveal--rel">
                 <ArchCrossSection />
-                <div className="anime-logo-deco"><AnimeMorphLogo size={80} /></div>
+                <div className="anime-logo-deco"><HNSWLayerIcon size={80} /></div>
               </div>
               <Flamegraph />
             </div>
@@ -1115,7 +320,7 @@ function Landing() {
           className="section-padded--integrations section-frame"
         >
           <div className="noise-overlay noise-overlay--12" />
-          <IOMultiplexing />
+          <ProtocolDiagram />
           {/* Hub+spoke SVG decoration */}
           <svg
             aria-hidden="true"
@@ -1147,25 +352,20 @@ function Landing() {
           >
             <div>
               <span className="section-eyebrow reveal">// Ecosystem</span>
-              <h2
-                id="integrations-heading"
-                className="section-title section-title--sm reveal reveal-delay-1"
-              >
-                Agnostic.
-                <br />
-                <span className="text-highlight--amber">Unbound.</span>
-              </h2>
+              <ScrambleText
+                text="Drop-in for any agent framework."
+                className="section-title section-title--sm reveal"
+              />
               <p className="section-sub reveal reveal-delay-2 section-sub--mb">
-                VantaDB plugs into any AI agent framework via direct FFI bindings.
-                LangChain vectorstores, LlamaIndex index traversal, AutoGen tools,
-                and Model Context Protocol — all with the same local-first contract.
+                LangChain vectorstores, LlamaIndex index traversal, AutoGen tools, MCP servers — all
+                connect via direct FFI bindings. No HTTP bridge, no sidecar process. Just import and query.
               </p>
               <div className="reveal reveal-delay-3">
                 <Link
                   to="/integrations"
                   className="cta-link nav-cta"
                 >
-                  Explore Orbit Ecosystem →
+                  Explore Ecosystem →
                 </Link>
               </div>
             </div>
@@ -1262,24 +462,21 @@ function Landing() {
         <section
           id="use-cases"
           aria-labelledby="use-cases-heading"
-          className="section-padded--engine"
+          className="section-padded--engine section-frame"
         >
+          <div className="noise-overlay noise-overlay--12" />
           <div
             className="section-split"
           >
             <div>
               <span className="section-eyebrow reveal">// Use Cases</span>
-              <h2
-                id="use-cases-heading"
-                className="section-title section-title--md reveal reveal-delay-1"
-              >
-                Where VantaDB
-                <br />
-                <span className="text-highlight--amber">fits perfectly.</span>
-              </h2>
+              <ScrambleText
+                text="Built for agents that need context."
+                className="section-title section-title--md reveal"
+              />
               <p className="section-sub section-sub--mb reveal reveal-delay-2">
-                Persistent scratchpads, memory that survives agent crashes, AST parsing context
-                databases, and secure edge execution contexts with zero network footprints.
+                Persistent agent memory, local-first RAG pipelines, codebase intelligence, and
+                edge environments with zero network footprint. One engine, every deployment.
               </p>
               <div className="reveal reveal-delay-3">
                 <Link
@@ -1314,11 +511,12 @@ function Landing() {
                   {/* SVG data flow */}
                   <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="uc-svg">
                     <circle cx="20" cy="40" r="8" stroke="var(--steel)" strokeWidth="1" fill="none" opacity="0.4" />
-                    <circle cx="60" cy="40" r="8" stroke="var(--amber)" strokeWidth="1" fill="none" opacity="0.4" />
+<circle cx="60" cy="40" r="8" stroke="var(--steel)" strokeWidth="1" 
+                      fill="none" opacity="0.4" />
                     <path d="M28 40 Q40 20 52 40" stroke="var(--amber)" strokeWidth="0.8" fill="none" strokeDasharray="2 2" opacity="0.5">
                       <animate attributeName="strokeDashoffset" from="0" to="20" dur="2s" repeatCount="indefinite" />
                     </path>
-                    <circle cx="40" cy="40" r="3" fill="var(--amber)" opacity="0.5">
+                    <circle cx="40" cy="40" r="3" fill="var(--steel)" opacity="0.5">
                       <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
                     </circle>
                   </svg>
@@ -1348,7 +546,8 @@ function Landing() {
                       </div>
                       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="uc-svg--mt">
                         <rect x="10" y="14" width="28" height="20" rx="2" stroke="var(--steel)" strokeWidth="0.8" opacity="0.3" fill="none" />
-                        <path d="M18 24l4 4 8-8" stroke="var(--amber)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+<path d="M18 24l4 4 8-8" stroke="var(--steel)" strokeWidth="1" 
+                        strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
                       </svg>
                     </div>
                   </div>
@@ -1375,8 +574,8 @@ function Landing() {
                       </div>
                       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="uc-svg--mt">
                         <path d="M16 16h16v16H16z" stroke="var(--steel)" strokeWidth="0.8" opacity="0.3" fill="none" />
-                        <path d="M24 22l-4 4 4 4" stroke="var(--amber)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
-                        <path d="M24 22l4 4-4 4" stroke="var(--amber)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                        <path d="M24 22l-4 4 4 4" stroke="var(--steel)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                        <path d="M24 22l4 4-4 4" stroke="var(--steel)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
                       </svg>
                     </div>
                   </div>
@@ -1401,13 +600,9 @@ function Landing() {
           >
             {/* Glow ring decoration */}
             <div className="cta-glow-ring" />
-            <h2 id="cta-heading" className="cta-heading">
-              Memory that
-              <br />
-              <span className="text-highlight--amber">never escapes.</span>
-            </h2>
+            <ScrambleText text="Context that never fragments." className="cta-heading" />
             <p className="cta-desc">
-              Start building AI agents with persistent, hybrid-searchable memory. Apache 2.0. One pip install.
+              BM25 + HNSW + GraphRAG in a single Rust binary. MIT — go build.
             </p>
             <div className="cta-actions">
               <button

@@ -17,8 +17,14 @@
    - [Capa 4 — Interacciones y Movimiento](#capa-4--interacciones-y-movimiento)
    - [Capa 5 — Auditoría y Refinamiento](#capa-5--auditoría-y-refinamiento)
    - [Capa 6 — Rendimiento y Optimización](#capa-6--rendimiento-y-optimización)
-   - [Capa 7 — Investigación y Metodología](#capa-7--investigación-y-metodología)
-   - [Capa 8 — Operaciones y Herramientas de Equipo](#capa-8--operaciones-y-herramientas-de-equipo)
+    - [Capa 7 — Investigación y Metodología](#capa-7--investigación-y-metodología)
+    - [Capa 8 — Operaciones y Herramientas de Equipo](#capa-8--operaciones-y-herramientas-de-equipo)
+4. [Capas Opcionales](#capas-opcionales)
+    - [Capa 9 — Video](#capa-9--video-opcional)
+    - [Capa 10 — 3D Avanzado](#capa-10--3d-avanzado-opcional)
+    - [Capa 11 — SEO + Mobile](#capa-11--seo--mobile-opcional)
+    - [Capa 12 — Branding, Arte, Temas](#capa-12--branding-arte-temas)
+    - [Capa 13 — Open Design Skills](#capa-13--open-design-skills)
 5. [Ciclo de Orquestación](#ciclo-de-orquestación)
 6. [Workflows Disponibles](#workflows-disponibles)
 7. [Reglas de Resolución de Conflictos](#reglas-de-resolución-de-conflictos)
@@ -31,10 +37,10 @@
 El toolkit de diseño de VantaDB es una colección de 170+ habilidades (skills) que cubren el ciclo completo de diseño de producto digital:
 
 ```
-Research → Estructura → Visuals → Interacción → Auditoría → Producción
+Estrategia → Research → Estructura → Visuals → Interacción → Auditoría → Producción
 ```
 
-Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (o el diseñador) puede seguir. Están organizadas en **8 capas funcionales** que se ejecutan en secuencia para evitar contradicciones.
+Cada skill es un archivo `SKILL.md` con instrucciones operativas que el agente (o el diseñador) puede seguir. Están organizadas en **13 capas funcionales (8 base + 5 opcionales)** que se ejecutan en secuencia para evitar contradicciones.
 
 **Principio rector**: Las decisiones se fundamentan en evidencia (research, métricas, heurísticas), no en preferencia personal. El "AI slop" (diseño genérico de IA) se rechaza activamente.
 
@@ -714,7 +720,7 @@ Además del ciclo genérico, el orquestador incluye **3 pipelines completos** en
 | `brand-identity-pipeline.json` | 11 | 20+ | 3-6h |
 | `video-production-pipeline.json` | 9 | 16+ | 1-3h |
 
-Y **18 presets de proyecto** en `configs/project-presets.json` para cargar configuración rápida:
+Y **20 presets de proyecto** en `configs/project-presets.json` para cargar configuración rápida:
 
 ```bash
 # Ejemplo: cargar preset para landing page
@@ -755,11 +761,14 @@ _Última actualización: 2026-06-19._
 |:--------|:------------|
 | `SKILL.md` | Orquestador principal con 13 capas, routing, conflictos |
 | `README.md` | Este archivo — visión general y referencia rápida |
-| `configs/project-presets.json` | 18 presets de proyecto (landing, brand, video, deck, etc.) |
-| `routing/ROUTING.md` | Tabla maestra de 50+ combinaciones de skills |
-| `examples/examples.md` | 10 ejemplos prácticos de uso combinado |
+| `configs/project-presets.json` | 20 presets de proyecto (landing, brand, video, deck, etc.) |
+| `routing/ROUTING.md` | Tabla maestra de 95+ combinaciones de skills |
+| `examples/examples.md` | 20 ejemplos prácticos de uso combinado |
 | `workflows/landing-page-pipeline.json` | Pipeline landing page (12 fases) |
 | `workflows/brand-identity-pipeline.json` | Pipeline brand identity (11 fases) |
 | `workflows/video-production-pipeline.json` | Pipeline video production (9 fases) |
 | `scripts/skill-bridge.ps1` | CLI para listar skills, rutas y conflictos |
 | `scripts/skill-inventory.json` | Inventario completo de 170+ skills |
+| `strategy/` | 13 documentos de estrategia (business-model, brand-platform, sensory-identity, etc.) |
+| `infrastructure/` | Documentación de herramientas, analytics, developer handoff |
+| `strategy/SUMMARY.md` | Índice rápido de los 13 documentos estratégicos |

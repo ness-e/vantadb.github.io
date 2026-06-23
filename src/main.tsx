@@ -4,7 +4,7 @@ import { RouterProvider } from "@tanstack/react-router";
 import { getRouter } from "./router";
 
 // Import CSS stylesheet
-import "./styles.css";
+import "./styles/index.css";
 
 const router = getRouter();
 

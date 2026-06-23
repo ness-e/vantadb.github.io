@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export const Route = createFileRoute("/integrations")({
   head: () => ({
@@ -176,18 +177,7 @@ hits = db.search_memory(
     },
   ];
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-    const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("is-visible");
-        }),
-      { threshold: 0.08 },
-    );
-    document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
+  useScrollReveal();
 
   const activeIntegration = integrations.find((i) => i.id === selectedSat) || integrations[0];
 
@@ -233,51 +223,22 @@ hits = db.search_memory(
             </pre>
           </div>
 
-          <div className="reveal reveal-delay-2">
-            <div className="orbit-universe">
-              {/* Sun (VantaDB Core) */}
-              <div className="int-core">
-                <span className="int-core-label">
-                  VantaDB
-                </span>
-              </div>
-
-              {/* Inner Orbit track (Python & MCP) */}
-              <div className="orbit-track inner">
-                <button
-                  className={`orbit-satellite orbit-satellite--top ${selectedSat === "python" ? "active" : ""}`}
-                  onClick={() => setSelectedSat("python")}
-                  title="Python SDK Native"
-                >
-                  <IconPython />
-                </button>
-                <button
-                  className={`orbit-satellite orbit-satellite--bottom ${selectedSat === "mcp" ? "active" : ""}`}
-                  onClick={() => setSelectedSat("mcp")}
-                  title="Model Context Protocol"
-                >
-                  <IconMCP />
-                </button>
-              </div>
-
-              {/* Middle Orbit track (LangChain & LlamaIndex) */}
-              <div className="orbit-track middle">
-                <button
-                  className={`orbit-satellite orbit-satellite--left ${selectedSat === "langchain" ? "active" : ""}`}
-                  onClick={() => setSelectedSat("langchain")}
-                  title="LangChain"
-                >
-                  <IconLangChain />
-                </button>
-                <button
-                  className={`orbit-satellite orbit-satellite--right ${selectedSat === "llamaindex" ? "active" : ""}`}
-                  onClick={() => setSelectedSat("llamaindex")}
-                  title="LlamaIndex"
-                >
-                  <IconLlamaIndex />
-                </button>
-              </div>
-            </div>
+          <div className="reveal reveal-delay-2 int-selector-grid">
+            {[
+              { id: "langchain", icon: <IconLangChain />, label: "LangChain" },
+              { id: "llamaindex", icon: <IconLlamaIndex />, label: "LlamaIndex" },
+              { id: "python", icon: <IconPython />, label: "Python SDK" },
+              { id: "mcp", icon: <IconMCP />, label: "MCP" },
+            ].map((fw) => (
+              <button
+                key={fw.id}
+                className={`int-selector-card ${selectedSat === fw.id ? "active" : ""}`}
+                onClick={() => setSelectedSat(fw.id)}
+              >
+                <div className="int-selector-icon">{fw.icon}</div>
+                <div className="int-selector-label">{fw.label}</div>
+              </button>
+            ))}
           </div>
         </section>
       </main>
