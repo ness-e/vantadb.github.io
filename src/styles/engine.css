@@ -1,0 +1,438 @@
+/* ═══════════════════════════════════════════════════════════
+   VantaDB — Swiss Engine Page
+   Fondo claro, negro absoluto, Safety Orange como único acento
+   Hairlines 1px, sin sombras difusas, radios 0-4px
+   ═══════════════════════════════════════════════════════════ */
+
+.engine-page {
+  background: var(--background);
+  min-height: 100vh;
+}
+
+.engine-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--foreground);
+  margin: 0.5rem 0 1.5rem;
+}
+
+.engine-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem) 8rem;
+}
+
+.engine-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.engine-grid--reverse {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.engine-section {
+  padding: 6rem 0;
+}
+.engine-section--bordered {
+  border-bottom: 1px solid var(--border);
+}
+
+.eng-circuit-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+}
+
+/* ── Engine quadrants — grilla hairline suiza ── */
+.eng-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ── Visual area de cada celda ── */
+.eng-visual {
+  height: 85px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+  /* Fondo superficial sobre papel claro */
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eng-cell-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.eng-cell-desc {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Celdas con hairlines — reemplaza rgba(255,255,255,0.025) */
+.eng-cell-border--rb {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  background: #ffffff;
+}
+.eng-cell-border--b {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  background: #ffffff;
+}
+.eng-cell-border--r {
+  border-right: 1px solid var(--border);
+  padding: 1.5rem;
+  background: #ffffff;
+}
+.eng-cell-border--none {
+  padding: 1.5rem;
+  background: #ffffff;
+}
+.eng-wrap {
+  position: relative;
+}
+
+.eng-cell-svg--75 {
+  width: 75%;
+  height: 75%;
+}
+.eng-cell-svg--abs {
+  position: absolute;
+  width: 82%;
+  height: 82%;
+}
+
+/* ── BM25 bars — naranja sólido ── */
+.bm25-bar-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10%;
+}
+
+.bm25-bar {
+  width: 5px;
+  background: var(--amber);
+  border-radius: 0px; /* Swiss: rectos */
+  height: 100%;
+  transform-origin: bottom;
+  animation: eng-wave 1.4s linear infinite;
+  opacity: 0.7;
+}
+
+/* ── WAL ring — contraste claro ── */
+.wal-ring-outer {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: eng-breathe 2.5s linear infinite;
+}
+
+.wal-ring-mid {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wal-core {
+  width: 9px;
+  height: 9px;
+  border-radius: 0px; /* Swiss: cuadrado */
+  background: var(--amber);
+  opacity: 0.9;
+}
+
+/* ── Keyframes ── */
+@keyframes eng-wave { 0%,100% { transform:scaleY(0.15); } 50% { transform:scaleY(0.85); } }
+@keyframes eng-dot-pulse { 0%,100% { opacity:0.15; transform:scale(1); } 50% { opacity:0.9; transform:scale(1.4); } }
+@keyframes eng-breathe { 0%,100% { opacity:0.5; transform:scale(1); } 50% { opacity:1; transform:scale(1.06); } }
+@keyframes tl-pulse { 0% { box-shadow:0 0 0 0 rgba(255,85,0,0.3); } 100% { box-shadow:0 0 0 12px rgba(255,85,0,0); } }
+@keyframes tunnel-down { 0% { transform:translateY(-24px); opacity:0; } 12% { opacity:1; } 80% { opacity:0.7; } 100% { transform:translateY(340px); opacity:0; } }
+
+/* ── Spec list ── */
+.spec-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.spec-item {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-family: var(--font-sans);
+}
+
+.spec-check { color: var(--amber); font-weight: 700; }
+
+/* ── Graph & WAL cards ── */
+.graph-card,
+.wal-simulator {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.wal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.wal-status-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.wal-status-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wal-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wal-btn-sm {
+  font-size: 0.7rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* ── RRF Slider container — plano suizo ── */
+.slider-container {
+  margin: 2rem 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.rrf-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px; /* Swiss: hairline track */
+  background: var(--border);
+  border-radius: 0px;
+  outline: none;
+  margin: 1.5rem 0;
+}
+
+.rrf-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 0px; /* Swiss: cuadrado */
+  background: var(--amber);
+  cursor: pointer;
+  border: 2px solid var(--foreground);
+  transition: transform 150ms linear;
+}
+
+.rrf-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.rrf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+.rrf-title {
+  font-family: var(--font-display);
+  color: var(--foreground);
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.rrf-latency {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--amber);
+  font-weight: 700;
+}
+
+.rrf-description {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+  font-family: var(--font-sans);
+}
+
+.rrf-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.rrf-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0; /* hairline unificado */
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* Celdas de métricas — borde hairline, fondo claro */
+.rrf-metric-card {
+  background: var(--surface);
+  padding: 1rem;
+  border-right: 1px solid var(--border);
+}
+.rrf-metric-card:last-child { border-right: none; }
+
+.rrf-metric-card--amber {
+  background: #fff7f0; /* papel naranja suave — visible en claro */
+  padding: 1rem;
+  border-right: 1px solid var(--border);
+  border-left: 2px solid var(--amber);
+}
+
+.rrf-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.rrf-metric-label--amber {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.rrf-metric-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+}
+
+.rrf-metric-value--amber {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--amber);
+  font-family: var(--font-mono);
+}
+
+/* ── Isometric stack — Swiss flat ── */
+.isometric-stack {
+  position: relative;
+  height: 480px;
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.isometric-layer {
+  position: absolute;
+  width: 380px;
+  height: 60px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0px; /* Swiss: sin redondeo */
+  transform: rotateX(60deg) rotateZ(-30deg) translateZ(calc(var(--layer-index) * 65px));
+  transition: all 200ms linear;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.isometric-layer:hover {
+  background: #fff7f0;
+  border-color: var(--amber);
+  transform: rotateX(60deg) rotateZ(-30deg) translateZ(calc(var(--layer-index) * 65px + 16px));
+}
+
+.isometric-layer-info {
+  transform: rotateZ(30deg) rotateX(-60deg);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .engine-grid,
+  .engine-grid--reverse {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .rrf-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .rrf-metric-card,
+  .rrf-metric-card--amber {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .rrf-metric-card:last-child { border-bottom: none; }
+}

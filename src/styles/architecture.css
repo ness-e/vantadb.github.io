@@ -1,0 +1,184 @@
+/* ═══════════════════════════════════════════════════════════
+   VantaDB — Swiss Architecture Section
+   Paleta: fondo papel (#f9f8f6), negro absoluto, Safety Orange
+   ═══════════════════════════════════════════════════════════ */
+
+.arch-section {
+  padding: 4rem 0 8rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+/* ── Detail / Tab panels ── */
+.arch-detail-panel,
+.arch-tab-content {
+  min-height: 180px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.arch-empty-state,
+.arch-tab-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Layer labels ── */
+.arch-layer-name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.arch-layer-index {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--amber);
+  font-weight: 700;
+}
+
+/* ── Spec table card ── */
+.arch-table-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .arch-table-card {
+    overflow-x: auto;
+  }
+  .arch-spec-table {
+    min-width: 500px;
+  }
+}
+
+.arch-spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.arch-table-head-row {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.arch-table-th {
+  padding: 1.25rem 1rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--foreground);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.arch-spec-section {
+  padding: 6rem 0;
+}
+
+/* ── Tab mono label ── */
+.arch-tab-mono {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Spec table rows ── */
+.spec-table-row {
+  border-bottom: 1px solid var(--subtle);
+}
+
+.spec-table-row:last-child {
+  border-bottom: none;
+}
+
+.spec-table-cell {
+  padding: 1.25rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.spec-table-label { color: var(--foreground); font-weight: 600; }
+.spec-table-value { color: var(--amber); font-weight: 700; }
+
+.spec-table-desc {
+  padding: 1.25rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── Architecture detail ── */
+.arch-detail-tech {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--amber);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.arch-detail-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.03em;
+}
+
+.arch-detail-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0 0 1rem;
+  font-family: var(--font-sans);
+}
+
+.arch-detail-spec {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--foreground);
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.arch-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section--engine {
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .arch-section {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
