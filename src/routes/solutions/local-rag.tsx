@@ -1,7 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroSubpage } from "../../components/HeroSubpage";
-import { ScrollStory } from "../../components/ScrollStory";
-import { PageShell } from "../../components/PageShell";
+import { createFileRoute } from "@tanstack/react-router";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/solutions/local-rag")({
   head: () => ({
@@ -17,198 +15,273 @@ export const Route = createFileRoute("/solutions/local-rag")({
   component: LocalRagPage,
 });
 
-const code = `import vantadb
+// ── Data ─────────────────────────────────────────────────────────────────────
+const PIPELINE = [
+  {
+    num: "01",
+    title: "Ingest",
+    desc: "Load documents (PDF, Markdown, code). Chunk and embed with a local model (all-MiniLM-L6-v2, nomic-embed-text). Zero network calls.",
+  },
+  {
+    num: "02",
+    title: "Index",
+    desc: "Store embeddings + text in VantaDB. BM25 full-text index for lexical fallback. Hybrid query with RRF fusion.",
+  },
+  {
+    num: "03",
+    title: "Retrieve",
+    desc: "Query with semantic + keyword search. Pass results to your local LLM. All in-process, all private.",
+  },
+];
+
+const RAG_CODE = `import vantadb
 from sentence_transformers import SentenceTransformer
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 db = vantadb.connect("./docs.vdb")
 
-# Index documents
+# Index documents — fully local
 for doc in documents:
     vec = model.encode(doc.text)
     db.insert("docs", {"vector": vec, "content": doc.text})
 
-# Query — all local, all private
-results = db.query("docs", query_text, top_k=5)`;
+# Hybrid query — all private, no API call
+results = db.query_hybrid(
+    "docs",
+    query_text,
+    top_k=5,
+    alpha=0.5  # 50% semantic, 50% BM25
+)`;
+
+const COMPARISON = {
+  problems: [
+    "Pinecone/Weaviate: your document embeddings leave your network",
+    "SaaS vector DB: every query crosses the wire, every result is visible",
+    "Hybrid cloud: embedding API + vector DB + LLM = 3 data exposures",
+    "Data residency: cloud providers may store in any region",
+  ],
+  solutions: [
+    "Embed documents locally — your data never touches a network",
+    "In-process retrieval — no API calls for vector search",
+    "Works with local LLMs (Ollama, llama.cpp, MLX)",
+    "Air-gap compatible — no internet connection required",
+  ],
+};
 
 function LocalRagPage() {
   return (
-    <PageShell>
-      <HeroSubpage
-        eyebrow="// Solution: Local RAG"
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="02"
+        eyebrow="Solution — Local RAG"
         title={
-          <>
+          <span>
             Your data never
             <br />
-            leaves your laptop.
-          </>
+            leaves your device.
+          </span>
         }
-        subtitle="Run Retrieval-Augmented Generation entirely on-device. VantaDB embeds, indexes, and queries documents locally — no vectors in the cloud, no data leaks, no API costs."
-        stats={[
-          { value: "Private", label: "By design" },
-          { value: "Local", label: "Embedding + retrieval" },
-          { value: "1", label: "Binary to deploy" },
-        ]}
+        sub="Run Retrieval-Augmented Generation entirely on-device. VantaDB embeds, indexes, and queries documents locally — no vectors in the cloud, no data leaks, no API costs."
       />
 
-      <main className="main-content">
-        <section className="comparison-split">
-          <div className="reveal">
-            <span className="section-eyebrow">// The Problem</span>
-            <h2 className="section-title section-title--compact">Cloud RAG leaks your data</h2>
-            <ul className="comparison-list">
-              <li>
-                <span className="icon-cross">✗</span> Pinecone/Weaviate: your document embeddings
-                leave your network
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> SaaS vector DB: every query crosses the wire,
-                every result is visible
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Hybrid cloud: embedding API + vector DB + LLM
-                = 3 data exposures
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Data residency: cloud providers may store in
-                any region
-              </li>
-            </ul>
-          </div>
-          <div className="reveal reveal-delay-1">
-            <span className="section-eyebrow">// The VantaDB Solution</span>
-            <h2 className="section-title section-title--compact">Local-first RAG, zero exposure</h2>
-            <ul className="comparison-list">
-              <li>
-                <span className="icon-check">✓</span> Embed documents locally — your data never
-                touches a network
-              </li>
-              <li>
-                <span className="icon-check">✓</span> In-process retrieval — no API calls for vector
-                search
-              </li>
-              <li>
-                <span className="icon-check">✓</span> Works with local LLMs (Ollama, llama.cpp, MLX)
-              </li>
-              <li>
-                <span className="icon-check">✓</span> Air-gap compatible — no internet connection
-                required
-              </li>
-            </ul>
+      <main className="engine-main">
+        {/* Section 1: Problem vs Solution */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">01 / 03 — Privacy Gap</span>
+          <div
+            className="swiss-grid-12"
+            style={{ alignItems: "start", marginTop: "3rem", gap: "1px" }}
+          >
+            <div
+              className="col-span-6"
+              style={{ border: "1px solid var(--border)", padding: "2.5rem" }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  color: "var(--steel)",
+                  marginBottom: "2rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                Cloud RAG leaks data
+              </h2>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {COMPARISON.problems.map((p, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--muted)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✗</span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              className="col-span-6"
+              style={{
+                border: "1px solid var(--border)",
+                borderLeft: "2px solid var(--amber)",
+                padding: "2.5rem",
+                background: "var(--surface)",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  color: "var(--amber)",
+                  marginBottom: "2rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                Local-first, zero exposure
+              </h2>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {COMPARISON.solutions.map((s, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--foreground)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
-        <section className="section-narrow">
-          <div className="reveal text-center reveal-centered">
-            <span className="section-eyebrow">// Architecture</span>
-            <h2 className="section-title section-title--compact">Local RAG pipeline</h2>
-          </div>
-          <div className="grid-3" style={{ marginTop: "2rem" }}>
-            {[
-              {
-                step: "01",
-                title: "Ingest",
-                desc: "Load documents (PDF, Markdown, code). Chunk and embed with a local model (all-MiniLM-L6-v2, nomic-embed-text).",
-              },
-              {
-                step: "02",
-                title: "Index",
-                desc: "Store embeddings + text in VantaDB. BM25 full-text index for lexical fallback. Hybrid query with RRF fusion.",
-              },
-              {
-                step: "03",
-                title: "Retrieve",
-                desc: "Query with semantic + keyword search. Pass results to local LLM. All in-process, all private.",
-              },
-            ].map((item) => (
-              <div key={item.step} className="arch-card reveal">
-                <div className="arch-number">{item.step}</div>
-                <div className="arch-title">{item.title}</div>
-                <div className="arch-desc">{item.desc}</div>
+        {/* Section 2: Pipeline */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">02 / 03 — Pipeline</span>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+              marginTop: "3rem",
+            }}
+          >
+            {PIPELINE.map((step) => (
+              <div
+                key={step.num}
+                style={{
+                  background: "var(--background)",
+                  padding: "2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "2rem",
+                    fontWeight: 800,
+                    color: "var(--border)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.04em",
+                  }}
+                >
+                  {step.num}
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    letterSpacing: "-0.03em",
+                    color: "var(--foreground)",
+                    margin: 0,
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}
+                >
+                  {step.desc}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        <section style={{ padding: "4rem 0" }}>
-          <div className="reveal text-center" style={{ marginBottom: "3rem" }}>
-            <span className="section-eyebrow">// Code Example</span>
-            <h2 className="section-title section-title--compact">RAG in 5 lines</h2>
-          </div>
-          <div className="terminal-window reveal" style={{ maxWidth: 600, margin: "0 auto" }}>
-            <div className="terminal-header">
-              <span className="term-dot term-dot-red" />
-              <span className="term-dot term-dot-yellow" />
-              <span className="term-dot term-dot-green" />
-              <span className="terminal-title">local_rag.py</span>
+        {/* Section 3: Code */}
+        <section className="engine-section">
+          <span className="swiss-eyebrow">03 / 03 — Implementation</span>
+          <div
+            style={{
+              border: "1px solid var(--border)",
+              background: "var(--block-dark-bg)",
+              marginTop: "3rem",
+            }}
+          >
+            <div
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderBottom: "1px solid var(--block-dark-border)",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--block-dark-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                local_rag.py
+              </span>
             </div>
             <pre
-              className="terminal-body"
-              style={{ fontSize: "0.72rem", lineHeight: "1.7", margin: 0, whiteSpace: "pre" }}
+              style={{
+                margin: 0,
+                padding: "2rem",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.78rem",
+                lineHeight: 1.7,
+                color: "var(--block-dark-text)",
+                overflowX: "auto",
+                whiteSpace: "pre",
+              }}
             >
-              {code}
+              <code>{RAG_CODE}</code>
             </pre>
           </div>
         </section>
-
-        <ScrollStory
-          id="rag-pipeline"
-          className="story-agents"
-          panels={[
-            {
-              id: "ingest",
-              content: (
-                <div className="story-panel-inner">
-                  <span className="section-eyebrow">// Step 1: Ingest</span>
-                  <h2 className="section-title section-title--sm" style={{ maxWidth: 500 }}>
-                    Load, chunk, embed — all local
-                  </h2>
-                  <p className="section-sub">
-                    PDFs, Markdown, code. Chunked and embedded with a local model. Your data never
-                    touches a network.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              id: "index",
-              content: (
-                <div className="story-panel-inner">
-                  <span className="section-eyebrow">// Step 2: Index</span>
-                  <h2 className="section-title section-title--sm" style={{ maxWidth: 500 }}>
-                    Dual index: HNSW + BM25
-                  </h2>
-                  <p className="section-sub">
-                    Vectors in HNSW for semantic search, inverted index for keyword fallback. Hybrid
-                    query fuses both with RRF.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              id: "retrieve",
-              content: (
-                <div className="story-panel-inner">
-                  <span className="section-eyebrow">// Step 3: Retrieve + Generate</span>
-                  <h2 className="section-title section-title--sm" style={{ maxWidth: 500 }}>
-                    In-process RAG, zero cloud
-                  </h2>
-                  <p className="section-sub">
-                    Query hits local VantaDB, results pass to your local LLM (Ollama, llama.cpp).
-                    All in-process, all private.
-                  </p>
-                </div>
-              ),
-            },
-          ]}
-        />
-
-        <nav className="bottom-nav">
-          <Link to="/" className="back-link nav-cta">
-            ← Back to Home
-          </Link>
-        </nav>
       </main>
-    </PageShell>
+    </div>
   );
 }

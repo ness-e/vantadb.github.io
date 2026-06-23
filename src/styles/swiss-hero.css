@@ -1,0 +1,317 @@
+/* ═══════════════════════════════════════════════════════════
+   VantaDB — Swiss Hero
+   100% typographic, animated grid background (SVG + CSS)
+   No gradients, no shadows, no rounded corners.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Shell ── */
+.swiss-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 6rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Animated grid background ── */
+.swiss-hero__grid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.swiss-hero__grid-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Base grid lines */
+.swiss-hero__grid-line {
+  stroke: var(--border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Vertical lines: stagger-drift animation */
+.swiss-hero__grid-line--v {
+  stroke-dasharray: 6 20;
+  stroke-dashoffset: 0;
+  animation: grid-drift-v 8s linear infinite;
+  animation-delay: calc(var(--col, 0) * -0.65s);
+  opacity: 0.5;
+}
+
+/* Horizontal lines: subtle static */
+.swiss-hero__grid-line--h {
+  stroke-dasharray: 3 40;
+  opacity: 0.3;
+  animation: grid-drift-h 12s linear infinite;
+  animation-delay: calc(var(--row, 0) * -1.4s);
+}
+
+/* Orange accent column */
+.swiss-hero__accent-line {
+  stroke-dasharray: 8 24;
+  stroke-dashoffset: 0;
+  animation: grid-drift-v 6s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes grid-drift-v {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -52; }
+}
+
+@keyframes grid-drift-h {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: 86; }
+}
+
+/* ── Content inner ── */
+.swiss-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  padding-top: 10rem; /* push below nav */
+}
+
+/* ── Eyebrow row ── */
+.swiss-hero__eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.swiss-hero__index {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--steel);
+}
+
+.swiss-hero__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--amber);
+}
+
+/* ── Headline — typographic mass ── */
+.swiss-hero__headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-size: clamp(4.5rem, 11vw, 10rem);
+  margin: 0 0 3rem;
+  gap: 0;
+}
+
+.swiss-hero__headline-line {
+  display: block;
+  color: var(--foreground);
+}
+
+/* Asymmetric indent — Swiss grid rule: offset 1 column */
+.swiss-hero__headline-line--indent {
+  padding-left: clamp(2rem, 8vw, 8rem);
+}
+
+/* Orange accent on final word */
+.swiss-hero__headline-line--accent {
+  color: var(--amber);
+}
+
+/* ── Sub ── */
+.swiss-hero__sub {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 480px;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+/* ── Install strip ── */
+.swiss-hero__install-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+.swiss-hero__install-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 0;
+}
+
+.swiss-hero__install-prefix {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--steel);
+  user-select: none;
+}
+
+.swiss-hero__install-cmd {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--foreground);
+  user-select: all;
+  letter-spacing: 0.01em;
+}
+
+.swiss-hero__install-copy {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--steel);
+  padding: 0 0 0 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 100ms var(--ease-cut);
+  position: relative;
+}
+
+.swiss-hero__install-copy::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 0.5rem);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 100ms var(--ease-cut);
+}
+
+.swiss-hero__install-copy:hover {
+  color: var(--amber);
+}
+
+.swiss-hero__install-copy:hover::after {
+  opacity: 1;
+}
+
+.swiss-hero__cta-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ── Proof strip ── */
+.swiss-hero__proof-strip {
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 640px;
+}
+
+.swiss-hero__proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.5rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  flex: 1;
+}
+
+.swiss-hero__proof-value {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.swiss-hero__proof-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--steel);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .swiss-hero {
+    min-height: 100svh;
+    padding-bottom: 4rem;
+    align-items: flex-start;
+  }
+
+  .swiss-hero__inner {
+    padding-top: 8rem;
+  }
+
+  .swiss-hero__headline {
+    font-size: clamp(3.2rem, 14vw, 5.5rem);
+    margin-bottom: 2rem;
+  }
+
+  .swiss-hero__headline-line--indent {
+    padding-left: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .swiss-hero__install-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .swiss-hero__proof-strip {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .swiss-hero__proof-item {
+    min-width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .swiss-hero__eyebrow-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .swiss-hero__grid-line--v,
+  .swiss-hero__grid-line--h,
+  .swiss-hero__accent-line {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}

@@ -28,7 +28,6 @@ import { Route as SolutionsLocalRagRouteImport } from './routes/solutions/local-
 import { Route as SolutionsAiIdeToolingRouteImport } from './routes/solutions/ai-ide-tooling'
 import { Route as SolutionsAiAgentsRouteImport } from './routes/solutions/ai-agents'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as AboutRoadmapRouteImport } from './routes/about/roadmap'
 import { Route as AboutContactRouteImport } from './routes/about/contact'
 import { Route as AboutCompanyRouteImport } from './routes/about/company'
 import { Route as AboutCommunityRouteImport } from './routes/about/community'
@@ -128,11 +127,6 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoadmapRoute = AboutRoadmapRouteImport.update({
-  id: '/about/roadmap',
-  path: '/about/roadmap',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AboutContactRoute = AboutContactRouteImport.update({
   id: '/about/contact',
   path: '/about/contact',
@@ -166,7 +160,6 @@ export interface FileRoutesByFullPath {
   '/about/community': typeof AboutCommunityRoute
   '/about/company': typeof AboutCompanyRoute
   '/about/contact': typeof AboutContactRoute
-  '/about/roadmap': typeof AboutRoadmapRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/solutions/ai-agents': typeof SolutionsAiAgentsRoute
   '/solutions/ai-ide-tooling': typeof SolutionsAiIdeToolingRoute
@@ -191,7 +184,6 @@ export interface FileRoutesByTo {
   '/about/community': typeof AboutCommunityRoute
   '/about/company': typeof AboutCompanyRoute
   '/about/contact': typeof AboutContactRoute
-  '/about/roadmap': typeof AboutRoadmapRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/solutions/ai-agents': typeof SolutionsAiAgentsRoute
   '/solutions/ai-ide-tooling': typeof SolutionsAiIdeToolingRoute
@@ -217,7 +209,6 @@ export interface FileRoutesById {
   '/about/community': typeof AboutCommunityRoute
   '/about/company': typeof AboutCompanyRoute
   '/about/contact': typeof AboutContactRoute
-  '/about/roadmap': typeof AboutRoadmapRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/solutions/ai-agents': typeof SolutionsAiAgentsRoute
   '/solutions/ai-ide-tooling': typeof SolutionsAiIdeToolingRoute
@@ -244,7 +235,6 @@ export interface FileRouteTypes {
     | '/about/community'
     | '/about/company'
     | '/about/contact'
-    | '/about/roadmap'
     | '/blog/$slug'
     | '/solutions/ai-agents'
     | '/solutions/ai-ide-tooling'
@@ -269,7 +259,6 @@ export interface FileRouteTypes {
     | '/about/community'
     | '/about/company'
     | '/about/contact'
-    | '/about/roadmap'
     | '/blog/$slug'
     | '/solutions/ai-agents'
     | '/solutions/ai-ide-tooling'
@@ -294,7 +283,6 @@ export interface FileRouteTypes {
     | '/about/community'
     | '/about/company'
     | '/about/contact'
-    | '/about/roadmap'
     | '/blog/$slug'
     | '/solutions/ai-agents'
     | '/solutions/ai-ide-tooling'
@@ -320,7 +308,6 @@ export interface RootRouteChildren {
   AboutCommunityRoute: typeof AboutCommunityRoute
   AboutCompanyRoute: typeof AboutCompanyRoute
   AboutContactRoute: typeof AboutContactRoute
-  AboutRoadmapRoute: typeof AboutRoadmapRoute
   BlogSlugRoute: typeof BlogSlugRoute
   SolutionsAiAgentsRoute: typeof SolutionsAiAgentsRoute
   SolutionsAiIdeToolingRoute: typeof SolutionsAiIdeToolingRoute
@@ -464,13 +451,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about/roadmap': {
-      id: '/about/roadmap'
-      path: '/about/roadmap'
-      fullPath: '/about/roadmap'
-      preLoaderRoute: typeof AboutRoadmapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about/contact': {
       id: '/about/contact'
       path: '/about/contact'
@@ -512,7 +492,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutCommunityRoute: AboutCommunityRoute,
   AboutCompanyRoute: AboutCompanyRoute,
   AboutContactRoute: AboutContactRoute,
-  AboutRoadmapRoute: AboutRoadmapRoute,
   BlogSlugRoute: BlogSlugRoute,
   SolutionsAiAgentsRoute: SolutionsAiAgentsRoute,
   SolutionsAiIdeToolingRoute: SolutionsAiIdeToolingRoute,

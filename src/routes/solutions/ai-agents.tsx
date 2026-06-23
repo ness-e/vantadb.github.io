@@ -1,12 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroSubpage } from "../../components/HeroSubpage";
-import { ScrollStory } from "../../components/ScrollStory";
-import { PageShell } from "../../components/PageShell";
+import { createFileRoute } from "@tanstack/react-router";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/solutions/ai-agents")({
   head: () => ({
     meta: [
-      { title: "VantaDB — AI Agent Memory & State Management" },
+      { title: "VantaDB — AI Agent Memory & State" },
       {
         name: "description",
         content:
@@ -17,205 +15,281 @@ export const Route = createFileRoute("/solutions/ai-agents")({
   component: AiAgentsPage,
 });
 
-const code = [
-  `import vantadb
+// ── Data ─────────────────────────────────────────────────────────────────────
+const PROBLEMS = [
+  { icon: "✗", text: "OpenAI assistants: context window limited to 128K tokens" },
+  { icon: "✗", text: "Redis + embedding: two services to manage for persisted memory" },
+  { icon: "✗", text: "Flat files: no semantic search, no structured querying" },
+  { icon: "✗", text: "Cloud vector DB: adds 100ms+ latency per memory access" },
+];
+
+const SOLUTIONS_LIST = [
+  { icon: "✓", text: "Store agent memories as typed vector + metadata records" },
+  { icon: "✓", text: 'Semantic recall: "What did the user say about pricing?"' },
+  { icon: "✓", text: 'Structured queries: "Show tool calls from last 24h with errors"' },
+  { icon: "✓", text: "In-process: no net call, no serialization, 1.2ms recall" },
+];
+
+const PRIMITIVES = [
+  {
+    num: "01",
+    title: "Conversation Log",
+    desc: "Append-only log of every turn. Query by semantic similarity, time range, or metadata tags.",
+  },
+  {
+    num: "02",
+    title: "Tool Result Cache",
+    desc: "Store tool call outputs keyed by input hash. Avoid redundant LLM invocations.",
+  },
+  {
+    num: "03",
+    title: "User Preferences",
+    desc: "Persistent key-value with vector embeddings for preference matching across sessions.",
+  },
+  {
+    num: "04",
+    title: "Ephemeral State",
+    desc: "In-memory WAL for active session state. Flushed to durable storage on checkpoint.",
+  },
+];
+
+const MEMORY_CODE = `import vantadb
 
 db = vantadb.connect("./agent_memory.vdb")
 
-# Store an agent memory with vector + metadata
+# Store a memory with vector + metadata
 db.insert("memories", {
-  "vector": embedding,
-  "metadata": {"role": "user", "session": session_id},
-  "content": message
+    "vector": embedding,
+    "metadata": {"role": "user", "session": session_id},
+    "content": message
 })
 
 # Semantic recall — no API call, no network
-results = db.query("memories", "What did we discuss about pricing?")`,
-];
+results = db.query(
+    "memories",
+    "What did we discuss about pricing?",
+    top_k=5
+)`;
 
 function AiAgentsPage() {
   return (
-    <PageShell>
-      <HeroSubpage
-        eyebrow="// Solution: AI Agents"
-        title={
-          <>
-            Memory that
-            <br />
-            doesn't forget.
-          </>
-        }
-        subtitle="Give your AI agent persistent memory — conversation history, tool call results, learned preferences, and ephemeral state — all in one embedded database that lives inside your agent process."
-        stats={[
-          { value: "1.2ms", label: "Memory retrieval" },
-          { value: "0", label: "External servers" },
-          { value: "MIT", label: "License" },
-        ]}
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="01"
+        eyebrow="Solution — AI Agent Memory"
+        title={<span>Memory that<br />doesn't forget.</span>}
+        sub="Give your AI agent persistent memory — conversation history, tool call results, learned preferences, and ephemeral state — all in one embedded database that lives inside your agent process."
       />
 
-      <main className="main-content">
-        <section className="comparison-split">
-          <div className="reveal">
-            <span className="section-eyebrow">// The Problem</span>
-            <h2 className="section-title section-title--compact">
-              Agents without memory are stateless
-            </h2>
-            <ul className="comparison-list">
-              <li>
-                <span className="icon-cross">✗</span> OpenAI assistants: context window limited to
-                128K tokens
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Redis + embedding: two services to manage for
-                persisted memory
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Flat files: no semantic search, no structured
-                querying
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Cloud vector DB: adds 100ms+ latency per
-                memory access
-              </li>
-            </ul>
-          </div>
-          <div className="reveal reveal-delay-1">
-            <span className="section-eyebrow">// The VantaDB Solution</span>
-            <h2 className="section-title section-title--compact">
-              Embedded memory, zero infrastructure
-            </h2>
-            <ul className="comparison-list">
-              <li>
-                <span className="icon-check">✓</span> Store agent memories as typed vector +
-                metadata records
-              </li>
-              <li>
-                <span className="icon-check">✓</span> Semantic recall: "What did the user say about
-                pricing?"
-              </li>
-              <li>
-                <span className="icon-check">✓</span> Structured queries: "Show tool calls from last
-                24h with errors"
-              </li>
-              <li>
-                <span className="icon-check">✓</span> In-process: no net call, no serialization,
-                1.2ms recall
-              </li>
-            </ul>
+      <main className="engine-main">
+        {/* Section 1: Problem vs Solution */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">01 / 03 — The Problem</span>
+          <div
+            className="swiss-grid-12"
+            style={{ alignItems: "start", marginTop: "3rem", gap: "1px" }}
+          >
+            {/* Problem */}
+            <div
+              className="col-span-6"
+              style={{
+                border: "1px solid var(--border)",
+                padding: "2.5rem",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  color: "var(--steel)",
+                  marginBottom: "2rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                Stateless agents
+              </h2>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {PROBLEMS.map((p, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--muted)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)" }}>
+                      {p.icon}
+                    </span>
+                    {p.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Solution */}
+            <div
+              className="col-span-6"
+              style={{
+                border: "1px solid var(--border)",
+                borderLeft: "2px solid var(--amber)",
+                padding: "2.5rem",
+                background: "var(--surface)",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  color: "var(--amber)",
+                  marginBottom: "2rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                Embedded memory
+              </h2>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {SOLUTIONS_LIST.map((s, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "0.75rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.82rem",
+                      color: "var(--foreground)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)" }}>
+                      {s.icon}
+                    </span>
+                    {s.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
-        <section className="section-narrow">
-          <div className="reveal text-center reveal-centered">
-            <span className="section-eyebrow">// How It Works</span>
-            <h2 className="section-title section-title--compact">Memory in four primitives</h2>
-          </div>
-          <div className="grid-2" style={{ marginTop: "2rem" }}>
-            {[
-              {
-                title: "Conversation Log",
-                desc: "Append-only log of every turn. Query by semantic similarity, time range, or metadata tags.",
-              },
-              {
-                title: "Tool Result Cache",
-                desc: "Store tool call outputs keyed by input hash. Avoid redundant LLM invocations.",
-              },
-              {
-                title: "User Preferences",
-                desc: "Persistent key-value with vector embeddings for preference matching across sessions.",
-              },
-              {
-                title: "Ephemeral State",
-                desc: "In-memory WAL for active session state. Flushed to durable storage on checkpoint.",
-              },
-            ].map((item) => (
-              <div key={item.title} className="arch-card reveal">
-                <div className="arch-title">{item.title}</div>
-                <div className="arch-desc">{item.desc}</div>
+        {/* Section 2: Primitives */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">02 / 03 — Memory Primitives</span>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+              marginTop: "3rem",
+            }}
+          >
+            {PRIMITIVES.map((p) => (
+              <div
+                key={p.num}
+                style={{
+                  background: "var(--background)",
+                  padding: "2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.6rem",
+                    color: "var(--amber)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  {p.num}
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    letterSpacing: "-0.02em",
+                    color: "var(--foreground)",
+                    margin: 0,
+                  }}
+                >
+                  {p.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}
+                >
+                  {p.desc}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        <section style={{ padding: "4rem 0" }}>
-          <div className="reveal text-center" style={{ marginBottom: "3rem" }}>
-            <span className="section-eyebrow">// Code Example</span>
-            <h2 className="section-title section-title--compact">Three lines of memory</h2>
-          </div>
-          <div className="terminal-window reveal" style={{ maxWidth: 600, margin: "0 auto" }}>
-            <div className="terminal-header">
-              <span className="term-dot term-dot-red" />
-              <span className="term-dot term-dot-yellow" />
-              <span className="term-dot term-dot-green" />
-              <span className="terminal-title">agent_memory.py</span>
+        {/* Section 3: Code */}
+        <section className="engine-section">
+          <span className="swiss-eyebrow">03 / 03 — Implementation</span>
+          <div
+            style={{
+              border: "1px solid var(--border)",
+              background: "var(--block-dark-bg)",
+              marginTop: "3rem",
+            }}
+          >
+            <div
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderBottom: "1px solid var(--block-dark-border)",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--block-dark-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                agent_memory.py
+              </span>
             </div>
             <pre
-              className="terminal-body"
-              style={{ fontSize: "0.72rem", lineHeight: "1.7", margin: 0, whiteSpace: "pre" }}
+              style={{
+                margin: 0,
+                padding: "2rem 2rem",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.78rem",
+                lineHeight: 1.7,
+                color: "var(--block-dark-text)",
+                overflowX: "auto",
+                whiteSpace: "pre",
+              }}
             >
-              {code[0]}
+              <code>{MEMORY_CODE}</code>
             </pre>
           </div>
         </section>
-
-        <ScrollStory
-          id="agents-memory"
-          className="story-agents"
-          panels={[
-            {
-              id: "in",
-              content: (
-                <div className="story-panel-inner">
-                  <span className="section-eyebrow">// Step 1: Ingest</span>
-                  <h2 className="section-title section-title--sm" style={{ maxWidth: 500 }}>
-                    Agent memories as structured data
-                  </h2>
-                  <p className="section-sub">
-                    Every conversation turn, tool call, and state update becomes a typed record with
-                    an embedding. No serialization, no external cache.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              id: "store",
-              content: (
-                <div className="story-panel-inner">
-                  <span className="section-eyebrow">// Step 2: Store</span>
-                  <h2 className="section-title section-title--sm" style={{ maxWidth: 500 }}>
-                    Hybrid index: vector + metadata
-                  </h2>
-                  <p className="section-sub">
-                    HNSW for semantic recall, BM25 for keyword matching, SQL for structured queries.
-                    Single query, unified results.
-                  </p>
-                </div>
-              ),
-            },
-            {
-              id: "recall",
-              content: (
-                <div className="story-panel-inner">
-                  <span className="section-eyebrow">// Step 3: Recall</span>
-                  <h2 className="section-title section-title--sm" style={{ maxWidth: 500 }}>
-                    1.2ms in-process retrieval
-                  </h2>
-                  <p className="section-sub">
-                    No network call, no serialization. The agent asks "what did we discuss about
-                    pricing?" and gets relevant memories in under 2ms.
-                  </p>
-                </div>
-              ),
-            },
-          ]}
-        />
-
-        <nav className="bottom-nav">
-          <Link to="/" className="back-link nav-cta">
-            ← Back to Home
-          </Link>
-        </nav>
       </main>
-    </PageShell>
+    </div>
   );
 }

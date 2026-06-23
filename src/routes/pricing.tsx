@@ -1,7 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroSubpage } from "../components/HeroSubpage";
-import { PageShell } from "../components/PageShell";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -17,6 +15,7 @@ export const Route = createFileRoute("/pricing")({
   component: PricingPage,
 });
 
+// ── Data ─────────────────────────────────────────────────────────────────────
 const tiers = [
   {
     name: "Free",
@@ -73,163 +72,294 @@ const tiers = [
 ];
 
 const comparisonRows = [
-  {
-    feature: "Deployment",
-    free: "Single-node, embedded",
-    pro: "Multi-node, embedded",
-    ent: "On-prem, air-gapped",
-  },
+  { feature: "Deployment", free: "Single-node, embedded", pro: "Multi-node, embedded", ent: "On-prem, air-gapped" },
   { feature: "Vector limit", free: "10M", pro: "100M", ent: "Unlimited" },
-  {
-    feature: "Query engines",
-    free: "HNSW + IVF + BM25",
-    pro: "HNSW + IVF + BM25 + hybrid RRF",
-    ent: "All engines + custom",
-  },
+  { feature: "Query engines", free: "HNSW + IVF + BM25", pro: "HNSW + IVF + BM25 + RRF", ent: "All engines + custom" },
   { feature: "Replication", free: "None", pro: "WAL-based multi-node", ent: "WAL + geo-redundant" },
   { feature: "Auth", free: "None", pro: "API key", ent: "SSO / SAML / OIDC + RBAC" },
   { feature: "Audit log", free: "None", pro: "Basic", ent: "Full + compliance export" },
-  {
-    feature: "Support",
-    free: "Community (Discord)",
-    pro: "Priority email + Discord",
-    ent: "Dedicated SLA",
-  },
+  { feature: "Support", free: "Community (Discord)", pro: "Priority email + Discord", ent: "Dedicated SLA" },
   { feature: "License", free: "MIT", pro: "MIT", ent: "MIT + enterprise terms" },
 ];
 
-function PricingPage() {
-  useScrollReveal();
+const FAQ_ITEMS = [
+  {
+    q: "Is VantaDB really free?",
+    a: "Yes. The core engine is MIT licensed and free forever. No hidden pricing, no per-query fees.",
+  },
+  {
+    q: "What counts as a seat?",
+    a: "One developer who compiles or deploys VantaDB. CI agents, production replicas, and end users of your application do not count.",
+  },
+  {
+    q: "Can I use VantaDB commercially?",
+    a: "Yes. The MIT license allows unrestricted use, modification, and distribution. No royalties, no attribution required.",
+  },
+  {
+    q: "Do you offer managed cloud hosting?",
+    a: "VantaDB is designed to be embedded. For managed infrastructure, the Enterprise tier includes deployment support and on-premise SLAs.",
+  },
+];
 
+function PricingPage() {
   return (
-    <PageShell>
-      <HeroSubpage
-        eyebrow="// Pricing"
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="05"
+        eyebrow="Pricing"
         title={
-          <>
+          <span>
             Free to build.
             <br />
             Fair to scale.
-          </>
+          </span>
         }
-        subtitle="VantaDB is MIT open core. Start building with zero cost and zero friction. Upgrade only when your team needs replication, priority support, or compliance features."
-        stats={[
-          { value: "MIT", label: "Open core" },
-          { value: "$0", label: "To start" },
-          { value: "Free", label: "Vector cap: 10M" },
-        ]}
+        sub="VantaDB is MIT open core. Start with zero cost and zero friction. Upgrade only when your team needs replication, priority support, or compliance features."
       />
 
-      <main className="main-content">
-        <section className="pricing-section-wrap">
-          <div className="pricing-grid">
-            {tiers.map((tier, i) => (
+      <main className="engine-main">
+        {/* Section 1: Tier Cards */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">01 / 03 — Plans</span>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+              marginTop: "3rem",
+            }}
+          >
+            {tiers.map((tier) => (
               <div
                 key={tier.name}
-                className={`pricing-card reveal ${tier.featured ? "pricing-card--featured" : ""}`}
-                style={{ transitionDelay: `${i * 0.08}s` }}
+                style={{
+                  background: tier.featured ? "var(--surface-raised)" : "var(--background)",
+                  padding: "2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1.5rem",
+                  borderLeft: tier.featured ? "2px solid var(--amber)" : "2px solid transparent",
+                  position: "relative",
+                }}
               >
-                {tier.featured && <span className="pricing-badge">Most Popular</span>}
-                <div className="pricing-name">{tier.name}</div>
-                <div className="pricing-tagline">{tier.tagline}</div>
-                <div className="pricing-price-wrap">
-                  <span className="pricing-price">{tier.price}</span>
-                  <span className="pricing-period">{tier.period}</span>
+                {tier.featured && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "1.25rem",
+                      right: "1.25rem",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.55rem",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      color: "var(--amber)",
+                      background: "rgba(255, 85, 0, 0.1)",
+                      padding: "0.2rem 0.6rem",
+                    }}
+                  >
+                    POPULAR
+                  </span>
+                )}
+
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "1.4rem",
+                      fontWeight: 800,
+                      letterSpacing: "-0.04em",
+                      color: tier.featured ? "var(--amber)" : "var(--foreground)",
+                    }}
+                  >
+                    {tier.name}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.75rem",
+                      color: "var(--muted)",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {tier.tagline}
+                  </div>
                 </div>
-                <ul className="pricing-features">
+
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "2.5rem",
+                      fontWeight: 800,
+                      letterSpacing: "-0.05em",
+                      color: "var(--foreground)",
+                    }}
+                  >
+                    {tier.price}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.65rem",
+                      color: "var(--steel)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    {tier.period}
+                  </span>
+                </div>
+
+                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                   {tier.features.map((f) => (
-                    <li key={f} className="pricing-feature-item">
-                      <span className="pricing-feature-check">✓</span>
+                    <li
+                      key={f}
+                      style={{
+                        display: "flex",
+                        gap: "0.6rem",
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.78rem",
+                        color: "var(--muted)",
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      <span style={{ color: tier.featured ? "var(--amber)" : "var(--steel)", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
                       {f}
                     </li>
                   ))}
                 </ul>
-                <div className="pricing-cta-wrap">
-                  <Link
-                    to={tier.href.startsWith("/") ? tier.href : "/about/contact"}
-                    className={`nav-cta pricing-cta ${tier.featured ? "pricing-cta--featured" : "pricing-cta--default"}`}
-                  >
-                    {tier.cta}
-                  </Link>
-                </div>
+
+                <Link
+                  to={tier.href.startsWith("/") ? (tier.href as "/") : "/about/contact"}
+                  style={{
+                    display: "block",
+                    textAlign: "center",
+                    padding: "0.85rem 1.5rem",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.78rem",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    textDecoration: "none",
+                    border: tier.featured
+                      ? "1.5px solid var(--amber)"
+                      : "1.5px solid var(--border)",
+                    background: tier.featured ? "var(--amber)" : "transparent",
+                    color: tier.featured ? "#000" : "var(--foreground)",
+                    transition: "all 150ms var(--ease-cut)",
+                  }}
+                >
+                  {tier.cta}
+                </Link>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="section-narrow">
-          <div className="reveal text-center reveal-centered">
-            <span className="section-eyebrow">// Feature Comparison</span>
-            <h2 className="section-title section-title--compact">Detailed breakdown</h2>
-          </div>
-          <div className="reveal reveal-delay-1">
-            <div className="pricing-compare-wrap">
-              <table className="pricing-table">
-                <thead>
-                  <tr className="pricing-table-header">
-                    <th>Feature</th>
-                    <th className="th-free">Free</th>
-                    <th className="th-pro">Pro</th>
-                    <th className="th-ent">Enterprise</th>
+        {/* Section 2: Comparison Table */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">02 / 03 — Feature Breakdown</span>
+
+          <div
+            style={{
+              border: "1px solid var(--border)",
+              marginTop: "3rem",
+              overflowX: "auto",
+            }}
+          >
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.8rem",
+              }}
+            >
+              <thead>
+                <tr style={{ borderBottom: "2px solid var(--border)" }}>
+                  <th style={{ padding: "1rem 1.5rem", textAlign: "left", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--steel)", fontWeight: 600 }}>Feature</th>
+                  <th style={{ padding: "1rem 1.5rem", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--steel)", fontWeight: 600 }}>Free</th>
+                  <th style={{ padding: "1rem 1.5rem", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--amber)", fontWeight: 600 }}>Pro</th>
+                  <th style={{ padding: "1rem 1.5rem", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--steel)", fontWeight: 600 }}>Enterprise</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row, i) => (
+                  <tr
+                    key={row.feature}
+                    style={{
+                      borderBottom: "1px solid var(--border)",
+                      background: i % 2 === 0 ? "var(--background)" : "var(--surface)",
+                    }}
+                  >
+                    <td style={{ padding: "0.9rem 1.5rem", fontWeight: 600, color: "var(--foreground)" }}>{row.feature}</td>
+                    <td style={{ padding: "0.9rem 1.5rem", textAlign: "center", color: "var(--muted)" }}>{row.free}</td>
+                    <td style={{ padding: "0.9rem 1.5rem", textAlign: "center", color: "var(--foreground)", fontWeight: 500 }}>{row.pro}</td>
+                    <td style={{ padding: "0.9rem 1.5rem", textAlign: "center", color: "var(--muted)" }}>{row.ent}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {comparisonRows.map((row, i) => (
-                    <tr key={row.feature} style={{ transitionDelay: `${i * 0.04}s` }}>
-                      <td>{row.feature}</td>
-                      <td className="td-free">{row.free}</td>
-                      <td className="td-pro">{row.pro}</td>
-                      <td className="td-ent">{row.ent}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
-        <section className="section-narrow pricing-section-noborder">
-          <div className="reveal text-center reveal-centered">
-            <span className="section-eyebrow">// FAQ</span>
-            <h2 className="section-title section-title--compact">Common questions</h2>
-            <div className="pricing-faq-list">
-              {[
-                {
-                  q: "Is VantaDB really free?",
-                  a: "Yes. The core engine is MIT licensed and free forever. No vector limits in the free tier (up to 10M), no hidden pricing, no per-query fees.",
-                },
-                {
-                  q: "What counts as a seat?",
-                  a: "A seat is one developer who compiles or deploys VantaDB. CI/CD agents, production replicas, and end users of your application do not count as seats.",
-                },
-                {
-                  q: "Can I use VantaDB in a commercial product?",
-                  a: "Yes. The MIT license allows unrestricted use, modification, and distribution. No royalties, no attribution required.",
-                },
-                {
-                  q: "Do you offer managed cloud hosting?",
-                  a: "VantaDB is designed to be embedded — we don't offer a cloud-hosted version. For managed infrastructure, the Enterprise tier includes deployment support and on-premise SLAs.",
-                },
-              ].map((faq, i) => (
-                <div
-                  key={faq.q}
-                  className="pricing-faq-item reveal"
-                  style={{ transitionDelay: `${i * 0.06}s` }}
+        {/* Section 3: FAQ */}
+        <section className="engine-section">
+          <span className="swiss-eyebrow">03 / 03 — FAQ</span>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+              marginTop: "3rem",
+            }}
+          >
+            {FAQ_ITEMS.map((item) => (
+              <div
+                key={item.q}
+                style={{
+                  background: "var(--background)",
+                  padding: "2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.9rem",
+                    fontWeight: 700,
+                    letterSpacing: "-0.02em",
+                    color: "var(--foreground)",
+                    margin: 0,
+                  }}
                 >
-                  <div className="pricing-faq-q">{faq.q}</div>
-                  <div className="pricing-faq-a">{faq.a}</div>
-                </div>
-              ))}
-            </div>
+                  {item.q}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}
+                >
+                  {item.a}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
-
-        <nav className="bottom-nav">
-          <Link to="/" className="back-link nav-cta">
-            ← Back to Home
-          </Link>
-        </nav>
       </main>
-    </PageShell>
+    </div>
   );
 }

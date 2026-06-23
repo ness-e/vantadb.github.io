@@ -9,7 +9,7 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 
 import { Nav } from "../components/Nav";
-import { VantaDBLogoFull } from "../components/VantaDBLogo";
+import { SwissFooter } from "../components/SwissFooter";
 
 function NotFoundComponent() {
   return (
@@ -132,79 +132,17 @@ function RootComponent() {
         <AnimatePresence mode="wait">
           <motion.div
             key={routeId}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
           >
             <Outlet />
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Footer ── */}
-        <footer className="vanta-footer">
-          <div className="footer-top">
-            <div className="footer-brand-group">
-              <VantaDBLogoFull size="sm" noAnimation />
-              <div className="footer-tagline">Embedded cognitive memory for AI agents</div>
-            </div>
-            <div className="footer-columns">
-              <div className="footer-col">
-                <h3 className="footer-col-title">Product</h3>
-                <ul>
-                  <li>
-                    <Link to="/engine">Engine</Link>
-                  </li>
-                  <li>
-                    <Link to="/architecture">Architecture</Link>
-                  </li>
-                  <li>
-                    <Link to="/integrations">Integrations</Link>
-                  </li>
-                  <li>
-                    <Link to="/use-cases">Use Cases</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="footer-col">
-                <h3 className="footer-col-title">Resources</h3>
-                <ul>
-                  <li>
-                    <a
-                      href="https://github.com/ness-e/Vantadb"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://pypi.org/project/vantadb-py/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      PyPI
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/ness-e/Vantadb#readme"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Documentation
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <div className="footer-copy">© 2026 VantaDB</div>
-            <div className="footer-license">MIT License</div>
-          </div>
-        </footer>
+        {/* ── Footer (Swiss OLED) ── */}
+        <SwissFooter />
       </div>
     </QueryClientProvider>
   );

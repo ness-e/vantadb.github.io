@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { HeroSubpage } from "@/components/HeroSubpage";
-import { PageShell } from "@/components/PageShell";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/docs")({
   head: () => ({
@@ -16,9 +15,11 @@ export const Route = createFileRoute("/docs")({
   component: DocsPage,
 });
 
+// ── Data ─────────────────────────────────────────────────────────────────────
 const sections = [
   {
     id: "getting-started",
+    num: "01",
     title: "Getting Started",
     code: `$ pip install vantadb-py
 
@@ -33,10 +34,11 @@ $ python
 >>> results = db.query("docs", "vector database", top_k=5)
 >>> results[0].score
 0.9421`,
-    desc: "Install VantaDB and run your first hybrid query in under 60 seconds. The engine ships as a single native binary with zero system dependencies — Python 3.10+ or Rust 1.75+ required.",
+    desc: "Install VantaDB and run your first hybrid query in under 60 seconds. Ships as a single native binary with zero system dependencies — Python 3.10+ or Rust 1.75+ required.",
   },
   {
     id: "python-sdk",
+    num: "02",
     title: "Python SDK",
     code: `import vantadb
 
@@ -62,14 +64,12 @@ results = db.query(
 results = db.query(
   "collection", "query",
   filter={"source": "web"}
-)
-
-# Delete by ID
-db.delete("collection", ids=[1, 2, 3])`,
+)`,
     desc: "The Python SDK provides a pandas-friendly interface with full type hints. Supports semantic search, hybrid BM25+HNSW retrieval, metadata filtering, and WAL-backed durability out of the box.",
   },
   {
-    id: "rust-embedding",
+    id: "rust-sdk",
+    num: "03",
     title: "Rust SDK",
     code: `use vantadb::prelude::*;
 
@@ -97,35 +97,32 @@ fn main() -> Result<()> {
   },
   {
     id: "cli-reference",
+    num: "04",
     title: "CLI Reference",
     code: `$ vantadb --help
-VantaDB 0.4.2 — Embedded vector database for AI agents
-
-USAGE:
-    vantadb [OPTIONS] <COMMAND>
+VantaDB 0.6.0 — Embedded vector database for AI agents
 
 COMMANDS:
-    init      Initialize a new database
-    insert    Insert documents from JSON/CSV
-    query     Run a semantic or hybrid search
-    serve     Start the HTTP API server (optional)
-    inspect   Inspect database stats and index
-    checkpoint   Force WAL checkpoint
+    init        Initialize a new database
+    insert      Insert documents from JSON/CSV
+    query       Run a semantic or hybrid search
+    serve       Start the HTTP API server (optional)
+    inspect     Inspect database stats and index
+    checkpoint  Force WAL checkpoint
+    repl        Connect to a primary for replication
 
 OPTIONS:
     --db-path <PATH>      Database path [default: ./.vantadb]
     --log-level <LEVEL>   Log level [default: info]
 
 $ vantadb init --db-path ./my_db.vdb
-[2026-06-21T10:00:00Z INFO  vantadb] Initialized database at ./my_db.vdb
-[2026-06-21T10:00:00Z INFO  vantadb] Index configured: HNSW (M=16, ef=200)
-
-$ vantadb query "hybrid search example" --top-k 5 --mode hybrid
-# Returns ranked results with RRF scores`,
-    desc: "The `vantadb` CLI provides full database management from the terminal — initialize databases, bulk-insert documents, run queries, inspect indexes, and manage WAL checkpoints without writing code.",
+[INFO] Initialized database at ./my_db.vdb
+[INFO] Index configured: HNSW (M=16, ef=200)`,
+    desc: "The `vantadb` CLI provides full database management from the terminal — initialize, bulk-insert, query, inspect, and manage WAL checkpoints without writing code.",
   },
   {
     id: "configuration",
+    num: "05",
     title: "Configuration",
     code: `# .vantadb/config.toml
 
@@ -152,84 +149,128 @@ weights = [0.5, 0.5]   # [bm25, vector]
 [limits]
 max_document_size = 10485760   # 10 MB
 max_collections = 256`,
-    desc: "Configure every aspect of the VantaDB engine via TOML, environment variables, or inline API calls. Tune HNSW parameters for recall/latency tradeoffs, set durability guarantees, and constrain resource usage.",
+    desc: "Configure every aspect of the VantaDB engine via TOML, environment variables, or inline API calls. Tune HNSW parameters for recall/latency tradeoffs and set durability guarantees.",
   },
   {
     id: "migration-guide",
+    num: "06",
     title: "Migration Guide",
-    code: `# v0.3 → v0.4 Migration
+    code: `# v0.5 → v0.6 Migration
 
 ## Breaking changes
-- The sync_mode default changed from "async" to "fsync"
-  → Explicitly set sync_mode="async" for maximum throughput
-
-- INSERT now returns UUIDs instead of incrementing integers
-  → Update foreign key references if relying on numeric IDs
-
-- BM25 tokenizer changed from "word" to "whitespace"
-  → Set tokenizer = "word" in config for old behavior
+- QueryBuilder::hybrid() now requires explicit alpha parameter
+  → db.query("col", "q", mode="hybrid", alpha=0.5)
 
 ## Deprecated
 - db.bulk_insert() → use db.insert() with batch parameter
 - --http-port CLI flag → use vantadb serve --port
 
 ## Removed
-- db.create_collection() (auto-created on first insert)
 - Python 3.9 support (minimum is now 3.10)
 
-$ python -m vantadb.migrate ./old_db.vdb --target v0.4`,
-    desc: "Follow our migration guides to upgrade between major versions. Each guide includes breaking changes, deprecated APIs, and automated migration scripts to keep your data safe.",
+## Automated migration
+$ python -m vantadb.migrate ./old_db.vdb --target v0.6`,
+    desc: "Follow our migration guides to upgrade between major versions. Each guide includes breaking changes, deprecated APIs, and automated migration scripts.",
   },
 ];
 
 function DocsPage() {
   return (
-    <PageShell>
-      <HeroSubpage
-        eyebrow="// Documentation"
-        title="Documentation"
-        subtitle="Comprehensive guides, SDK references, and configuration reference for VantaDB — the embedded database for AI agents."
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="00"
+        eyebrow="Documentation"
+        title={<span>Start in 60<br />seconds.</span>}
+        sub="Comprehensive guides, SDK references, and configuration reference for VantaDB — the embedded database for AI agents."
       />
 
-      {sections.map((s, i) => {
-        const isOdd = i % 2 === 0;
-        return (
+      <main className="engine-main">
+        {sections.map((s, i) => (
           <section
             key={s.id}
             id={s.id}
-            className={`section-padded--engine ${!isOdd ? "section-padded--surface" : ""}`}
+            className={`engine-section${i < sections.length - 1 ? " engine-section--bordered" : ""}`}
           >
-            <div className="reveal">
-              <span className="section-eyebrow reveal">// {s.title}</span>
-              <h2 className="section-title section-title--sm reveal reveal-delay-1">{s.title}</h2>
-              <p className="section-sub section-sub--mb reveal reveal-delay-2">{s.desc}</p>
-            </div>
-            <div className="tactile-card reveal reveal-delay-2" style={{ marginTop: "1.5rem" }}>
-              <div className="term-window" style={{ border: "none", background: "transparent" }}>
-                <div className="term-titlebar">
-                  <span className="term-dot term-dot--red" />
-                  <span className="term-dot term-dot--yellow" />
-                  <span className="term-dot term-dot--green" />
-                  <span className="term-label">{s.id}</span>
-                </div>
-                <pre
+            <span className="swiss-eyebrow">{s.num} / 06 — {s.title}</span>
+
+            <div
+              className="swiss-grid-12"
+              style={{ alignItems: "start", marginTop: "3rem" }}
+            >
+              {/* Description left */}
+              <div className="col-span-4">
+                <h2
                   style={{
-                    margin: 0,
-                    padding: "1.25rem 1.5rem",
-                    fontSize: "0.8125rem",
-                    lineHeight: 1.6,
-                    overflowX: "auto",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.5rem",
+                    fontWeight: 800,
+                    letterSpacing: "-0.04em",
+                    color: "var(--foreground)",
+                    lineHeight: 1.1,
+                    marginBottom: "1.25rem",
                   }}
                 >
-                  <code style={{ fontFamily: "var(--font-mono)", color: "var(--steel)" }}>
-                    {s.code}
-                  </code>
-                </pre>
+                  {s.title}
+                </h2>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.82rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}
+                >
+                  {s.desc}
+                </p>
+              </div>
+
+              {/* Code right */}
+              <div className="col-span-8">
+                <div
+                  style={{
+                    border: "1px solid var(--border)",
+                    background: "var(--block-dark-bg)",
+                  }}
+                >
+                  <div
+                    style={{
+                      padding: "0.65rem 1.25rem",
+                      borderBottom: "1px solid var(--block-dark-border)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.6rem",
+                        color: "var(--block-dark-muted)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                      }}
+                    >
+                      {s.id}
+                    </span>
+                  </div>
+                  <pre
+                    style={{
+                      margin: 0,
+                      padding: "1.5rem",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.75rem",
+                      lineHeight: 1.65,
+                      color: "var(--block-dark-text)",
+                      overflowX: "auto",
+                      whiteSpace: "pre",
+                    }}
+                  >
+                    <code>{s.code}</code>
+                  </pre>
+                </div>
               </div>
             </div>
           </section>
-        );
-      })}
-    </PageShell>
+        ))}
+      </main>
+    </div>
   );
 }

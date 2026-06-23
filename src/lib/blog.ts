@@ -21,7 +21,7 @@ function parseFrontmatter(raw: string): {
   for (const line of match[1].split("\n")) {
     const idx = line.indexOf(":");
     if (idx === -1) continue;
-    let key = line.slice(0, idx).trim();
+    const key = line.slice(0, idx).trim();
     let val: string | string[] = line
       .slice(idx + 1)
       .trim()

@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroSubpage } from "../components/HeroSubpage";
-import { PageShell } from "../components/PageShell";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/changelog")({
   head: () => ({
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/changelog")({
   component: ChangelogPage,
 });
 
+// ── Data ─────────────────────────────────────────────────────────────────────
 const releases = [
   {
     version: "v0.6.0",
@@ -47,13 +48,16 @@ const releases = [
   {
     version: "v0.5.1",
     date: "2026-05-20",
-    tag: "Stability release",
+    tag: "Stability Release",
     changes: [
       {
         type: "fix",
         text: "Fixed race condition in concurrent reader/writer scenarios under heavy load.",
       },
-      { type: "fix", text: "Memory-mapped file handle leak on Windows after 10K+ connections." },
+      {
+        type: "fix",
+        text: "Memory-mapped file handle leak on Windows after 10K+ connections.",
+      },
       {
         type: "perf",
         text: "Reduced lock contention in WAL commit path — 15% higher throughput on multi-threaded workloads.",
@@ -63,7 +67,7 @@ const releases = [
   {
     version: "v0.5.0",
     date: "2026-04-28",
-    tag: "Multi-node replication",
+    tag: "Multi-node Replication",
     changes: [
       {
         type: "feature",
@@ -105,7 +109,7 @@ const releases = [
   {
     version: "v0.4.1",
     date: "2026-02-14",
-    tag: "Bug fix release",
+    tag: "Bug Fix",
     changes: [
       {
         type: "fix",
@@ -143,90 +147,267 @@ const releases = [
   },
 ];
 
-const typeConfig: Record<string, { color: string; label: string }> = {
-  feature: { color: "var(--success)", label: "Feature" },
-  perf: { color: "var(--amber)", label: "Perf" },
-  fix: { color: "var(--steel-light)", label: "Fix" },
-  breaking: { color: "var(--danger)", label: "Breaking" },
+const TYPE_CONFIG: Record<string, { label: string; color: string }> = {
+  feature: { label: "FEATURE", color: "var(--foreground)" },
+  perf: { label: "PERF", color: "var(--amber)" },
+  fix: { label: "FIX", color: "var(--steel)" },
+  breaking: { label: "BREAKING", color: "#ff3b30" },
 };
 
+// ── Filter bar ────────────────────────────────────────────────────────────────
+const ALL_TYPES = ["all", "feature", "perf", "fix", "breaking"];
+
 function ChangelogPage() {
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filteredReleases = releases
+    .map((r) => ({
+      ...r,
+      changes:
+        activeFilter === "all"
+          ? r.changes
+          : r.changes.filter((c) => c.type === activeFilter),
+    }))
+    .filter((r) => r.changes.length > 0);
+
   return (
-    <PageShell>
-      <HeroSubpage
-        eyebrow="// Changelog"
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="04"
+        eyebrow="Changelog"
         title={
-          <>
-            What's new.
+          <span>
+            What changed.
             <br />
-            What's improved.
-          </>
+            Why it matters.
+          </span>
         }
-        subtitle="Every release of VantaDB — features, performance gains, bug fixes, and migration notes. No marketing fluff, just the diff."
-        stats={[
-          { value: "v0.6.0", label: "Latest" },
-          { value: "6", label: "Releases" },
-          { value: "MIT", label: "License" },
-        ]}
+        sub="Every release — features, performance gains, fixes, and migration notes. No marketing fluff."
       />
 
-      <main className="main-content">
-        <section className="cl-timeline">
-          <div className="cl-line" />
+      <main className="engine-main">
+        {/* Filter bar */}
+        <div
+          style={{
+            display: "flex",
+            gap: "1px",
+            background: "var(--border)",
+            border: "1px solid var(--border)",
+            marginBottom: "4rem",
+            width: "fit-content",
+          }}
+        >
+          {ALL_TYPES.map((t) => {
+            const cfg = TYPE_CONFIG[t];
+            const isActive = activeFilter === t;
+            return (
+              <button
+                key={t}
+                onClick={() => setActiveFilter(t)}
+                style={{
+                  background: isActive ? "var(--surface-raised)" : "var(--background)",
+                  border: "none",
+                  borderBottom: isActive
+                    ? `2px solid ${t === "all" ? "var(--foreground)" : cfg?.color || "var(--foreground)"}`
+                    : "2px solid transparent",
+                  padding: "0.75rem 1.5rem",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: isActive
+                    ? t === "all"
+                      ? "var(--foreground)"
+                      : cfg?.color || "var(--foreground)"
+                    : "var(--steel)",
+                  cursor: "pointer",
+                  transition: "all 150ms var(--ease-cut)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {t === "all" ? "ALL" : cfg?.label || t.toUpperCase()}
+              </button>
+            );
+          })}
+        </div>
 
-          {releases.map((release, i) => (
+        {/* Timeline */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: "1px",
+            background: "var(--border)",
+            border: "1px solid var(--border)",
+          }}
+        >
+          {filteredReleases.map((release, i) => (
             <div
               key={release.version}
-              className="cl-release reveal"
-              style={{ transitionDelay: `${i * 0.06}s` }}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "220px 1fr",
+                background: "var(--background)",
+              }}
             >
-              <div className="cl-dot" />
-
-              <div className="cl-release-header">
-                <h3 className="cl-version">{release.version}</h3>
-                <span className="cl-date">{release.date}</span>
-                <span className="cl-tag">{release.tag}</span>
+              {/* Left: version + date */}
+              <div
+                style={{
+                  padding: "2.5rem 2rem",
+                  borderRight: "1px solid var(--border)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                  position: "relative",
+                }}
+              >
+                {i === 0 && (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.55rem",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      color: "var(--amber)",
+                      background: "rgba(255, 85, 0, 0.1)",
+                      padding: "0.2rem 0.5rem",
+                      marginBottom: "0.5rem",
+                      width: "fit-content",
+                    }}
+                  >
+                    LATEST
+                  </span>
+                )}
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.5rem",
+                    fontWeight: 800,
+                    letterSpacing: "-0.04em",
+                    color: "var(--foreground)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {release.version}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.6rem",
+                    color: "var(--steel)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {release.date}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.72rem",
+                    color: "var(--muted)",
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  {release.tag}
+                </span>
               </div>
 
-              <ul className="cl-changes">
-                {release.changes.map((c) => {
-                  const cfg = typeConfig[c.type] || { color: "var(--muted)", label: c.type };
+              {/* Right: changes list */}
+              <div
+                style={{
+                  padding: "2.5rem 2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0",
+                }}
+              >
+                {release.changes.map((change, ci) => {
+                  const cfg = TYPE_CONFIG[change.type] || {
+                    label: change.type.toUpperCase(),
+                    color: "var(--muted)",
+                  };
                   return (
-                    <li key={c.text} className="cl-change">
+                    <div
+                      key={ci}
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "80px 1fr",
+                        gap: "1rem",
+                        alignItems: "baseline",
+                        padding: "0.85rem 0",
+                        borderBottom:
+                          ci < release.changes.length - 1
+                            ? "1px solid var(--border)"
+                            : "none",
+                      }}
+                    >
                       <span
-                        className="cl-change-type"
-                        style={{ color: cfg.color, borderColor: cfg.color }}
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.55rem",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
+                          color: cfg.color,
+                          paddingTop: "2px",
+                        }}
                       >
                         {cfg.label}
                       </span>
-                      <span className="cl-change-text">{c.text}</span>
-                    </li>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.82rem",
+                          color: "var(--muted)",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        {change.text}
+                      </span>
+                    </div>
                   );
                 })}
-              </ul>
+              </div>
             </div>
           ))}
-        </section>
+        </div>
 
-        <section className="section-narrow" style={{ borderBottom: "none" }}>
-          <div className="reveal text-center reveal-centered">
-            <span className="section-eyebrow">// Upgrade</span>
-            <h2 className="section-title section-title--compact">Upgrade notes</h2>
-            <p className="section-sub" style={{ margin: "0 auto" }}>
-              VantaDB follows semantic versioning. Upgrading between patch versions (0.4.x → 0.4.y)
-              requires no code changes. Minor version bumps (0.4 → 0.5) may introduce breaking
-              changes — check the Breaking tags above. Always test against your data before
-              deploying to production.
+        {/* Semver note */}
+        <section className="engine-section" style={{ borderTop: "1px solid var(--border)", marginTop: "1px", background: "var(--surface)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: "3rem", alignItems: "start" }}>
+            <div>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  color: "var(--amber)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                SEMVER
+              </span>
+            </div>
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.82rem",
+                color: "var(--muted)",
+                lineHeight: 1.7,
+                margin: 0,
+                maxWidth: "600px",
+              }}
+            >
+              VantaDB follows semantic versioning. Patch upgrades (0.4.x → 0.4.y) require no code
+              changes. Minor bumps (0.4 → 0.5) may include breaking changes — check those tags
+              before deploying to production.
             </p>
           </div>
         </section>
-
-        <nav className="bottom-nav">
-          <Link to="/" className="back-link nav-cta">
-            ← Back to Home
-          </Link>
-        </nav>
       </main>
-    </PageShell>
+    </div>
   );
 }
