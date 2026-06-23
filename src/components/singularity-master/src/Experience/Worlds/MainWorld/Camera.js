@@ -68,33 +68,29 @@ export default class Camera {
   animateCameraPosition(pos, target) {
     this._animateTargetPos = new THREE.Vector3(pos.x, pos.y, pos.z);
     this._animateTargetTarget = new THREE.Vector3(target.x, target.y, target.z);
-    this._animState = 'wait';
+    this._animState = "wait";
     this._animTimer = 0;
     this._animProgress = 0;
   }
 
   update() {
-    if (this._animState === 'wait') {
+    if (this._animState === "wait") {
       this._animTimer += this.time.delta;
       if (this._animTimer >= 2) {
-        this._animState = 'move';
+        this._animState = "move";
         this._animProgress = 0;
       }
-    } else if (this._animState === 'move') {
+    } else if (this._animState === "move") {
       this._animProgress += this.time.delta * 0.25;
       if (this._animProgress >= 1) {
         this._animProgress = 1;
-        this._animState = 'done';
+        this._animState = "done";
         this.instance.position.copy(this._animateTargetPos);
         this.controls.target.copy(this._animateTargetTarget);
       }
       const t = 1 - Math.pow(1 - this._animProgress, 3);
       this.instance.position.lerpVectors(this.defaultCameraPosition, this._animateTargetPos, t);
-      this.controls.target.lerpVectors(
-        new THREE.Vector3(-1, 0, 0),
-        this._animateTargetTarget,
-        t,
-      );
+      this.controls.target.lerpVectors(new THREE.Vector3(-1, 0, 0), this._animateTargetTarget, t);
     }
 
     this.controls?.update();

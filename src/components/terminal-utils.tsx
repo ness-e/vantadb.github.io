@@ -139,7 +139,7 @@ function tokenizePython(line: string): Token[] {
       i = j;
       continue;
     }
-    if (/[\[\](){},.]/.test(line[i])) {
+    if ("[](){},.".includes(line[i])) {
       parts.push({ t: "punctuation", v: line[i] });
       i++;
       continue;
@@ -200,7 +200,7 @@ function tokenizeRust(line: string): Token[] {
       i = j;
       continue;
     }
-    if (/[\[\](){},.;:]/.test(line[i])) {
+    if ("[](){},.;:".includes(line[i])) {
       parts.push({ t: "punctuation", v: line[i] });
       i++;
       continue;

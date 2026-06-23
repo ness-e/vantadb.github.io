@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { gsap } from "gsap";
 import { VantaDBLogoFull } from "./VantaDBLogo";
 import { NavDropdown } from "./NavDropdown";
 
@@ -51,7 +50,6 @@ const NAV_ITEMS: NavItem[] = [
     label: "Company",
     children: [
       { label: "About", to: "/about" },
-      { label: "Roadmap", to: "/about/roadmap" },
       { label: "Blog", to: "/blog" },
       { label: "Community", to: "/about/community" },
       { label: "Contact", to: "/about/contact" },
@@ -113,7 +111,7 @@ function MobileNavItem({ item, onNavigate }: { item: NavItem; onNavigate: () => 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 0.15, ease: "easeInOut" }}
           >
             {item.children?.map((child) =>
               child.external ? (
@@ -173,16 +171,6 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
-    if (!navRef.current) return;
-    gsap.to(navRef.current, {
-      y: hidden ? -64 : 0,
-      duration: 0.35,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-  }, [hidden]);
-
-  useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
@@ -205,7 +193,7 @@ export function Nav() {
     <>
       <nav
         ref={navRef}
-        className={`vanta-nav${scrolled ? " vanta-nav--scrolled" : ""}`}
+        className={`vanta-nav${scrolled ? " vanta-nav--scrolled" : ""}${hidden ? " vanta-nav--hidden" : ""}`}
         id="main-nav"
         onKeyDown={handleKeyDown}
       >
