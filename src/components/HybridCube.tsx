@@ -6,18 +6,23 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STAR_COUNT = 40;
+const GRID_COUNT = 32;
 
 function CubeScene() {
   const meshRef = useRef<THREE.Mesh>(null);
-  const starRef = useRef<THREE.Points>(null);
+  const gridRef = useRef<THREE.Points>(null);
+  const scrollDriven = useRef(false);
 
-  const starPositions = useMemo(() => {
-    const pos = new Float32Array(STAR_COUNT * 3);
-    for (let i = 0; i < STAR_COUNT; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 18;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 18;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 18;
+  /* Grid de puntos en un plano — Swiss precision dots vs estrellas flotantes */
+  const gridPositions = useMemo(() => {
+    const pos = new Float32Array(GRID_COUNT * 3);
+    const side = Math.sqrt(GRID_COUNT) | 0;
+    for (let i = 0; i < GRID_COUNT; i++) {
+      const row = Math.floor(i / side);
+      const col = i % side;
+      pos[i * 3]     = (col / side - 0.5) * 14;
+      pos[i * 3 + 1] = (row / side - 0.5) * 14;
+      pos[i * 3 + 2] = -6;
     }
     return pos;
   }, []);
@@ -31,6 +36,10 @@ function CubeScene() {
         trigger: "#cta",
         start: "top bottom",
         end: "bottom top",
+        onEnter: () => { scrollDriven.current = true; },
+        onLeave: () => { scrollDriven.current = false; },
+        onEnterBack: () => { scrollDriven.current = true; },
+        onLeaveBack: () => { scrollDriven.current = false; },
         onUpdate: (self) => {
           const rot = self.progress * Math.PI * 2;
           el.rotation.x = rot * 0.5;
@@ -43,12 +52,9 @@ function CubeScene() {
   }, []);
 
   useFrame((_, delta) => {
-    if (meshRef.current) {
+    if (meshRef.current && !scrollDriven.current) {
       meshRef.current.rotation.x += delta * 0.15;
       meshRef.current.rotation.y += delta * 0.2;
-    }
-    if (starRef.current) {
-      starRef.current.rotation.y += delta * 0.05;
     }
   });
 
@@ -56,23 +62,25 @@ function CubeScene() {
     <group>
       <mesh ref={meshRef}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
-        <meshBasicMaterial color="#ff6a00" wireframe opacity={0.15} transparent />
+        {/* Wireframe Safety Orange — opaco para fondo claro */}
+        <meshBasicMaterial color="#ff5500" wireframe opacity={0.5} transparent />
         <lineSegments>
           <edgesGeometry args={[new THREE.BoxGeometry(2.5, 2.5, 2.5)]} />
-          <lineBasicMaterial color="#ff6a00" opacity={0.08} transparent />
+          <lineBasicMaterial color="#ff5500" opacity={0.9} transparent />
         </lineSegments>
       </mesh>
-      <points ref={starRef}>
+      {/* Puntos en grilla negros — visibles sobre fondo claro */}
+      <points ref={gridRef}>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            args={[starPositions, 3]}
+            args={[gridPositions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.08}
-          color="#ffffff"
-          opacity={0.3}
+          size={0.06}
+          color="#000000"
+          opacity={0.15}
           transparent
           sizeAttenuation
         />

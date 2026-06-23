@@ -12,13 +12,13 @@ export function HNSWIsometric() {
     const ctx = gsap.context(() => {
       dots.forEach((dot, i) => {
         gsap.to(dot, {
-          opacity: 0.15 + Math.random() * 0.5,
-          scale: 0.6 + Math.random() * 0.8,
-          duration: 1 + Math.random() * 2,
+          opacity: 0.25 + Math.random() * 0.65,
+          scale: 0.7 + Math.random() * 0.6,
+          duration: 0.8 + Math.random() * 1.2,
           yoyo: true,
           repeat: -1,
-          ease: "sine.inOut",
-          delay: i * 0.2,
+          ease: "power1.inOut",
+          delay: i * 0.15,
         });
       });
     }, el);
@@ -41,10 +41,11 @@ export function HNSWIsometric() {
             height: `${62 - layer * 14}%`,
             transform: `rotateX(60deg) rotateZ(-45deg) translateY(${layer * 8}px)`,
             transformStyle: "preserve-3d",
-            border: "1px solid rgba(255,140,60,0.12)",
-            borderRadius: "12px",
-            background: `rgba(255,140,60,${0.02 + layer * 0.01})`,
-            transition: "transform 0.3s ease, border-color 0.3s ease",
+            /* Swiss: hairline 1px negra, sin border-radius */
+            border: `1px solid rgba(0,0,0,${0.12 + layer * 0.06})`,
+            borderRadius: "0px",
+            background: `rgba(0,0,0,${0.02 + layer * 0.015})`,
+            transition: "transform 200ms linear, border-color 150ms linear",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -55,12 +56,12 @@ export function HNSWIsometric() {
           onMouseEnter={(e) => {
             const t = e.currentTarget;
             t.style.transform = `rotateX(60deg) rotateZ(-45deg) translateY(${layer * 8}px) translateZ(12px)`;
-            t.style.borderColor = "rgba(255,140,60,0.3)";
+            t.style.borderColor = "rgba(255,85,0,0.6)";
           }}
           onMouseLeave={(e) => {
             const t = e.currentTarget;
             t.style.transform = `rotateX(60deg) rotateZ(-45deg) translateY(${layer * 8}px)`;
-            t.style.borderColor = "rgba(255,140,60,0.12)";
+            t.style.borderColor = `rgba(0,0,0,${0.12 + layer * 0.06})`;
           }}
         >
           {Array.from({ length: 5 - layer }).map((_, i) => (
@@ -70,9 +71,9 @@ export function HNSWIsometric() {
               style={{
                 width: 4 + (2 - layer) * 2,
                 height: 4 + (2 - layer) * 2,
-                borderRadius: "50%",
+                borderRadius: "0px", /* Square dots — Swiss precision */
                 background: "var(--amber)",
-                opacity: 0.2,
+                opacity: 0.5,
               }}
             />
           ))}
