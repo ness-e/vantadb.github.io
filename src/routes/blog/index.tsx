@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroSubpage } from "../../components/HeroSubpage";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 import { getAllPosts } from "../../lib/blog";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
@@ -20,116 +19,176 @@ export const Route = createFileRoute("/blog/")({
 function BlogIndex() {
   const posts = getAllPosts();
 
-  useScrollReveal();
-
   return (
-    <div className="page-wrapper">
-      <HeroSubpage
-        eyebrow="// Blog"
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="00"
+        eyebrow="Blog"
         title={
-          <>
+          <span>
             Deep dives.
             <br />
             Release notes.
-            <br />
-            Ideas.
-          </>
+          </span>
         }
-        subtitle="Engineering blog about embedded vector databases, AI agents, local RAG, and the future of AI data infrastructure."
-        stats={[
-          { value: `${posts.length}`, label: "Posts" },
-          { value: "Open", label: "Source" },
-          { value: "MIT", label: "License" },
-        ]}
+        sub="Engineering blog about embedded vector databases, AI agents, local RAG, and the future of AI data infrastructure."
       />
 
-      <main className="main-content">
-        <section style={{ padding: "4rem 0" }}>
-          {posts.length === 0 && (
-            <div className="reveal text-center reveal-centered">
+      <main className="engine-main">
+        <section className="engine-section">
+          <span className="swiss-eyebrow">Posts — {posts.length} articles</span>
+
+          {posts.length === 0 ? (
+            <div
+              style={{
+                border: "1px solid var(--border)",
+                padding: "4rem",
+                textAlign: "center",
+                marginTop: "3rem",
+              }}
+            >
               <p
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.85rem",
+                  fontSize: "0.8rem",
                   color: "var(--steel)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  margin: 0,
                 }}
               >
-                No posts yet. Check back soon or write one!
+                No posts yet. Check back soon.
               </p>
             </div>
-          )}
-          <div style={{ display: "grid", gap: "1.5rem" }}>
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                to="/blog/$slug"
-                params={{ slug: post.slug }}
-                className="arch-card reveal"
-                style={{ textDecoration: "none" }}
-              >
-                <div
+          ) : (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: "1px",
+                background: "var(--border)",
+                border: "1px solid var(--border)",
+                marginTop: "3rem",
+              }}
+            >
+              {posts.map((post) => (
+                <Link
+                  key={post.slug}
+                  to="/blog/$slug"
+                  params={{ slug: post.slug }}
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "baseline",
-                    marginBottom: "0.5rem",
+                    display: "grid",
+                    gridTemplateColumns: "160px 1fr auto",
+                    gap: "2rem",
+                    alignItems: "start",
+                    padding: "2rem 2.5rem",
+                    background: "var(--background)",
+                    textDecoration: "none",
+                    borderLeft: "2px solid transparent",
+                    transition: "all 150ms var(--ease-cut)",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    el.style.background = "var(--surface-raised)";
+                    el.style.borderLeftColor = "var(--amber)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    el.style.background = "var(--background)";
+                    el.style.borderLeftColor = "transparent";
                   }}
                 >
-                  <div className="arch-title">{post.title}</div>
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: "0.7rem",
+                      fontSize: "0.65rem",
                       color: "var(--steel)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      paddingTop: "3px",
                     }}
                   >
                     {post.date}
                   </span>
-                </div>
-                <div className="arch-desc" style={{ marginBottom: "0.75rem" }}>
-                  {post.description}
-                </div>
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                  {post.author && (
-                    <span
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "0.62rem",
-                        color: "var(--amber)",
-                        background: "var(--amber-dim)",
-                        padding: "0.15rem 0.5rem",
-                        borderRadius: "var(--radius-pill)",
-                      }}
-                    >
-                      {post.author}
-                    </span>
-                  )}
-                  {post.tags?.map((t) => (
-                    <span
-                      key={t}
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "0.62rem",
-                        color: "var(--steel)",
-                        background: "var(--surface)",
-                        padding: "0.15rem 0.5rem",
-                        borderRadius: "var(--radius-pill)",
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
 
-        <nav className="bottom-nav">
-          <Link to="/" className="back-link nav-cta">
-            ← Back to Home
-          </Link>
-        </nav>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                    <h2
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        letterSpacing: "-0.02em",
+                        color: "var(--foreground)",
+                        margin: 0,
+                      }}
+                    >
+                      {post.title}
+                    </h2>
+                    {post.description && (
+                      <p
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.8rem",
+                          color: "var(--muted)",
+                          lineHeight: 1.5,
+                          margin: 0,
+                        }}
+                      >
+                        {post.description}
+                      </p>
+                    )}
+                    <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginTop: "0.25rem" }}>
+                      {post.author && (
+                        <span
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "0.55rem",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.08em",
+                            color: "var(--amber)",
+                            border: "1px solid rgba(255, 85, 0, 0.3)",
+                            padding: "0.15rem 0.5rem",
+                          }}
+                        >
+                          {post.author}
+                        </span>
+                      )}
+                      {post.tags?.map((t) => (
+                        <span
+                          key={t}
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "0.55rem",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.08em",
+                            color: "var(--steel)",
+                            border: "1px solid var(--border)",
+                            padding: "0.15rem 0.5rem",
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.65rem",
+                      color: "var(--amber)",
+                      paddingTop: "3px",
+                    }}
+                  >
+                    →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );

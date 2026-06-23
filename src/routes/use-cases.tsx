@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { HeroSubpage } from "@/components/HeroSubpage";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { ScrollStory } from "@/components/ScrollStory";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/use-cases")({
   head: () => ({
@@ -17,102 +15,173 @@ export const Route = createFileRoute("/use-cases")({
   component: UseCasesPage,
 });
 
-interface UseCase {
-  title: string;
-  tags: string[];
-  desc: string;
-  icon: string;
-}
-
-const cases: UseCase[] = [
+// ── Data ─────────────────────────────────────────────────────────────────────
+const CASES = [
   {
-    title: "AI Agents Memory",
+    num: "01",
+    title: "AI Agent Memory",
     tags: ["persistent", "≤1ms read", "crash-safe"],
     desc: "Store conversational history, agent thoughts, and user preferences locally. Context survives restarts with WAL crash safety — no external database needed.",
-    icon: "M20 12H4m16 0a8 8 0 01-8 8m8-8a8 8 0 00-8-8",
   },
   {
+    num: "02",
     title: "Local-First RAG",
     tags: ["hybrid search", "zero deps", "on-device"],
     desc: "Run BM25 lexical + HNSW vector fusion in-process. No external server, no network overhead — full hybrid search without spinning up a container.",
-    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
   },
   {
+    num: "03",
     title: "Codebase Intelligence",
     tags: ["GraphRAG", "AST-aware", "30K loc/s"],
     desc: "Map function definitions, imports, and caller relations in a local knowledge graph. Traverse graph hops with vector similarity for accurate code retrieval.",
-    icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
   },
   {
+    num: "04",
     title: "Multi-Agent Orchestration",
     tags: ["namespaces", "isolation", "concurrent"],
     desc: "Run hundreds of independent agents on a single DB file. Namespace-level isolation prevents key collisions while keeping a unified storage footprint.",
-    icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
   },
   {
+    num: "05",
     title: "E-Commerce Semantic Search",
     tags: ["vector", "metadata filter", "real-time"],
     desc: "Serve personalized product recommendations using vector similarity on behavior embeddings — updated in real-time with zero reindexing.",
-    icon: "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z",
   },
   {
+    num: "06",
     title: "Edge / IoT Inference",
     tags: ["embedded", "ARM/RISC-V", "WAL-safe"],
     desc: "Persist device state and sensor telemetry on embedded hardware. Sub-millisecond reads with CRC32C WAL crash protection on ARM and RISC-V.",
-    icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
   },
   {
+    num: "07",
     title: "Healthcare RAG",
     tags: ["PHI-safe", "audit log", "zero-server"],
     desc: "Run private medical RAG on-device with full audit trails. Embeddings and FHIR documents stay local — no PHI leaves the hospital network.",
-    icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
   },
   {
+    num: "08",
     title: "Financial Document Processing",
     tags: ["compliance", "high-throughput", "WAL"],
     desc: "Parse, index, and search invoices, statements, and regulatory filings with crash-safe durability. Thousands of documents per second on a single thread.",
-    icon: "M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+  },
+];
+
+const PIPELINE_STEPS = [
+  {
+    num: "01",
+    title: "Memory",
+    desc: "Embeddings and metadata are written to the LSM-tree engine with immediate durability. The WAL guarantees crash recovery — every vector, every key, every byte.",
+    tags: ["write-ahead log", "CRC32C", "O(1) append"],
+  },
+  {
+    num: "02",
+    title: "Search",
+    desc: "HNSW vector index + BM25 lexical index fused via RRF in a single call. Sub-millisecond latency with zero network — all computation is in-process.",
+    tags: ["HNSW", "BM25", "RRF fusion"],
+  },
+  {
+    num: "03",
+    title: "Persist",
+    desc: "Everything lives in a single portable DB file. Backup via SCP, move across machines, survive process kills — no reindexing, no restore procedure.",
+    tags: ["single file", "portable", "zero reindex"],
   },
 ];
 
 function UseCasesPage() {
-  useScrollReveal();
-
   return (
-    <div className="page-wrapper">
-      <HeroSubpage
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="12"
         eyebrow="Use Cases"
-        title="Built for agents that need context"
-        subtitle="Eight production-tested patterns for persistent memory, hybrid search, and agentic data — all running in-process with zero external dependencies."
+        title={<span>Built for agents<br />that need context.</span>}
+        sub="Eight production-tested patterns for persistent memory, hybrid search, and agentic data — all running in-process with zero external dependencies."
       />
 
-      <main className="main-content">
-        <section className="section-narrow">
-          <div className="use-cases-grid reveal">
-            {cases.map((c, i) => (
-              <div key={i} className={`tactile-card reveal reveal-delay-${Math.min(i, 4)}`}>
-                <div className="uc-card-header">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="var(--amber)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
+      <main className="engine-main">
+        {/* Section 1: 8 use case cards */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">01 / 02 — Production Patterns</span>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+              marginTop: "3rem",
+            }}
+          >
+            {CASES.map((c) => (
+              <div
+                key={c.num}
+                style={{
+                  background: "var(--background)",
+                  padding: "2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                  transition: "background-color 150ms var(--ease-cut)",
+                }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--surface-raised)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLDivElement).style.background = "var(--background)")
+                }
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.6rem",
+                      color: "var(--amber)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
                   >
-                    <path d={c.icon} />
-                  </svg>
-                  <h3 className="uc-card-title" style={{ margin: 0 }}>
-                    {c.title}
-                  </h3>
+                    {c.num}
+                  </span>
                 </div>
-                <p className="uc-card-desc">{c.desc}</p>
-                <div className="tl-tag-group">
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    letterSpacing: "-0.02em",
+                    color: "var(--foreground)",
+                    margin: 0,
+                  }}
+                >
+                  {c.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                    flex: 1,
+                  }}
+                >
+                  {c.desc}
+                </p>
+                <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
                   {c.tags.map((tag) => (
-                    <span key={tag} className="tl-tag">
+                    <span
+                      key={tag}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.55rem",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        color: "var(--steel)",
+                        border: "1px solid var(--border)",
+                        padding: "0.2rem 0.5rem",
+                      }}
+                    >
                       {tag}
                     </span>
                   ))}
@@ -122,89 +191,99 @@ function UseCasesPage() {
           </div>
         </section>
 
-        <div className="section-divider" />
-
-        <section style={{ padding: "4rem 0" }}>
+        {/* Section 2: Pipeline */}
+        <section className="engine-section">
+          <span className="swiss-eyebrow">02 / 02 — Core Pipeline</span>
           <h2
-            className="reveal"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "2rem",
-              fontWeight: 700,
-              color: "var(--white)",
-              letterSpacing: "-0.03em",
-              margin: "0 0 0.5rem",
+              fontSize: "clamp(1.5rem, 3vw, 2rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              margin: "1.25rem 0 3rem",
+              lineHeight: 1.05,
             }}
           >
-            Pipeline
-            <br />
-            <span style={{ color: "var(--amber)" }}>Memory → Search → Persist</span>
+            Memory → Search → Persist.
           </h2>
-          <p className="section-sub reveal reveal-delay-1">
-            Three-stage architecture powering every use case above.
-          </p>
-          <ScrollStory
-            id="pipeline"
-            className="reveal reveal-delay-2"
-            panels={[
-              {
-                id: "memory",
-                content: (
-                  <div className="ss-panel-inner">
-                    <span className="ss-step">01</span>
-                    <h3 className="ss-title">Memory</h3>
-                    <p className="ss-desc">
-                      Embeddings and metadata are written to the LSM-tree engine with immediate
-                      durability. The WAL guarantees crash recovery — every vector, every key, every
-                      byte.
-                    </p>
-                    <div className="tl-tag-group">
-                      <span className="tl-tag">write-ahead log</span>
-                      <span className="tl-tag">CRC32C</span>
-                      <span className="tl-tag">O(1) append</span>
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                id: "search",
-                content: (
-                  <div className="ss-panel-inner">
-                    <span className="ss-step">02</span>
-                    <h3 className="ss-title">Search</h3>
-                    <p className="ss-desc">
-                      HNSW vector index + BM25 lexical index fused via RRF in a single call.
-                      Sub-millisecond latency with zero network — all computation is in-process.
-                    </p>
-                    <div className="tl-tag-group">
-                      <span className="tl-tag">HNSW</span>
-                      <span className="tl-tag">BM25</span>
-                      <span className="tl-tag">RRF fusion</span>
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                id: "persist",
-                content: (
-                  <div className="ss-panel-inner">
-                    <span className="ss-step">03</span>
-                    <h3 className="ss-title">Persist</h3>
-                    <p className="ss-desc">
-                      Everything lives in a single portable DB file. Backup via SCP, move across
-                      machines, survive process kills — no reindexing, no restore procedure, no
-                      cloud egress.
-                    </p>
-                    <div className="tl-tag-group">
-                      <span className="tl-tag">single file</span>
-                      <span className="tl-tag">portable</span>
-                      <span className="tl-tag">zero reindex</span>
-                    </div>
-                  </div>
-                ),
-              },
-            ]}
-          />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "1px",
+              background: "var(--border)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            {PIPELINE_STEPS.map((step) => (
+              <div
+                key={step.num}
+                style={{
+                  background: "var(--background)",
+                  padding: "2.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "2rem",
+                    fontWeight: 800,
+                    color: "var(--border)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.04em",
+                  }}
+                >
+                  {step.num}
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.2rem",
+                    fontWeight: 700,
+                    letterSpacing: "-0.03em",
+                    color: "var(--foreground)",
+                    margin: 0,
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                    flex: 1,
+                  }}
+                >
+                  {step.desc}
+                </p>
+                <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                  {step.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.55rem",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        color: "var(--amber)",
+                        border: "1px solid rgba(255, 85, 0, 0.3)",
+                        padding: "0.2rem 0.5rem",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
       </main>
     </div>
