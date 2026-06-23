@@ -1,8 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroSubpage } from "../components/HeroSubpage";
-import { PageShell } from "../components/PageShell";
-import { CtaSection } from "../components/CtaSection";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { createFileRoute } from "@tanstack/react-router";
+import { SwissSubpageHero } from "@/components/SwissSubpageHero";
 
 export const Route = createFileRoute("/config")({
   head: () => ({
@@ -18,153 +15,122 @@ export const Route = createFileRoute("/config")({
   component: ConfigPage,
 });
 
-function ConfigPage() {
-  useScrollReveal();
+// ── Data ─────────────────────────────────────────────────────────────────────
+const LEGACY_CONFIG = [
+  "Pinecone: API key, environment, pod type, index config",
+  "Redis: host, port, password, TLS, cluster mode",
+  "S3: region, bucket, credentials, IAM roles, CORS",
+  "Schema migrations: define, version, migrate, rollback",
+  "Connection pooling: tune pool size, timeouts, retries",
+];
 
+const VANTA_CONFIG = [
+  "No API keys to configure or rotate",
+  "No host/port/password — connect to a file path",
+  "No cloud credentials or IAM policies",
+  "Schema-free: insert data, DB infers types",
+  "Auto-indexing: vectors indexed automatically",
+];
+
+const LEGACY_CODE = `# Set up 3 services + auth + schema
+import pinecone
+import redis
+import boto3
+
+pinecone.init(api_key=os.environ["PINECONE_KEY"],
+              environment="us-east-1-aws")
+
+r = redis.Redis(host=os.environ["REDIS_HOST"],
+                port=6379,
+                password=os.environ["REDIS_PW"],
+                ssl=True)
+
+s3 = boto3.client("s3",
+                  region_name="us-east-1",
+                  aws_access_key_id=...,
+                  aws_secret_access_key=...)
+
+# Define schema, create index, set up cache...
+# (50+ lines of config)`;
+
+const VANTA_CODE = `import vantadb_py
+
+db = vantadb_py.connect("./my_db.vdb")
+
+# Ready. No config, no schema, no cloud.`;
+
+function ConfigPage() {
   return (
-    <PageShell>
-      <HeroSubpage
-        eyebrow="// Configuration"
-        title={
-          <>
-            Zero config.
-            <br />
-            Just connect.
-          </>
-        }
-        subtitle="No YAML, no .env, no migration scripts. VantaDB is schema-free and self-configuring. Point it at a file path and start querying."
-        stats={[
-          { value: "0", label: "Config files" },
-          { value: "0", label: "Env vars required" },
-          { value: "1", label: "Line to connect" },
-        ]}
+    <div className="engine-page">
+      <SwissSubpageHero
+        num="10"
+        eyebrow="Configuration"
+        title={<span>Zero config.<br />Just connect.</span>}
+        sub="No YAML, no .env, no migration scripts. VantaDB is schema-free and self-configuring. Point it at a file path and start querying."
       />
 
-      <main className="main-content">
-        <section className="comparison-split">
-          <div className="reveal">
-            <span className="section-eyebrow">// Legacy Setup</span>
-            <h2 className="section-title section-title--compact">Pages of configuration</h2>
-            <ul className="comparison-list">
-              <li>
-                <span className="icon-cross">✗</span> Pinecone: API key, environment, pod type,
-                index config
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Redis: host, port, password, TLS, cluster mode
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> S3: region, bucket, credentials, IAM roles,
-                CORS
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Schema migrations: define, version, migrate,
-                rollback
-              </li>
-              <li>
-                <span className="icon-cross">✗</span> Connection pooling: tune pool size, timeouts,
-                retries
-              </li>
-            </ul>
-          </div>
-          <div className="reveal reveal-delay-1">
-            <span className="section-eyebrow">// VantaDB Setup</span>
-            <h2 className="section-title section-title--compact">Zero lines of config</h2>
-            <ul className="comparison-list">
-              <li>
-                <span className="icon-check">✓</span> No API keys to configure or rotate
-              </li>
-              <li>
-                <span className="icon-check">✓</span> No host/port/password — connect to a file path
-              </li>
-              <li>
-                <span className="icon-check">✓</span> No cloud credentials or IAM policies
-              </li>
-              <li>
-                <span className="icon-check">✓</span> Schema-free: insert data, DB infers types
-              </li>
-              <li>
-                <span className="icon-check">✓</span> Auto-indexing: vectors indexed automatically
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        <section className="section-narrow">
-          <div className="reveal text-center reveal-centered mb-12">
-            <span className="section-eyebrow">// Code Comparison</span>
-            <h2 className="section-title section-title--compact">From 50 lines to 1</h2>
-          </div>
-
-          <div className="ops-grid">
-            <div className="terminal-window reveal">
-              <div className="terminal-header">
-                <span className="term-dot term-dot-red" />
-                <span className="term-dot term-dot-yellow" />
-                <span className="term-dot term-dot-green" />
-                <span className="terminal-title">legacy_setup.py</span>
-              </div>
-              <div className="terminal-body">
-                <span className="term-comment"># Set up 3 services + auth + schema</span>
-                <br />
-                <span className="term-keyword">import</span> pinecone
-                <br />
-                <span className="term-keyword">import</span> redis
-                <br />
-                <span className="term-keyword">import</span> boto3
-                <br />
-                <br />
-                pinecone.init(api_key=..., <span className="term-muted">environment=...</span>)
-                <br />r = redis.Redis(host=...,{" "}
-                <span className="term-muted">port=..., password=...</span>)<br />
-                s3 = boto3.client(<span className="term-string">"s3"</span>,{" "}
-                <span className="term-muted">region=...</span>)<br />
-                <br />
-                <span className="term-comment"># Define schema, create index, set up cache…</span>
-                <br />
-                <span className="term-muted">(50+ lines of config)</span>
-              </div>
+      <main className="engine-main">
+        {/* Section 1: Comparison */}
+        <section className="engine-section engine-section--bordered">
+          <span className="swiss-eyebrow">01 / 02 — Setup Comparison</span>
+          <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem", gap: "1px" }}>
+            <div className="col-span-6" style={{ border: "1px solid var(--border)", padding: "2.5rem" }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--steel)", marginBottom: "2rem", textTransform: "uppercase" }}>
+                Legacy — Pages of config
+              </h2>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+                {LEGACY_CONFIG.map((item, i) => (
+                  <li key={i} style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5 }}>
+                    <span style={{ color: "#ff3b30", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✗</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <div className="terminal-window reveal reveal-delay-1">
-              <div className="terminal-header">
-                <span className="term-dot term-dot-red" />
-                <span className="term-dot term-dot-yellow" />
-                <span className="term-dot term-dot-green" />
-                <span className="terminal-title">vantadb_setup.py</span>
-              </div>
-              <div className="terminal-body">
-                <span className="term-keyword">import</span> vantadb_py
-                <br />
-                <br />
-                db = vantadb_py.connect(<span className="term-string">"./my_db.vdb"</span>)<br />
-                <br />
-                <span className="term-comment">// Ready. No config, no schema, no cloud.</span>
-              </div>
+            <div className="col-span-6" style={{ border: "1px solid var(--border)", borderLeft: "2px solid var(--amber)", padding: "2.5rem", background: "var(--surface)" }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--amber)", marginBottom: "2rem", textTransform: "uppercase" }}>
+                VantaDB — Zero lines
+              </h2>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+                {VANTA_CONFIG.map((item, i) => (
+                  <li key={i} style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--foreground)", lineHeight: 1.5 }}>
+                    <span style={{ color: "var(--amber)", fontWeight: 700, minWidth: "1rem", fontFamily: "var(--font-mono)", flexShrink: 0 }}>✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        <section className="section-narrow">
-          <div className="reveal text-center reveal-centered">
-            <span className="section-eyebrow">// Developer Experience</span>
-            <h2 className="section-title section-title--compact">Configuration that disappears</h2>
-            <p className="section-sub">
-              Every minute spent configuring infrastructure is a minute not spent building your
-              product. VantaDB's zero-config philosophy means your database setup time goes from
-              hours to seconds.
-            </p>
+        {/* Section 2: Code comparison */}
+        <section className="engine-section">
+          <span className="swiss-eyebrow">02 / 02 — Code: From 50 Lines to 1</span>
+          <div className="swiss-grid-12" style={{ alignItems: "start", marginTop: "3rem", gap: "1px" }}>
+            {/* Legacy code */}
+            <div className="col-span-6" style={{ border: "1px solid var(--border)", background: "var(--block-dark-bg)" }}>
+              <div style={{ padding: "0.65rem 1.25rem", borderBottom: "1px solid var(--block-dark-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "#ff3b30", textTransform: "uppercase", letterSpacing: "0.08em" }}>legacy_setup.py</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.55rem", color: "var(--block-dark-muted)" }}>50+ lines</span>
+              </div>
+              <pre style={{ margin: 0, padding: "1.5rem", fontFamily: "var(--font-mono)", fontSize: "0.72rem", lineHeight: 1.65, color: "var(--block-dark-muted)", overflowX: "auto", whiteSpace: "pre" }}>
+                <code>{LEGACY_CODE}</code>
+              </pre>
+            </div>
+
+            {/* VantaDB code */}
+            <div className="col-span-6" style={{ border: "1px solid var(--border)", borderLeft: "2px solid var(--amber)", background: "var(--block-dark-bg)" }}>
+              <div style={{ padding: "0.65rem 1.25rem", borderBottom: "1px solid var(--block-dark-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--amber)", textTransform: "uppercase", letterSpacing: "0.08em" }}>vantadb_setup.py</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.55rem", color: "var(--amber)" }}>3 lines</span>
+              </div>
+              <pre style={{ margin: 0, padding: "1.5rem", fontFamily: "var(--font-mono)", fontSize: "0.72rem", lineHeight: 1.65, color: "var(--block-dark-text)", overflowX: "auto", whiteSpace: "pre" }}>
+                <code>{VANTA_CODE}</code>
+              </pre>
+            </div>
           </div>
         </section>
-
-        <CtaSection />
-
-        <nav className="bottom-nav">
-          <Link to="/" className="back-link nav-cta">
-            ← Back to comparison
-          </Link>
-        </nav>
       </main>
-    </PageShell>
+    </div>
   );
 }
