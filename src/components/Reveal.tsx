@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
 interface RevealProps {
@@ -8,7 +8,7 @@ interface RevealProps {
   as?: "div" | "section";
 }
 
-const variants = {
+const variants: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: (delay: number) => ({
     opacity: 1,

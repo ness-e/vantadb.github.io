@@ -70,7 +70,7 @@ function useGSAPReveal() {
 
     // Glow card mouse tracking — gsap.quickTo pattern
     const quickTos: (() => void)[] = [];
-    document.querySelectorAll(".glow-card").forEach((el) => {
+    document.querySelectorAll<HTMLElement>(".glow-card").forEach((el) => {
       const toMX = gsap.quickTo(el, "--mx", { x: 0 });
       const toMY = gsap.quickTo(el, "--my", { y: 0 });
       const handler = (e: MouseEvent) => {

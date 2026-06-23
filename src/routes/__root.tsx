@@ -74,7 +74,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://vantadb.dev/og/default.svg" },
-      { name: "theme-color", content: "#ff6a00" },
+      { name: "theme-color", content: "#ff5500" },
     ],
     links: [
       { rel: "icon", href: "/favicon.png", type: "image/png" },

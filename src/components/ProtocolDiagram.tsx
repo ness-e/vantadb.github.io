@@ -20,11 +20,11 @@ export function ProtocolDiagram({ style }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
     let frame = 0;
     let id = 0;
     function tick() {
+      const svg = svgRef.current;
+      if (!svg) return;
       frame = (frame + 1) % 120;
       const dots = svg.querySelectorAll<SVGRectElement>(".pd-pulse");
       dots.forEach((d, i) => {
